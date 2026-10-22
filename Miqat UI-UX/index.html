@@ -6,14 +6,17 @@
   <title>ميقات — منصة اختيار ومقارنة برامج الحج والعمرة</title>
   <meta name="description" content="منصة ميقات تساعد المعتمرين والحجاج في استكشاف ومقارنة برامج الحج والعمرة والتواصل المباشر مع شركات السياحة المرخصة.">
 
-  <!-- Google Fonts: IBM Plex Sans Arabic & Inter -->
+  <!-- Google Fonts: Aref Ruqaa (Arabic Display), Cormorant Garamond (English Display), IBM Plex Sans Arabic (Arabic UI/Body), Inter (English UI/Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload: Miqat Text Regular -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="./styles.css">
-  <link rel="icon" type="image/png" href="./assets/Miqat Logo .png">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
 </head>
 <body>
 
@@ -26,8 +29,8 @@
       
       <!-- Brand Logo / Wordmark -->
       <a href="#hero" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
-        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="44" height="44">
-        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="44" height="44">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
         <div class="brand-wordmark">
           <span class="brand-title">مـيـقـات</span>
           <span class="brand-tagline">MIQAT PLATFORM</span>
@@ -37,7 +40,7 @@
       <!-- Desktop Navigation Links -->
       <nav class="nav-desktop" aria-label="التنقل الرئيسي">
         <a href="#hero" class="nav-link" data-i18n="nav.home">الرئيسية</a>
-        <a href="#programs" class="nav-link" data-i18n="nav.programs">استكشف البرامج</a>
+        <a href="#gateways" class="nav-link" data-i18n="nav.gateways">نوع الرحلة</a>
         <a href="#how-it-works" class="nav-link" data-i18n="nav.how_it_works">كيف تعمل ميقات</a>
         <a href="#value" class="nav-link" data-i18n="nav.value">قيمة المنصة</a>
         <a href="#partnerships" class="nav-link" data-i18n="nav.partnerships">شركات السياحة</a>
@@ -49,7 +52,7 @@
         
         <!-- Language Switcher -->
         <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
-          <span class="lang-label" style="font-size: 0.8rem; font-weight: 700;">EN</span>
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
         </button>
 
         <!-- Theme Toggle (Light / Dark) -->
@@ -74,7 +77,7 @@
         <button type="button" class="btn btn-ghost btn-sm" data-open-modal="login" data-i18n="nav.login">تسجيل الدخول</button>
 
         <!-- Primary CTA Header -->
-        <a href="#programs" class="btn btn-primary btn-sm" data-i18n="nav.cta_explore">استكشف البرامج</a>
+        <a href="#gateways" class="btn btn-primary btn-sm" data-i18n="nav.cta_explore">استكشف البرامج</a>
 
         <!-- Mobile Menu Toggle Button -->
         <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
@@ -96,9 +99,9 @@
       
       <div class="mobile-nav-header">
         <div class="brand-wrapper">
-          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="36" height="36" class="brand-logo-img logo-light">
-          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="36" height="36" class="brand-logo-img logo-dark">
-          <span class="brand-title" style="font-size: 1.15rem;">مـيـقـات</span>
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
         </div>
         <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -110,6 +113,7 @@
 
       <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
         <a href="#hero" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
+        <a href="#gateways" class="mobile-nav-link" data-i18n="nav.gateways">نوع الرحلة</a>
         <a href="#programs" class="mobile-nav-link" data-i18n="nav.programs">استكشف البرامج</a>
         <a href="#how-it-works" class="mobile-nav-link" data-i18n="nav.how_it_works">كيف تعمل ميقات</a>
         <a href="#value" class="mobile-nav-link" data-i18n="nav.value">قيمة المنصة</a>
@@ -140,7 +144,7 @@
           </button>
           <button type="button" class="btn btn-outline btn-sm" style="flex: 1;" data-open-modal="login" data-i18n="nav.login">تسجيل الدخول</button>
         </div>
-        <a href="#programs" class="btn btn-primary" style="width: 100%;" data-i18n="nav.cta_explore">استكشف البرامج</a>
+        <a href="#gateways" class="btn btn-primary" style="width: 100%;" data-i18n="nav.cta_explore">استكشف البرامج</a>
       </div>
 
     </div>
@@ -149,29 +153,51 @@
   <!-- ==================== MAIN CONTENT ==================== -->
   <main id="main-content">
 
-    <!-- 1. HERO SECTION -->
-    <section id="hero" class="hero-section">
-      <div class="container hero-grid">
-        
+    <!-- 1. HERO SECTION (AUTHENTIC KAABA PHOTOGRAPH BACKGROUND & APPROVED DISPLAY TYPOGRAPHY) -->
+    <section id="hero" class="hero-section hero-kaaba-bg" aria-label="الرئيسية — استكشاف برامج الحج والعمرة">
+      
+      <!-- Authentic Kaaba Photograph Background with Directional Readable Gradient Overlay -->
+      <div class="hero-bg-media" aria-hidden="true">
+        <img src="./assets/kaaba-kiswah.jpg" alt="" class="hero-bg-photo" loading="eager" fetchpriority="high">
+        <div class="hero-bg-gradient-overlay"></div>
+        <div class="hero-bg-bottom-fade"></div>
+      </div>
+
+      <div class="container hero-container-inner">
         <div class="hero-content">
+          
           <div class="hero-badge-container">
             <div class="hero-badge">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
-              <span data-i18n="hero.eyebrow">الحج والعمرة، بخيارات أوضح</span>
+              <span data-i18n="hero.eyebrow">الحَجُّ وَالعُمْرَةُ، بِخِيَارَاتٍ أَوْضَحَ</span>
             </div>
           </div>
 
-          <h1 class="hero-heading" data-i18n="hero.heading">رحلتك تبدأ باختيار يناسبك</h1>
+          <h1 class="hero-heading" data-i18n="hero.heading">رِحْلَتُكَ تَبْدَأُ بِاخْتِيَارٍ يُنَاسِبُكَ</h1>
 
           <p class="hero-subheading" data-i18n="hero.subheading">
             اكتشف برامج الحج والعمرة، وقارن التفاصيل المهمة بالنسبة لك، واطلب التواصل مع شركة السياحة لاستكمال خطوات الحجز.
           </p>
 
           <div class="hero-actions">
-            <a href="#programs" class="btn btn-primary btn-lg" data-i18n="hero.cta_primary">استكشف البرامج</a>
-            <button type="button" class="btn btn-outline btn-lg" data-open-modal="partner" data-i18n="hero.cta_secondary">انضم كشركة سياحة</button>
+            <a href="#gateways" class="btn btn-primary btn-lg" data-i18n="hero.cta_primary">استكشف البرامج</a>
+            <button type="button" class="btn btn-outline btn-lg hero-btn-secondary" data-open-modal="partner" data-i18n="hero.cta_secondary">انضم كشركة سياحة</button>
+          </div>
+
+          <!-- Grounded Spiritual Reassurance Bar -->
+          <div class="hero-assurance-bar">
+            <div class="assurance-icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="12 6 12 12 16 14"></polygon>
+              </svg>
+            </div>
+            <div class="assurance-text-box">
+              <h3 class="assurance-title" data-i18n="hero.visual_badge_title">رِحْلَةٌ مُبَارَكَةٌ بِخِيَارَاتٍ وَاضِحَةٍ</h3>
+              <p class="assurance-subtitle" data-i18n="hero.visual_badge_subtitle">مقارنة شفافة • برامج معتمدة • تواصل مباشر</p>
+            </div>
           </div>
 
           <div class="hero-trust-tag">
@@ -181,83 +207,67 @@
             </svg>
             <span data-i18n="hero.badge_trusted">منصة مقارنة موحدة لبرامج شركات السياحة المرخصة</span>
           </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SECTION C: DISCOVER HAJJ & UMRAH (JOURNEY GATEWAYS) -->
+    <section id="gateways" class="gateways-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-eyebrow" data-i18n="gateways.eyebrow">بوابة الاختيار</span>
+          <h2 class="section-title" data-i18n="gateways.heading">حَدِّدْ مَسَارَ رِحْلَتِكَ المُبَارَكَةِ</h2>
+          <p class="section-desc" data-i18n="gateways.subheading">
+            اختر بين مواسم العمرة المتاحة على مدار العام أو برامج الحج السنوي المعتمدة
+          </p>
         </div>
 
-        <!-- Distinctive Hero Criteria Panel (Editorial, Grounded Preview) -->
-        <div class="hero-visual-card" aria-label="معايير المقارنة والاختيار">
-          <div class="hero-card-header">
-            <h2 class="hero-card-title" data-i18n="hero.card_title">نظرة على معايير الاختيار</h2>
-            <p class="hero-card-subtitle" data-i18n="hero.card_subtitle">كيف يساعدك ميقات في تحديد البرنامج الأنسب</p>
-          </div>
-
-          <div class="criteria-list">
-            
-            <div class="criterion-item">
-              <div class="criterion-label">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                <span data-i18n="hero.crit_type">نوع الرحلة</span>
-              </div>
-              <span class="criterion-value" data-i18n="hero.crit_type_val">حج / عمرة</span>
+        <div class="gateways-grid">
+          
+          <!-- Gateway 1: Umrah Journeys -->
+          <article class="gateway-card">
+            <div class="gateway-photo-wrap">
+              <img src="./assets/makkah-sunset-tawaf.jpg" alt="مشهد الطواف حول الكعبة المشرفة وقت الغروب" class="gateway-photo" width="430" height="650" loading="lazy">
+              <span class="gateway-badge" data-i18n="gateways.umrah_tag">متاحة طوال العام</span>
             </div>
-
-            <div class="criterion-item">
-              <div class="criterion-label">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span data-i18n="hero.crit_standard">مستوى الإقامة</span>
-              </div>
-              <span class="criterion-value" data-i18n="hero.crit_standard_val">اقتصادي، 4 نجوم، 5 نجوم، فاخر</span>
+            <div class="gateway-body">
+              <h3 class="gateway-title" data-i18n="gateways.umrah_title">رحلات العمرة</h3>
+              <p class="gateway-desc" data-i18n="gateways.umrah_desc">
+                خيارات روحانية متكاملة للأفراد والعائلات، بمستويات إقامة متعددة تشمل البرامج الاقتصادية، والمتميزة، وفاخرة VIP، وبرامج شهر رمضان المبارك.
+              </p>
+              <a href="#programs" class="btn btn-outline" data-switch-tab="umrah" data-i18n="gateways.umrah_cta">استعراض فئات العمرة</a>
             </div>
+          </article>
 
-            <div class="criterion-item">
-              <div class="criterion-label">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span data-i18n="hero.crit_proximity">المسافة عن الحرمين</span>
-              </div>
-              <span class="criterion-value" data-i18n="hero.crit_proximity_val">مركزية، صف أول، أو مواصلات</span>
+          <!-- Gateway 2: Hajj Journeys -->
+          <article class="gateway-card">
+            <div class="gateway-photo-wrap">
+              <img src="./assets/mataf-panoramic.jpg" alt="المطاف والمسجد الحرام في موسم الحج" class="gateway-photo" width="470" height="260" loading="lazy">
+              <span class="gateway-badge" style="background-color: var(--color-accent); color: var(--color-accent-text);" data-i18n="gateways.hajj_tag">الموسم السنوي المبارك</span>
             </div>
-
-            <div class="criterion-item">
-              <div class="criterion-label">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M22 2L11 13"></path>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-                <span data-i18n="hero.crit_travel">طريقة السفر</span>
-              </div>
-              <span class="criterion-value" data-i18n="hero.crit_travel_val">طيران مباشر / بري منظم</span>
+            <div class="gateway-body">
+              <h3 class="gateway-title" data-i18n="gateways.hajj_title">رحلات الحج</h3>
+              <p class="gateway-desc" data-i18n="gateways.hajj_desc">
+                برامج الحج الرسمية الخاضعة للضوابط التنظيمية المعتمدة، تشمل حج القرعة الرسمي، الحج السياحي المنظم، وباقات الحج الفاخر بالمشاعر المقدسة.
+              </p>
+              <a href="#programs" class="btn btn-primary" data-switch-tab="hajj" data-i18n="gateways.hajj_cta">استعراض فئات الحج</a>
             </div>
+          </article>
 
-          </div>
-
-          <div class="hero-card-footer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <p data-i18n="hero.card_note">بيانات منظمة وشفافة تساعدك قبل التواصل المباشر مع الشركة المرخصة</p>
-          </div>
         </div>
 
       </div>
     </section>
 
-    <!-- 2. PROGRAM CATEGORIES SECTION -->
+    <!-- 3. SECTION D: PROGRAM DISCOVERY & COMPARISON -->
     <section id="programs" class="categories-section">
       <div class="container">
         
         <div class="section-header">
           <span class="section-eyebrow" data-i18n="categories.eyebrow">تصنيفات البرامج</span>
-          <h2 class="section-title" data-i18n="categories.heading">اختر الفئة التي تلائم تطلعاتك وميزانيتك</h2>
+          <h2 class="section-title" data-i18n="categories.heading">اخْتَرْ الفِئَةَ الَّتِي تُلائِمُ تَطَلُّعَاتِكَ وَمِيزَانِيَّتَكَ</h2>
           <p class="section-desc" data-i18n="categories.description">
             استعراض عام لتصنيفات رحلات الحج والعمرة المعتمدة لتسهيل المقارنة واتخاذ القرار الصحيح دون تعقيد.
           </p>
@@ -266,7 +276,7 @@
         <!-- Filter Tabs -->
         <div class="categories-tabs" role="tablist" aria-label="تصنيفات البرامج">
           <button type="button" class="category-tab-btn is-active" data-category-tab="all" role="tab" aria-selected="true">
-            <span data-i18n="nav.programs">استكشف البرامج</span>
+            <span data-i18n="categories.tab_all">جميع البرامج</span>
           </button>
           <button type="button" class="category-tab-btn" data-category-tab="umrah" role="tab" aria-selected="false">
             <span data-i18n="categories.tab_umrah">برامج العمرة</span>
@@ -280,7 +290,7 @@
         <div class="categories-group" data-group-type="umrah" id="umrah-categories">
           <div class="group-badge-row">
             <span class="group-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
               </svg>
@@ -305,6 +315,23 @@
               <p class="category-card-desc" data-i18n="categories.umrah_economy.desc">
                 برامج تركز على التكلفة المناسبة مع توفير متطلبات الإقامة المعتمدة ووسائل النقل المنظمة من وإلى الحرم.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.umrah_economy.tier">اقتصادي معتمد</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.umrah_economy.proximity">حافلات ترددية للحرم</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.umrah_economy.transport">بري منظم / طيران</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -319,6 +346,8 @@
                   <span data-i18n="categories.umrah_economy.feat_3">تنظيم متكامل للمعتمرين بمستويات خدمة موثوقة</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: Premium -->
@@ -335,6 +364,23 @@
               <p class="category-card-desc" data-i18n="categories.umrah_premium.desc">
                 برامج تجمع بين الفنادق القريبة من الحرمين الشريفين والخدمات المتكاملة لرحلة هادئة ومريحة.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.umrah_premium.tier">4 أو 5 نجوم</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.umrah_premium.proximity">مسافة سير قصيرة</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.umrah_premium.transport">طيران مباشر</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -349,6 +395,8 @@
                   <span data-i18n="categories.umrah_premium.feat_3">إشراف ميداني وتنسيق مستمر لراحة المعتمر</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: VIP -->
@@ -365,6 +413,23 @@
               <p class="category-card-desc" data-i18n="categories.umrah_vip.desc">
                 تجربة استثنائية تشمل الإقامة في فنادق الصف الأول المطلة على الكعبة المشرفة وخدمات تنقل خاصة.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.umrah_vip.tier">صف أول 5 نجوم</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.umrah_vip.proximity">إطلالة مباشرة على الكعبة</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.umrah_vip.transport">سيارات خاصة VIP</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -379,6 +444,8 @@
                   <span data-i18n="categories.umrah_vip.feat_3">متابعة وإشراف شخصي مخصص على مدار الساعة</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: Ramadan -->
@@ -395,6 +462,23 @@
               <p class="category-card-desc" data-i18n="categories.umrah_ramadan.desc">
                 برامج مخصصة لأيام وليالي شهر رمضان المبارك، متضمنة فترات العشر الأوائل، المنتصف، أو العشر الأواخر.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.umrah_ramadan.tier">باقات رمضانية متنوعة</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.umrah_ramadan.proximity">مركزية الحرم المكي</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.umrah_ramadan.transport">طيران مباشر منظم</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -409,6 +493,8 @@
                   <span data-i18n="categories.umrah_ramadan.feat_3">ترتيبات خاصة للوجبات وتسهيل حركة المعتمرين</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
           </div>
@@ -418,7 +504,7 @@
         <div class="categories-group" data-group-type="hajj" id="hajj-categories">
           <div class="group-badge-row">
             <span class="group-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
               <span data-i18n="categories.hajj_badge">موسم الحج السنوي</span>
@@ -445,6 +531,23 @@
               <p class="category-card-desc" data-i18n="categories.hajj_lottery.desc">
                 برامج الحج المعتمدة عبر المنظومة الرسمية، مع ترتيبات النقل والإقامة في المشاعر المقدسة وفق الضوابط المحددة.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.hajj_lottery.tier">تنظيم رسمي موحد</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.hajj_lottery.proximity">المشاعر المقدسة الرسمية</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.hajj_lottery.transport">طيران ونقل معتمد</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -459,6 +562,8 @@
                   <span data-i18n="categories.hajj_lottery.feat_3">مواعيد وإجراءات تعاقد محددة رسمياً</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Hajj: Tourist -->
@@ -478,6 +583,23 @@
               <p class="category-card-desc" data-i18n="categories.hajj_tourist.desc">
                 برامج تقدمها شركات السياحة المرخصة بمستويات إقامة متعددة في مكة والمدينة ومخيمات المشاعر المطورة.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.hajj_tourist.tier">اقتصادي إلى 5 نجوم</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.hajj_tourist.proximity">مكة والمشاعر المطورة</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.hajj_tourist.transport">طيران وخدمات تنقل مخصصة</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -492,6 +614,8 @@
                   <span data-i18n="categories.hajj_tourist.feat_3">خيارات طيران متعددة مع خدمات نقل خاصة</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Hajj: VIP -->
@@ -509,6 +633,23 @@
               <p class="category-card-desc" data-i18n="categories.hajj_vip.desc">
                 خدمات رفيعة تشمل مخيمات مكيفة ومطورة بالقرب من الجمرات وإقامة فندقية فاخرة وخدمات ضيافة ممتازة.
               </p>
+
+              <!-- Scannable Criteria Bar -->
+              <div class="card-metrics-bar">
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_tier">المستوى</span>
+                  <span class="metric-val" data-i18n="categories.hajj_vip.tier">فاخر متميز VIP</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_proximity">المسافة</span>
+                  <span class="metric-val" data-i18n="categories.hajj_vip.proximity">مخيمات مطورة قرب الجمرات</span>
+                </div>
+                <div class="metric-line">
+                  <span class="metric-key" data-i18n="categories.criteria_transport">السفر</span>
+                  <span class="metric-val" data-i18n="categories.hajj_vip.transport">نقل خاص لكبار الشخصيات</span>
+                </div>
+              </div>
+
               <ul class="card-features-list">
                 <li class="card-feature-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -523,6 +664,8 @@
                   <span data-i18n="categories.hajj_vip.feat_3">إعاشة وبوفيهات خاصة مع رعاية صحية وإرشادية</span>
                 </li>
               </ul>
+
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
           </div>
@@ -541,7 +684,7 @@
       </div>
     </section>
 
-    <!-- 3. HOW MIQAT WORKS -->
+    <!-- 4. SECTION E: HOW MIQAT WORKS -->
     <section id="how-it-works" class="how-it-works-section">
       <div class="container">
         
@@ -560,7 +703,7 @@
             <div class="step-number-row">
               <span class="step-badge" data-i18n="how_it_works.step_1_num">01</span>
               <div class="step-icon-wrap" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
@@ -577,7 +720,7 @@
             <div class="step-number-row">
               <span class="step-badge" data-i18n="how_it_works.step_2_num">02</span>
               <div class="step-icon-wrap" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="18" y1="20" x2="18" y2="10"></line>
                   <line x1="12" y1="20" x2="12" y2="4"></line>
                   <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -595,7 +738,7 @@
             <div class="step-number-row">
               <span class="step-badge" data-i18n="how_it_works.step_3_num">03</span>
               <div class="step-icon-wrap" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
               </div>
@@ -611,7 +754,7 @@
             <div class="step-number-row">
               <span class="step-badge" data-i18n="how_it_works.step_4_num">04</span>
               <div class="step-icon-wrap" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
@@ -628,7 +771,7 @@
       </div>
     </section>
 
-    <!-- 4. VALUE FOR CUSTOMERS -->
+    <!-- 5. SECTION F: VALUE FOR CUSTOMERS -->
     <section id="value" class="value-section">
       <div class="container">
         
@@ -644,7 +787,7 @@
           
           <div class="value-card">
             <div class="value-icon-box" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
@@ -658,7 +801,7 @@
 
           <div class="value-card">
             <div class="value-icon-box" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -672,7 +815,7 @@
 
           <div class="value-card">
             <div class="value-icon-box" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
@@ -685,7 +828,7 @@
 
           <div class="value-card">
             <div class="value-icon-box" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -703,7 +846,7 @@
       </div>
     </section>
 
-    <!-- 5. TOURISM COMPANY PARTNERSHIP -->
+    <!-- 6. SECTION G: TOURISM COMPANY PARTNERSHIP (AUTHENTIC SHOWCASE) -->
     <section id="partnerships" class="partnerships-section">
       <div class="container partnership-grid">
         
@@ -741,42 +884,45 @@
           </div>
         </div>
 
-        <!-- Partnership Standards Box -->
+        <!-- Partnership Standards Box with Authentic Desk Mockup -->
         <div class="partnership-standards-card">
-          <div class="standards-header">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-            <h3 data-i18n="partnerships.standards_title">معايير الانضمام لمنصة ميقات</h3>
+          <img src="./assets/partner-portal-desk.jpg" alt="بوابة شركاء ميقات على جهاز كمبيوتر مكتبي" class="partner-desk-photo" width="800" height="450" loading="lazy">
+          <div class="standards-body">
+            <div class="standards-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <h3 data-i18n="partnerships.standards_title">معايير الانضمام لمنصة ميقات</h3>
+            </div>
+
+            <ul class="standards-list">
+              <li class="standards-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span data-i18n="partnerships.req_1">ترخيص سياحي رسمي سارٍ ومعتمد من الجهات المختصة.</span>
+              </li>
+              <li class="standards-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span data-i18n="partnerships.req_2">صحة ومطابقة كافة البيانات المرفوعة من فنادق ومسافات ونقل وأسعار حقيقية.</span>
+              </li>
+              <li class="standards-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span data-i18n="partnerships.req_3">الالتزام بالرد على طلبات التواصل المحولة خلال 24 ساعة لضمان تجربة ممتازة.</span>
+              </li>
+            </ul>
+
+            <button type="button" class="btn btn-accent btn-lg" style="width: 100%;" data-open-modal="partner" data-i18n="partnerships.cta_partner">طلب الانضمام كشريك</button>
           </div>
-
-          <ul class="standards-list">
-            <li class="standards-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span data-i18n="partnerships.req_1">ترخيص سياحي رسمي سارٍ ومعتمد من الجهات المختصة.</span>
-            </li>
-            <li class="standards-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span data-i18n="partnerships.req_2">صحة ومطابقة كافة البيانات المرفوعة من فنادق ومسافات ونقل وأسعار حقيقية.</span>
-            </li>
-            <li class="standards-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span data-i18n="partnerships.req_3">الالتزام بالرد على طلبات التواصل المحولة خلال 24 ساعة لضمان تجربة ممتازة.</span>
-            </li>
-          </ul>
-
-          <button type="button" class="btn btn-accent btn-lg" style="width: 100%;" data-open-modal="partner" data-i18n="partnerships.cta_partner">طلب الانضمام كشريك</button>
         </div>
 
       </div>
     </section>
 
-    <!-- 6. TRUST & TRANSPARENCY -->
+    <!-- 7. SECTION H: TRUST & TRANSPARENCY -->
     <section id="transparency" class="transparency-section">
       <div class="container container-narrow">
         <div class="transparency-card">
           <div class="transparency-icon-box" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -792,17 +938,17 @@
       </div>
     </section>
 
-    <!-- 7. FINAL CALL TO ACTION -->
+    <!-- 8. SECTION I: FINAL CALL TO ACTION -->
     <section id="final-cta" class="final-cta-section">
       <div class="container">
         <div class="final-cta-card">
           <span class="final-cta-eyebrow" data-i18n="final_cta.eyebrow">ابدأ التخطيط لرحلتك</span>
-          <h2 class="final-cta-title" data-i18n="final_cta.heading">خيارات أوضح، وتواصل أسهل مع الشركات المرخصة</h2>
+          <h2 class="final-cta-title" data-i18n="final_cta.heading">خِيَارَاتٌ أَوْضَحُ، وَتَوَاصُلٌ أَسْهَلُ مَعَ الشَّرِكَاتِ المُرَخَّصَةِ</h2>
           <p class="final-cta-desc" data-i18n="final_cta.desc">
             سواء كنت تبحث عن البرنامج الملائم لرحلتك، أو شركة سياحة ترغب في تنظيم وصولها للعملاء، ميقات بوابتك الموثوقة.
           </p>
           <div class="final-cta-actions">
-            <a href="#programs" class="btn btn-accent btn-lg" data-i18n="final_cta.btn_explore">استكشف برامج الحج والعمرة</a>
+            <a href="#gateways" class="btn btn-accent btn-lg" data-i18n="final_cta.btn_explore">استكشف برامج الحج والعمرة</a>
             <button type="button" class="btn btn-outline btn-lg" style="color: #FFFFFF; border-color: rgba(255,255,255,0.4);" data-open-modal="partner" data-i18n="final_cta.btn_partner">انضم كشركة سياحة شريكة</button>
           </div>
         </div>
@@ -819,8 +965,8 @@
         
         <div class="footer-brand">
           <a href="#hero" class="brand-wrapper" aria-label="ميقات">
-            <img src="./assets/Full Miqat Logo Transparent.png" alt="شعار منصة ميقات" class="footer-brand-logo logo-light" width="160" height="48">
-            <img src="./assets/Full Miqat Logo Dark.png" alt="شعار منصة ميقات" class="footer-brand-logo logo-dark" width="160" height="48">
+            <img src="./assets/Full Miqat Logo Transparent.png" alt="شعار منصة ميقات" class="footer-brand-logo logo-light" width="160" height="52">
+            <img src="./assets/Full Miqat Logo Dark.png" alt="شعار منصة ميقات" class="footer-brand-logo logo-dark" width="160" height="52">
           </a>
           <p class="footer-desc" data-i18n="footer.brand_desc">
             منصة رقمية رائدة لاستعراض ومقارنة برامج الحج والعمرة، وتسهيل التواصل المباشر مع شركات السياحة المرخصة.
@@ -831,6 +977,7 @@
           <h4 data-i18n="footer.nav_heading">أقسام المنصة</h4>
           <ul class="footer-nav-list">
             <li><a href="#hero" data-i18n="nav.home">الرئيسية</a></li>
+            <li><a href="#gateways" data-i18n="nav.gateways">نوع الرحلة</a></li>
             <li><a href="#programs" data-i18n="nav.programs">استكشف البرامج</a></li>
             <li><a href="#how-it-works" data-i18n="nav.how_it_works">كيف تعمل ميقات</a></li>
             <li><a href="#value" data-i18n="nav.value">قيمة المنصة</a></li>
@@ -842,7 +989,7 @@
           <ul class="footer-nav-list">
             <li><a href="#umrah-categories" data-i18n="categories.tab_umrah">برامج العمرة</a></li>
             <li><a href="#hajj-categories" data-i18n="categories.tab_hajj">برامج الحج</a></li>
-            <li><a href="#programs" data-i18n="hero.card_title">معايير الاختيار</a></li>
+            <li><a href="#hero" data-i18n="hero.card_title">معايير الاختيار</a></li>
             <li><a href="#transparency" data-i18n="nav.transparency">الموثوقية والشفافية</a></li>
           </ul>
         </div>

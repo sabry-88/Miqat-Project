@@ -1,0 +1,16 @@
+# Dependencies
+**/node_modules/
+
+# Local caches and temporary files
+font-tools/cache/
+**/.DS_Store
+**/Thumbs.db
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Build outputs
+**/dist/
+**/build/

@@ -337,6 +337,69 @@
   });
 
   /**
+   * Smart Navbar Transparency over Hero Section
+   * Transparent only at the very top of the landing page over the Hero.
+   * Transitions to solid background as soon as the user starts scrolling down,
+   * preventing navbar text from overlapping content as it scrolls underneath.
+   */
+  function initNavbarTransparency() {
+    const header = document.getElementById('siteHeader');
+    const hero = document.getElementById('hero');
+    if (!header) return;
+    if (!hero) {
+      header.classList.remove('is-transparent');
+      return;
+    }
+
+    // Small, sensible threshold to trigger solid navbar on scroll
+    // and subtle hysteresis to avoid flickering around the boundary
+    const SCROLL_THRESHOLD_SOLID = 24;
+    const SCROLL_THRESHOLD_TRANSPARENT = 10;
+
+    function updateNavbar() {
+      const scrollY = window.scrollY ?? window.pageYOffset ?? document.documentElement.scrollTop ?? 0;
+      const hash = window.location.hash;
+      const isTargetingOtherSection = hash && hash !== '#hero' && hash !== '#main-content';
+
+      if (scrollY <= SCROLL_THRESHOLD_TRANSPARENT && !isTargetingOtherSection) {
+        header.classList.add('is-transparent');
+      } else if (scrollY > SCROLL_THRESHOLD_SOLID || isTargetingOtherSection) {
+        header.classList.remove('is-transparent');
+      }
+    }
+
+    // Run immediately to set initial state
+    updateNavbar();
+
+    // Immediately make solid when navigating to any non-hero anchor link
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', () => {
+        const targetId = anchor.getAttribute('href');
+        if (targetId && targetId !== '#hero' && targetId !== '#' && targetId !== '#main-content') {
+          header.classList.remove('is-transparent');
+        }
+      });
+    });
+
+    // Smooth scroll listener via requestAnimationFrame
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateNavbar();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Handle hash change, page load, and viewport resize
+    window.addEventListener('hashchange', updateNavbar, { passive: true });
+    window.addEventListener('load', updateNavbar, { passive: true });
+    window.addEventListener('resize', updateNavbar, { passive: true });
+  }
+
+  /**
    * Event Listeners Registration
    */
   function initEvents() {
@@ -364,6 +427,7 @@
 
     initCategoryTabs();
     initModals();
+    initNavbarTransparency();
   }
 
   // --- Embedded fallback dictionary (for file:// protocol without local server) ---

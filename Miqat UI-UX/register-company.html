@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — تسجيل شركة سياحة</title>
+  <meta name="description" content="تسجيل وانضمام شركات السياحة الدينية المرخصة إلى منصة ميقات لعرض برامج الحج والعمرة.">
+
+  <!-- Google Fonts: Aref Ruqaa, Cormorant Garamond, IBM Plex Sans Arabic, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="auth-page" data-page-title-key="auth.company_reg_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#companyRegisterForm" class="skip-link">تخطي إلى نموذج تسجيل الشركة</a>
+
+  <!-- ==================== AUTH HEADER ==================== -->
+  <header class="auth-header">
+    <div class="container auth-header-container">
+      
+      <!-- Brand Logo / Wordmark linking back to Landing Page -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="44" height="44">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="44" height="44">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Header Utilities: Back Link, Language, Theme -->
+      <div class="auth-header-actions">
+        <a href="index.html" class="nav-action-btn" id="navHomeBtn">
+          <svg class="nav-btn-icon nav-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span data-i18n="auth.back_to_home">العودة للرئيسية</span>
+        </a>
+
+        <!-- Language Switcher Button -->
+        <button type="button" class="nav-action-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <svg class="nav-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button type="button" class="nav-action-btn icon-only" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="nav-btn-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="nav-btn-icon icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN AUTH CONTAINER ==================== -->
+  <main class="auth-main" id="main-content">
+    <div class="auth-card auth-card-wide">
+      
+      <!-- Card Header -->
+      <div class="auth-card-header">
+        <div class="auth-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span data-i18n="auth.company_portal_badge">بوابة شركاء ميقات</span>
+        </div>
+        <h1 class="auth-title" data-i18n="auth.company_reg_heading">تسجيل شركة سياحة</h1>
+        <p class="auth-subtitle" data-i18n="auth.company_reg_subheading">سجّل بيانات شركتك عشان نقدر نراجع طلب انضمامك ونساعدك تبدأ التعاون مع منصة ميقات.</p>
+      </div>
+
+      <!-- Authentication / Registration Status Alert -->
+      <div class="auth-status-alert" id="authStatusBox" role="status" aria-live="polite"></div>
+
+      <!-- Tourism Company Registration Form -->
+      <form class="auth-form" id="companyRegisterForm" novalidate>
+        
+        <!-- Field 1: Company Name — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyName">
+            <span data-i18n="auth.company_name_label">اسم الشركة</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="text" 
+              id="companyName" 
+              name="companyName" 
+              class="auth-input" 
+              autocomplete="organization" 
+              data-i18n-attr="placeholder:auth.company_name_placeholder" 
+              placeholder="اكتب اسم شركة السياحة" 
+              required
+            >
+          </div>
+          <div class="field-error" id="companyNameError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 2: Responsible Person's Name — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="responsiblePerson">
+            <span data-i18n="auth.responsible_person_label">اسم المسؤول</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="text" 
+              id="responsiblePerson" 
+              name="responsiblePerson" 
+              class="auth-input" 
+              autocomplete="name" 
+              data-i18n-attr="placeholder:auth.responsible_person_placeholder" 
+              placeholder="اكتب اسم المسؤول عن الشركة" 
+              required
+            >
+          </div>
+          <div class="field-error" id="responsiblePersonError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 3: Telephone Number — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyPhone">
+            <span data-i18n="auth.company_phone_label">رقم التليفون</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="tel" 
+              id="companyPhone" 
+              name="phone" 
+              class="auth-input" 
+              autocomplete="tel" 
+              inputmode="tel" 
+              data-i18n-attr="placeholder:auth.company_phone_placeholder" 
+              placeholder="اكتب رقم التليفون" 
+              required
+            >
+          </div>
+          <div class="form-hint" data-i18n="auth.company_phone_hint">يقبل أرقام الهواتف والموبايل المصرية (010, 011, 012, 015 أو أرضي) والأرقام الدولية</div>
+          <div class="field-error" id="companyPhoneError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 4: Governorate — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyGovernorate">
+            <span data-i18n="auth.company_gov_label">المحافظة</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <select 
+              id="companyGovernorate" 
+              name="governorate" 
+              class="auth-input auth-select" 
+              required
+            >
+              <option value="" disabled selected data-i18n="auth.company_gov_placeholder">اختار المحافظة</option>
+            </select>
+          </div>
+          <div class="field-error" id="companyGovernorateError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 5: License Number — Optional -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="licenseNumber">
+            <span data-i18n="auth.license_number_label">رقم الترخيص (اختياري)</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="text" 
+              id="licenseNumber" 
+              name="licenseNumber" 
+              class="auth-input" 
+              data-i18n-attr="placeholder:auth.license_number_placeholder" 
+              placeholder="اكتب رقم الترخيص لو متاح"
+            >
+          </div>
+          <div class="field-error" id="licenseNumberError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 6: Email Address — Optional -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyEmail">
+            <span data-i18n="auth.company_email_label">البريد الإلكتروني (اختياري)</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="email" 
+              id="companyEmail" 
+              name="email" 
+              class="auth-input" 
+              autocomplete="email" 
+              inputmode="email" 
+              data-i18n-attr="placeholder:auth.company_email_placeholder" 
+              placeholder="اكتب البريد الإلكتروني لو متاح"
+            >
+          </div>
+          <div class="form-hint" data-i18n="auth.company_email_hint">اختياري — لإرسال إشعارات مراجعة الترخيص وتفاصيل التفعيل</div>
+          <div class="field-error" id="companyEmailError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 7: Password — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyPassword">
+            <span data-i18n="auth.password_label">كلمة المرور</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="companyPassword" 
+              name="password" 
+              class="auth-input" 
+              autocomplete="new-password" 
+              data-i18n-attr="placeholder:auth.password_reg_placeholder" 
+              placeholder="أنشئ كلمة مرور قوية" 
+              required
+            >
+            <button 
+              type="button" 
+              class="password-toggle-btn" 
+              id="companyPasswordToggleBtn" 
+              aria-label="إظهار كلمة المرور" 
+              title="إظهار كلمة المرور"
+            >
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <!-- Dynamic Password-Requirements Checklist -->
+          <ul class="password-requirements-checklist" id="companyPasswordChecklist" aria-label="شروط كلمة المرور">
+            <li class="password-req-item" data-req="length">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_length">أكثر من 8 أحرف</span>
+            </li>
+            <li class="password-req-item" data-req="letter">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_letter">تحتوي على حرف إنجليزي واحد على الأقل</span>
+            </li>
+            <li class="password-req-item" data-req="number">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_number">تحتوي على رقم واحد على الأقل</span>
+            </li>
+            <li class="password-req-item" data-req="special">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_special">تحتوي على رمز خاص واحد على الأقل</span>
+            </li>
+          </ul>
+          <div class="field-error" id="companyPasswordError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 8: Confirm Password — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyConfirmPassword">
+            <span data-i18n="auth.confirm_password_label">تأكيد كلمة المرور</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="companyConfirmPassword" 
+              name="confirmPassword" 
+              class="auth-input" 
+              autocomplete="new-password" 
+              data-i18n-attr="placeholder:auth.confirm_password_placeholder" 
+              placeholder="اكتب كلمة المرور مرة تانية" 
+              required
+            >
+            <button 
+              type="button" 
+              class="password-toggle-btn" 
+              id="companyConfirmPasswordToggleBtn" 
+              aria-label="إظهار كلمة المرور" 
+              title="إظهار كلمة المرور"
+            >
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="password-match-feedback" id="companyPasswordMatch" style="display: none;"></div>
+          <div class="field-error" id="companyConfirmPasswordError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 9: Additional Notes — Optional -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="companyNotes">
+            <span data-i18n="auth.notes_label">ملاحظات إضافية (اختياري)</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <textarea 
+              id="companyNotes" 
+              name="notes" 
+              class="auth-input auth-textarea" 
+              rows="3" 
+              maxlength="1000" 
+              data-i18n-attr="placeholder:auth.notes_placeholder" 
+              placeholder="اكتب أي تفاصيل إضافية تحب تشاركها معانا"
+            ></textarea>
+          </div>
+          <div class="field-error" id="companyNotesError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Primary Submission Button -->
+        <button type="submit" class="btn btn-primary btn-auth-submit" id="submitBtn">
+          <span class="btn-text" data-i18n="auth.submit_application_btn">إرسال طلب الانضمام</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+      </form>
+
+      <!-- Bottom Navigation to Login -->
+      <div class="auth-card-footer">
+        <span data-i18n="auth.have_account">عندك حساب بالفعل؟</span>
+        <a href="login.html?journey=partner" class="auth-link auth-link-bold" id="linkToLogin" data-i18n="auth.sign_in">تسجيل الدخول</a>
+      </div>
+
+      <!-- Trust & Licensing Verification Note -->
+      <div class="auth-security-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span data-i18n="auth.company_verification_note">تخضع جميع طلبات الانضمام لمراجعة وتدقيق التراخيص السياحية الرسمية من قبل فريق ميقات قبل تفعيل الحساب</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Dedicated Authentication & Registration Engine -->
+  <script src="./auth.js"></script>
+</body>
+</html>

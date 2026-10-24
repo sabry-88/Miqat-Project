@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — تسجيل الدخول</title>
+  <meta name="description" content="تسجيل الدخول إلى منصة ميقات الموحدة لمتابعة استفسارات الحج والعمرة وإدارة برامج شركات السياحة المرخصة.">
+
+  <!-- Google Fonts: Aref Ruqaa (Arabic Display), Cormorant Garamond (English Display), IBM Plex Sans Arabic (Arabic UI/Body), Inter (English UI/Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload: Miqat Text Regular -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="auth-page" data-page-title-key="auth.login_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#loginForm" class="skip-link">تخطي إلى نموذج تسجيل الدخول</a>
+
+  <!-- ==================== AUTH HEADER ==================== -->
+  <header class="auth-header">
+    <div class="container auth-header-container">
+      
+      <!-- Brand Logo / Wordmark linking back to Landing Page -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="44" height="44">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="44" height="44">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Header Utilities: Back Link, Language, Theme -->
+      <div class="auth-header-actions">
+        <a href="index.html" class="nav-action-btn" id="navHomeBtn">
+          <svg class="nav-btn-icon nav-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span data-i18n="auth.back_to_home">العودة للرئيسية</span>
+        </a>
+
+        <!-- Language Switcher Button -->
+        <button type="button" class="nav-action-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <svg class="nav-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button type="button" class="nav-action-btn icon-only" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="nav-btn-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="nav-btn-icon icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN AUTH CONTAINER ==================== -->
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      
+      <!-- Card Header -->
+      <div class="auth-card-header">
+        
+        <!-- Context Banner for Preserved Program Details Inquiry -->
+        <div class="program-context-banner" id="programContextBanner" style="display: none;">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <div>
+            <span data-i18n="auth.program_context_label">طلب تفاصيل:</span>
+            <strong id="programContextTitle">البرنامج المحدد</strong>
+          </div>
+        </div>
+
+        <!-- Context Banner for Preserved Tourism Partner Onboarding -->
+        <div class="program-context-banner" id="partnerContextBanner" style="display: none;">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <div>
+            <span data-i18n="auth.partner_context_label">بوابة شركاء ميقات:</span>
+            <strong data-i18n="auth.partner_login_banner">تسجيل دخول الشركاء — سجّل دخولك لإدارة برامج شركتك وعروض الحج والعمرة</strong>
+          </div>
+        </div>
+
+        <div class="auth-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span data-i18n="auth.portal_badge">منصة ميقات الموحدة</span>
+        </div>
+        <h1 class="auth-title" data-i18n="auth.login_heading">تسجيل الدخول</h1>
+        <p class="auth-subtitle" data-i18n="auth.login_subheading">مرحباً بك في منصة ميقات. سجل دخولك لمتابعة استفساراتك أو إدارة برامج الحج والعمرة.</p>
+      </div>
+
+      <!-- Authentication Status Alert (Real backend state or notifications) -->
+      <div class="auth-status-alert" id="authStatusBox" role="status" aria-live="polite"></div>
+
+      <!-- Login Form -->
+      <form class="auth-form" id="loginForm" novalidate>
+        
+        <!-- Field 1: Unified Identifier (Email or Phone Number) -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="loginIdentifier" data-i18n="auth.identifier_label">البريد الإلكتروني أو رقم الموبايل</label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="text" 
+              id="loginIdentifier" 
+              name="identifier" 
+              class="auth-input" 
+              autocomplete="username" 
+              inputmode="email"
+              data-i18n-attr="placeholder:auth.identifier_placeholder"
+              placeholder="اكتب الإيميل أو رقم الموبايل"
+              required
+            >
+          </div>
+          <div class="form-hint" data-i18n="auth.identifier_hint">يقبل البريد الإلكتروني أو أرقام الموبايل (المصرية والدولية)</div>
+          <div class="field-error" id="identifierError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 2: Password with Masking & Visibility Toggle -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <div class="form-label-row">
+            <label class="form-label" for="loginPassword" data-i18n="auth.password_label">كلمة المرور</label>
+            <a href="forgot-password.html" class="auth-link" data-i18n="auth.forgot_password">نسيت كلمة المرور؟</a>
+          </div>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              name="password" 
+              class="auth-input" 
+              autocomplete="current-password" 
+              data-i18n-attr="placeholder:auth.password_placeholder"
+              placeholder="اكتب كلمة المرور"
+              required
+            >
+            <button 
+              type="button" 
+              class="password-toggle-btn" 
+              id="passwordToggleBtn" 
+              aria-label="إظهار كلمة المرور" 
+              title="إظهار كلمة المرور"
+            >
+              <!-- Eye Icon (when hidden) -->
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <!-- Eye Off Icon (when shown) -->
+              <svg class="icon-eye-off" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="field-error" id="passwordError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Primary Login Button -->
+        <button type="submit" class="btn btn-primary btn-auth-submit" id="submitBtn">
+          <span class="btn-text" data-i18n="auth.sign_in_btn">تسجيل الدخول</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+      </form>
+
+      <!-- Bottom Registration Link -->
+      <div class="auth-card-footer">
+        <span data-i18n="auth.no_account">ليس لديك حساب؟</span>
+        <a href="register-choice.html" class="auth-link auth-link-bold" id="linkToRegister" data-i18n="auth.create_account">إنشاء حساب جديد</a>
+      </div>
+
+      <!-- Trust & Security Reassurance Note -->
+      <div class="auth-security-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span data-i18n="auth.security_note">بياناتك محمية ومُشفّرة وفق أعلى معايير الأمان</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Dedicated Authentication Engine -->
+  <script src="./auth.js"></script>
+</body>
+</html>

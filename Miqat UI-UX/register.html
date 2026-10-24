@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — إنشاء حساب عميل</title>
+  <meta name="description" content="إنشاء حساب عميل على منصة ميقات للاطلاع على تفاصيل برامج الحج والعمرة ومتابعة طلباتك.">
+
+  <!-- Google Fonts: Aref Ruqaa, Cormorant Garamond, IBM Plex Sans Arabic, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="auth-page" data-page-title-key="auth.register_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#customerRegisterForm" class="skip-link">تخطي إلى نموذج إنشاء الحساب</a>
+
+  <!-- ==================== AUTH HEADER ==================== -->
+  <header class="auth-header">
+    <div class="container auth-header-container">
+      
+      <!-- Brand Logo / Wordmark linking back to Landing Page -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="44" height="44">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="44" height="44">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Header Utilities: Back Link, Language, Theme -->
+      <div class="auth-header-actions">
+        <a href="index.html" class="nav-action-btn" id="navHomeBtn">
+          <svg class="nav-btn-icon nav-arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span data-i18n="auth.back_to_home">العودة للرئيسية</span>
+        </a>
+
+        <!-- Language Switcher Button -->
+        <button type="button" class="nav-action-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <svg class="nav-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button type="button" class="nav-action-btn icon-only" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="nav-btn-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="nav-btn-icon icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN AUTH CONTAINER ==================== -->
+  <main class="auth-main" id="main-content">
+    <div class="auth-card">
+      
+      <!-- Card Header -->
+      <div class="auth-card-header">
+        
+        <!-- Context Banner for Preserved Program Details Inquiry -->
+        <div class="program-context-banner" id="programContextBanner" style="display: none;">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <div>
+            <span data-i18n="auth.program_context_label">طلب تفاصيل:</span>
+            <strong id="programContextTitle">البرنامج المحدد</strong>
+          </div>
+        </div>
+
+        <div class="auth-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span data-i18n="auth.portal_badge">منصة ميقات الموحدة</span>
+        </div>
+        <h1 class="auth-title" data-i18n="auth.register_heading">إنشاء حساب عميل</h1>
+        <p class="auth-subtitle" data-i18n="auth.register_subheading">سجّل بياناتك عشان تقدر تطّلع على تفاصيل برامج الحج والعمرة وتتابع طلباتك.</p>
+      </div>
+
+      <!-- Authentication / Registration Status Alert -->
+      <div class="auth-status-alert" id="authStatusBox" role="status" aria-live="polite"></div>
+
+      <!-- Customer Registration Form -->
+      <form class="auth-form" id="customerRegisterForm" novalidate>
+        
+        <!-- Field 1: Customer Name — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerName">
+            <span data-i18n="auth.name_label">الاسم بالكامل</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="text" 
+              id="customerName" 
+              name="name" 
+              class="auth-input" 
+              autocomplete="name" 
+              data-i18n-attr="placeholder:auth.name_placeholder" 
+              placeholder="اكتب اسمك بالكامل" 
+              required
+            >
+          </div>
+          <div class="field-error" id="nameError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 2: Mobile / WhatsApp Number — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerPhone">
+            <span data-i18n="auth.phone_label">رقم الموبايل / واتساب</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="tel" 
+              id="customerPhone" 
+              name="phone" 
+              class="auth-input" 
+              autocomplete="tel" 
+              inputmode="tel" 
+              data-i18n-attr="placeholder:auth.phone_placeholder" 
+              placeholder="اكتب رقم الموبايل المتاح عليه واتساب" 
+              required
+            >
+          </div>
+          <div class="form-hint" data-i18n="auth.phone_hint">يقبل أرقام الموبايل المصرية (010, 011, 012, 015) أو الأرقام الدولية</div>
+          <div class="field-error" id="phoneError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 3: Governorate — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerGovernorate">
+            <span data-i18n="auth.governorate_label">المحافظة</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="auth-input-wrapper">
+            <select 
+              id="customerGovernorate" 
+              name="governorate" 
+              class="auth-input auth-select" 
+              required
+            >
+              <option value="" disabled selected data-i18n="auth.governorate_placeholder">اختار المحافظة</option>
+            </select>
+          </div>
+          <div class="field-error" id="governorateError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 4: Email Address — Optional -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerEmail">
+            <span data-i18n="auth.email_label">البريد الإلكتروني (اختياري)</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <input 
+              type="email" 
+              id="customerEmail" 
+              name="email" 
+              class="auth-input" 
+              autocomplete="email" 
+              inputmode="email" 
+              data-i18n-attr="placeholder:auth.email_placeholder" 
+              placeholder="اكتب الإيميل لو متاح"
+            >
+          </div>
+          <div class="form-hint" data-i18n="auth.email_hint">اختياري — لمتابعة إشعارات وتفاصيل البرامج على بريدك</div>
+          <div class="field-error" id="emailError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 5: Password — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerPassword">
+            <span data-i18n="auth.password_label">كلمة المرور</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="customerPassword" 
+              name="password" 
+              class="auth-input" 
+              autocomplete="new-password" 
+              data-i18n-attr="placeholder:auth.password_reg_placeholder" 
+              placeholder="أنشئ كلمة مرور قوية" 
+              required
+            >
+            <button 
+              type="button" 
+              class="password-toggle-btn" 
+              id="customerPasswordToggleBtn" 
+              aria-label="إظهار كلمة المرور" 
+              title="إظهار كلمة المرور"
+            >
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <!-- Dynamic Password-Requirements Checklist -->
+          <ul class="password-requirements-checklist" id="customerPasswordChecklist" aria-label="شروط كلمة المرور">
+            <li class="password-req-item" data-req="length">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_length">أكثر من 8 أحرف</span>
+            </li>
+            <li class="password-req-item" data-req="letter">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_letter">تحتوي على حرف إنجليزي واحد على الأقل</span>
+            </li>
+            <li class="password-req-item" data-req="number">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_number">تحتوي على رقم واحد على الأقل</span>
+            </li>
+            <li class="password-req-item" data-req="special">
+              <span class="password-req-icon" aria-hidden="true">
+                <span class="icon-circle"></span>
+                <svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span data-i18n="auth.pass_req_special">تحتوي على رمز خاص واحد على الأقل</span>
+            </li>
+          </ul>
+          <div class="field-error" id="customerPasswordError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Field 6: Confirm Password — Required -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="customerConfirmPassword">
+            <span data-i18n="auth.confirm_password_label">تأكيد كلمة المرور</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <div class="password-input-wrapper">
+            <input 
+              type="password" 
+              id="customerConfirmPassword" 
+              name="confirmPassword" 
+              class="auth-input" 
+              autocomplete="new-password" 
+              data-i18n-attr="placeholder:auth.confirm_password_placeholder" 
+              placeholder="اكتب كلمة المرور مرة تانية" 
+              required
+            >
+            <button 
+              type="button" 
+              class="password-toggle-btn" 
+              id="customerConfirmPasswordToggleBtn" 
+              aria-label="إظهار كلمة المرور" 
+              title="إظهار كلمة المرور"
+            >
+              <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="password-match-feedback" id="customerPasswordMatch" style="display: none;"></div>
+          <div class="field-error" id="customerConfirmPasswordError" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Primary Submission Button -->
+        <button type="submit" class="btn btn-primary btn-auth-submit" id="submitBtn">
+          <span class="btn-text" data-i18n="auth.continue_btn">متابعة</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+      </form>
+
+      <!-- Bottom Navigation to Login -->
+      <div class="auth-card-footer">
+        <span data-i18n="auth.have_account">عندك حساب بالفعل؟</span>
+        <a href="login.html" class="auth-link auth-link-bold" id="linkToLogin" data-i18n="auth.sign_in">تسجيل الدخول</a>
+      </div>
+
+      <!-- Trust & Security Reassurance Note -->
+      <div class="auth-security-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span data-i18n="auth.security_note">بياناتك محمية ومُشفّرة وفق أعلى معايير الأمان</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Dedicated Authentication & Registration Engine -->
+  <script src="./auth.js"></script>
+</body>
+</html>

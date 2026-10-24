@@ -73,11 +73,11 @@
           </svg>
         </button>
 
-        <!-- Sign In (Company Portal) -->
-        <button type="button" class="btn btn-ghost btn-sm" data-open-modal="login" data-i18n="nav.login">تسجيل الدخول</button>
+        <!-- Sign In (Secondary Action) -->
+        <a href="login.html" class="btn btn-ghost btn-sm nav-login-btn" data-i18n="nav.login">تسجيل الدخول</a>
 
-        <!-- Primary CTA Header -->
-        <a href="#gateways" class="btn btn-primary btn-sm" data-i18n="nav.cta_explore">استكشف البرامج</a>
+        <!-- Create Account (Primary Action) -->
+        <a href="register-choice.html" class="btn btn-primary btn-sm nav-register-btn" data-i18n="nav.register">إنشاء حساب</a>
 
         <!-- Mobile Menu Toggle Button -->
         <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
@@ -142,9 +142,9 @@
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
           </button>
-          <button type="button" class="btn btn-outline btn-sm" style="flex: 1;" data-open-modal="login" data-i18n="nav.login">تسجيل الدخول</button>
+          <a href="login.html" class="btn btn-outline btn-sm nav-login-btn" style="flex: 1;" data-i18n="nav.login">تسجيل الدخول</a>
         </div>
-        <a href="#gateways" class="btn btn-primary" style="width: 100%;" data-i18n="nav.cta_explore">استكشف البرامج</a>
+        <a href="register-choice.html" class="btn btn-primary" style="width: 100%;" data-i18n="nav.register">إنشاء حساب</a>
       </div>
 
     </div>
@@ -363,7 +363,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="umrah" data-program-id="umrah_economy" data-program-name-ar="عمرة اقتصادية" data-program-name-en="Economy Umrah" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: Premium -->
@@ -412,7 +412,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="umrah" data-program-id="umrah_premium" data-program-name-ar="عمرة متميزة" data-program-name-en="Premium Umrah" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: VIP -->
@@ -461,7 +461,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="umrah" data-program-id="umrah_vip" data-program-name-ar="عمرة فاخرة (VIP)" data-program-name-en="VIP Umrah" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Umrah: Ramadan -->
@@ -510,7 +510,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="umrah" data-program-id="umrah_ramadan" data-program-name-ar="عمرة شهر رمضان" data-program-name-en="Ramadan Umrah" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
           </div>
@@ -579,7 +579,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="hajj" data-program-id="hajj_lottery" data-program-name-ar="حج القرعة" data-program-name-en="Lottery Hajj" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Hajj: Tourist -->
@@ -631,7 +631,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="hajj" data-program-id="hajj_tourist" data-program-name-ar="حج سياحي" data-program-name-en="Tourist Hajj" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
             <!-- Hajj: VIP -->
@@ -681,7 +681,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-open-modal="partner" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
+              <button type="button" class="btn btn-outline btn-sm" style="width: 100%; margin-top: auto;" data-action="request-details" data-trip="hajj" data-program-id="hajj_vip" data-program-name-ar="حج فاخر (VIP)" data-program-name-en="VIP Hajj" data-i18n="categories.card_action_inquire">طلب تفاصيل البرنامج</button>
             </article>
 
           </div>
@@ -1015,7 +1015,7 @@
           <ul class="footer-nav-list">
             <li><a href="#partnerships" data-i18n="nav.partnerships">شراكة شركات السياحة</a></li>
             <li><a href="#partnerships" data-open-modal="partner" data-i18n="partnerships.cta_partner">طلب الانضمام كشريك</a></li>
-            <li><a href="#siteHeader" data-open-modal="login" data-i18n="nav.login">بوابة الشركات (تجريبي)</a></li>
+            <li><a href="login.html" data-i18n="nav.login">تسجيل الدخول</a></li>
           </ul>
         </div>
 
@@ -1029,80 +1029,142 @@
     </div>
   </footer>
 
-  <!-- ==================== MODALS (LOGIN & PARTNERSHIP REQUEST) ==================== -->
-  
-  <!-- Login Dialog -->
-  <div id="loginModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="loginTitle">
-    <div class="modal-box">
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Account Choice Experience Dialog (Customer Program Inquiries) -->
+  <div id="accountChoiceModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="accountChoiceTitle">
+    <div class="modal-box account-choice-box">
       <button type="button" class="modal-close-btn" data-close-modal aria-label="إغلاق النافذة">
         <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
 
-      <h3 id="loginTitle" class="modal-title" data-i18n="modals.login_title">تسجيل الدخول إلى ميقات</h3>
-      <p class="modal-desc" data-i18n="modals.login_desc">تسجيل الدخول مخصص لمسؤولي شركات السياحة المرخصة لإدارة عروض وبرامج الشركة.</p>
+      <!-- Badge with Selected Program Name -->
+      <div class="choice-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span id="accountChoiceBadgeText" data-i18n="account_choice.badge">طلب تفاصيل البرنامج</span>
+      </div>
 
-      <form onsubmit="event.preventDefault();">
-        <div class="form-group">
-          <label class="form-label" for="loginEmail" data-i18n="modals.login_placeholder_email">البريد الإلكتروني للشركة</label>
-          <input type="email" id="loginEmail" class="form-input" required data-i18n-attr="placeholder:modals.login_placeholder_email">
-        </div>
+      <h3 id="accountChoiceTitle" class="modal-title" data-i18n="account_choice.title">خلّينا نوصّلك لتفاصيل البرنامج</h3>
+      <p class="modal-desc" data-i18n="account_choice.desc">عشان نقدر نساعدك وتتابع تفاصيل برنامجك، محتاجين نعرف إذا كان عندك حساب على منصة ميقات.</p>
 
-        <div class="form-group">
-          <label class="form-label" for="loginPass" data-i18n="modals.login_placeholder_pass">كلمة المرور</label>
-          <input type="password" id="loginPass" class="form-input" required data-i18n-attr="placeholder:modals.login_placeholder_pass">
-        </div>
+      <div class="choice-question-label" data-i18n="account_choice.question">هل عندك حساب بالفعل؟</div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;" data-i18n="modals.login_btn">دخول</button>
+      <div class="account-choice-cards">
+        <!-- Option 1: Existing Account -> Login -->
+        <a href="login.html" class="choice-card" id="choiceLoginLink">
+          <div class="choice-card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </div>
+          <div class="choice-card-content">
+            <h4 class="choice-card-title" data-i18n="account_choice.opt1_title">أيوه، عندي حساب</h4>
+            <p class="choice-card-text" data-i18n="account_choice.opt1_desc">سجّل دخولك عشان نكمل معاك.</p>
+          </div>
+          <div class="choice-card-arrow">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </div>
+        </a>
 
-        <div class="form-note" data-i18n="modals.login_scope_note">
-          بوابة الشركات قيد التفعيل التجريبي. يرجى التواصل مع فريق ميقات للحصول على بيانات الدخول.
-        </div>
-      </form>
+        <!-- Option 2: New Customer -> Register -->
+        <a href="register.html" class="choice-card choice-card-primary" id="choiceRegisterLink">
+          <div class="choice-card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </div>
+          <div class="choice-card-content">
+            <h4 class="choice-card-title" data-i18n="account_choice.opt2_title">لأ، دي أول مرة ليا</h4>
+            <p class="choice-card-text" data-i18n="account_choice.opt2_desc">سجّل بياناتك الأساسية وكمّل طلبك.</p>
+          </div>
+          <div class="choice-card-arrow">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 
-  <!-- Partnership Request Dialog -->
-  <div id="partnerModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="partnerTitle">
-    <div class="modal-box">
+  <!-- Partner Account Choice Dialog (Tourism Company Onboarding) -->
+  <div id="partnerChoiceModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="partnerChoiceTitle">
+    <div class="modal-box account-choice-box">
       <button type="button" class="modal-close-btn" data-close-modal aria-label="إغلاق النافذة">
         <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
 
-      <h3 id="partnerTitle" class="modal-title" data-i18n="modals.partner_modal_title">طلب انضمام شركة سياحة</h3>
-      <p class="modal-desc" data-i18n="modals.partner_modal_desc">نرحب بانضمام شركات السياحة الدينية المرخصة رسمياً لعرض برامجها عبر منصة ميقات.</p>
+      <!-- Badge for Company Partnership -->
+      <div class="choice-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+        <span data-i18n="partner_choice.badge">بوابة الشراكة والانضمام</span>
+      </div>
 
-      <form id="partnerForm">
-        <div class="form-group">
-          <label class="form-label" for="partnerCompany" data-i18n="modals.partner_field_name">اسم شركة السياحة</label>
-          <input type="text" id="partnerCompany" class="form-input" required data-i18n-attr="placeholder:modals.partner_field_name">
-        </div>
+      <h3 id="partnerChoiceTitle" class="modal-title" data-i18n="partner_choice.title">انضم لشركاء ميقات</h3>
+      <p class="modal-desc" data-i18n="partner_choice.desc">عشان نكمّل إجراءات انضمام شركتك، محتاجين نعرف إذا كان عندك حساب بالفعل على منصة ميقات.</p>
 
-        <div class="form-group">
-          <label class="form-label" for="partnerLicense" data-i18n="modals.partner_field_license">رقم الترخيص السياحي</label>
-          <input type="text" id="partnerLicense" class="form-input" required data-i18n-attr="placeholder:modals.partner_field_license">
-        </div>
+      <div class="choice-question-label" data-i18n="partner_choice.question">عندك حساب بالفعل؟</div>
 
-        <div class="form-group">
-          <label class="form-label" for="partnerContact" data-i18n="modals.partner_field_contact">اسم مسؤول التواصل</label>
-          <input type="text" id="partnerContact" class="form-input" required data-i18n-attr="placeholder:modals.partner_field_contact">
-        </div>
+      <div class="account-choice-cards">
+        <!-- Option 1: Existing Account -> Login with journey=partner -->
+        <a href="login.html?journey=partner" class="choice-card" id="partnerChoiceLoginLink">
+          <div class="choice-card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </div>
+          <div class="choice-card-content">
+            <h4 class="choice-card-title" data-i18n="partner_choice.opt1_title">أيوه، عندي حساب</h4>
+            <p class="choice-card-text" data-i18n="partner_choice.opt1_desc">سجّل دخولك عشان تكمّل إجراءات الشراكة.</p>
+          </div>
+          <div class="choice-card-arrow">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </div>
+        </a>
 
-        <div class="form-group">
-          <label class="form-label" for="partnerPhone" data-i18n="modals.partner_field_phone">رقم الهاتف / واتساب</label>
-          <input type="tel" id="partnerPhone" class="form-input" required data-i18n-attr="placeholder:modals.partner_field_phone">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="partnerCity" data-i18n="modals.partner_field_city">المدينة / المقر الرئيسي</label>
-          <input type="text" id="partnerCity" class="form-input" required data-i18n-attr="placeholder:modals.partner_field_city">
-        </div>
-
-        <button type="submit" class="btn btn-accent btn-lg" style="width: 100%; margin-top: 10px;" data-i18n="modals.partner_btn_submit">إرسال طلب الشراكة</button>
-
-        <div id="partnerFeedback" class="form-feedback-alert" data-i18n="modals.partner_success">
-          شكراً لتواصلكم. تم تسجيل اهتمامكم وسيقوم فريق ميقات بمراجعة بيانات الترخيص والتواصل معكم خلال 24 ساعة.
-        </div>
-      </form>
+        <!-- Option 2: New Partner -> Tourism Company Registration -->
+        <a href="register-company.html" class="choice-card choice-card-primary" id="partnerChoiceRegisterLink">
+          <div class="choice-card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </div>
+          <div class="choice-card-content">
+            <h4 class="choice-card-title" data-i18n="partner_choice.opt2_title">لأ، دي أول مرة ليا</h4>
+            <p class="choice-card-text" data-i18n="partner_choice.opt2_desc">سجّل بيانات شركتك وابدأ طلب الانضمام.</p>
+          </div>
+          <div class="choice-card-arrow">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 

@@ -68,15 +68,15 @@
   --color-input-border: #D3DFEB;
   --color-input-border-hover: #A8BED2;
   --color-input-text: #24374A;
-  --color-input-placeholder: #7A8D9F;
+   --color-input-placeholder: #7A8D9F;
   --color-badge-bg: #F4EBD8;
   --color-badge-border: rgba(197, 161, 94, 0.45);
   --color-badge-text: #183653;
   --color-badge-icon: #C5A15E;
 
   /* Typography Stacks */
-  /* Approved Arabic Typeface System */
-  --font-display-ar: 'Aref Ruqaa', 'Traditional Arabic', 'Amiri', serif;
+  /* Approved Arabic Typeface System: IBM Plex Sans Arabic for UI Display & Headings */
+  --font-display-ar: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
   --font-body-ar: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
 
   /* Approved English Typeface System: Spiritual Premium (Cormorant Garamond Display + Miqat Text Content + Inter UI) */
@@ -186,6 +186,8 @@
 
 /* Document Font Assignments */
 html[lang="ar"] {
+  --font-display: var(--font-display-ar);
+  --font-body: var(--font-body-ar);
   --font-current: var(--font-body-ar);
   font-family: var(--font-body-ar);
 }
@@ -578,16 +580,27 @@ img, svg {
 
 .btn-accent {
   background-color: var(--color-accent);
-  color: var(--color-accent-text);
+  color: #12202D;
+  font-weight: 700;
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
 }
 
 .btn-accent:hover {
   background-color: var(--color-accent-hover);
-  color: var(--color-accent-text);
+  color: #0A141E;
   text-decoration: none;
   box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .btn-accent {
+  background-color: var(--color-accent);
+  color: #12202D;
+}
+
+[data-theme="dark"] .btn-accent:hover {
+  background-color: var(--color-accent-hover);
+  color: #0A141E;
 }
 
 .btn-outline {
@@ -1496,7 +1509,8 @@ img, svg {
 
 .gateway-badge-accent {
   background-color: var(--color-accent);
-  color: var(--color-accent-text);
+  color: #12202D;
+  font-weight: 700;
 }
 
 [data-theme="dark"] .gateway-badge {
@@ -1506,7 +1520,8 @@ img, svg {
 
 [data-theme="dark"] .gateway-badge-accent {
   background-color: var(--color-accent);
-  color: var(--color-accent-text);
+  color: #12202D;
+  font-weight: 700;
 }
 
 .gateway-body {
@@ -2141,8 +2156,12 @@ img, svg {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--color-accent);
-  letter-spacing: 0.04em;
+  letter-spacing: normal;
   margin-bottom: 18px;
+}
+
+[dir="ltr"] .final-cta-eyebrow {
+  letter-spacing: 0.04em;
 }
 
 .final-cta-title {

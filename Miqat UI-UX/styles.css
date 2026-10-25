@@ -832,8 +832,8 @@ img, svg {
 .nav-desktop {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-inline: 24px;
+  gap: clamp(10px, 1.3vw, 20px);
+  margin-inline: clamp(10px, 1.8vw, 24px);
   flex-shrink: 0;
 }
 
@@ -888,7 +888,7 @@ img, svg {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 1vw, 12px);
   flex-shrink: 0;
 }
 
@@ -1127,6 +1127,16 @@ img, svg {
   background-color: var(--color-surface-secondary);
   color: var(--color-primary);
   text-decoration: none;
+}
+
+.mobile-nav-link:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .mobile-nav-link:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent-rich);
 }
 
 .mobile-nav-footer {
@@ -3776,8 +3786,8 @@ img, svg {
    17. Comprehensive Mobile-First & Responsive Breakpoint System
    ========================================================================== */
 
-/* Laptops & Tablets (<= 1180px for desktop nav) */
-@media (max-width: 1180px) {
+/* Compact Laptops, Tablets & Intermediate Screens (<= 1320px for desktop nav) */
+@media (max-width: 1320px) {
   .nav-desktop {
     display: none;
   }

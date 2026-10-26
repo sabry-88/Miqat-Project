@@ -75,8 +75,8 @@
   --color-badge-icon: #C5A15E;
 
   /* Typography Stacks */
-  /* Approved Arabic Typeface System: IBM Plex Sans Arabic for UI Display & Headings */
-  --font-display-ar: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
+  /* Approved Arabic Typeface System: Ruq'ah for Display & Headings, IBM Plex Sans Arabic for Body */
+  --font-display-ar: 'Aref Ruqaa', 'Traditional Arabic', 'Amiri', serif;
   --font-body-ar: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
 
   /* Approved English Typeface System: Spiritual Premium (Cormorant Garamond Display + Miqat Text Content + Inter UI) */
@@ -221,6 +221,13 @@ main > [id] {
 
 #hero {
   scroll-margin-top: 0;
+}
+
+[dir="rtl"],
+html[lang="ar"] {
+  --font-display: var(--font-display-ar);
+  --font-body: var(--font-body-ar);
+  --font-current: var(--font-body-ar);
 }
 
 [dir="ltr"] {
@@ -676,11 +683,15 @@ img, svg {
 .section-title {
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.45;
+  font-weight: 400;
+  line-height: 1.55;
   margin-bottom: 16px;
   color: var(--color-text);
-  padding-top: 4px;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 [dir="ltr"] .section-eyebrow {
@@ -1294,11 +1305,15 @@ img, svg {
 .hero-heading {
   font-family: var(--font-display);
   font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 1.42;
+  font-weight: 400;
+  line-height: 1.55;
   margin-bottom: 22px;
   color: var(--color-primary);
-  padding-top: 6px;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 [data-theme="dark"] .hero-heading {
@@ -1389,11 +1404,16 @@ img, svg {
 
 .assurance-title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.35;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--color-primary);
   margin: 0;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 [data-theme="dark"] .assurance-title {
@@ -1544,11 +1564,15 @@ img, svg {
 .gateway-title {
   font-family: var(--font-display);
   font-size: 1.85rem;
-  font-weight: 700;
-  line-height: 1.38;
+  font-weight: 400;
+  line-height: 1.48;
   color: var(--color-text);
   margin-bottom: 12px;
-  padding-top: 2px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 [dir="ltr"] .gateway-title {
@@ -2127,9 +2151,17 @@ img, svg {
 }
 
 .transparency-content h2 {
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.5;
   margin-bottom: 12px;
   color: var(--color-text);
+  padding-top: 4px;
+  padding-bottom: 2px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 .transparency-content p {
@@ -2177,13 +2209,17 @@ img, svg {
 .final-cta-title {
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.42;
+  font-weight: 400;
+  line-height: 1.55;
   color: #FFFFFF;
   margin-bottom: 18px;
   max-width: 760px;
   margin-inline: auto;
-  padding-top: 4px;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  letter-spacing: normal;
+  font-feature-settings: "mark" 1, "mkmk" 1, "liga" 1;
+  text-rendering: geometricPrecision;
 }
 
 [dir="ltr"] .final-cta-title {
@@ -3888,7 +3924,8 @@ img, svg {
 
   .hero-heading {
     font-size: clamp(2rem, 5vw, 2.35rem);
-    line-height: 1.38;
+    line-height: 1.48;
+    padding-top: 8px;
   }
 
   [dir="ltr"] .hero-heading {
@@ -3902,6 +3939,8 @@ img, svg {
 
   .section-title {
     font-size: clamp(1.65rem, 4vw, 1.85rem);
+    line-height: 1.48;
+    padding-top: 8px;
   }
 
   [dir="ltr"] .section-title {
@@ -3967,6 +4006,8 @@ img, svg {
 
   .final-cta-title {
     font-size: clamp(1.65rem, 4vw, 1.9rem);
+    line-height: 1.48;
+    padding-top: 8px;
   }
 
   [dir="ltr"] .final-cta-title {
@@ -4045,6 +4086,8 @@ img, svg {
 @media (max-width: 480px) {
   .hero-heading {
     font-size: 1.95rem;
+    line-height: 1.48;
+    padding-top: 6px;
   }
 
   [dir="ltr"] .hero-heading {

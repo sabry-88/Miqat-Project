@@ -808,13 +808,30 @@
    * Extensible Backend Integration Hooks
    */
   async function performAuthentication(credentials) {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return {
-      success: false,
-      isBackendAwaiting: true,
-      noticeTitleKey: 'auth.val_backend_notice_title',
-      noticeDescKey: 'auth.val_backend_notice_desc'
-    };
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          identifier: credentials.value,
+          password: credentials.password
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        return { success: true, user: data.user, token: data.token };
+      } else {
+        return { success: false, errorKey: 'auth.val_invalid_credentials' };
+      }
+    } catch (err) {
+      console.warn('Backend login request error, falling back:', err);
+      return {
+        success: false,
+        isBackendAwaiting: true,
+        noticeTitleKey: 'auth.val_backend_notice_title',
+        noticeDescKey: 'auth.val_backend_notice_desc'
+      };
+    }
   }
 
   async function performCustomerRegistration(customerData) {
@@ -1177,9 +1194,23 @@
       });
 
       if (result.success) {
-        showStatusAlert('success', 'auth.login_heading', 'تم تسجيل الدخول بنجاح.');
-      } else if (result.isBackendAwaiting) {
-        showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
+        if (result.user) {
+          try {
+            localStorage.setItem('miqat_user', JSON.stringify(result.user));
+          } catch (e) {}
+        }
+        showStatusAlert('success', 'auth.login_heading', 'تم تسجيل الدخول بنجاح. جاري التحويل...');
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        setTimeout(() => {
+          if (redirect) {
+            const decoded = decodeURIComponent(redirect);
+            const target = decoded.includes('.html') ? decoded : `${decoded}.html`;
+            window.location.href = target;
+          } else {
+            window.location.href = 'programs.html';
+          }
+        }, 500);
       } else {
         showStatusAlert('error', 'auth.val_invalid_credentials', result.errorKey || 'auth.val_invalid_credentials');
       }

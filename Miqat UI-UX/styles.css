@@ -3982,98 +3982,351 @@ img, svg {
 }
 
 /* ==========================================================================
-   17. Comprehensive Mobile-First & Responsive Breakpoint System
+   17. Miqat Platform — Strict Responsive Navbar Standard
+   Permanent standard for all pages (Arabic RTL & English LTR)
    ========================================================================== */
 
-/* Tablets & Mobile Screens (<= 1019.98px: Drawer Navigation) */
-@media (max-width: 1019.98px) {
+/* --- A & B. Mobile (320px - 430px) & Small Tablet (431px - 767px) ---
+   Visible in header: Logo + platform name (intact), Login button, Hamburger menu
+   Hidden from header: Full navigation links, Create Account button, Language switch, Theme switch */
+@media (max-width: 767.98px) {
   .nav-desktop {
     display: none !important;
   }
 
-  .menu-toggle-btn {
+  .site-header .nav-register-btn {
+    display: none !important;
+  }
+
+  .site-header .control-btn:not(.menu-toggle-btn) {
+    display: none !important;
+  }
+
+  .site-header .menu-toggle-btn {
     display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .site-header .header-actions .nav-login-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    white-space: nowrap;
+    line-height: 1;
   }
 }
 
-/* Intermediate Desktop & Compact Laptop Layouts (1020px to 1279.98px)
-   Maintains comfortable, readable typography and prevents control collisions */
-@media (min-width: 1020px) and (max-width: 1279.98px) {
+/* Mobile Specific Refinement (320px to 430px): Compact Login button, intact branding, comfortable touch targets */
+@media (max-width: 430px) {
   .site-header .container {
     padding-inline: 12px;
-    max-width: 100%;
   }
 
   .header-container {
-    gap: 6px;
+    gap: 8px;
   }
 
   .brand-wrapper {
-    gap: 6px;
+    gap: 7px;
   }
 
   .brand-logo-img {
+    width: 36px;
     height: 36px;
   }
 
   .brand-title {
-    font-size: 1.25rem;
+    font-size: 1.18rem;
   }
 
   .brand-tagline {
-    display: none;
+    display: block !important;
+    font-size: 0.55rem;
+    letter-spacing: 0.05em;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .site-header .header-actions .nav-login-btn {
+    min-height: 40px;
+    height: 40px;
+    padding: 0 11px;
+    font-size: 0.81rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .site-header .menu-toggle-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+}
+
+/* Ultra-Compact Mobile (320px to 350px) */
+@media (max-width: 350px) {
+  .site-header .container {
+    padding-inline: 8px;
+  }
+
+  .header-container {
+    gap: 4px;
+  }
+
+  .brand-wrapper {
+    gap: 5px;
+  }
+
+  .brand-logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-title {
+    font-size: 1.08rem;
+  }
+
+  .brand-tagline {
+    font-size: 0.50rem;
+    letter-spacing: 0.04em;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .site-header .header-actions .nav-login-btn {
+    min-height: 38px;
+    height: 38px;
+    padding: 0 8px;
+    font-size: 0.76rem;
+  }
+
+  .site-header .menu-toggle-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+}
+
+/* --- C & D. Tablet (768px - 1023px) & Compact Desktop / Laptop (1024px - 1279px) ---
+   Visible in header: Logo + platform name, Language switch, Theme switch, Login button, Create Account button, Hamburger menu
+   Hidden from header: Full navigation links */
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .site-header .control-btn {
+    display: inline-flex !important;
+  }
+
+  .site-header .menu-toggle-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .site-header .nav-login-btn {
+    display: inline-flex !important;
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .site-header .nav-register-btn {
+    display: inline-flex !important;
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .site-header .header-actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1vw, 10px);
+    flex-shrink: 0;
+  }
+
+  .brand-tagline {
+    display: block !important;
+  }
+}
+
+/* --- E. Desktop / Full HD (1280px to 1920px and above) ---
+   Visible in header: Complete Navbar (Logo + platform name, All navigation links, Language switch, Theme switch, Login button, Create Account button)
+   Hidden from header: Hamburger menu */
+@media (min-width: 1280px) {
+  .nav-desktop {
+    display: flex !important;
+  }
+
+  .site-header .control-btn:not(.menu-toggle-btn) {
+    display: inline-flex !important;
+  }
+
+  .site-header .menu-toggle-btn,
+  #mobileMenuToggle {
+    display: none !important;
+  }
+
+  .site-header .nav-login-btn {
+    display: inline-flex !important;
+  }
+
+  .site-header .nav-register-btn {
+    display: inline-flex !important;
+  }
+
+  .brand-tagline {
+    display: block !important;
+  }
+}
+
+/* Range A: 1280px to 1440px — Balanced space distribution without crowding or overlap */
+@media (min-width: 1280px) and (max-width: 1440px) {
+  .site-header .container {
+    max-width: 100%;
+    padding-inline: clamp(14px, 1.8vw, 24px);
+  }
+
+  .header-container {
+    gap: clamp(8px, 1vw, 16px);
+  }
+
+  .brand-wrapper {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .brand-logo-img {
+    width: 40px;
+    height: 40px;
   }
 
   .nav-desktop {
-    gap: clamp(4px, 0.65vw, 8px);
-    margin-inline: clamp(2px, 0.5vw, 8px);
+    gap: clamp(4px, 0.6vw, 10px);
+    margin-inline: clamp(6px, 0.8vw, 14px);
     flex-shrink: 1;
     min-width: 0;
   }
 
   .nav-link {
-    font-size: clamp(0.875rem, 0.9vw, 0.92rem);
-    padding: 6px 6px;
-    font-weight: 700;
+    padding: 6px 7px;
     white-space: nowrap;
   }
 
   [dir="ltr"] .nav-desktop {
-    gap: clamp(3px, 0.55vw, 7px);
-    margin-inline: clamp(2px, 0.5vw, 6px);
+    gap: clamp(3px, 0.5vw, 8px);
+    margin-inline: clamp(4px, 0.6vw, 10px);
   }
 
   [dir="ltr"] .nav-link {
-    font-size: clamp(0.85rem, 0.88vw, 0.9rem);
     padding: 6px 5px;
-    font-weight: 600;
   }
 
   .header-actions {
-    gap: 5px;
+    gap: clamp(6px, 0.7vw, 9px);
     flex-shrink: 0;
   }
 
-  .control-btn {
-    width: 34px;
-    height: 34px;
+  .site-header .control-btn {
+    width: 38px;
+    height: 38px;
   }
 
-  .control-btn svg {
-    width: 16px;
-    height: 16px;
+  .site-header .nav-login-btn {
+    min-height: 38px;
+    padding: 6px 13px;
+    white-space: nowrap;
   }
 
-  .control-btn .lang-label {
-    font-size: 0.8rem;
+  .site-header .nav-register-btn {
+    min-height: 38px;
+    padding: 6px 13px;
+    white-space: nowrap;
   }
 
-  .site-header .btn-sm {
-    min-height: 34px;
-    padding: 5px 10px;
-    font-size: 0.82rem;
+  [dir="ltr"] .site-header .nav-login-btn {
+    padding: 6px 11px;
+  }
+
+  [dir="ltr"] .site-header .nav-register-btn {
+    padding: 6px 11px;
   }
 }
+
+/* Range B: 1441px to 1920px — Spacious, naturally proportioned Navbar */
+@media (min-width: 1441px) {
+  .site-header .container {
+    max-width: min(1760px, 92vw);
+    padding-inline: clamp(24px, 2.5vw, 40px);
+  }
+
+  .header-container {
+    gap: clamp(18px, 2vw, 36px);
+  }
+
+  .brand-wrapper {
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .brand-logo-img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-desktop {
+    gap: clamp(10px, 0.9vw, 16px);
+    margin-inline: clamp(14px, 1.6vw, 28px);
+    flex-shrink: 1;
+  }
+
+  .nav-link {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  [dir="ltr"] .nav-desktop {
+    gap: clamp(8px, 0.75vw, 14px);
+    margin-inline: clamp(12px, 1.4vw, 24px);
+  }
+
+  [dir="ltr"] .nav-link {
+    padding: 8px 9px;
+  }
+
+  .header-actions {
+    gap: clamp(10px, 0.8vw, 14px);
+    flex-shrink: 0;
+  }
+
+  .site-header .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .site-header .nav-login-btn {
+    min-height: 40px;
+    padding: 8px 18px;
+    white-space: nowrap;
+  }
+
+  .site-header .nav-register-btn {
+    min-height: 40px;
+    padding: 8px 18px;
+    white-space: nowrap;
+  }
+}
+
 
 /* Tablets (<= 1024px) */
 @media (max-width: 1024px) {
@@ -4111,22 +4364,14 @@ img, svg {
   }
 }
 
-/* Small Tablets & Large Phones (<= 768px) */
-@media (max-width: 768px) {
+/* Small Tablets & Large Phones (<= 767.98px) */
+@media (max-width: 767.98px) {
   :root {
     --header-height: 66px;
   }
 
   body {
     font-size: 1.05rem;
-  }
-
-  .site-header .nav-register-btn {
-    display: none;
-  }
-
-  .site-header .control-btn:not(.menu-toggle-btn) {
-    display: none;
   }
 
   .brand-logo-img {
@@ -4390,10 +4635,6 @@ img, svg {
 
 /* Compact Mobile Screens (<= 380px down to 320px) */
 @media (max-width: 380px) {
-  .brand-wordmark .brand-tagline {
-    display: none;
-  }
-
   .brand-title {
     font-size: 1.15rem;
   }
@@ -4444,10 +4685,6 @@ img, svg {
     min-height: 44px;
     font-size: 0.98rem;
   }
-
-  .site-header .header-actions .nav-login-btn {
-    display: none; /* In ultra-narrow screens, login is easily accessible in drawer menu */
-  }
 }
 
 /* ==========================================================================
@@ -4480,8 +4717,8 @@ img, svg {
   transform: scaleX(1);
 }
 
-/* Ensure Customer Page Navbar is visible across desktop screens (1025px - 1920px) */
-@media (min-width: 1025px) {
+/* Ensure Customer Page Navbar is visible across desktop screens (1280px - 1920px) */
+@media (min-width: 1280px) {
   .programs-page .nav-desktop {
     display: flex !important;
   }

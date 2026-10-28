@@ -18,6 +18,13 @@
   const STORAGE_LANG = 'miqat_lang';
   const STORAGE_THEME = 'miqat_theme';
 
+  const API_BASE_URL = (function () {
+    if (typeof window !== 'undefined' && window.location && window.location.port === '4173') {
+      return '';
+    }
+    return 'http://127.0.0.1:4173';
+  })();
+
   const EGYPTIAN_GOVERNORATES = [
     { id: 'cairo', ar: 'القاهرة', en: 'Cairo' },
     { id: 'giza', ar: 'الجيزة', en: 'Giza' },
@@ -289,7 +296,9 @@
     let authenticatedUser = null;
 
     try {
-      const res = await fetch('/api/auth/me');
+      const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        credentials: 'include'
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.authenticated && data.user) {
@@ -357,7 +366,10 @@
 
   async function handleLogout() {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
     } catch (e) {}
     currentUser = null;
     try {
@@ -371,7 +383,7 @@
    */
   async function fetchPrograms() {
     try {
-      const res = await fetch('/api/programs');
+      const res = await fetch(`${API_BASE_URL}/api/programs`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       allPrograms = json.data || [];
@@ -745,11 +757,12 @@
         notes: notesVal || null
       };
 
-      const response = await fetch('/api/requests', {
+      const response = await fetch(`${API_BASE_URL}/api/requests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(payload)
       });
 
@@ -770,8 +783,9 @@
         openWhatsAppBtn.href = result.whatsapp.waLink;
         openWhatsAppBtn.onclick = () => {
           // Track WhatsApp dispatch
-          fetch(`/api/requests/${encodeURIComponent(currentRequestId)}/whatsapp-dispatched`, {
-            method: 'POST'
+          fetch(`${API_BASE_URL}/api/requests/${encodeURIComponent(currentRequestId)}/whatsapp-dispatched`, {
+            method: 'POST',
+            credentials: 'include'
           }).catch(() => {});
         };
       }

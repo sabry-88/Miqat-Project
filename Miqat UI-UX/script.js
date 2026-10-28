@@ -427,8 +427,8 @@
 
     const sections = [
       { id: 'hero', targetHref: '#hero' },
-      { id: 'gateways', targetHref: 'programs.html' },
-      { id: 'programs', targetHref: 'programs.html' },
+      { id: 'gateways', targetHref: '#gateways' },
+      { id: 'programs', targetHref: '#gateways' },
       { id: 'how-it-works', targetHref: '#how-it-works' },
       { id: 'value', targetHref: '#value' },
       { id: 'partnerships', targetHref: '#partnerships' },
@@ -465,45 +465,6 @@
   }
 
   /**
-   * Hero Button & Navbar Customer Link: Intentional Account Choice Routing
-   */
-  function initHeroExplore() {
-    const heroExploreBtn = document.getElementById('heroExploreBtn');
-    const navProgramsLink = document.getElementById('navProgramsLink');
-
-    function handleProtectedNavigation(e, targetUrl) {
-      const user = localStorage.getItem('miqat_user');
-      if (user) {
-        // Authenticated customer: continue to customer page
-        window.location.href = targetUrl;
-        return;
-      }
-
-      // Unauthenticated visitor: display existing account-choice interaction
-      e.preventDefault();
-      const redirectQuery = `?redirect=${encodeURIComponent(targetUrl)}`;
-      if (choiceLoginLink) {
-        choiceLoginLink.href = `login.html${redirectQuery}`;
-      }
-      if (choiceRegisterLink) {
-        choiceRegisterLink.href = `register.html${redirectQuery}`;
-      }
-      if (accountChoiceBadgeText) {
-        accountChoiceBadgeText.textContent = currentLang === 'ar' ? 'استكشاف برامج الحج والعمرة' : 'Explore Hajj & Umrah Programs';
-      }
-      openModal(accountChoiceModal);
-    }
-
-    if (heroExploreBtn) {
-      heroExploreBtn.addEventListener('click', (e) => handleProtectedNavigation(e, 'programs.html'));
-    }
-
-    if (navProgramsLink) {
-      navProgramsLink.addEventListener('click', (e) => handleProtectedNavigation(e, 'programs.html'));
-    }
-  }
-
-  /**
    * Event Listeners Registration
    */
   function initEvents() {
@@ -533,7 +494,6 @@
     initModals();
     initNavbarTransparency();
     initScrollSpy();
-    initHeroExplore();
   }
 
   const fallbackLocales = {

@@ -17,6 +17,13 @@
   const STORAGE_LANG = 'miqat_lang';
   const STORAGE_THEME = 'miqat_theme';
 
+  const API_BASE_URL = (function () {
+    if (typeof window !== 'undefined' && window.location && window.location.port === '4173') {
+      return '';
+    }
+    return 'http://127.0.0.1:4173';
+  })();
+
   let currentLang = localStorage.getItem(STORAGE_LANG) || 'ar';
   let currentTheme = localStorage.getItem(STORAGE_THEME) || 'light';
   let translations = { ar: null, en: null };
@@ -742,7 +749,13 @@
     if (egLocalRegex.test(cleanPhone)) return { isValid: true, type: 'phone_egypt', value: cleanPhone };
 
     const egIntlRegex = /^(?:\+20|0020|20)1[0125][0-9]{8}$/;
-    if (egIntlRegex.test(cleanPhone)) return { isValid: true, type: 'phone_egypt_intl', value: cleanPhone };
+    if (egIntlRegex.test(cleanPhone)) {
+      let localPhone = cleanPhone;
+      if (localPhone.startsWith('+20')) localPhone = '0' + localPhone.substring(3);
+      else if (localPhone.startsWith('0020')) localPhone = '0' + localPhone.substring(4);
+      else if (localPhone.startsWith('20')) localPhone = '0' + localPhone.substring(2);
+      return { isValid: true, type: 'phone_egypt_intl', value: localPhone };
+    }
 
     const intlPhoneRegex = /^(?:\+|00)[1-9][0-9]{7,14}$/;
     if (intlPhoneRegex.test(cleanPhone)) return { isValid: true, type: 'phone_intl', value: cleanPhone };
@@ -809,9 +822,10 @@
    */
   async function performAuthentication(credentials) {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           identifier: credentials.value,
           password: credentials.password
@@ -1186,6 +1200,7 @@
       submitTextEl.textContent = getTranslation('auth.signing_in_btn', dict);
     }
 
+    let isRedirecting = false;
     try {
       const result = await performAuthentication({
         value: idCheck.value,
@@ -1194,33 +1209,63 @@
       });
 
       if (result.success) {
+        // Establish authenticated customer session
         if (result.user) {
           try {
             localStorage.setItem('miqat_user', JSON.stringify(result.user));
           } catch (e) {}
         }
-        showStatusAlert('success', 'auth.login_heading', 'تم تسجيل الدخول بنجاح. جاري التحويل...');
-        const params = new URLSearchParams(window.location.search);
-        const redirect = params.get('redirect');
-        setTimeout(() => {
-          if (redirect) {
-            const decoded = decodeURIComponent(redirect);
-            const target = decoded.includes('.html') ? decoded : `${decoded}.html`;
-            window.location.href = target;
-          } else {
-            window.location.href = 'programs.html';
+        if (result.token) {
+          try {
+            localStorage.setItem('miqat_token', result.token);
+          } catch (e) {}
+        }
+
+        // Determine Customer Dashboard target route
+        let target = 'programs.html';
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const redirectParam = params.get('redirect');
+          if (redirectParam) {
+            const decoded = decodeURIComponent(redirectParam).trim();
+            if (decoded === 'program' || decoded === 'programs') {
+              params.delete('redirect');
+              const remaining = params.toString();
+              target = remaining ? `programs.html?${remaining}` : 'programs.html';
+            } else if (decoded.startsWith('programs.html')) {
+              target = decoded;
+            } else if (decoded.includes('.html')) {
+              target = decoded;
+            } else if (decoded) {
+              target = `${decoded}.html`;
+            }
           }
-        }, 500);
+        } catch (e) {
+          target = 'programs.html';
+        }
+
+        // Immediate redirect to existing Customer Dashboard
+        isRedirecting = true;
+        if (window.location.replace) {
+          window.location.replace(target);
+        } else {
+          window.location.href = target;
+        }
+        return;
+      } else if (result.isBackendAwaiting) {
+        showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
       } else {
         showStatusAlert('error', 'auth.val_invalid_credentials', result.errorKey || 'auth.val_invalid_credentials');
       }
     } catch (err) {
       showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
     } finally {
-      submitBtn.classList.remove('is-loading');
-      submitBtn.removeAttribute('disabled');
-      if (submitTextEl) {
-        submitTextEl.textContent = prevText || getTranslation('auth.sign_in_btn', dict);
+      if (!isRedirecting) {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.removeAttribute('disabled');
+        if (submitTextEl) {
+          submitTextEl.textContent = prevText || getTranslation('auth.sign_in_btn', dict);
+        }
       }
     }
   }

@@ -389,6 +389,8 @@ function normalizePhone(raw) {
   cleaned = cleaned.replace(/[^\d+]/g, '');
   if (cleaned.startsWith('+20')) {
     cleaned = '0' + cleaned.substring(3);
+  } else if (cleaned.startsWith('0020') && cleaned.length === 14) {
+    cleaned = '0' + cleaned.substring(4);
   } else if (cleaned.startsWith('20') && cleaned.length === 12) {
     cleaned = '0' + cleaned.substring(2);
   }
@@ -408,12 +410,6 @@ function seedTestCustomer() {
 
   const existing = db.prepare('SELECT id FROM users WHERE phone = ?').get(phone);
   if (existing) {
-    db.prepare('UPDATE users SET password_salt = ?, password_hash = ?, updated_at = ? WHERE phone = ?').run(
-      salt,
-      hash,
-      now,
-      phone
-    );
     return;
   }
 
@@ -446,7 +442,7 @@ seedTestCustomer();
 // --- Users & Sessions ---
 function getUserByPhoneOrEmail(identifier) {
   if (!identifier) return null;
-  const clean = identifier.trim();
+  const clean = String(identifier).trim();
   const normalized = normalizePhone(clean);
   return db.prepare(`
     SELECT * FROM users 

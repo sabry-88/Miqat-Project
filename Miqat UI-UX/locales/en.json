@@ -12,7 +12,7 @@
     "login": "Sign In",
     "register": "Create Account",
     "cta_explore": "Explore Programs",
-    "hajj_umrah_programs": "Hajj & Umrah Programs",
+    "hajj_umrah_programs": "Trips",
     "payments": "Payments",
     "payment_history": "Payment History",
     "my_account": "My Account",
@@ -23,7 +23,8 @@
     "toggle_theme_dark": "Switch to Dark Mode",
     "toggle_theme_light": "Switch to Light Mode",
     "menu_open": "Open Navigation Menu",
-    "menu_close": "Close Navigation Menu"
+    "menu_close": "Close Navigation Menu",
+    "trips": "Trips"
   },
   "hero": {
     "eyebrow": "Hajj & Umrah, with Clearer Choices",

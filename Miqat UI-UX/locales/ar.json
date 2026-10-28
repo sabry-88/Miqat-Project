@@ -12,7 +12,7 @@
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
     "cta_explore": "استكشف البرامج",
-    "hajj_umrah_programs": "رحلات الحج والعمرة",
+    "hajj_umrah_programs": "الرحلات",
     "payments": "المدفوعات",
     "payment_history": "سجل المدفوعات",
     "my_account": "حسابي",
@@ -23,7 +23,8 @@
     "toggle_theme_dark": "تفعيل الوضع الداكن",
     "toggle_theme_light": "تفعيل الوضع الفاتح",
     "menu_open": "فتح القائمة الرئيسية",
-    "menu_close": "إغلاق القائمة"
+    "menu_close": "إغلاق القائمة",
+    "trips": "الرحلات"
   },
   "hero": {
     "eyebrow": "الحَجُّ وَالعُمْرَةُ، بِخِيَارَاتٍ أَوْضَحَ",

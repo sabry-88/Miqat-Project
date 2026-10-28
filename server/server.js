@@ -58,14 +58,45 @@ function parseJsonBody(req) {
 }
 
 /**
+ * Allowed CORS Origins for Local Frontend & Development
+ */
+const ALLOWED_ORIGINS = new Set([
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173'
+]);
+
+function getCorsHeaders(req) {
+  const origin = req && req.headers ? req.headers['origin'] : null;
+  const isAllowed = origin && (
+    ALLOWED_ORIGINS.has(origin) ||
+    /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
+  );
+
+  const headers = {
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+  };
+
+  if (isAllowed) {
+    headers['Access-Control-Allow-Origin'] = origin;
+    headers['Access-Control-Allow-Credentials'] = 'true';
+  } else {
+    headers['Access-Control-Allow-Origin'] = origin || '*';
+  }
+
+  return headers;
+}
+
+/**
  * Utility: Send JSON response
  */
 function sendJson(res, statusCode, data, headers = {}) {
+  const cors = getCorsHeaders(res.req);
   res.writeHead(statusCode, {
     'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    ...cors,
     ...headers
   });
   res.end(JSON.stringify(data));
@@ -105,10 +136,9 @@ function getSessionUser(req) {
 const server = http.createServer(async (req, res) => {
   // CORS Preflight
   if (req.method === 'OPTIONS') {
+    const cors = getCorsHeaders(req);
     res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      ...cors,
       'Access-Control-Max-Age': '86400'
     });
     res.end();

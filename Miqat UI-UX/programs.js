@@ -55,6 +55,54 @@
     { id: 'sohag', ar: 'سوهاج', en: 'Sohag' }
   ];
 
+  /**
+   * Verified English Translations for Program Features
+   * Mapped from database features_json values to maintain clean bilingual parity
+   */
+  const PROGRAM_FEATURES_TRANSLATIONS = {
+    // Economy & Standard Umrah
+    'فنادق مصنفة ومعتمدة مع حافلات ترددية مستمرة': 'Approved hotels with continuous 24/7 shuttle service',
+    'استخراج التأشيرة والتأمين الطبي الشامل': 'Visa processing assistance & comprehensive medical insurance',
+    'إشراف إداري وتفويج منتظم طوال مدة الرحلة': 'Administrative supervision & regular guided group departures',
+    'مزارات مكة المكرمة والمدينة المنورة بإشراف مرشدين': 'Guided historical tours in Makkah & Madinah with experts',
+
+    // Premium Umrah
+    'فنادق ٤ و ٥ نجوم قريبة سيراً على الأقدام': '4 & 5-star hotels within comfortable walking distance',
+    'رحلات طيران مباشرة واستقبال وتوديع خاص بالمطارات': 'Direct flights with dedicated airport meet & assist',
+    'بوفيه إفطار يومي فاخر في مكة المكرمة والمدينة المنورة': 'Gourmet daily breakfast buffet in Makkah & Madinah',
+    'مرشد ديني متخصص ومرافقة دائمة': 'Dedicated religious scholar & continuous accompaniment',
+
+    // VIP Umrah
+    'أجنحة فاخرة صف أول بإطلالة بانورامية على الكعبة': 'Front-row luxury suites with panoramic Kaaba views',
+    'استقبال صالة كبار الشخصيات وتنقلات بسيارات فاخرة خاصة': 'VIP lounge airport reception & private luxury vehicle transit',
+    'خدمة كونسيرج ومرافقة شخصية على مدار الساعة': '24/7 personal concierge & accompaniment service',
+    'مرونة تامة في تحديد التواريخ وبرامج المزارات الخاصة': 'Full flexibility with custom dates & tailored private ziyarat',
+
+    // Ramadan Umrah
+    'باقات مخصصة للعشر الأواخر وليلة ختم القرآن': 'Tailored packages for the Last Ten Nights & Khatm al-Quran',
+    'ترتيبات إفطار وسحور مجهزة يومياً': 'Daily prepared Iftar and Suhoor dining arrangements',
+    'مواقع فندقية قريبة تسهل التواجد في الصلوات': 'Prime hotel locations enabling effortless prayer attendance',
+    'تأمين صحي وتنظيم تفويج مكثف ومستمر': 'Medical insurance & intensive crowd management protocols',
+
+    // Tourist Hajj
+    'إشراف ومطابقة تامة مع الضوابط واللوائح الرسمية': 'Full supervision and compliance with official regulations',
+    'مخيمات مكيفة ومجهزة بالكامل في منى وعرفات': 'Fully equipped, air-conditioned camps in Mina & Arafat',
+    'خدمات إعاشة ووجبات طازجة طوال أيام التشريق': 'Fresh catering & meal services throughout Tashreeq days',
+    'لجان طبية وإرشادية ترافق الحجاج على مدار الساعة': '24/7 medical & guidance committees accompanying pilgrims',
+
+    // VIP Hajj
+    'مخيمات VIP مطورة بمواقع متقدمة قرب منشأة الجمرات': 'Upgraded VIP camps at prime locations near Jamarat',
+    'بوفيهات مفتوحة وخدمة ضيافة مستمرة طوال أيام المناسك': 'Open buffets & round-the-clock hospitality during rituals',
+    'إقامة فندقية ٥ نجوم صف أول مطلة على الحرم': '5-star front-row hotel accommodation overlooking the Haram',
+    'أطقم مخصصة للرعاية الصحية والإرشاد والتفويج الميسر': 'Dedicated medical, guidance, and facilitated crowd teams',
+
+    // Official Government Lottery Hajj
+    'تنظيم رسمي يخضع للضوابط والقرارات الحكومية المعتمدة': 'Official organization governed by approved government policies',
+    'مخيمات معتمدة في منى وعرفات بإشراف بعثة الحج الرسمية': 'Certified Mina & Arafat camps supervised by official Hajj mission',
+    'مواعيد قرعة وتسجيل محددة بدقة وفق الإعلانات الرسمية': 'Strict lottery & registration deadlines per official bulletins',
+    'لا تمثل ميقات جهة تسجيل بالقرعة وإنما تقدم دليلاً استرشادياً موحداً': 'Miqat does not register for lottery but provides a unified guide'
+  };
+
   // --- State ---
   let currentLang = localStorage.getItem(STORAGE_LANG) || 'ar';
   let currentTheme = localStorage.getItem(STORAGE_THEME) || 'light';
@@ -65,6 +113,7 @@
   let activeCatFilter = 'all';
   let searchQuery = '';
   let currentRequestId = null;
+  let currentProgramTitle = '';
   let isSubmittingRequest = false;
 
   // --- DOM Elements ---
@@ -77,13 +126,18 @@
   const mobileNavDrawer = document.getElementById('mobileNavDrawer');
   const mobileNavClose = document.getElementById('mobileNavClose');
 
-  // Auth Elements
+  // Auth & Client Identity Elements
   const headerAuthArea = document.getElementById('headerAuthArea');
+  const clientAvatar = document.getElementById('clientAvatar');
+  const clientAvatarInitial = document.getElementById('clientAvatarInitial');
+  const headerLogoutBtn = document.getElementById('headerLogoutBtn');
+  const mobileClientCard = document.getElementById('mobileClientCard');
+  const mobileClientAvatar = document.getElementById('mobileClientAvatar');
+  const mobileClientAvatarInitial = document.getElementById('mobileClientAvatarInitial');
+  const mobileClientName = document.getElementById('mobileClientName');
+  const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
   const headerLoginBtn = document.getElementById('headerLoginBtn');
   const headerRegisterBtn = document.getElementById('headerRegisterBtn');
-  const headerUserPill = document.getElementById('headerUserPill');
-  const headerUserName = document.getElementById('headerUserName');
-  const headerLogoutBtn = document.getElementById('headerLogoutBtn');
   const mobileLoginBtn = document.getElementById('mobileLoginBtn');
   const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
 
@@ -118,6 +172,8 @@
   const requestSubmitBtn = document.getElementById('requestSubmitBtn');
   const requestStatusAlert = document.getElementById('requestStatusAlert');
   const successRequestId = document.getElementById('successRequestId');
+  const successProgramName = document.getElementById('successProgramName');
+  const successCustomerName = document.getElementById('successCustomerName');
   const openWhatsAppBtn = document.getElementById('openWhatsAppBtn');
 
   // Future Scope Modal
@@ -203,6 +259,25 @@
 
     // Re-render program cards in current language
     renderProgramCards();
+
+    // Refresh authenticated client navbar identity if present
+    if (currentUser) {
+      renderAuthUI(currentUser);
+      updateModalCustomerInfo(lang);
+    }
+
+    if (requestSuccessView && requestSuccessView.classList.contains('is-active')) {
+      if (successCustomerName && currentUser) {
+        successCustomerName.textContent = getCustomerDisplayName(currentUser, lang);
+      }
+    }
+
+    const logoutAria = lang === 'ar' ? 'تسجيل الخروج' : 'Sign Out';
+    [headerLogoutBtn, mobileLogoutBtn].forEach((btn) => {
+      if (!btn) return;
+      btn.setAttribute('aria-label', logoutAria);
+      btn.setAttribute('title', logoutAria);
+    });
   }
 
   function toggleLanguage() {
@@ -339,28 +414,74 @@
     return true;
   }
 
+  /**
+   * Safe Unicode Initial Extraction for Client Avatar
+   */
+  function getClientInitial(name, lang = 'ar') {
+    if (!name || typeof name !== 'string') {
+      return lang === 'en' ? 'M' : 'م';
+    }
+    const trimmed = name.trim();
+    if (!trimmed) {
+      return lang === 'en' ? 'M' : 'م';
+    }
+    const iterator = trimmed[Symbol.iterator]();
+    const firstChar = iterator.next().value;
+    if (!firstChar || !/[a-zA-Z\u0600-\u06FF]/.test(firstChar)) {
+      return lang === 'en' ? 'M' : 'م';
+    }
+    return firstChar.toUpperCase();
+  }
+
   function renderAuthUI(user) {
-    if (user) {
-      if (headerLoginBtn) headerLoginBtn.style.display = 'none';
-      if (headerRegisterBtn) headerRegisterBtn.style.display = 'none';
-      if (headerUserPill) {
-        headerUserPill.style.display = 'inline-flex';
-        if (headerUserName) headerUserName.textContent = user.name;
+    if (!user) return;
+    const initial = getClientInitial(user.name, currentLang);
+    const displayName = user.name || (currentLang === 'en' ? 'Customer' : 'عميل');
+
+    if (clientAvatarInitial) clientAvatarInitial.textContent = initial;
+    if (clientAvatar) {
+      clientAvatar.setAttribute('title', displayName);
+      clientAvatar.setAttribute('aria-label', displayName);
+    }
+
+    if (mobileClientAvatarInitial) mobileClientAvatarInitial.textContent = initial;
+    if (mobileClientName) mobileClientName.textContent = displayName;
+
+    if (headerAuthArea) headerAuthArea.style.display = 'inline-flex';
+    if (mobileClientCard) mobileClientCard.style.display = 'flex';
+
+    // Ensure login/register buttons remain hidden across all states
+    if (headerLoginBtn) headerLoginBtn.style.display = 'none';
+    if (headerRegisterBtn) headerRegisterBtn.style.display = 'none';
+    if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+    if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+  }
+
+  /**
+   * Bilingual Customer Display Name & Modal Context Binding
+   */
+  function getCustomerDisplayName(user, lang = 'ar') {
+    if (!user) return '';
+    const englishName = user.name_en || user.nameEn || user.displayName_en || user.displayNameEn || user.englishName;
+    if (lang === 'en' && englishName) {
+      return englishName;
+    }
+    if (user.name) {
+      if (lang === 'en' && typeof user.name === 'string') {
+        return user.name.replace(/\(حساب العميل التجريبي\)/g, '(Demo Client Account)');
       }
-      if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
-      if (mobileRegisterBtn) {
-        mobileRegisterBtn.textContent = user.name;
-        mobileRegisterBtn.href = '#my-account';
-      }
-    } else {
-      if (headerLoginBtn) headerLoginBtn.style.display = '';
-      if (headerRegisterBtn) headerRegisterBtn.style.display = '';
-      if (headerUserPill) headerUserPill.style.display = 'none';
-      if (mobileLoginBtn) mobileLoginBtn.style.display = '';
-      if (mobileRegisterBtn) {
-        mobileRegisterBtn.textContent = currentLang === 'ar' ? 'إنشاء حساب' : 'Create Account';
-        mobileRegisterBtn.href = 'register-choice.html';
-      }
+      return user.name;
+    }
+    return lang === 'en' ? 'Verified Client' : 'عميل مؤكد';
+  }
+
+  function updateModalCustomerInfo(lang = currentLang) {
+    if (!currentUser) return;
+    if (modalCustomerNameDisplay) {
+      modalCustomerNameDisplay.textContent = getCustomerDisplayName(currentUser, lang);
+    }
+    if (modalCustomerPhoneDisplay) {
+      modalCustomerPhoneDisplay.textContent = currentUser.phone || '';
     }
   }
 
@@ -483,45 +604,45 @@
       const desc = isAr ? p.description_ar : p.description_en;
       const features = p.features || [];
 
-      const featuresHtml = features.map(f => `
+      const featuresHtml = features.map(f => {
+        const featureText = isAr ? f : (PROGRAM_FEATURES_TRANSLATIONS[f] || f);
+        return `
         <li class="card-feature-item">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
-          <span>${f}</span>
+          <span>${featureText}</span>
         </li>
-      `).join('');
+      `;
+      }).join('');
 
       return `
         <article class="program-card" data-program-id="${p.id}" data-category="${p.category}">
           
-          <!-- Card Media Area with Authentic Photography -->
-          <div class="card-media-wrap">
-            <img src="${p.image_url}" alt="${title}" class="card-media-photo" loading="lazy" width="600" height="340">
-            <div class="card-media-gradient"></div>
-            <div class="card-badges-overlay">
-              <span class="card-category-badge">${badge}</span>
-              <span class="card-season-pill">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                <span>${season}</span>
-              </span>
-            </div>
-          </div>
-
-          <!-- Card Body -->
+          <!-- Card Body: Clean, modern, text-first presentation without media -->
           <div class="program-card-body">
-            
-            <div class="card-duration-row">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span>${duration}</span>
+
+            <!-- Card Top Header: Category badge & Meta tags (season, duration) -->
+            <div class="program-card-header">
+              <span class="card-category-badge">${badge}</span>
+              <div class="card-meta-pills">
+                <span class="card-season-pill">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span>${season}</span>
+                </span>
+                <span class="card-duration-pill">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>${duration}</span>
+                </span>
+              </div>
             </div>
 
             <h3 class="program-card-title">${title}</h3>
@@ -603,26 +724,27 @@
     }
 
     // Set Program Context
+    currentProgramTitle = programTitle || '';
     if (requestProgramId) requestProgramId.value = programId;
     if (requestModalProgramBadge) {
-      requestModalProgramBadge.textContent = programTitle || programId;
+      requestModalProgramBadge.textContent = programTitle || (currentLang === 'en' ? 'Selected Program' : 'البرنامج المختار');
     }
 
-    // If User is Authenticated, bind verified details
+    // Always keep form fields visible and styled
+    if (modalGuestFields) modalGuestFields.style.display = 'block';
+
+    // If User is Authenticated, bind verified details and show banner
     if (currentUser) {
       if (modalLoggedInNotice) modalLoggedInNotice.style.display = 'flex';
-      if (modalCustomerNameDisplay) modalCustomerNameDisplay.textContent = currentUser.name;
-      if (modalCustomerPhoneDisplay) modalCustomerPhoneDisplay.textContent = currentUser.phone;
-      if (reqCustomerName) reqCustomerName.value = currentUser.name;
-      if (reqCustomerPhone) reqCustomerPhone.value = currentUser.phone;
+      updateModalCustomerInfo(currentLang);
+      if (reqCustomerName) reqCustomerName.value = currentUser.name || '';
+      if (reqCustomerPhone) reqCustomerPhone.value = currentUser.phone || '';
       if (reqCustomerEmail) reqCustomerEmail.value = currentUser.email || '';
       if (reqCustomerGovernorate && currentUser.governorate) {
         reqCustomerGovernorate.value = currentUser.governorate;
       }
-      if (modalGuestFields) modalGuestFields.style.display = 'none';
     } else {
       if (modalLoggedInNotice) modalLoggedInNotice.style.display = 'none';
-      if (modalGuestFields) modalGuestFields.style.display = 'block';
     }
 
     requestDetailsModal.classList.add('is-active');
@@ -630,7 +752,7 @@
     document.body.style.overflow = 'hidden';
 
     // Focus first interactive control
-    if (currentUser && reqCustomerNotes) {
+    if (reqCustomerNotes && currentUser && reqCustomerNotes.value === '') {
       reqCustomerNotes.focus();
     } else if (reqCustomerName) {
       reqCustomerName.focus();
@@ -642,6 +764,9 @@
     requestDetailsModal.classList.remove('is-active');
     requestDetailsModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    // Reset view steps so future modal openings start cleanly on the form view
+    if (requestFormView) requestFormView.classList.add('is-active');
+    if (requestSuccessView) requestSuccessView.classList.remove('is-active');
     if (lastActiveModalTrigger) {
       lastActiveModalTrigger.focus();
       lastActiveModalTrigger = null;
@@ -694,43 +819,47 @@
 
     let hasErrors = false;
 
-    // Validate fields if guest
-    if (!currentUser) {
-      if (!nameVal || nameVal.length < 2) {
-        showFieldError(nameErrorEl, reqCustomerName, getNestedValue(dict, 'request_modal.val_name') || 'من فضلك اكتب اسمك بالكامل.');
+    // Validate fields
+    const effectiveName = nameVal || (currentUser ? currentUser.name : '');
+    const rawPhone = phoneVal || (currentUser ? currentUser.phone : '');
+    const normalizedPhone = normalizeNumerals(rawPhone).replace(/[\s\-\(\)]/g, '');
+    const effectiveGov = govVal || (currentUser ? currentUser.governorate : '');
+
+    if (!effectiveName || effectiveName.length < 2) {
+      showFieldError(nameErrorEl, reqCustomerName, getNestedValue(dict, 'request_modal.val_name') || 'من فضلك اكتب اسمك بالكامل.');
+      hasErrors = true;
+    } else {
+      clearFieldError(nameErrorEl, reqCustomerName);
+    }
+
+    const egRegex = /^01[0125][0-9]{8}$/;
+    const intlRegex = /^(?:\+20|0020|20)1[0125][0-9]{8}$/;
+    const generalIntl = /^(?:\+|00)[1-9][0-9]{7,14}$/;
+
+    if (!normalizedPhone || (!egRegex.test(normalizedPhone) && !intlRegex.test(normalizedPhone) && !generalIntl.test(normalizedPhone) && normalizedPhone.length < 8)) {
+      showFieldError(phoneErrorEl, reqCustomerPhone, getNestedValue(dict, 'request_modal.val_phone') || 'من فضلك اكتب رقم موبايل صحيح.');
+      hasErrors = true;
+    } else {
+      clearFieldError(phoneErrorEl, reqCustomerPhone);
+    }
+
+    if (!effectiveGov) {
+      showFieldError(govErrorEl, reqCustomerGovernorate, getNestedValue(dict, 'request_modal.val_gov') || 'من فضلك اختار المحافظة.');
+      hasErrors = true;
+    } else {
+      clearFieldError(govErrorEl, reqCustomerGovernorate);
+    }
+
+    if (emailVal) {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+      if (!emailRegex.test(emailVal)) {
+        showFieldError(emailErrorEl, reqCustomerEmail, getNestedValue(dict, 'request_modal.val_email') || 'من فضلك اكتب بريد إلكتروني صحيح.');
         hasErrors = true;
       } else {
-        clearFieldError(nameErrorEl, reqCustomerName);
+        clearFieldError(emailErrorEl, reqCustomerEmail);
       }
-
-      const normalizedPhone = normalizeNumerals(phoneVal).replace(/[\s\-\(\)]/g, '');
-      const egRegex = /^01[0125][0-9]{8}$/;
-      const intlRegex = /^(?:\+20|0020|20)1[0125][0-9]{8}$/;
-      const generalIntl = /^(?:\+|00)[1-9][0-9]{7,14}$/;
-
-      if (!normalizedPhone || (!egRegex.test(normalizedPhone) && !intlRegex.test(normalizedPhone) && !generalIntl.test(normalizedPhone) && normalizedPhone.length < 8)) {
-        showFieldError(phoneErrorEl, reqCustomerPhone, getNestedValue(dict, 'request_modal.val_phone') || 'من فضلك اكتب رقم موبايل صحيح.');
-        hasErrors = true;
-      } else {
-        clearFieldError(phoneErrorEl, reqCustomerPhone);
-      }
-
-      if (!govVal) {
-        showFieldError(govErrorEl, reqCustomerGovernorate, getNestedValue(dict, 'request_modal.val_gov') || 'من فضلك اختار المحافظة.');
-        hasErrors = true;
-      } else {
-        clearFieldError(govErrorEl, reqCustomerGovernorate);
-      }
-
-      if (emailVal) {
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
-        if (!emailRegex.test(emailVal)) {
-          showFieldError(emailErrorEl, reqCustomerEmail, getNestedValue(dict, 'request_modal.val_email') || 'من فضلك اكتب بريد إلكتروني صحيح.');
-          hasErrors = true;
-        } else {
-          clearFieldError(emailErrorEl, reqCustomerEmail);
-        }
-      }
+    } else {
+      clearFieldError(emailErrorEl, reqCustomerEmail);
     }
 
     if (hasErrors) {
@@ -750,10 +879,10 @@
     try {
       const payload = {
         programId: progId,
-        customerName: currentUser ? currentUser.name : nameVal,
-        customerPhone: currentUser ? currentUser.phone : normalizeNumerals(phoneVal).replace(/[\s\-\(\)]/g, ''),
-        customerEmail: currentUser ? currentUser.email : (emailVal || null),
-        customerGovernorate: currentUser ? currentUser.governorate : govVal,
+        customerName: effectiveName,
+        customerPhone: normalizedPhone,
+        customerEmail: emailVal || (currentUser ? currentUser.email : null),
+        customerGovernorate: effectiveGov,
         notes: notesVal || null
       };
 
@@ -776,6 +905,13 @@
       currentRequestId = result.request.id;
       if (successRequestId) {
         successRequestId.textContent = currentRequestId;
+      }
+      if (successProgramName) {
+        successProgramName.textContent = currentProgramTitle || (currentLang === 'en' ? 'Selected Program' : 'البرنامج المختار');
+      }
+      if (successCustomerName) {
+        const clientDisplayName = (currentUser ? getCustomerDisplayName(currentUser, currentLang) : effectiveName) || (currentLang === 'en' ? 'Valued Client' : 'عميل ميقات');
+        successCustomerName.textContent = clientDisplayName;
       }
 
       // Prepare WhatsApp Link with target 201203340116
@@ -987,18 +1123,43 @@
     }
 
     if (headerLogoutBtn) headerLogoutBtn.addEventListener('click', handleLogout);
+    if (mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', handleLogout);
 
     // Request Modal Events
     if (requestModalCloseBtn) requestModalCloseBtn.addEventListener('click', closeRequestModal);
     if (successCloseBtn) successCloseBtn.addEventListener('click', closeRequestModal);
     if (requestDetailsModal) {
       requestDetailsModal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-close-request-modal]') || e.target.closest('#requestModalCloseBtn') || e.target.closest('#successCloseBtn')) {
+          e.preventDefault();
+          closeRequestModal();
+          return;
+        }
         if (e.target === requestDetailsModal) closeRequestModal();
       });
     }
     if (requestDetailsForm) {
       requestDetailsForm.addEventListener('submit', handleRequestSubmit);
     }
+
+    // Required Field Tooltip Interactions (touch toggle & outside dismiss)
+    const requiredIndicators = document.querySelectorAll('.required-indicator');
+    requiredIndicators.forEach((ind) => {
+      ind.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wasActive = ind.classList.contains('is-active');
+        requiredIndicators.forEach((i) => i.classList.remove('is-active'));
+        if (!wasActive) {
+          ind.classList.add('is-active');
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.required-indicator')) {
+        requiredIndicators.forEach((i) => i.classList.remove('is-active'));
+      }
+    });
 
     // Future Scope Triggers
     futureItems.forEach((item) => {
@@ -1038,6 +1199,64 @@
     initFilterListeners();
   }
 
+  /**
+   * Transparent Navbar over Hero with background transition on scroll.
+   * Matches Landing Page hysteresis and scroll threshold logic.
+   */
+  function initNavbarTransparency() {
+    const header = document.getElementById('siteHeader');
+    const hero = document.getElementById('hero');
+    if (!header) return;
+    if (!hero) {
+      header.classList.remove('is-transparent');
+      return;
+    }
+
+    const SCROLL_THRESHOLD_SOLID = 24;
+    const SCROLL_THRESHOLD_TRANSPARENT = 10;
+
+    function updateNavbar() {
+      const scrollY = window.scrollY ?? window.pageYOffset ?? document.documentElement.scrollTop ?? 0;
+      const hash = window.location.hash;
+      const isTargetingOtherSection = hash && hash !== '#hero' && hash !== '#main-content';
+
+      if (scrollY <= SCROLL_THRESHOLD_TRANSPARENT && !isTargetingOtherSection) {
+        header.classList.add('is-transparent');
+      } else if (scrollY > SCROLL_THRESHOLD_SOLID || isTargetingOtherSection) {
+        header.classList.remove('is-transparent');
+      }
+    }
+
+    // Set initial state
+    updateNavbar();
+
+    // Solid transition when clicking non-hero anchors
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', () => {
+        const targetId = anchor.getAttribute('href');
+        if (targetId && targetId !== '#hero' && targetId !== '#' && targetId !== '#main-content') {
+          header.classList.remove('is-transparent');
+        }
+      });
+    });
+
+    // Smooth scroll listener via requestAnimationFrame
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateNavbar();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('hashchange', updateNavbar, { passive: true });
+    window.addEventListener('load', updateNavbar, { passive: true });
+    window.addEventListener('resize', updateNavbar, { passive: true });
+  }
+
   function initUrlParams() {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -1066,6 +1285,7 @@
   async function init() {
     applyTheme(currentTheme);
     initEvents();
+    initNavbarTransparency();
     initUrlParams();
     await applyTranslations(currentLang);
     const hasAccess = await checkAuthSession();

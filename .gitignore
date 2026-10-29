@@ -19,3 +19,6 @@ font-tools/cache/
 data/*.db
 data/*.db-wal
 data/*.db-shm
+
+#Testing
+scratch/

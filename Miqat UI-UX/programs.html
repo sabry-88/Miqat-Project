@@ -86,31 +86,19 @@
           </svg>
         </button>
 
-        <!-- Dynamic User Status Area (Logged Out vs Logged In) -->
-        <div id="headerAuthArea" class="header-auth-area">
-          <a href="login.html?redirect=programs" class="btn btn-ghost btn-sm nav-login-btn" id="headerLoginBtn" data-i18n="nav.login">تسجيل الدخول</a>
-          <a href="register-choice.html" class="btn btn-primary btn-sm nav-register-btn" id="headerRegisterBtn" data-i18n="nav.register">إنشاء حساب</a>
-          
-          <!-- Authenticated Customer Pill (Shown when logged in) -->
-          <div class="user-profile-pill" id="headerUserPill" style="display: none;">
-            <div class="user-avatar" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
-            <div class="user-info-text">
-              <span class="user-name-display" id="headerUserName">أحمد محمود</span>
-              <span class="user-role-tag" data-i18n="nav.customer_tag">عميل</span>
-            </div>
-            <button type="button" class="user-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-              </svg>
-            </button>
+        <!-- Client Identity Area (Avatar + Logout Button) -->
+        <div id="headerAuthArea" class="client-auth-area">
+          <div class="client-avatar" id="clientAvatar" role="img" aria-label="حساب العميل" title="حساب العميل">
+            <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
           </div>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
         </div>
 
         <!-- Mobile Menu Toggle Button -->
@@ -145,6 +133,17 @@
         </button>
       </div>
 
+      <!-- Mobile Client Identity Card -->
+      <div class="mobile-client-card" id="mobileClientCard">
+        <div class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-hidden="true">
+          <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileClientName">العميل</span>
+          <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
+        </div>
+      </div>
+
       <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
         <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
         <a href="programs.html" class="mobile-nav-link is-active" aria-current="page" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
@@ -174,9 +173,15 @@
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
           </button>
-          <a href="login.html?redirect=programs" class="btn btn-outline btn-sm nav-login-btn" id="mobileLoginBtn" style="flex: 1;" data-i18n="nav.login">تسجيل الدخول</a>
         </div>
-        <a href="register-choice.html" class="btn btn-primary" id="mobileRegisterBtn" style="width: 100%;" data-i18n="nav.register">إنشاء حساب</a>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
       </div>
 
     </div>
@@ -186,7 +191,7 @@
   <main id="main-content">
 
     <!-- 1. SPIRITUAL SERENITY HERO SECTION -->
-    <section class="programs-hero-section" aria-label="استعراض برامج الحج والعمرة">
+    <section class="programs-hero-section" id="hero" aria-label="استعراض برامج الحج والعمرة">
       <!-- Background Media with Dignified Readable Gradient -->
       <div class="programs-hero-bg-media" aria-hidden="true">
         <img src="./assets/Miqat-Background.jpg" alt="" class="programs-hero-bg-photo" loading="eager" fetchpriority="high">
@@ -260,9 +265,9 @@
               تركز على خفض التكلفة مع توفير متطلبات الإقامة المصنفة وحافلات ترددية دورية على مدار ٢٤ ساعة.
             </p>
             <ul class="guide-card-points">
-              <li>فنادق مصنفة بمعايير وزارة السياحة</li>
-              <li>حافلات ترددية دورية لساحات الحرم</li>
-              <li>سفر بري منظم أو طيران اقتصادي</li>
+              <li data-i18n="programs_page.guide_econ_point1">فنادق مصنفة بمعايير وزارة السياحة</li>
+              <li data-i18n="programs_page.guide_econ_point2">حافلات ترددية دورية لساحات الحرم</li>
+              <li data-i18n="programs_page.guide_econ_point3">سفر بري منظم أو طيران اقتصادي</li>
             </ul>
           </div>
 
@@ -280,9 +285,9 @@
               فنادق ٤ أو ٥ نجوم على مسافة سير مريحة وقصيرة من ساحات الحرمين، مع طيران مباشر وخدمات استقبال.
             </p>
             <ul class="guide-card-points">
-              <li>مسافة سير قصيرة دون الحاجة لحافلات</li>
-              <li>طيران مباشر وخدمات استقبال بالمطار</li>
-              <li>بوفيهات إفطار ومرافقة إرشادية دائمة</li>
+              <li data-i18n="programs_page.guide_prem_point1">مسافة سير قصيرة دون الحاجة لحافلات</li>
+              <li data-i18n="programs_page.guide_prem_point2">طيران مباشر وخدمات استقبال بالمطار</li>
+              <li data-i18n="programs_page.guide_prem_point3">بوفيهات إفطار ومرافقة إرشادية دائمة</li>
             </ul>
           </div>
 
@@ -300,9 +305,9 @@
               أجنحة فندقية صف أول مطلة مباشرة على الكعبة المشرفة أو مخيمات مطورة قرب الجمرات، مع سيارات خاصة.
             </p>
             <ul class="guide-card-points">
-              <li>إطلالات بانورامية مباشرة على الكعبة المشرفة</li>
-              <li>سيارات خاصة VIP ومخيمات مطورة بالكامل</li>
-              <li>خدمات كونسيرج ومرافقة شخصية ٢٤/٧</li>
+              <li data-i18n="programs_page.guide_vip_point1">إطلالات بانورامية مباشرة على الكعبة المشرفة</li>
+              <li data-i18n="programs_page.guide_vip_point2">سيارات خاصة VIP ومخيمات مطورة بالكامل</li>
+              <li data-i18n="programs_page.guide_vip_point3">خدمات كونسيرج ومرافقة شخصية ٢٤/٧</li>
             </ul>
           </div>
 
@@ -356,8 +361,8 @@
               <button type="button" class="category-chip" data-cat-filter="umrah_premium" data-i18n="programs_page.filter_category_premium">متميز (٤ و ٥ نجوم)</button>
               <button type="button" class="category-chip" data-cat-filter="umrah_vip" data-i18n="programs_page.filter_category_vip">فاخر (VIP)</button>
               <button type="button" class="category-chip" data-cat-filter="umrah_ramadan" data-i18n="programs_page.filter_category_ramadan">شهر رمضان</button>
-              <button type="button" class="category-chip" data-cat-filter="hajj_tourist" data-i18n="categories.hajj_tourist.title">حج سياحي</button>
-              <button type="button" class="category-chip" data-cat-filter="hajj_vip" data-i18n="categories.hajj_vip.title">حج VIP</button>
+              <button type="button" class="category-chip" data-cat-filter="hajj_tourist" data-i18n="programs_page.filter_category_tourist">حج سياحي</button>
+              <button type="button" class="category-chip" data-cat-filter="hajj_vip" data-i18n="programs_page.filter_category_hajj_vip">حج VIP</button>
               <button type="button" class="category-chip" data-cat-filter="hajj_lottery" data-i18n="programs_page.filter_category_lottery">حج القرعة</button>
             </div>
 
@@ -482,7 +487,7 @@
   <div id="requestDetailsModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="requestModalTitle">
     <div class="modal-box request-modal-box">
       
-      <button type="button" class="modal-close-btn" id="requestModalCloseBtn" data-close-request-modal aria-label="إغلاق النافذة">
+      <button type="button" class="modal-close-btn" id="requestModalCloseBtn" data-close-request-modal aria-label="إغلاق النافذة" data-i18n-attr="aria-label:request_modal.close_btn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
 
@@ -494,7 +499,7 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
-            <span id="requestModalProgramBadge">عمرة اقتصادية معتمدة</span>
+            <span id="requestModalProgramBadge" data-i18n="request_modal.program_badge">البرنامج المختار</span>
           </div>
           <h3 id="requestModalTitle" class="modal-title" data-i18n="request_modal.title">طلب تفاصيل البرنامج</h3>
           <p class="modal-desc" data-i18n="request_modal.subtitle">سجّل بياناتك للتواصل معك وإرسال كافة تفاصيل البرنامج والمواعيد وخيارات الغرف.</p>
@@ -502,41 +507,67 @@
 
         <!-- Authenticated Context Bar (if user is logged in) -->
         <div id="modalLoggedInNotice" class="modal-logged-in-bar" style="display: none;">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+          <div class="logged-in-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
           <div class="logged-in-text">
-            <span data-i18n="request_modal.logged_in_notice">أنت مسجل الدخول باسم:</span>
-            <strong id="modalCustomerNameDisplay">أحمد محمود</strong>
-            (<span id="modalCustomerPhoneDisplay">01156379992</span>)
+            <div class="logged-in-primary">
+              <span data-i18n="request_modal.logged_in_notice">أنت مسجل الدخول باسم:</span>
+              <strong id="modalCustomerNameDisplay"></strong>
+            </div>
+            <div class="logged-in-meta">
+              <span class="verified-tag">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span data-i18n="request_modal.verified_tag">حساب معتمد</span>
+              </span>
+              <span class="logged-in-phone" id="modalCustomerPhoneDisplay" dir="ltr"></span>
+            </div>
           </div>
         </div>
 
         <form id="requestDetailsForm" class="request-modal-form" novalidate>
           <input type="hidden" id="requestProgramId" name="programId" value="">
           
-          <!-- Contact Fields (Shown if guest, pre-filled if authenticated) -->
+          <!-- Contact Fields (Pre-filled if authenticated, editable) -->
           <div id="modalGuestFields" class="modal-fields-group">
             
             <div class="form-row">
               <div class="form-group">
                 <label for="reqCustomerName" class="form-label">
                   <span data-i18n="request_modal.name_label">الاسم بالكامل</span>
-                  <span class="required-star" aria-hidden="true">*</span>
+                  <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:request_modal.required_tooltip,data-tooltip:request_modal.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                    <span class="required-dot" aria-hidden="true"></span>
+                    <span class="required-tooltip" role="tooltip" data-i18n="request_modal.required_tooltip">هذا الحقل إجباري</span>
+                  </span>
                 </label>
-                <input type="text" id="reqCustomerName" name="customerName" class="form-input" placeholder="اكتب اسمك الثلاثي" data-i18n-attr="placeholder:request_modal.name_placeholder" required autocomplete="name">
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <input type="text" id="reqCustomerName" name="customerName" class="form-input has-icon" placeholder="اكتب اسمك الثلاثي" data-i18n-attr="placeholder:request_modal.name_placeholder" required autocomplete="name">
+                </div>
                 <div class="field-error-feedback" id="reqNameError"></div>
               </div>
 
               <div class="form-group">
                 <label for="reqCustomerPhone" class="form-label">
                   <span data-i18n="request_modal.phone_label">رقم الموبايل / واتساب</span>
-                  <span class="required-star" aria-hidden="true">*</span>
+                  <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:request_modal.required_tooltip,data-tooltip:request_modal.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                    <span class="required-dot" aria-hidden="true"></span>
+                    <span class="required-tooltip" role="tooltip" data-i18n="request_modal.required_tooltip">هذا الحقل إجباري</span>
+                  </span>
                 </label>
-                <input type="tel" id="reqCustomerPhone" name="customerPhone" class="form-input" placeholder="01012345678" data-i18n-attr="placeholder:request_modal.phone_placeholder" required autocomplete="tel" dir="ltr">
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <input type="tel" id="reqCustomerPhone" name="customerPhone" class="form-input has-icon" placeholder="01012345678" data-i18n-attr="placeholder:request_modal.phone_placeholder" required autocomplete="tel" dir="ltr">
+                </div>
                 <div class="field-error-feedback" id="reqPhoneError"></div>
-                <span class="field-hint" data-i18n="request_modal.phone_hint">سيتم إرسال تفاصيل البرنامج والتواصل معك عبر هذا الرقم</span>
               </div>
             </div>
 
@@ -544,12 +575,22 @@
               <div class="form-group">
                 <label for="reqCustomerGovernorate" class="form-label">
                   <span data-i18n="request_modal.gov_label">المحافظة</span>
-                  <span class="required-star" aria-hidden="true">*</span>
+                  <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:request_modal.required_tooltip,data-tooltip:request_modal.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                    <span class="required-dot" aria-hidden="true"></span>
+                    <span class="required-tooltip" role="tooltip" data-i18n="request_modal.required_tooltip">هذا الحقل إجباري</span>
+                  </span>
                 </label>
-                <select id="reqCustomerGovernorate" name="customerGovernorate" class="form-select" required>
-                  <option value="" disabled selected>اختار محافظتك</option>
-                  <!-- Populated via JS -->
-                </select>
+                <div class="select-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <select id="reqCustomerGovernorate" name="customerGovernorate" class="form-select has-icon" required>
+                    <option value="" disabled selected data-i18n="request_modal.gov_placeholder">اختار محافظتك</option>
+                    <!-- Populated via JS -->
+                  </select>
+                  <svg class="select-arrow" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
                 <div class="field-error-feedback" id="reqGovError"></div>
               </div>
 
@@ -557,7 +598,13 @@
                 <label for="reqCustomerEmail" class="form-label">
                   <span data-i18n="request_modal.email_label">البريد الإلكتروني (اختياري)</span>
                 </label>
-                <input type="email" id="reqCustomerEmail" name="customerEmail" class="form-input" placeholder="اكتب بريدك الإلكتروني لو متاح" data-i18n-attr="placeholder:request_modal.email_placeholder" autocomplete="email" dir="ltr">
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <input type="email" id="reqCustomerEmail" name="customerEmail" class="form-input has-icon" placeholder="اكتب بريدك الإلكتروني لو متاح" data-i18n-attr="placeholder:request_modal.email_placeholder" autocomplete="email">
+                </div>
                 <div class="field-error-feedback" id="reqEmailError"></div>
               </div>
             </div>
@@ -565,20 +612,30 @@
           </div>
 
           <!-- Notes / Additional Inquiries Field -->
-          <div class="form-group">
+          <div class="form-group notes-form-group">
             <label for="reqCustomerNotes" class="form-label">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
               <span data-i18n="request_modal.notes_label">ملاحظات إضافية أو تفضيل الغرف (اختياري)</span>
             </label>
-            <textarea id="reqCustomerNotes" name="notes" class="form-textarea" rows="2" placeholder="مثال: عدد أفراد الأسرة، تفضيل غرفة ثنائية أو ثلاثية، تاريخ سفر مفضل..." data-i18n-attr="placeholder:request_modal.notes_placeholder"></textarea>
+            <textarea id="reqCustomerNotes" name="notes" class="form-textarea" rows="3" placeholder="مثال: عدد أفراد الأسرة، تفضيل غرفة ثنائية أو ثلاثية، تاريخ سفر مفضل..." data-i18n-attr="placeholder:request_modal.notes_placeholder"></textarea>
           </div>
 
           <!-- Form Global Status Alert -->
           <div id="requestStatusAlert" class="request-status-alert" style="display: none;"></div>
 
           <!-- Submit Action Button -->
-          <button type="submit" id="requestSubmitBtn" class="btn btn-primary btn-lg" style="width: 100%;">
+          <button type="submit" id="requestSubmitBtn" class="btn btn-primary btn-lg request-submit-btn">
             <span class="btn-spinner" aria-hidden="true"></span>
             <span class="btn-text" data-i18n="request_modal.submit_btn">تأكيد وإرسال الطلب</span>
+            <svg class="btn-arrow-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </button>
         </form>
 
@@ -589,7 +646,7 @@
         
         <div class="success-illustration-box">
           <div class="success-icon-ring" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
@@ -600,19 +657,42 @@
           </p>
         </div>
 
-        <!-- Request ID Card -->
-        <div class="request-id-card">
-          <span class="id-label" data-i18n="request_modal.request_id_label">رقم الطلب المرجعي:</span>
-          <strong class="id-value" id="successRequestId">MQT-REQ-20261026-0000</strong>
+        <!-- Order Summary Voucher Card -->
+        <div class="order-summary-voucher">
+          <div class="voucher-top-bar">
+            <div class="voucher-id-wrap">
+              <span class="id-label" data-i18n="request_modal.request_id_label">رقم الطلب المرجعي:</span>
+              <strong class="id-value" id="successRequestId">MQT-REQ-20261026-0000</strong>
+            </div>
+            <span class="voucher-status-pill">
+              <span class="status-pulse-dot" aria-hidden="true"></span>
+              <span data-i18n="request_modal.status_in_review">قيد المراجعة الفورية</span>
+            </span>
+          </div>
+          <div class="voucher-details-grid">
+            <div class="voucher-item">
+              <span class="item-label" data-i18n="request_modal.program_label">البرنامج:</span>
+              <strong class="item-value" id="successProgramName">عمرة اقتصادية معتمدة</strong>
+            </div>
+            <div class="voucher-item">
+              <span class="item-label" data-i18n="request_modal.customer_label">اسم العميل:</span>
+              <strong class="item-value" id="successCustomerName">أحمد محمود</strong>
+            </div>
+          </div>
         </div>
 
         <!-- WhatsApp Direct Follow-up Option -->
         <div class="whatsapp-action-box">
           <div class="wa-box-header">
-            <svg class="wa-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-            </svg>
-            <h4 class="wa-box-title" data-i18n="request_modal.whatsapp_box_title">متابعة فورية عبر واتساب</h4>
+            <div class="wa-icon-wrap" aria-hidden="true">
+              <svg class="wa-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </div>
+            <div class="wa-box-titles">
+              <h4 class="wa-box-title" data-i18n="request_modal.whatsapp_box_title">متابعة فورية عبر واتساب</h4>
+              <span class="wa-desk-badge" data-i18n="request_modal.wa_desk_badge">خدمة عملاء ميقات (01203340116)</span>
+            </div>
           </div>
           <p class="wa-box-desc" data-i18n="request_modal.whatsapp_box_desc">
             تم تجهيز رسالة تفاصيل طلبك بالكامل لتصل مباشرة إلى رقم خدمة عملاء ميقات (01203340116).
@@ -626,7 +706,7 @@
           <span class="wa-instruction" data-i18n="request_modal.whatsapp_instruction">ملاحظة: سيتم فتح تطبيق واتساب ومعه تفاصيل طلبك جاهزة؛ يرجى الضغط على زر الإرسال لإتمام المحادثة.</span>
         </div>
 
-        <button type="button" class="btn btn-outline" id="successCloseBtn" style="width: 100%; margin-top: 1rem;" data-i18n="request_modal.close_btn">إغلاق النافذة</button>
+        <button type="button" class="btn btn-outline" id="successCloseBtn" data-close-request-modal data-i18n="request_modal.close_btn">إغلاق النافذة</button>
 
       </div>
 

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — نتيجة العملية</title>
+  <meta name="description" content="بيان وإيصال نتيجة معاملة الدفع التجريبي عبر منصة ميقات.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="programs-page payment-page" data-page-id="payment-result" data-page-title-key="payments.result_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="التنقل الرئيسي للعملاء">
+        <a href="programs.html" class="nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="nav-link" data-i18n="nav.payments" title="المدفوعات">المدفوعات</a>
+        <a href="transactions.html" class="nav-link" data-i18n="nav.payment_history" title="سجل المدفوعات">سجل المدفوعات</a>
+        <a href="my-account.html" class="nav-link" id="navMyAccountLink" data-i18n="nav.my_account" title="الملف الشخصي للعميل">حسابي</a>
+      </nav>
+
+      <div class="header-actions">
+        
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <div id="headerAuthArea" class="client-auth-area">
+          <a href="my-account.html" class="client-avatar" id="clientAvatar" role="link" aria-label="حساب العميل" title="حساب العميل">
+            <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
+          </a>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
+        </div>
+
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-client-card" id="mobileClientCard">
+        <a href="my-account.html" class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-label="حساب العميل" title="حساب العميل">
+          <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
+        </a>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileClientName">العميل</span>
+          <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
+        </div>
+      </div>
+
+      <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
+        <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
+        <a href="programs.html" class="mobile-nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="mobile-nav-link" data-i18n="nav.payments">المدفوعات</a>
+        <a href="transactions.html" class="mobile-nav-link" data-i18n="nav.payment_history">سجل المدفوعات</a>
+        <a href="my-account.html" class="mobile-nav-link" id="mobileMyAccountLink" data-i18n="nav.my_account">حسابي</a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تفعيل الوضع الداكن">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN RESULT CONTENT ==================== -->
+  <main class="payment-main" id="main-content">
+    <div class="payment-container-narrow">
+      
+      <!-- Loading State -->
+      <div id="resultLoadingState" style="text-align: center; padding: 48px 16px;">
+        <div style="font-size: 1.1rem; color: var(--color-text-muted);">جاري تحميل نتيجة المعاملة...</div>
+      </div>
+
+      <!-- Error State -->
+      <div id="resultErrorState" style="display: none; text-align: center; padding: 48px 16px;">
+        <h2 style="color: var(--color-validation-text); margin-bottom: 12px;">تعذر العثور على المعاملة المطلوبة</h2>
+        <p style="color: var(--color-text-muted); margin-bottom: 24px;">يرجى التحقق من الرقم المرجعي أو الانتقال لسجل المدفوعات.</p>
+        <a href="transactions.html" class="btn btn-primary" data-i18n="payments.view_history_btn">عرض سجل مدفوعاتي</a>
+      </div>
+
+      <!-- Test Receipt Voucher Card -->
+      <div class="receipt-voucher" id="receiptVoucherCard" style="display: none;">
+        
+        <!-- Voucher Header Stamp -->
+        <div class="receipt-header-row">
+          <div class="receipt-brand-stamp">
+            <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" class="logo-light" width="34" height="34">
+            <img src="./assets/Miqat Logo Dark.png" alt="ميقات" class="logo-dark" width="34" height="34">
+            <span class="receipt-brand-name">مـيـقـات</span>
+          </div>
+          <!-- Clear Test Watermark -->
+          <span class="receipt-watermark-pill" data-i18n="payments.receipt_watermark">إيصال محاكاة تجريبي</span>
+        </div>
+
+        <!-- Outcome Status Banner -->
+        <div class="receipt-status-banner">
+          <div class="receipt-status-icon-ring" id="resultStatusIconRing"></div>
+          <h2 class="receipt-status-heading" id="resultStatusHeading">تم الدفع بنجاح (تجريبي)</h2>
+          <div class="receipt-ref-code" id="receiptRefCode">MQT-PAY-20261029-XXXXX</div>
+        </div>
+
+        <!-- Receipt Details Key-Values Grid -->
+        <div class="receipt-grid">
+          <div class="receipt-item">
+            <span class="receipt-item-label" data-i18n="payments.receipt_customer">اسم العميل المسجل:</span>
+            <strong class="receipt-item-val" id="receiptCustomerName">أحمد محمود</strong>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-item-label" data-i18n="payments.receipt_program">البرنامج المعتمد:</span>
+            <strong class="receipt-item-val" id="receiptProgramTitle">عمرة اقتصادية معتمدة</strong>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-item-label" data-i18n="payments.receipt_travelers">عدد الأفراد:</span>
+            <strong class="receipt-item-val" id="receiptTravelersCount">1</strong>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-item-label" data-i18n="payments.receipt_date">تاريخ ووقت المعاملة:</span>
+            <strong class="receipt-item-val" id="receiptDate">—</strong>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-item-label" data-i18n="payments.receipt_method">طريقة السداد:</span>
+            <strong class="receipt-item-val" id="receiptMethod" data-i18n="payments.receipt_method_card">بطاقة بنكية تجريبية (محاكاة)</strong>
+          </div>
+          <div class="receipt-item" id="receiptPlanRow">
+            <span class="receipt-item-label" data-i18n="payments.summary_selected_plan">خطة السداد:</span>
+            <strong class="receipt-item-val" id="receiptPlanName">سداد كامل (١٠٠٪)</strong>
+          </div>
+          <div class="receipt-item" id="receiptPackageTotalRow">
+            <span class="receipt-item-label" data-i18n="payments.summary_package_subtotal">إجمالي قيمة الباقة:</span>
+            <strong class="receipt-item-val" id="receiptPackageTotalVal">—</strong>
+          </div>
+          <div class="receipt-item" id="receiptRemainingRow" style="display: none;">
+            <span class="receipt-item-label" data-i18n="payments.summary_remaining_balance">المبلغ المتبقي لاحقاً:</span>
+            <strong class="receipt-item-val" id="receiptRemainingVal" style="color: var(--color-validation-text);">—</strong>
+          </div>
+        </div>
+
+        <!-- Total Paid Bar -->
+        <div class="receipt-total-bar">
+          <span class="receipt-total-label" id="receiptAmountLabel" data-i18n="payments.receipt_amount">المبلغ الإجمالي المسدد:</span>
+          <strong class="receipt-total-amount" id="receiptTotalAmount">33,000 ج.م</strong>
+        </div>
+
+        <!-- Action CTAs -->
+        <div class="receipt-actions-row">
+          <a href="transactions.html" class="btn btn-primary" style="flex: 1;" data-i18n="payments.view_history_btn">عرض سجل مدفوعاتي</a>
+          <a href="#" class="btn btn-outline" id="resultRetryBtn" style="display: none; flex: 1;" data-i18n="payments.retry_payment_btn">إعادة محاولة دفع جديدة</a>
+          <a href="programs.html" class="btn btn-outline" style="flex: 1;" data-i18n="payments.back_to_programs">العودة لرحلات الحج والعمرة</a>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+    <!-- ==================== FUTURE SCOPE MODAL (MY ACCOUNT) ==================== -->
+  <div id="futureScopeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-box account-choice-box" style="text-align: center; max-width: 460px;">
+      <button type="button" class="modal-close-btn" data-close-future-modal aria-label="إغلاق النافذة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-icon-wrap" style="margin: 0 auto 1rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(209, 177, 108, 0.15); color: var(--color-accent);">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <h3 id="futureScopeTitle" class="modal-title">الملف الشخصي للعميل</h3>
+      <p class="modal-desc" id="futureScopeDesc" style="margin-top: 8px;">
+        جاري تطوير لوحة تحكم متكاملة لإدارة حجوزاتك ومستنداتك الشخصية.
+      </p>
+      <div style="margin-top: 1.5rem;">
+        <button type="button" class="btn btn-primary" data-close-future-modal style="min-width: 140px;">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+<script src="./payments.js"></script>
+</body>
+</html>
+

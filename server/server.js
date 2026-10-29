@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const db = require('./db');
 const whatsapp = require('./whatsapp');
+const mockPaymentService = require('./mockPaymentService');
 
 const PORT = process.env.PORT || 4173;
 const ROOT_DIR = path.resolve(__dirname, '..', 'Miqat UI-UX');
@@ -218,7 +219,8 @@ const server = http.createServer(async (req, res) => {
         phone: user.phone,
         email: user.email,
         governorate: user.governorate,
-        role: user.role
+        role: user.role,
+        created_at: user.created_at
       };
 
       const cookieHeader = `miqat_session=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000`;
@@ -253,6 +255,119 @@ const server = http.createServer(async (req, res) => {
 
     const clearCookie = `miqat_session=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     return sendJson(res, 200, { success: true }, { 'Set-Cookie': clearCookie });
+  }
+
+  // 7b. GET /api/account (Authoritative Customer Account Profile)
+  if (pathname === '/api/account' && req.method === 'GET') {
+    const user = getSessionUser(req);
+    if (!user) {
+      return sendJson(res, 401, { success: false, error: 'AUTH_REQUIRED', message: 'Authentication required' });
+    }
+    const freshUser = db.getUserById(user.id);
+    if (!freshUser) {
+      return sendJson(res, 404, { success: false, error: 'USER_NOT_FOUND', message: 'User record not found' });
+    }
+    return sendJson(res, 200, {
+      success: true,
+      user: freshUser
+    });
+  }
+
+  // 7c. PUT/PATCH /api/account (Update Permitted Contact Fields: Phone & Email)
+  if (pathname === '/api/account' && (req.method === 'PUT' || req.method === 'PATCH')) {
+    try {
+      const user = getSessionUser(req);
+      if (!user) {
+        return sendJson(res, 401, { success: false, error: 'AUTH_REQUIRED', message: 'Authentication required' });
+      }
+
+      const body = await parseJsonBody(req);
+
+      // Name is strictly immutable through this account-update operation
+      if (body.name !== undefined && body.name !== user.name) {
+        return sendJson(res, 400, {
+          success: false,
+          error: 'NAME_IMMUTABLE',
+          message: 'Modifying customer name is not permitted to preserve identity and booking integrity.'
+        });
+      }
+
+      // Permitted update fields: phone, email
+      let newPhone = user.phone;
+      let newEmail = user.email;
+
+      if (body.phone !== undefined) {
+        const rawPhone = String(body.phone).trim();
+        if (!rawPhone) {
+          return sendJson(res, 400, {
+            success: false,
+            error: 'PHONE_EMPTY',
+            message: 'Phone number cannot be empty.'
+          });
+        }
+        const cleanPhone = db.normalizePhone(rawPhone);
+        const egPhoneRegex = /^01[0125][0-9]{8}$/;
+        if (!egPhoneRegex.test(cleanPhone)) {
+          return sendJson(res, 400, {
+            success: false,
+            error: 'PHONE_INVALID',
+            message: 'Invalid Egyptian mobile number format. Must be 11 digits starting with 01.'
+          });
+        }
+
+        // Check uniqueness if changing
+        if (cleanPhone !== user.phone) {
+          const conflict = db.checkPhoneOrEmailExists(cleanPhone, null, user.id);
+          if (conflict && conflict.conflict === 'phone') {
+            return sendJson(res, 409, {
+              success: false,
+              error: 'PHONE_EXISTS',
+              message: 'Phone number is already registered to another account.'
+            });
+          }
+        }
+        newPhone = cleanPhone;
+      }
+
+      if (body.email !== undefined) {
+        const rawEmail = body.email ? String(body.email).trim() : '';
+        if (rawEmail) {
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+          if (!emailRegex.test(rawEmail)) {
+            return sendJson(res, 400, {
+              success: false,
+              error: 'EMAIL_INVALID',
+              message: 'Invalid email address format.'
+            });
+          }
+
+          // Check uniqueness if changing
+          if (!user.email || rawEmail.toLowerCase() !== user.email.toLowerCase()) {
+            const conflict = db.checkPhoneOrEmailExists(null, rawEmail, user.id);
+            if (conflict && conflict.conflict === 'email') {
+              return sendJson(res, 409, {
+                success: false,
+                error: 'EMAIL_EXISTS',
+                message: 'Email address is already registered to another account.'
+              });
+            }
+          }
+          newEmail = rawEmail;
+        } else {
+          newEmail = null;
+        }
+      }
+
+      const updatedUser = db.updateUserProfile(user.id, { phone: newPhone, email: newEmail });
+
+      return sendJson(res, 200, {
+        success: true,
+        message: 'Account updated successfully',
+        user: updatedUser
+      });
+    } catch (err) {
+      return sendJson(res, 500, { success: false, error: 'SERVER_ERROR', message: err.message });
+    }
   }
 
   // 8. POST /api/requests (Submit Program Details Inquiry)
@@ -368,6 +483,174 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       return sendJson(res, 500, { success: false, error: err.message });
     }
+  }
+
+  // ==================== PAYMENT REST APIS ====================
+
+  // 12. GET /api/payments/preview (Authoritative Price Calculation)
+  if (pathname === '/api/payments/preview' && req.method === 'GET') {
+    try {
+      const programId = searchParams.get('programId');
+      const travelersCount = searchParams.get('travelers') || searchParams.get('travelersCount') || 1;
+      const paymentOption = searchParams.get('paymentOption') || searchParams.get('option') || 'full';
+      const preview = mockPaymentService.previewPayment({ programId, travelersCount, paymentOption });
+      return sendJson(res, 200, { success: true, data: preview });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  // 13. POST /api/payments/initiate (Create Pending Payment Attempt)
+  if (pathname === '/api/payments/initiate' && req.method === 'POST') {
+    try {
+      const sessionUser = getSessionUser(req);
+      if (!sessionUser) {
+        return sendJson(res, 401, { success: false, error: 'Authentication required' });
+      }
+
+      const body = await parseJsonBody(req);
+      const programId = body.programId;
+      const travelersCount = body.travelersCount || 1;
+      const paymentOption = body.paymentOption || 'full';
+      const requestId = body.requestId || null;
+      const idempotencyKey = body.idempotencyKey || null;
+
+      const payment = mockPaymentService.initiatePayment({
+        customerUser: sessionUser,
+        programId,
+        travelersCount,
+        paymentOption,
+        requestId,
+        idempotencyKey
+      });
+
+      return sendJson(res, 201, { success: true, payment });
+    } catch (err) {
+      if (err.code === 'PRICING_UNVERIFIED') {
+        return sendJson(res, 422, { success: false, error: err.message, code: err.code, details: err.details });
+      }
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  // 14. POST /api/payments/:reference/process (Simulate Outcome)
+  if (pathname.startsWith('/api/payments/') && pathname.endsWith('/process') && req.method === 'POST') {
+    try {
+      const sessionUser = getSessionUser(req);
+      if (!sessionUser) {
+        return sendJson(res, 401, { success: false, error: 'Authentication required' });
+      }
+
+      const parts = pathname.split('/');
+      const reference = parts[3];
+      const body = await parseJsonBody(req);
+      const scenario = body.scenario || 'success';
+
+      const updated = mockPaymentService.processPaymentSimulation({
+        paymentReference: reference,
+        customerId: sessionUser.id,
+        scenario
+      });
+
+      return sendJson(res, 200, { success: true, payment: updated });
+    } catch (err) {
+      if (err.code === 'NOT_FOUND') return sendJson(res, 404, { success: false, error: err.message });
+      if (err.code === 'FORBIDDEN') return sendJson(res, 403, { success: false, error: err.message });
+      if (err.code === 'CONFLICT') return sendJson(res, 409, { success: false, error: err.message });
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  // 15. GET /api/payments/my (Authenticated Customer Transactions Only)
+  if (pathname === '/api/payments/my' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+
+    const status = searchParams.get('status') || undefined;
+    const limit = parseInt(searchParams.get('limit') || '50', 10);
+    const offset = parseInt(searchParams.get('offset') || '0', 10);
+
+    const items = db.getPaymentsByCustomerId(sessionUser.id, { status, limit, offset });
+    return sendJson(res, 200, { success: true, count: items.length, data: items });
+  }
+
+  // 16. GET /api/payments/admin (Admin Only Transactions Search & Inspection)
+  if (pathname === '/api/payments/admin' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'admin') {
+      return sendJson(res, 403, { success: false, error: 'Admin authorization required' });
+    }
+
+    const search = searchParams.get('search') || undefined;
+    const status = searchParams.get('status') || undefined;
+    const limit = parseInt(searchParams.get('limit') || '50', 10);
+    const offset = parseInt(searchParams.get('offset') || '0', 10);
+
+    const items = db.getAllPaymentsAdmin({ search, status, limit, offset });
+    return sendJson(res, 200, { success: true, count: items.length, data: items });
+  }
+
+  // 17. POST /api/payments/:reference/refund (Admin Only Mock Refund Execution)
+  if (pathname.startsWith('/api/payments/') && pathname.endsWith('/refund') && req.method === 'POST') {
+    try {
+      const sessionUser = getSessionUser(req);
+      if (!sessionUser) {
+        return sendJson(res, 401, { success: false, error: 'Authentication required' });
+      }
+      if (sessionUser.role !== 'admin') {
+        return sendJson(res, 403, { success: false, error: 'Admin authorization required' });
+      }
+
+      const parts = pathname.split('/');
+      const reference = parts[3];
+      const body = await parseJsonBody(req);
+      const reason = body.reason;
+
+      const refunded = mockPaymentService.executeMockRefund({
+        paymentReference: reference,
+        reason,
+        adminUser: sessionUser
+      });
+
+      return sendJson(res, 200, { success: true, payment: refunded });
+    } catch (err) {
+      if (err.message === 'REFUND_REASON_INVALID') {
+        return sendJson(res, 400, { success: false, error: 'A valid non-empty refund reason (5-500 characters) is required.' });
+      }
+      if (err.message === 'PAYMENT_NOT_FOUND') {
+        return sendJson(res, 404, { success: false, error: 'Payment not found' });
+      }
+      if (err.message === 'PAYMENT_NOT_ELIGIBLE_FOR_REFUND' || err.message === 'PAYMENT_ALREADY_REFUNDED' || err.message === 'PAYMENT_STATUS_CONFLICT') {
+        return sendJson(res, 409, { success: false, error: err.message });
+      }
+      return sendJson(res, 500, { success: false, error: err.message });
+    }
+  }
+
+  // 18. GET /api/payments/:reference (Payment & Receipt Details)
+  if (pathname.startsWith('/api/payments/') && !pathname.includes('/process') && !pathname.includes('/refund') && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+
+    const reference = pathname.replace('/api/payments/', '').trim();
+    const payment = db.getPaymentByReference(reference);
+    if (!payment) {
+      return sendJson(res, 404, { success: false, error: 'Payment not found' });
+    }
+
+    // Access guard: Customer must own transaction OR user must be admin
+    if (sessionUser.role !== 'admin' && payment.customer_id !== sessionUser.id) {
+      return sendJson(res, 403, { success: false, error: 'Access denied' });
+    }
+
+    return sendJson(res, 200, { success: true, payment });
   }
 
   // ==================== STATIC FILE SERVING ====================

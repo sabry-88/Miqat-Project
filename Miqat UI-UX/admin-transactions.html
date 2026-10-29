@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — إدارة المدفوعات والمحاكاة</title>
+  <meta name="description" content="لوحة إدارة معاملات الدفع التجريبية وعمليات الاسترداد المحاكاة لمنصة ميقات.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="payment-page" data-page-id="admin-transactions" data-page-title-key="payments.admin_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="payments.admin_portal">لوحة الإدارة</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="تنقل إدارة المنصة">
+        <a href="admin-transactions.html" class="nav-link is-active" aria-current="page" data-i18n="payments.admin_nav">إدارة المدفوعات والمحاكاة</a>
+        <a href="programs.html" class="nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+      </nav>
+
+      <div class="header-actions">
+        
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <div id="headerAuthArea" class="client-auth-area">
+          <div class="client-avatar" id="clientAvatar" role="img" aria-label="حساب المسؤول" title="حساب المسؤول" style="background: var(--color-primary); color: #FFFFFF;">
+            <span class="client-avatar-initial" id="clientAvatarInitial">A</span>
+          </div>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN ADMIN CONTENT ==================== -->
+  <main class="payment-main" id="main-content">
+    <div class="payment-container">
+      
+      <!-- Unauthorized Access Alert Banner -->
+      <div class="price-unverified-alert" id="adminUnauthorizedBanner" style="display: none;">
+        <svg class="price-unverified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+        </svg>
+        <h2 class="price-unverified-title" data-i18n="payments.unauthorized_admin_title">غير مصرح بالدخول</h2>
+        <p class="price-unverified-desc" data-i18n="payments.unauthorized_admin_desc">هذه الصفحة مخصصة لمديري النظام المعتمدين فقط. حسابك الحالي لا يمتلك صلاحيات إدارة المدفوعات.</p>
+        <a href="programs.html" class="btn btn-primary" data-i18n="payments.back_to_programs">العودة لرحلات الحج والعمرة</a>
+      </div>
+
+      <!-- Authorized Admin Content Area -->
+      <div id="adminMainContent">
+        
+        <!-- Page Header -->
+        <div class="payment-page-header">
+          <h1 class="payment-page-title" data-i18n="payments.admin_heading">إدارة المعاملات وعمليات الاسترداد التجريبي</h1>
+          <p class="payment-page-subtitle" data-i18n="payments.admin_subheading">مراجعة كافة عمليات الدفع التجريبية لعملاء المنصة وتنفيذ عمليات الاسترداد المحاكاة (Refunds).</p>
+        </div>
+
+        <!-- Admin Toolbar: Search & Status Filters -->
+        <div class="transactions-filter-bar">
+          
+          <!-- Filter Tabs -->
+          <div class="filter-tabs-list" role="tablist">
+            <button type="button" class="filter-tab-btn admin-filter-tab is-active" data-filter="all" role="tab" aria-selected="true" data-i18n="payments.filter_all">كافة المعاملات</button>
+            <button type="button" class="filter-tab-btn admin-filter-tab" data-filter="Paid" role="tab" aria-selected="false" data-i18n="payments.filter_paid">العمليات الناجحة</button>
+            <button type="button" class="filter-tab-btn admin-filter-tab" data-filter="Refunded" role="tab" aria-selected="false" data-i18n="payments.filter_refunded">العمليات المستردة</button>
+            <button type="button" class="filter-tab-btn admin-filter-tab" data-filter="Failed" role="tab" aria-selected="false" data-i18n="payments.filter_failed">العمليات غير الناجحة</button>
+            <button type="button" class="filter-tab-btn admin-filter-tab" data-filter="Cancelled" role="tab" aria-selected="false" data-i18n="payments.filter_cancelled">العمليات الملغاة</button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="admin-search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="admin-search-input" id="adminSearchInput" data-i18n-placeholder="payments.search_placeholder" placeholder="بحث برقم المرجع أو هاتف العميل أو الاسم...">
+          </div>
+
+        </div>
+
+        <!-- Admin Data Table -->
+        <div class="table-responsive-wrapper">
+          <table class="miqat-data-table" aria-label="جدول إدارة المعاملات المالية">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="payments.table_ref">الرقم المرجعي</th>
+                <th scope="col" data-i18n="request_modal.customer_label">اسم العميل</th>
+                <th scope="col" data-i18n="payments.table_program">البرنامج</th>
+                <th scope="col" data-i18n="payments.table_amount">المبلغ</th>
+                <th scope="col" data-i18n="payments.table_date">التاريخ</th>
+                <th scope="col" data-i18n="payments.table_status">الحالة</th>
+                <th scope="col" style="text-align: end;" data-i18n="payments.table_actions">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Dynamically populated via payments.js -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== MODAL: INSPECT TRANSACTION ==================== -->
+  <div class="modal-overlay" id="adminInspectModal" role="dialog" aria-modal="true" aria-labelledby="inspectModalTitle">
+    <div class="modal-dialog" style="max-width: 620px;">
+      <button type="button" class="modal-close-btn" data-close-modal aria-label="إغلاق النافذة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <h2 class="modal-title" id="inspectModalTitle">تفاصيل المعاملة والتدقيق</h2>
+      
+      <div class="refund-payment-summary" style="margin-top: 14px;">
+        <div class="refund-summary-row">
+          <span>الرقم المرجعي:</span>
+          <strong id="inspectRef" class="ref-code-display">—</strong>
+        </div>
+        <div class="refund-summary-row">
+          <span>العميل:</span>
+          <strong id="inspectCustomer">—</strong>
+        </div>
+        <div class="refund-summary-row">
+          <span>البرنامج:</span>
+          <strong id="inspectProgram">—</strong>
+        </div>
+        <div class="refund-summary-row">
+          <span>الحالة الحالية:</span>
+          <span id="inspectStatus">—</span>
+        </div>
+        <div class="refund-summary-row is-amount">
+          <span>المبلغ الإجمالي:</span>
+          <strong id="inspectAmount">—</strong>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.05rem; font-weight: 700; margin: 20px 0 10px 0;" data-i18n="payments.audit_trail_title">سجل التدقيق والحركات (Audit Trail)</h3>
+      <div class="audit-events-list" id="inspectAuditEvents"></div>
+
+      <button type="button" class="btn btn-outline" data-close-modal style="width: 100%; margin-top: 20px;" data-i18n="payments.close_btn">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: MOCK REFUND CONFIRMATION ==================== -->
+  <div class="modal-overlay" id="adminRefundModal" role="dialog" aria-modal="true" aria-labelledby="refundModalHeading">
+    <div class="modal-dialog" style="max-width: 560px;">
+      <button type="button" class="modal-close-btn" data-close-modal aria-label="إغلاق النافذة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <h2 class="modal-title" id="refundModalHeading" data-i18n="payments.refund_modal_title">تأكيد الاسترداد التجريبي (Mock Refund)</h2>
+      <p class="form-note" style="margin-top: 6px;" data-i18n="payments.refund_modal_desc">سيتم تسجيل استرداد المبلغ بالكامل وإدراج المعاملة في سجل الاستردادات. هذه محاكاة داخلية لا تمثل تحويلاً بنكياً حقيقياً.</p>
+
+      <!-- Target Transaction Summary -->
+      <div class="refund-payment-summary">
+        <div class="refund-summary-row">
+          <span data-i18n="payments.table_ref">الرقم المرجعي:</span>
+          <strong id="refundModalRef" class="ref-code-display">—</strong>
+        </div>
+        <div class="refund-summary-row">
+          <span data-i18n="request_modal.customer_label">اسم العميل:</span>
+          <strong id="refundModalCustomer">—</strong>
+        </div>
+        <div class="refund-summary-row is-amount">
+          <span data-i18n="payments.table_amount">مبلغ الاسترداد:</span>
+          <strong id="refundModalAmount">—</strong>
+        </div>
+      </div>
+
+      <!-- Refund Form with Mandatory Reason -->
+      <form id="adminRefundForm" novalidate>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="refundReasonInput" class="form-label">
+            <span data-i18n="payments.refund_reason_label">سبب الاسترداد (إلزامي):</span>
+            <span class="required-indicator" tabindex="0" role="img" aria-label="حقل إجباري" data-tooltip="هذا الحقل إجباري">
+              <span class="required-dot" aria-hidden="true"></span>
+              <span class="required-tooltip" role="tooltip" data-i18n="request_modal.required_tooltip">هذا الحقل إجباري</span>
+            </span>
+          </label>
+          <textarea id="refundReasonInput" class="refund-reason-textarea" required minlength="5" maxlength="500" data-i18n-placeholder="payments.refund_reason_placeholder" placeholder="اكتب سبب طلب الاسترداد (مثال: إلغاء بناءً على طلب العميل، خطأ تجريبي في الإجراءات...)"></textarea>
+          <span class="refund-field-hint" data-i18n="payments.refund_reason_hint">الحد الأدنى 5 أحرف. مسجل في سجل التدقيق لأغراض التوثيق الإداري.</span>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="submit" class="btn btn-primary" id="submitRefundBtn" style="flex: 1;">
+            <span class="btn-text" data-i18n="payments.refund_confirm_btn">تأكيد الاسترداد الآن</span>
+          </button>
+          <button type="button" class="btn btn-outline" data-close-modal style="flex: 1;" data-i18n="payments.cancel_btn">إلغاء</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="./payments.js"></script>
+</body>
+</html>
+

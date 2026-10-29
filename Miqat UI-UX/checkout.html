@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — إتمام الدفع التجريبي</title>
+  <meta name="description" content="إتمام ومحاكاة الدفع لبرامج الحج والعمرة المعتمدة عبر منصة ميقات.">
+
+  <!-- Google Fonts: Aref Ruqaa, Cormorant Garamond, IBM Plex Sans Arabic, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="programs-page payment-page" data-page-id="checkout" data-page-title-key="payments.checkout_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Desktop Customer Navigation Links (Exact Match to programs.html) -->
+      <nav class="nav-desktop" aria-label="التنقل الرئيسي للعملاء">
+        <a href="programs.html" class="nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="nav-link is-active" aria-current="page" data-i18n="nav.payments" title="المدفوعات">المدفوعات</a>
+        <a href="transactions.html" class="nav-link" data-i18n="nav.payment_history" title="سجل المدفوعات">سجل المدفوعات</a>
+        <a href="my-account.html" class="nav-link" id="navMyAccountLink" data-i18n="nav.my_account" title="الملف الشخصي للعميل">حسابي</a>
+      </nav>
+
+      <!-- Header Utilities -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Client Identity Area (Avatar + Logout Button) -->
+        <div id="headerAuthArea" class="client-auth-area">
+          <a href="my-account.html" class="client-avatar" id="clientAvatar" role="link" aria-label="حساب العميل" title="حساب العميل">
+            <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
+          </a>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE DRAWER NAVIGATION ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-client-card" id="mobileClientCard">
+        <a href="my-account.html" class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-label="حساب العميل" title="حساب العميل">
+          <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
+        </a>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileClientName">العميل</span>
+          <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
+        </div>
+      </div>
+
+      <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
+        <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
+        <a href="programs.html" class="mobile-nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="mobile-nav-link is-active" aria-current="page" data-i18n="nav.payments">المدفوعات</a>
+        <a href="transactions.html" class="mobile-nav-link" data-i18n="nav.payment_history">سجل المدفوعات</a>
+        <a href="my-account.html" class="mobile-nav-link" id="mobileMyAccountLink" data-i18n="nav.my_account">حسابي</a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تفعيل الوضع الداكن">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CHECKOUT CONTENT ==================== -->
+  <main class="payment-main" id="main-content">
+    <div class="payment-container">
+
+      <!-- ======================================================== -->
+      <!-- VIEW 1: PROGRAM DISCOVERY & FILTERING CATALOGUE          -->
+      <!-- ======================================================== -->
+      <section id="programSelectionView" style="display: block;">
+        
+        <!-- Header -->
+        <div class="payment-page-header">
+          <h1 class="payment-page-title" data-i18n="payments.select_program_heading">اختر البرنامج الذي ترغب في السداد له</h1>
+          <p class="payment-page-subtitle" data-i18n="payments.select_program_subheading">استعرض البرامج المتاحة للسداد التجريبي واختر البرنامج المناسب للمتابعة.</p>
+        </div>
+
+        <!-- Simulation Notice Banner -->
+        <div class="simulation-notice-banner">
+          <div class="sim-notice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="sim-notice-content">
+            <h2 class="sim-notice-title" data-i18n="payments.notice_simulated">عملية دفع تجريبية — لا يتم خصم أي أموال حقيقية</h2>
+            <p class="sim-notice-desc" data-i18n="payments.notice_simulated_desc">نظام الدفع هذا مخصص للمحاكاة واختبار تجربة المستخدم فقط. لا يتطلب إدخال بيانات بطاقات بنكية حقيقية.</p>
+          </div>
+        </div>
+
+        <!-- Lightweight Program Catalog Filter Toolbar (Section 3.C) -->
+        <div class="programs-filter-toolbar" id="programCatalogFilterBar">
+          <div class="filter-tabs-list" role="tablist" aria-label="تصفية البرامج المتاحة">
+            <button type="button" class="filter-tab-btn is-active" data-program-filter="all" role="tab" aria-selected="true" data-i18n="payments.filter_programs_all">كافة البرامج</button>
+            <button type="button" class="filter-tab-btn" data-program-filter="umrah" role="tab" aria-selected="false" data-i18n="payments.filter_programs_umrah">العمرة</button>
+            <button type="button" class="filter-tab-btn" data-program-filter="hajj" role="tab" aria-selected="false" data-i18n="payments.filter_programs_hajj">الحج</button>
+            <button type="button" class="filter-tab-btn" data-program-filter="available" role="tab" aria-selected="false" data-i18n="payments.filter_programs_available">المتاح للسداد التجريبي</button>
+            <button type="button" class="filter-tab-btn" data-program-filter="economy" role="tab" aria-selected="false" data-i18n="payments.filter_programs_economy">اقتصادي</button>
+            <button type="button" class="filter-tab-btn" data-program-filter="premium" role="tab" aria-selected="false" data-i18n="payments.filter_programs_premium">متميز و VIP</button>
+          </div>
+        </div>
+
+        <!-- Available Programs Dynamic Grid (Clean Hierarchy, No Random Emojis) -->
+        <div class="program-selection-grid" id="programsSelectionGrid">
+          <!-- Populated dynamically via payments.js from /api/programs -->
+        </div>
+
+        <!-- No Filter Match Box -->
+        <div class="table-empty-box checkout-empty-card" id="catalogNoFilterMatchState" style="display: none; margin-top: 30px;">
+          <h2 class="empty-state-title" data-i18n="payments.no_programs_match_title">لا توجد برامج مطابقة لهذا الفلتر</h2>
+          <p class="empty-state-desc" data-i18n="payments.no_programs_match_desc">لم يتم العثور على برامج تطابق خيارات التصفية الحالية. يمكنك إعادة تعيين الفلتر للاطلاع على كافة البرامج المتاحة.</p>
+          <div style="margin-top: 16px;">
+            <button type="button" class="btn btn-primary btn-sm" id="btnResetProgramsFilter" data-i18n="payments.reset_programs_filter_btn">عرض كافة البرامج</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 2: DEDICATED BOOKING PREPARATION & PAYMENT OPTIONS  -->
+      <!-- ======================================================== -->
+      <section id="bookingPreparationView" style="display: none;">
+        
+        <!-- Dedicated Return Action Directly Beneath Navbar (Section 1.A) -->
+        <div class="payment-step-nav-bar">
+          <button type="button" class="payment-back-btn" id="btnReturnToCatalog" aria-label="العودة لاختيار برنامج آخر">
+            <svg class="back-arrow-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span data-i18n="payments.return_to_catalog_btn">العودة لاختيار برنامج آخر</span>
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div class="payment-page-header">
+          <h1 class="payment-page-title" data-i18n="payments.preparation_heading">تفاصيل البرنامج وخيارات السداد</h1>
+          <p class="payment-page-subtitle" data-i18n="payments.preparation_subheading">مراجعة كافة مواصفات ومميزات البرنامج المعتمد وتحديد عدد المسافرين وخيار السداد المناسب قبل الدفع.</p>
+        </div>
+
+        <!-- Simulation Notice Banner -->
+        <div class="simulation-notice-banner">
+          <div class="sim-notice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="sim-notice-content">
+            <h2 class="sim-notice-title" data-i18n="payments.notice_simulated">عملية دفع تجريبية — لا يتم خصم أي أموال حقيقية</h2>
+            <p class="sim-notice-desc" data-i18n="payments.notice_simulated_desc">نظام الدفع هذا مخصص للمحاكاة واختبار تجربة المستخدم فقط. لا يتطلب إدخال بيانات بطاقات بنكية حقيقية.</p>
+          </div>
+        </div>
+
+        <!-- Preparation 2-Column Layout -->
+        <div class="prep-layout-grid">
+          
+          <!-- Column 1: Program Specifications & Included Features -->
+          <section class="checkout-card prep-overview-card" aria-labelledby="prepProgramTitle">
+            <div class="program-card-badge-row" style="margin-bottom: 12px;">
+              <span class="program-category-badge" id="prepProgramCategory">—</span>
+              <span class="select-card-badge badge-verified" id="prepProgramEligibilityBadge" data-i18n="payments.available_for_mock_pay">متاح للسداد التجريبي</span>
+            </div>
+
+            <h2 class="prep-program-title" id="prepProgramTitle">—</h2>
+            <p class="prep-program-desc" id="prepProgramDescription">—</p>
+
+            <div class="prep-specs-list" id="prepSpecsList">
+              <div class="prep-spec-item">
+                <span class="prep-spec-label" data-i18n="payments.spec_season">الموسم:</span>
+                <span class="prep-spec-val" id="prepSeasonVal">—</span>
+              </div>
+              <div class="prep-spec-item">
+                <span class="prep-spec-label" data-i18n="payments.spec_duration">المدة:</span>
+                <span class="prep-spec-val" id="prepDurationVal">—</span>
+              </div>
+              <div class="prep-spec-item">
+                <span class="prep-spec-label" data-i18n="payments.spec_hotel">مستوى الإقامة:</span>
+                <span class="prep-spec-val" id="prepHotelVal">—</span>
+              </div>
+              <div class="prep-spec-item">
+                <span class="prep-spec-label" data-i18n="payments.spec_proximity">القرب من الحرم:</span>
+                <span class="prep-spec-val" id="prepProximityVal">—</span>
+              </div>
+              <div class="prep-spec-item">
+                <span class="prep-spec-label" data-i18n="payments.spec_transport">وسيلة النقل:</span>
+                <span class="prep-spec-val" id="prepTransportVal">—</span>
+              </div>
+            </div>
+
+            <div class="prep-features-section">
+              <h3 class="prep-features-heading" data-i18n="payments.included_features_title">الخدمات والمزايا المشمولة في الباقة</h3>
+              <ul class="prep-features-list" id="prepFeaturesList">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+
+            <div class="prep-price-basis-box">
+              <span class="basis-label" data-i18n="payments.unit_price_label">سعر الفرد المعتمد:</span>
+              <strong class="basis-val" id="prepUnitPriceVal">—</strong>
+            </div>
+          </section>
+
+          <!-- Column 2: Traveler Selector, Payment Choice, Live Calculations -->
+          <section class="checkout-card prep-controls-card" aria-label="خيارات الحجز والسداد">
+            
+            <!-- Step A: Traveler Selector Dedicated Module (Miqat UI/UX Consistent) -->
+            <div class="prep-module-card prep-travelers-module">
+              <div class="prep-module-header">
+                <div class="prep-module-icon-ring" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div class="prep-module-title-box">
+                  <h3 class="prep-module-title" data-i18n="payments.travelers_section_title">تحديد عدد المسافرين</h3>
+                  <p class="prep-module-subtitle" data-i18n="payments.travelers_section_subtitle">اختر عدد الأفراد المشمولين في الحجز لاحتساب التكلفة بدقة</p>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="prepTravelersSelect" class="form-label" data-i18n="payments.travelers_select_label">عدد الأفراد المسافرين:</label>
+                <div class="select-wrapper traveler-select-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <select id="prepTravelersSelect" class="form-select has-icon traveler-select-control" aria-describedby="prepTravelersHint">
+                    <option value="1" selected>١ فرد</option>
+                    <option value="2">٢ أفراد</option>
+                    <option value="3">٣ أفراد</option>
+                    <option value="4">٤ أفراد</option>
+                    <option value="5">٥ أفراد</option>
+                  </select>
+                  <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <div class="form-note-wrapper">
+                  <svg class="note-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                  <span class="form-note" id="prepTravelersHint" data-i18n="payments.travelers_count_hint">الحد الأقصى للتسجيل عبر النظام التجريبي ٥ مسافرين للعملية الواحدة.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step B: Payment Plan Choice (30% deposit vs Full payment) -->
+            <div class="prep-section-group">
+              <h3 class="prep-group-title" data-i18n="payments.payment_plan_title">اختيار خطة السداد المناسبة</h3>
+              <div class="payment-plan-options" role="radiogroup" aria-label="خيارات السداد">
+                
+                <!-- Option 1: Deposit 30% -->
+                <div class="plan-option-card is-selected" id="planOptionDepositCard" data-plan="deposit_30" role="radio" aria-checked="true" tabindex="0">
+                  <div class="plan-card-header">
+                    <div class="plan-radio-indicator"></div>
+                    <div class="plan-title-wrap">
+                      <strong class="plan-title" data-i18n="payments.plan_deposit_30_title">سداد دفعة مقدمة (٣٠٪)</strong>
+                      <span class="plan-badge" data-i18n="payments.plan_deposit_30_badge">دفعة مقدمة ٣٠٪</span>
+                    </div>
+                  </div>
+                  <p class="plan-desc" data-i18n="payments.plan_deposit_30_desc">دفع ٣٠٪ فقط من إجمالي الباقة لتثبيت الحجز التجريبي، مع تسوية المبلغ المتبقي لاحقاً.</p>
+                  <div class="plan-figures-box">
+                    <div class="plan-fig-row">
+                      <span data-i18n="payments.payable_now_badge">مستحق السداد الآن:</span>
+                      <strong class="fig-val is-due" id="planDepositDueVal">—</strong>
+                    </div>
+                    <div class="plan-fig-row">
+                      <span data-i18n="payments.remaining_badge">المتبقي لاحقاً:</span>
+                      <span class="fig-val" id="planDepositRemainVal">—</span>
+                    </div>
+                  </div>
+                  <div class="plan-policy-note" data-i18n="payments.plan_deposit_30_note">يتم تسوية المبلغ المتبقي قبل موعد انطلاق الرحلة وفق شروط الحجز وسياسات التفويج المعتمدة.</div>
+                </div>
+
+                <!-- Option 2: Full Payment 100% -->
+                <div class="plan-option-card" id="planOptionFullCard" data-plan="full" role="radio" aria-checked="false" tabindex="0">
+                  <div class="plan-card-header">
+                    <div class="plan-radio-indicator"></div>
+                    <div class="plan-title-wrap">
+                      <strong class="plan-title" data-i18n="payments.plan_full_title">سداد كامل المبلغ (١٠٠٪)</strong>
+                      <span class="plan-badge" data-i18n="payments.plan_full_badge">سداد كامل ١٠٠٪</span>
+                    </div>
+                  </div>
+                  <p class="plan-desc" data-i18n="payments.plan_full_desc">تسوية كامل قيمة الباقة مسبقاً وتأكيد السداد التجريبي بالكامل بدون أي التزامات مالية متبقية.</p>
+                  <div class="plan-figures-box">
+                    <div class="plan-fig-row">
+                      <span data-i18n="payments.payable_now_badge">مستحق السداد الآن:</span>
+                      <strong class="fig-val is-due" id="planFullDueVal">—</strong>
+                    </div>
+                    <div class="plan-fig-row">
+                      <span data-i18n="payments.remaining_badge">المتبقي لاحقاً:</span>
+                      <span class="fig-val" id="planFullRemainVal">0 ج.م</span>
+                    </div>
+                  </div>
+                  <div class="plan-policy-note" data-i18n="payments.plan_full_note">سداد فوري لكامل قيمة البرنامج دون أي مطالبات مالية لاحقة.</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Step C: Live Calculation Summary & Proceed Button -->
+            <div class="prep-summary-bar">
+              <div class="summary-line">
+                <span data-i18n="payments.summary_package_subtotal">إجمالي قيمة الباقة:</span>
+                <strong id="prepSummaryPackageTotal">—</strong>
+              </div>
+              <div class="summary-line">
+                <span data-i18n="payments.summary_selected_plan">خطة السداد المختارة:</span>
+                <strong id="prepSummaryPlanName">دفعة مقدمة (٣٠٪)</strong>
+              </div>
+              <div class="summary-line is-highlight">
+                <span data-i18n="payments.summary_payable_now">المبلغ المستحق سداده الآن:</span>
+                <strong class="highlight-val" id="prepSummaryPayableNow">—</strong>
+              </div>
+              <div class="summary-line is-remaining" id="prepSummaryRemainingRow">
+                <span data-i18n="payments.summary_remaining_balance">المبلغ المتبقي لاحقاً:</span>
+                <strong id="prepSummaryRemainingBalance">—</strong>
+              </div>
+              <button type="button" class="btn btn-primary btn-block btn-lg" id="btnProceedToCheckout" style="margin-top: 18px;">
+                <span data-i18n="payments.proceed_to_payment_btn">متابعة إلى تأكيد الدفع ←</span>
+              </button>
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 3: CHECKOUT EXECUTION & SCENARIO FORM               -->
+      <!-- ======================================================== -->
+      <section id="checkoutExecutionView" style="display: none;">
+        
+        <!-- Dedicated Return / Edit Section Directly Beneath Navbar (Section 1.B) -->
+        <div class="checkout-step-navigation-bar">
+          <button type="button" class="payment-back-btn checkout-edit-nav-btn" id="btnReturnToPrep" aria-label="العودة لتعديل تفاصيل الحجز وخيار السداد">
+            <svg class="back-arrow-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span class="btn-edit-text" data-i18n="payments.return_to_preparation_btn">العودة لتعديل تفاصيل الحجز وخيار السداد</span>
+          </button>
+          <span class="checkout-step-hint" data-i18n="payments.checkout_edit_hint">يمكنك مراجعة أو تعديل عدد المسافرين وخطة السداد قبل إتمام المعاملة</span>
+        </div>
+
+        <!-- Page Header -->
+        <div class="payment-page-header">
+          <h1 class="payment-page-title" data-i18n="payments.checkout_review_heading">مراجعة وتأكيد السداد التجريبي</h1>
+          <p class="payment-page-subtitle" data-i18n="payments.checkout_review_subheading">مراجعة تفاصيل الحجز وخطة السداد المحددة وتنفيذ محاكاة الدفع عبر النظام الداخلي للمنصة.</p>
+        </div>
+
+        <!-- Mandatory Simulation Notice Banner -->
+        <div class="simulation-notice-banner">
+          <div class="sim-notice-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="sim-notice-content">
+            <h2 class="sim-notice-title" data-i18n="payments.notice_simulated">عملية دفع تجريبية — لا يتم خصم أي أموال حقيقية</h2>
+            <p class="sim-notice-desc" data-i18n="payments.notice_simulated_desc">نظام الدفع هذا مخصص للمحاكاة واختبار تجربة المستخدم فقط. لا يتطلب إدخال بيانات بطاقات بنكية حقيقية.</p>
+          </div>
+        </div>
+
+        <!-- Price Unverified Safeguard Alert -->
+        <div class="price-unverified-alert" id="priceUnverifiedAlert" style="display: none;">
+          <svg class="price-unverified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <h3 class="price-unverified-title" data-i18n="payments.price_unverified_title">السعر بانتظار التأكيد الرسمي</h3>
+          <p class="price-unverified-desc" data-i18n="payments.price_unverified_desc">هذا البرنامج يتطلب تأكيد السعر الرسمي من إدارة ميقات قبل إتمام الدفع.</p>
+          <button type="button" class="btn btn-primary" id="btnUnverifiedChangeProgram" data-i18n="payments.select_program_cta">اختيار برنامج آخر متاح للسداد</button>
+        </div>
+
+        <!-- Checkout 2-Column Execution Grid -->
+        <div class="checkout-grid" id="checkoutGridArea">
+          
+          <!-- Column 1: Booking & Payment Breakdown Card -->
+          <section class="checkout-card" id="programSummaryCard" aria-labelledby="programSummaryTitle">
+            <h2 class="checkout-card-title" id="programSummaryTitle">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span data-i18n="payments.program_summary">ملخص البرنامج المختار</span>
+            </h2>
+
+            <div class="program-summary-hero">
+              <h3 class="program-summary-name" id="checkoutProgramTitle">عمرة اقتصادية معتمدة</h3>
+              <span class="program-summary-category" id="checkoutProgramCategory">umrah_economy</span>
+            </div>
+
+            <!-- Traveler Count Display (Readonly Summary - NO duplicate dropdown) -->
+            <div class="confirmed-travelers-display" id="confirmedTravelersRow">
+              <span class="confirmed-label" data-i18n="payments.confirmed_travelers_label">عدد المسافرين المعتمد:</span>
+              <strong class="confirmed-val" id="checkoutConfirmedTravelers">1 فرد</strong>
+            </div>
+
+            <!-- Authoritative Financial Breakdown (Section 7.C) -->
+            <div class="price-summary-box">
+              <div class="price-row">
+                <span class="price-label" data-i18n="payments.summary_package_subtotal">إجمالي قيمة الباقة:</span>
+                <strong class="price-val" id="checkoutPackageTotal">—</strong>
+              </div>
+              <div class="price-row">
+                <span class="price-label" data-i18n="payments.summary_selected_plan">خطة السداد:</span>
+                <strong class="price-val" id="checkoutSelectedPlan">—</strong>
+              </div>
+              <div class="price-row is-total">
+                <span class="price-label" data-i18n="payments.summary_payable_now">المبلغ المستحق سداده الآن:</span>
+                <strong class="total-val" id="checkoutPayableNow">—</strong>
+              </div>
+              <div class="price-row" id="checkoutRemainingRow">
+                <span class="price-label" data-i18n="payments.summary_remaining_balance">المبلغ المتبقي لاحقاً:</span>
+                <strong class="price-val" id="checkoutRemainingBalance">—</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- Column 2: Simulation Execution Form & Graceful In-Page Alert -->
+          <section class="checkout-card" id="checkoutFormCard" aria-labelledby="paymentExecutionTitle">
+            <h2 class="checkout-card-title" id="paymentExecutionTitle">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+              <span data-i18n="payments.checkout_heading">تأكيد تفاصيل الدفع التجريبي</span>
+            </h2>
+
+            <!-- In-Page Graceful Alert Container (Section 8 - Replaces browser alerts) -->
+            <div class="checkout-error-alert" id="checkoutErrorAlert" style="display: none;" role="alert">
+              <div class="alert-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="alert-content-box">
+                <strong class="alert-title" id="checkoutErrorTitle">تنبيه</strong>
+                <p class="alert-desc" id="checkoutErrorDesc"></p>
+                <div id="checkoutErrorActionArea" style="margin-top: 10px; display: none;">
+                  <a href="login.html?redirect=checkout.html" class="btn btn-primary btn-sm" id="checkoutErrorActionBtn" data-i18n="payments.login_now_btn">تسجيل الدخول</a>
+                </div>
+              </div>
+            </div>
+
+            <form id="checkoutForm" novalidate>
+              
+              <!-- Simulation Scenario Selector -->
+              <div class="form-group" style="margin-bottom: 26px;">
+                <span class="form-label" data-i18n="payments.simulation_scenario_label">سيناريو التجربة المطلوب اختباره:</span>
+                
+                <div class="scenario-options-group">
+                  <!-- Option 1: Success -->
+                  <label class="scenario-option-card is-selected">
+                    <input type="radio" name="simScenario" value="success" checked>
+                    <div class="scenario-card-info">
+                      <div class="scenario-card-title" data-i18n="payments.scenario_success">محاكاة دفع ناجح (مقبول)</div>
+                      <div class="scenario-card-desc" data-i18n="payments.scenario_success_desc">يقوم النظام بتأكيد المعاملة وإصدار إيصال السداد التجريبي المعتمد فوراً.</div>
+                    </div>
+                  </label>
+
+                  <!-- Option 2: Decline / Fail -->
+                  <label class="scenario-option-card">
+                    <input type="radio" name="simScenario" value="fail">
+                    <div class="scenario-card-info">
+                      <div class="scenario-card-title" data-i18n="payments.scenario_fail">محاكاة فشل المعاملة (رفض بنكي تجريبي)</div>
+                      <div class="scenario-card-desc" data-i18n="payments.scenario_fail_desc">محاكاة رفض العملية البنكية لاختبار التعامل الآمن مع العمليات غير الناجحة.</div>
+                    </div>
+                  </label>
+
+                  <!-- Option 3: Customer Cancellation -->
+                  <label class="scenario-option-card">
+                    <input type="radio" name="simScenario" value="cancel">
+                    <div class="scenario-card-info">
+                      <div class="scenario-card-title" data-i18n="payments.scenario_cancel">محاكاة إلغاء المعاملة من قِبل العميل</div>
+                      <div class="scenario-card-desc" data-i18n="payments.scenario_cancel_desc">محاكاة تراجع العميل عن إتمام العملية قبل خصم المبلغ التجريبي.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Confirm Submit Button -->
+              <button type="submit" class="btn btn-primary" id="submitPaymentBtn" style="width: 100%; min-height: 52px;">
+                <span class="btn-text" data-i18n="payments.confirm_pay_btn">تأكيد وتنفيذ الدفع التجريبي</span>
+              </button>
+
+            </form>
+          </section>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== FUTURE SCOPE MODAL (MY ACCOUNT) ==================== -->
+  <div id="futureScopeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-box account-choice-box" style="text-align: center; max-width: 460px;">
+      <button type="button" class="modal-close-btn" data-close-future-modal aria-label="إغلاق النافذة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-icon-wrap" style="margin: 0 auto 1rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(209, 177, 108, 0.15); color: var(--color-accent);">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <h3 id="futureScopeTitle" class="modal-title" data-i18n="account_modal.title">الملف الشخصي للعميل</h3>
+      <p class="modal-desc" id="futureScopeDesc" style="margin-top: 8px;" data-i18n="account_modal.desc">
+        جاري تطوير لوحة تحكم متكاملة لإدارة حجوزاتك ومستنداتك الشخصية.
+      </p>
+      <div style="margin-top: 1.5rem;">
+        <button type="button" class="btn btn-primary" data-close-future-modal style="min-width: 140px;" data-i18n="account_modal.got_it">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./payments.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميقات — سجل المدفوعات</title>
+  <meta name="description" content="سجل المعاملات والمدفوعات لبرامج الحج والعمرة عبر منصة ميقات.">
+
+  <!-- Google Fonts: Aref Ruqaa, Cormorant Garamond, IBM Plex Sans Arabic, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="programs-page payment-page" data-page-id="transactions" data-page-title-key="payments.history_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Desktop Customer Navigation Links (Exact Match to programs.html) -->
+      <nav class="nav-desktop" aria-label="التنقل الرئيسي للعملاء">
+        <a href="programs.html" class="nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="nav-link" data-i18n="nav.payments" title="المدفوعات">المدفوعات</a>
+        <a href="transactions.html" class="nav-link is-active" aria-current="page" data-i18n="nav.payment_history" title="سجل المدفوعات">سجل المدفوعات</a>
+        <a href="my-account.html" class="nav-link" id="navMyAccountLink" data-i18n="nav.my_account" title="الملف الشخصي للعميل">حسابي</a>
+      </nav>
+
+      <!-- Header Utilities -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية" title="تغيير اللغة إلى الإنجليزية">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Client Identity Area (Avatar + Logout Button) -->
+        <div id="headerAuthArea" class="client-auth-area">
+          <a href="my-account.html" class="client-avatar" id="clientAvatar" role="link" aria-label="حساب العميل" title="حساب العميل">
+            <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
+          </a>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-client-card" id="mobileClientCard">
+        <a href="my-account.html" class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-label="حساب العميل" title="حساب العميل">
+          <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
+        </a>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileClientName">العميل</span>
+          <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
+        </div>
+      </div>
+
+      <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
+        <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
+        <a href="programs.html" class="mobile-nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="mobile-nav-link" data-i18n="nav.payments">المدفوعات</a>
+        <a href="transactions.html" class="mobile-nav-link is-active" aria-current="page" data-i18n="nav.payment_history">سجل المدفوعات</a>
+        <a href="my-account.html" class="mobile-nav-link" id="mobileMyAccountLink" data-i18n="nav.my_account">حسابي</a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة إلى الإنجليزية">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تفعيل الوضع الداكن">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN TRANSACTIONS CONTENT ==================== -->
+  <main class="payment-main" id="main-content">
+    <div class="payment-container">
+      
+      <!-- Page Header -->
+      <div class="payment-page-header">
+        <h1 class="payment-page-title" data-i18n="payments.history_heading">سجل المعاملات والمدفوعات التجريبية</h1>
+        <p class="payment-page-subtitle" data-i18n="payments.history_subheading">استعراض كافة عمليات السداد التجريبية الخاصة بحسابك مع إمكانية عرض وطباعة الإيصالات.</p>
+      </div>
+
+      <!-- Filters Toolbar (Visible ONLY in populated or filter-search states) -->
+      <div class="transactions-filter-bar" id="transactionsFilterBar" style="display: none;">
+        <div class="filter-tabs-list" role="tablist" aria-label="تصفية المعاملات حسب الحالة">
+          <button type="button" class="filter-tab-btn is-active" data-filter="all" role="tab" aria-selected="true" data-i18n="payments.filter_all">كافة المعاملات</button>
+          <button type="button" class="filter-tab-btn" data-filter="paid" role="tab" aria-selected="false" data-i18n="payments.filter_paid">العمليات الناجحة</button>
+          <button type="button" class="filter-tab-btn" data-filter="refunded" role="tab" aria-selected="false" data-i18n="payments.filter_refunded">العمليات المستردة</button>
+          <button type="button" class="filter-tab-btn" data-filter="failed" role="tab" aria-selected="false" data-i18n="payments.filter_failed">العمليات غير الناجحة</button>
+          <button type="button" class="filter-tab-btn" data-filter="cancelled" role="tab" aria-selected="false" data-i18n="payments.filter_cancelled">العمليات الملغاة</button>
+        </div>
+      </div>
+
+      <!-- State A: Coherent Loading Indicator -->
+      <div class="table-empty-box checkout-empty-card" id="transactionsLoadingState" style="display: none;">
+        <div class="loading-spinner" style="margin: 0 auto 16px; width: 38px; height: 38px; border: 3px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite;" aria-hidden="true"></div>
+        <p class="empty-state-desc" style="font-weight: 600;" data-i18n="payments.loading_text">جاري تحميل البيانات...</p>
+      </div>
+
+      <!-- State B: Clean Polished Empty State (0 Transactions on Account) -->
+      <div class="table-empty-box checkout-empty-card" id="transactionsEmptyState" style="display: none;">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+          <line x1="2" y1="10" x2="22" y2="10"></line>
+        </svg>
+        <h2 class="empty-state-title" data-i18n="payments.empty_history_title">لا توجد مدفوعات حتى الآن</h2>
+        <p class="empty-state-desc" data-i18n="payments.empty_history_desc">عندما تقوم بإجراء أول عملية دفع، ستظهر تفاصيلها هنا.</p>
+        <a href="programs.html" class="btn btn-primary" data-i18n="payments.empty_history_cta">استعرض البرامج</a>
+      </div>
+
+      <!-- State C: Request Error State (API or Network Failure) -->
+      <div class="table-empty-box checkout-empty-card" id="transactionsErrorState" style="display: none;">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="color: var(--color-validation-border);">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <h2 class="empty-state-title" data-i18n="payments.error_load_failed">تعذر تحميل سجل المدفوعات. يُرجى المحاولة مرة أخرى.</h2>
+        <div style="margin-top: 18px;">
+          <button type="button" class="btn btn-primary btn-sm" id="transactionsRetryBtn" data-i18n="payments.retry_load_btn">إعادة المحاولة</button>
+        </div>
+      </div>
+
+      <!-- State Unauth: Authentication Required (Case C) -->
+      <div class="table-empty-box checkout-empty-card" id="transactionsUnauthState" style="display: none;">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="color: var(--color-accent);">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <h2 class="empty-state-title" data-i18n="payments.unauth_history_title">سجل المدفوعات يتطلب تسجيل الدخول</h2>
+        <p class="empty-state-desc" data-i18n="payments.unauth_history_desc">يرجى تسجيل الدخول بحساب العميل لاستعراض سجل معاملاتك وإيصالاتك المعتمدة.</p>
+        <div style="margin-top: 18px;">
+          <a href="login.html?redirect=transactions.html" class="btn btn-primary" data-i18n="payments.login_now_btn">تسجيل الدخول</a>
+        </div>
+      </div>
+
+      <!-- State E: Filter Produces No Matching Records -->
+      <div class="table-empty-box checkout-empty-card" id="transactionsNoFilterMatchState" style="display: none;">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        <h2 class="empty-state-title" data-i18n="payments.no_filter_match_title">لا توجد معاملات مطابقة لهذا الفلتر</h2>
+        <p class="empty-state-desc" data-i18n="payments.no_filter_match_desc">لم يتم العثور على أي معاملات مسجلة ضمن هذه الفئة حالياً. يمكنك تصفح الفئات الأخرى أو إعادة تعيين الفلتر.</p>
+        <button type="button" class="btn btn-primary btn-sm" id="btnResetFilter" data-i18n="payments.reset_filter_btn">عرض كافة المعاملات</button>
+      </div>
+
+      <!-- State D: Populated Transactions Responsive Table -->
+      <div class="table-responsive-wrapper" id="transactionsTableArea" style="display: none;">
+        <table class="miqat-data-table" aria-label="جدول المعاملات المالية">
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="payments.table_ref">الرقم المرجعي</th>
+              <th scope="col" data-i18n="payments.table_program">البرنامج</th>
+              <th scope="col" data-i18n="payments.table_travelers">الأفراد</th>
+              <th scope="col" data-i18n="payments.table_amount">المبلغ</th>
+              <th scope="col" data-i18n="payments.table_date">التاريخ</th>
+              <th scope="col" data-i18n="payments.table_status">الحالة</th>
+              <th scope="col" style="text-align: end;" data-i18n="payments.table_actions">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTableBody">
+            <!-- Dynamically populated via payments.js -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== FUTURE SCOPE MODAL (MY ACCOUNT) ==================== -->
+  <div id="futureScopeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-box account-choice-box" style="text-align: center; max-width: 460px;">
+      <button type="button" class="modal-close-btn" data-close-future-modal aria-label="إغلاق النافذة">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-icon-wrap" style="margin: 0 auto 1rem; width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(209, 177, 108, 0.15); color: var(--color-accent);">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <h3 id="futureScopeTitle" class="modal-title">الملف الشخصي للعميل</h3>
+      <p class="modal-desc" id="futureScopeDesc" style="margin-top: 8px;">
+        جاري تطوير لوحة تحكم متكاملة لإدارة حجوزاتك ومستنداتك الشخصية.
+      </p>
+      <div style="margin-top: 1.5rem;">
+        <button type="button" class="btn btn-primary" data-close-future-modal style="min-width: 140px;">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./payments.js"></script>
+</body>
+</html>

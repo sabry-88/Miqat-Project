@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="account.page_title">حسابي | ميقات</title>
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="programs-page payment-page account-page" data-page-id="account" data-page-title-key="account.page_title">
+
+  <!-- ==================== SITE HEADER / CUSTOMER NAVBAR ==================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="48" height="48">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="48" height="48">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline">MIQAT PLATFORM</span>
+        </div>
+      </a>
+
+      <!-- Desktop Customer Navigation Links (Identical to programs.html) -->
+      <nav class="nav-desktop" aria-label="التنقل الرئيسي للعملاء">
+        <a href="programs.html" class="nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="nav-link" data-i18n="nav.payments" title="المدفوعات">المدفوعات</a>
+        <a href="transactions.html" class="nav-link" data-i18n="nav.payment_history" title="سجل المدفوعات">سجل المدفوعات</a>
+        <a href="my-account.html" class="nav-link is-active" id="navMyAccountLink" aria-current="page" data-i18n="nav.my_account" title="الملف الشخصي للعميل">حسابي</a>
+      </nav>
+
+      <!-- Header Utilities -->
+      <div class="header-actions">
+        <!-- Language Switcher -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Client Identity Area (Avatar + Logout Button) -->
+        <div id="headerAuthArea" class="client-auth-area">
+          <a href="my-account.html" class="client-avatar" id="clientAvatar" role="link" aria-label="حساب العميل" title="حساب العميل">
+            <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
+          </a>
+          <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE DRAWER NAVIGATION ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Client Identity Card -->
+      <div class="mobile-client-card" id="mobileClientCard">
+        <a href="my-account.html" class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-label="حساب العميل" title="حساب العميل">
+          <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
+        </a>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileClientName">العميل</span>
+          <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
+        </div>
+      </div>
+
+      <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
+        <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
+        <a href="programs.html" class="mobile-nav-link" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
+        <a href="checkout.html" class="mobile-nav-link" data-i18n="nav.payments">المدفوعات</a>
+        <a href="transactions.html" class="mobile-nav-link" data-i18n="nav.payment_history">سجل المدفوعات</a>
+        <a href="my-account.html" class="mobile-nav-link is-active" id="mobileMyAccountLink" aria-current="page" data-i18n="nav.my_account">حسابي</a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تفعيل الوضع الداكن">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+        <button type="button" class="mobile-logout-btn" id="mobileLogoutBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN PAGE CONTENT ==================== -->
+  <main class="account-main-content">
+    <div class="container account-container">
+
+      <!-- Navigation Item Directly Beneath Navbar (Section 5) -->
+      <div class="account-step-nav-bar">
+        <a href="programs.html" class="payment-back-btn account-back-btn is-active" aria-label="الرحلات">
+          <svg class="back-arrow-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span data-i18n="account.nav_trips">رحلات</span>
+        </a>
+      </div>
+
+      <!-- Page Header -->
+      <header class="account-page-header">
+        <span class="account-header-badge" data-i18n="account.badge">الملف الشخصي</span>
+        <h1 class="account-header-title" data-i18n="account.heading">الملف الشخصي والحساب</h1>
+        <p class="account-header-subtitle" data-i18n="account.subheading">عرض وتحديث بياناتك الشخصية ومعلومات الاتصال المعتمدة على منصة ميقات</p>
+      </header>
+
+      <!-- Unauthenticated Alert Card (Hidden by default) -->
+      <div class="account-unauth-card" id="accountUnauthCard" style="display: none;">
+        <div class="unauth-icon-wrap">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h2 class="unauth-title" data-i18n="account.auth_required_title">تسجيل الدخول مطلوب</h2>
+        <p class="unauth-desc" data-i18n="account.auth_required_desc">يرجى تسجيل الدخول للوصول إلى بيانات حسابك وإدارة معلوماتك الشخصية.</p>
+        <a href="index.html" class="btn btn-primary account-btn" data-i18n="account.btn_login">تسجيل الدخول</a>
+      </div>
+
+      <!-- Account Feedback Alert (Success / Error banner) -->
+      <div class="account-alert" id="accountAlert" role="alert" style="display: none;" aria-live="polite">
+        <div class="account-alert-icon" id="accountAlertIcon"></div>
+        <div class="account-alert-body">
+          <strong class="account-alert-title" id="accountAlertTitle"></strong>
+          <span class="account-alert-message" id="accountAlertMessage"></span>
+        </div>
+        <button type="button" class="account-alert-close" id="accountAlertClose" aria-label="إغلاق التنبيه">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Account Grid -->
+      <div class="account-grid" id="accountGrid">
+
+        <!-- ================= CARD 1: IDENTITY & REGISTRATION (READ-ONLY) ================= -->
+        <section class="account-card account-identity-card" aria-labelledby="cardIdentityTitle">
+          <div class="account-card-header">
+            <h2 class="account-card-title" id="cardIdentityTitle" data-i18n="account.card_identity_title">البيانات الأساسية والهوية</h2>
+            <p class="account-card-subtitle" data-i18n="account.card_identity_subtitle">بيانات العميل المعتمدة لدى المنصة</p>
+          </div>
+
+          <div class="account-card-body">
+            
+            <!-- Avatar Medallion and Basic Identity -->
+            <div class="account-avatar-banner">
+              <div class="account-avatar-medallion" id="accountAvatarMedallion">
+                <span id="accountAvatarLetter">م</span>
+              </div>
+              <div class="account-avatar-meta">
+                <div class="account-status-pill verified">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span data-i18n="account.status_verified">عميل مسجل ومعتمد</span>
+                </div>
+                <div class="account-role-tag" data-i18n="account.role_customer">عميل منصة ميقات</div>
+              </div>
+            </div>
+
+            <!-- Customer Full Name (Strictly Immutable) -->
+            <div class="account-field-group">
+              <div class="account-field-label-row">
+                <label class="account-field-label" data-i18n="account.name_label">الاسم الكامل</label>
+                <span class="immutable-pill" title="معتمد وغير قابل للتعديل">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <span data-i18n="account.name_immutable_badge">معتمد وغير قابل للتعديل</span>
+                </span>
+              </div>
+              
+              <!-- Non-editable Display Box -->
+              <div class="account-immutable-box" id="accountCustomerNameBox">
+                <span class="account-immutable-val" id="accountCustomerName">—</span>
+              </div>
+              <p class="account-field-hint immutable-hint" data-i18n="account.name_immutable_hint">الاسم مسجل ومعتمد بموجب الهوية الرسمية ولا يمكن تعديله ذاتياً للحفاظ على سلامة الحجوزات والمعاملات الرسمية.</p>
+            </div>
+
+            <!-- Authoritative Metadata List (Registration date, Governorate) -->
+            <div class="account-meta-list">
+              
+              <!-- Registration Date -->
+              <div class="account-meta-item">
+                <div class="meta-item-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <div class="meta-item-content">
+                  <span class="meta-item-label" data-i18n="account.registration_date_label">تاريخ إنشاء الحساب</span>
+                  <strong class="meta-item-value font-numeric" id="accountCreatedAtDisplay">—</strong>
+                </div>
+              </div>
+
+              <!-- Registered Governorate -->
+              <div class="account-meta-item">
+                <div class="meta-item-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="meta-item-content">
+                  <span class="meta-item-label" data-i18n="account.governorate_label">المحافظة</span>
+                  <strong class="meta-item-value" id="accountGovernorateDisplay">—</strong>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= CARD 2: CONTACT INFORMATION (EDITABLE) ================= -->
+        <section class="account-card account-contact-card" aria-labelledby="cardContactTitle">
+          <div class="account-card-header">
+            <h2 class="account-card-title" id="cardContactTitle" data-i18n="account.card_contact_title">معلومات الاتصال القابلة للتحديث</h2>
+            <p class="account-card-subtitle" data-i18n="account.card_contact_subtitle">يمكنك تحديث رقم الموبايل والبريد الإلكتروني لتلقي إشعارات الحجوزات</p>
+          </div>
+
+          <div class="account-card-body">
+            <form id="accountContactForm" novalidate>
+              
+              <!-- Primary Phone Number / WhatsApp -->
+              <div class="account-form-group">
+                <label for="accountPhoneInput" class="account-field-label">
+                  <span data-i18n="account.phone_label">رقم الموبايل / واتساب</span>
+                  <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                    <span class="required-dot" aria-hidden="true"></span>
+                    <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                  </span>
+                </label>
+                
+                <div class="account-input-wrap">
+                  <svg class="input-prefix-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <input type="tel" id="accountPhoneInput" class="account-form-input font-numeric" dir="ltr" placeholder="01012345678" required autocomplete="tel">
+                </div>
+                
+                <p class="account-field-hint" data-i18n="account.phone_hint">يقبل أرقام الموبايل المصرية (010, 011, 012, 015) المعتمدة على واتساب</p>
+                <div class="account-field-error" id="accountPhoneError" role="alert" style="display: none;"></div>
+              </div>
+
+              <!-- Email Address -->
+              <div class="account-form-group">
+                <label for="accountEmailInput" class="account-field-label">
+                  <span data-i18n="account.email_label">البريد الإلكتروني</span>
+                </label>
+                
+                <div class="account-input-wrap">
+                  <svg class="input-prefix-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <input type="email" id="accountEmailInput" class="account-form-input" dir="ltr" placeholder="example@domain.com" autocomplete="email">
+                </div>
+                
+                <p class="account-field-hint" data-i18n="account.email_hint">يُستخدم لاستلام إيصالات الدفع وتفاصيل الحجوزات الرسمية</p>
+                <div class="account-field-error" id="accountEmailError" role="alert" style="display: none;"></div>
+              </div>
+
+              <!-- Action Buttons Row -->
+              <div class="account-actions-row">
+                <button type="submit" id="accountSaveBtn" class="btn btn-primary account-btn account-save-btn">
+                  <span class="account-btn-spinner" id="accountSaveSpinner" style="display: none;" aria-hidden="true"></span>
+                  <span id="accountSaveBtnText" data-i18n="account.save_btn">حفظ التعديلات</span>
+                </button>
+                <button type="button" id="accountCancelBtn" class="btn btn-outline account-btn account-cancel-btn" data-i18n="account.cancel_btn">إلغاء واسترجاع البيانات</button>
+              </div>
+
+            </form>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-title">مـيـقـات</span>
+        <span class="brand-tagline">MIQAT PLATFORM</span>
+      </div>
+      <p class="footer-copy">© 2026 جميع الحقوق محفوظة لمنصة ميقات لتنظيم رحلات الحج والعمرة المعتمدة.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./payments.js"></script>
+</body>
+</html>

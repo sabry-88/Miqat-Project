@@ -42,20 +42,14 @@
         <!-- 1. Hajj & Umrah Programs (Current Page - Active) -->
         <a href="programs.html" class="nav-link is-active" aria-current="page" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
         
-        <!-- 2. Payments (Future Scope - Graceful notice) -->
-        <a href="#payments" class="nav-link nav-link-future" data-future-item="payments" aria-disabled="true" data-i18n="nav.payments" title="المدفوعات الإلكترونية — قيد التطوير">
-          المدفوعات
-          <span class="nav-future-badge" data-i18n="nav.coming_soon">قريباً</span>
-        </a>
+        <!-- 2. Payments -->
+        <a href="checkout.html" class="nav-link" data-i18n="nav.payments" title="المدفوعات">المدفوعات</a>
 
         <!-- 3. Payment History (Future Scope - Graceful notice) -->
-        <a href="#payment-history" class="nav-link nav-link-future" data-future-item="payment-history" aria-disabled="true" data-i18n="nav.payment_history" title="سجل المدفوعات — قيد التطوير">
-          سجل المدفوعات
-          <span class="nav-future-badge" data-i18n="nav.coming_soon">قريباً</span>
-        </a>
+        <a href="transactions.html" class="nav-link" data-i18n="nav.payment_history" title="سجل المدفوعات">سجل المدفوعات</a>
 
         <!-- 4. Customer Profile (Future Scope / Auth Linked) -->
-        <a href="#my-account" class="nav-link nav-link-future" id="navMyAccountLink" data-future-item="my-account" data-i18n="nav.my_account" title="الملف الشخصي للعميل">
+        <a href="my-account.html" class="nav-link" id="navMyAccountLink" data-i18n="nav.my_account" title="الملف الشخصي للعميل">
           حسابي
         </a>
       </nav>
@@ -88,9 +82,9 @@
 
         <!-- Client Identity Area (Avatar + Logout Button) -->
         <div id="headerAuthArea" class="client-auth-area">
-          <div class="client-avatar" id="clientAvatar" role="img" aria-label="حساب العميل" title="حساب العميل">
+          <a href="my-account.html" class="client-avatar" id="clientAvatar" role="link" aria-label="حساب العميل" title="حساب العميل">
             <span class="client-avatar-initial" id="clientAvatarInitial">م</span>
-          </div>
+          </a>
           <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -135,9 +129,9 @@
 
       <!-- Mobile Client Identity Card -->
       <div class="mobile-client-card" id="mobileClientCard">
-        <div class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-hidden="true">
+        <a href="my-account.html" class="client-avatar mobile-client-avatar" id="mobileClientAvatar" aria-label="حساب العميل" title="حساب العميل">
           <span class="client-avatar-initial" id="mobileClientAvatarInitial">م</span>
-        </div>
+        </a>
         <div class="mobile-client-info">
           <span class="mobile-client-name" id="mobileClientName">العميل</span>
           <span class="mobile-client-badge" data-i18n="nav.customer_tag">عميل</span>
@@ -147,9 +141,9 @@
       <nav class="mobile-nav-links" aria-label="قائمة التنقل للهواتف">
         <a href="index.html" class="mobile-nav-link" data-i18n="nav.home">الرئيسية</a>
         <a href="programs.html" class="mobile-nav-link is-active" aria-current="page" data-i18n="nav.hajj_umrah_programs">رحلات الحج والعمرة</a>
-        <a href="#payments" class="mobile-nav-link nav-link-future" data-future-item="payments" data-i18n="nav.payments">المدفوعات (قريباً)</a>
-        <a href="#payment-history" class="mobile-nav-link nav-link-future" data-future-item="payment-history" data-i18n="nav.payment_history">سجل المدفوعات (قريباً)</a>
-        <a href="#my-account" class="mobile-nav-link nav-link-future" id="mobileMyAccountLink" data-future-item="my-account" data-i18n="nav.my_account">حسابي</a>
+        <a href="checkout.html" class="mobile-nav-link" data-i18n="nav.payments">المدفوعات</a>
+        <a href="transactions.html" class="mobile-nav-link" data-i18n="nav.payment_history">سجل المدفوعات</a>
+        <a href="my-account.html" class="mobile-nav-link" id="mobileMyAccountLink" data-i18n="nav.my_account">حسابي</a>
       </nav>
 
       <div class="mobile-nav-footer">

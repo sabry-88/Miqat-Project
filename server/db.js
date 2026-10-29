@@ -102,7 +102,61 @@ function initSchema() {
     CREATE INDEX IF NOT EXISTS idx_requests_status ON requests(status);
     CREATE INDEX IF NOT EXISTS idx_requests_customer ON requests(customer_phone);
     CREATE INDEX IF NOT EXISTS idx_programs_category ON programs(category);
+
+    CREATE TABLE IF NOT EXISTS payments (
+      id TEXT PRIMARY KEY,
+      reference TEXT UNIQUE NOT NULL,
+      customer_id TEXT NOT NULL,
+      customer_name TEXT NOT NULL,
+      customer_phone TEXT NOT NULL,
+      customer_email TEXT,
+      request_id TEXT,
+      program_id TEXT NOT NULL,
+      program_title_ar TEXT NOT NULL,
+      program_title_en TEXT NOT NULL,
+      travelers_count INTEGER NOT NULL DEFAULT 1,
+      currency TEXT NOT NULL DEFAULT 'EGP',
+      unit_price INTEGER NOT NULL,
+      package_total INTEGER,
+      payment_option TEXT DEFAULT 'full',
+      remaining_amount INTEGER DEFAULT 0,
+      total_amount INTEGER NOT NULL,
+      status TEXT NOT NULL DEFAULT 'Pending',
+      simulated_method TEXT NOT NULL DEFAULT 'mock_card',
+      idempotency_key TEXT UNIQUE,
+      failure_reason TEXT,
+      paid_at TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      audit_log_json TEXT NOT NULL DEFAULT '[]',
+      FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE RESTRICT,
+      FOREIGN KEY (program_id) REFERENCES programs(id) ON DELETE RESTRICT
+    );
+
+    CREATE TABLE IF NOT EXISTS refunds (
+      id TEXT PRIMARY KEY,
+      payment_reference TEXT UNIQUE NOT NULL,
+      amount INTEGER NOT NULL,
+      currency TEXT NOT NULL DEFAULT 'EGP',
+      reason TEXT NOT NULL,
+      admin_id TEXT NOT NULL,
+      admin_name TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      audit_log_json TEXT NOT NULL DEFAULT '[]',
+      FOREIGN KEY (payment_reference) REFERENCES payments(reference) ON DELETE RESTRICT,
+      FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE RESTRICT
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_payments_reference ON payments(reference);
+    CREATE INDEX IF NOT EXISTS idx_payments_customer ON payments(customer_id);
+    CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
+    CREATE INDEX IF NOT EXISTS idx_payments_created ON payments(created_at);
+    CREATE INDEX IF NOT EXISTS idx_refunds_payment ON refunds(payment_reference);
   `);
+
+  try { db.exec("ALTER TABLE payments ADD COLUMN package_total INTEGER"); } catch (e) {}
+  try { db.exec("ALTER TABLE payments ADD COLUMN payment_option TEXT DEFAULT 'full'"); } catch (e) {}
+  try { db.exec("ALTER TABLE payments ADD COLUMN remaining_amount INTEGER DEFAULT 0"); } catch (e) {}
 }
 
 /**
@@ -454,7 +508,42 @@ function getUserByPhoneOrEmail(identifier) {
 
 function getUserById(id) {
   if (!id) return null;
-  return db.prepare('SELECT id, name, phone, email, governorate, role, created_at FROM users WHERE id = ?').get(id);
+  return db.prepare('SELECT id, name, phone, email, governorate, role, created_at, updated_at FROM users WHERE id = ?').get(id);
+}
+
+function checkPhoneOrEmailExists(phone, email, excludeUserId) {
+  if (phone) {
+    const cleanPhone = normalizePhone(phone);
+    const existing = db.prepare('SELECT id FROM users WHERE phone = ? AND id != ?').get(cleanPhone, excludeUserId || '');
+    if (existing) return { conflict: 'phone' };
+  }
+  if (email && String(email).trim()) {
+    const cleanEmail = String(email).trim().toLowerCase();
+    const existing = db.prepare('SELECT id FROM users WHERE LOWER(email) = ? AND id != ?').get(cleanEmail, excludeUserId || '');
+    if (existing) return { conflict: 'email' };
+  }
+  return null;
+}
+
+function updateUserProfile(userId, { phone, email } = {}) {
+  if (!userId) throw new Error('USER_ID_REQUIRED');
+  const user = getUserById(userId);
+  if (!user) throw new Error('USER_NOT_FOUND');
+
+  const now = new Date().toISOString();
+  const newPhone = phone !== undefined ? normalizePhone(phone) : user.phone;
+  const newEmail = email !== undefined ? (email && String(email).trim() ? String(email).trim() : null) : user.email;
+
+  // Name is strictly excluded from this parameterized update
+  db.prepare(`
+    UPDATE users
+    SET phone = ?,
+        email = ?,
+        updated_at = ?
+    WHERE id = ?
+  `).run(newPhone, newEmail, now, userId);
+
+  return getUserById(userId);
 }
 
 function createUser({ name, phone, email, governorate, password, role = 'customer' }) {
@@ -705,12 +794,349 @@ function recordWhatsAppDispatched(id, { mode = 'prefilled_link_opened' } = {}) {
   return getRequestById(id);
 }
 
+// --- Admin Secure Provisioning ---
+function provisionAdminUser({ phone, password, name = 'مدير النظام (مسؤول المدفوعات)', email = 'admin@miqat.test' }) {
+  if (!phone || !password) {
+    throw new Error('ADMIN_PROVISION_MISSING_CREDENTIALS');
+  }
+  const cleanPhone = normalizePhone(phone);
+  const { salt, hash } = hashPassword(password);
+  const now = new Date().toISOString();
+
+  const existing = db.prepare('SELECT id FROM users WHERE phone = ?').get(cleanPhone);
+  if (existing) {
+    db.prepare(`
+      UPDATE users
+      SET role = 'admin',
+          name = COALESCE(?, name),
+          email = COALESCE(?, email),
+          password_salt = ?,
+          password_hash = ?,
+          updated_at = ?
+      WHERE id = ?
+    `).run(name, email, salt, hash, now, existing.id);
+    return getUserById(existing.id);
+  } else {
+    const adminId = `usr_adm_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+    db.prepare(`
+      INSERT INTO users (id, name, phone, email, governorate, role, password_salt, password_hash, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, 'admin', ?, ?, ?, ?)
+    `).run(adminId, name, cleanPhone, email, 'cairo', salt, hash, now, now);
+    return getUserById(adminId);
+  }
+}
+
+// Check startup environment variables for initial admin bootstrap
+if (process.env.MIQAT_ADMIN_PHONE && process.env.MIQAT_ADMIN_PASSWORD) {
+  try {
+    provisionAdminUser({
+      phone: process.env.MIQAT_ADMIN_PHONE,
+      password: process.env.MIQAT_ADMIN_PASSWORD,
+      name: process.env.MIQAT_ADMIN_NAME || 'مدير النظام المعتمد',
+      email: process.env.MIQAT_ADMIN_EMAIL || 'admin@miqat.test'
+    });
+    console.log('[Security] Admin user provisioned from environment configuration.');
+  } catch (err) {
+    console.error('[Security] Failed to provision admin user:', err.message);
+  }
+}
+
+// --- Payments & Refunds Repository ---
+
+function createPaymentRecord({
+  id,
+  reference,
+  customerId,
+  customerName,
+  customerPhone,
+  customerEmail,
+  requestId,
+  programId,
+  programTitleAr,
+  programTitleEn,
+  travelersCount = 1,
+  currency = 'EGP',
+  unitPrice,
+  packageTotal = null,
+  paymentOption = 'full',
+  remainingAmount = 0,
+  totalAmount,
+  status = 'Pending',
+  simulatedMethod = 'mock_card',
+  idempotencyKey = null
+}) {
+  const now = new Date().toISOString();
+  const pkgTotalVal = packageTotal != null ? packageTotal : totalAmount;
+  const planLabel = paymentOption === 'deposit_30' ? '30% Deposit' : 'Full Payment';
+  const initialAudit = JSON.stringify([
+    {
+      timestamp: now,
+      action: 'PAYMENT_INITIATED',
+      actor: customerName,
+      details: `Simulated payment initiated for ${travelersCount} traveler(s) - Plan: ${planLabel} - Paid now: ${totalAmount} ${currency} (Package: ${pkgTotalVal} ${currency})`
+    }
+  ]);
+
+  db.prepare(`
+    INSERT INTO payments (
+      id, reference, customer_id, customer_name, customer_phone, customer_email,
+      request_id, program_id, program_title_ar, program_title_en, travelers_count,
+      currency, unit_price, package_total, payment_option, remaining_amount, total_amount,
+      status, simulated_method, idempotency_key,
+      created_at, updated_at, audit_log_json
+    ) VALUES (
+      ?, ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?,
+      ?, ?, ?,
+      ?, ?, ?
+    )
+  `).run(
+    id,
+    reference,
+    customerId,
+    customerName,
+    customerPhone,
+    customerEmail || null,
+    requestId || null,
+    programId,
+    programTitleAr,
+    programTitleEn,
+    travelersCount,
+    currency,
+    unitPrice,
+    pkgTotalVal,
+    paymentOption,
+    remainingAmount,
+    totalAmount,
+    status,
+    simulatedMethod,
+    idempotencyKey || null,
+    now,
+    now,
+    initialAudit
+  );
+
+  return getPaymentByReference(reference);
+}
+
+function getPaymentByReference(reference) {
+  if (!reference) return null;
+  const row = db.prepare('SELECT * FROM payments WHERE reference = ?').get(reference);
+  if (!row) return null;
+
+  let refund = null;
+  if (row.status === 'Refunded') {
+    refund = db.prepare('SELECT * FROM refunds WHERE payment_reference = ?').get(reference);
+    if (refund) {
+      refund.audit_log = JSON.parse(refund.audit_log_json || '[]');
+    }
+  }
+
+  return {
+    ...row,
+    audit_log: JSON.parse(row.audit_log_json || '[]'),
+    refund
+  };
+}
+
+function getPaymentByIdempotencyKey(key) {
+  if (!key) return null;
+  const row = db.prepare('SELECT * FROM payments WHERE idempotency_key = ?').get(key);
+  if (!row) return null;
+  return getPaymentByReference(row.reference);
+}
+
+function getPaymentsByCustomerId(customerId, { status, limit = 50, offset = 0 } = {}) {
+  if (!customerId) return [];
+  let query = 'SELECT * FROM payments WHERE customer_id = ?';
+  const params = [customerId];
+
+  if (status && status !== 'all') {
+    query += ' AND status = ?';
+    params.push(status);
+  }
+
+  query += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
+  params.push(limit, offset);
+
+  const rows = db.prepare(query).all(...params);
+  return rows.map(r => ({
+    ...r,
+    audit_log: JSON.parse(r.audit_log_json || '[]')
+  }));
+}
+
+function getAllPaymentsAdmin({ search, status, limit = 50, offset = 0 } = {}) {
+  let query = 'SELECT * FROM payments WHERE 1=1';
+  const params = [];
+
+  if (status && status !== 'all') {
+    query += ' AND status = ?';
+    params.push(status);
+  }
+
+  if (search && search.trim()) {
+    const term = `%${search.trim()}%`;
+    query += ' AND (reference LIKE ? OR customer_phone LIKE ? OR customer_name LIKE ?)';
+    params.push(term, term, term);
+  }
+
+  query += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
+  params.push(limit, offset);
+
+  const rows = db.prepare(query).all(...params);
+  return rows.map(r => {
+    let refund = null;
+    if (r.status === 'Refunded') {
+      refund = db.prepare('SELECT * FROM refunds WHERE payment_reference = ?').get(r.reference);
+      if (refund) {
+        refund.audit_log = JSON.parse(refund.audit_log_json || '[]');
+      }
+    }
+    return {
+      ...r,
+      audit_log: JSON.parse(r.audit_log_json || '[]'),
+      refund
+    };
+  });
+}
+
+function updatePaymentStatus(reference, {
+  status,
+  failureReason = null,
+  paidAt = null,
+  actor = 'System',
+  details = ''
+}) {
+  const payment = getPaymentByReference(reference);
+  if (!payment) return null;
+
+  const now = new Date().toISOString();
+  const audit = payment.audit_log || [];
+  audit.push({
+    timestamp: now,
+    action: `STATUS_${status.toUpperCase()}`,
+    actor,
+    details: details || `Payment status changed from ${payment.status} to ${status}`
+  });
+
+  db.prepare(`
+    UPDATE payments
+    SET status = ?,
+        failure_reason = COALESCE(?, failure_reason),
+        paid_at = COALESCE(?, paid_at),
+        updated_at = ?,
+        audit_log_json = ?
+    WHERE reference = ?
+  `).run(
+    status,
+    failureReason,
+    paidAt,
+    now,
+    JSON.stringify(audit),
+    reference
+  );
+
+  return getPaymentByReference(reference);
+}
+
+function executeRefundAtomic({ paymentReference, reason, adminId, adminName }) {
+  const cleanReason = (reason || '').trim();
+  if (!cleanReason || cleanReason.length < 5 || cleanReason.length > 500) {
+    throw new Error('REFUND_REASON_INVALID');
+  }
+
+  db.exec('BEGIN IMMEDIATE;');
+  try {
+    const payment = db.prepare('SELECT * FROM payments WHERE reference = ?').get(paymentReference);
+    if (!payment) {
+      throw new Error('PAYMENT_NOT_FOUND');
+    }
+    if (payment.status !== 'Paid') {
+      throw new Error('PAYMENT_NOT_ELIGIBLE_FOR_REFUND');
+    }
+
+    const existingRefund = db.prepare('SELECT id FROM refunds WHERE payment_reference = ?').get(paymentReference);
+    if (existingRefund) {
+      throw new Error('PAYMENT_ALREADY_REFUNDED');
+    }
+
+    const now = new Date().toISOString();
+    const audit = JSON.parse(payment.audit_log_json || '[]');
+    audit.push({
+      timestamp: now,
+      action: 'PAYMENT_REFUNDED',
+      actor: adminName,
+      details: `Simulated refund of ${payment.total_amount} ${payment.currency} processed by Admin ${adminName} (${adminId}). Reason: ${cleanReason}`
+    });
+
+    const updateRes = db.prepare(`
+      UPDATE payments
+      SET status = 'Refunded',
+          updated_at = ?,
+          audit_log_json = ?
+      WHERE reference = ? AND status = 'Paid'
+    `).run(now, JSON.stringify(audit), paymentReference);
+
+    if (updateRes.changes === 0) {
+      throw new Error('PAYMENT_STATUS_CONFLICT');
+    }
+
+    const randSuffix = crypto.randomBytes(3).toString('hex').toUpperCase();
+    const refundId = `MQT-REF-${Date.now()}-${randSuffix}`;
+    const refundAudit = JSON.stringify([{
+      timestamp: now,
+      action: 'REFUND_RECORDED',
+      actor: adminName,
+      details: `Mock refund recorded for transaction reference ${paymentReference}`
+    }]);
+
+    db.prepare(`
+      INSERT INTO refunds (
+        id, payment_reference, amount, currency, reason, admin_id, admin_name, created_at, audit_log_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      refundId,
+      paymentReference,
+      payment.total_amount,
+      payment.currency,
+      cleanReason,
+      adminId,
+      adminName,
+      now,
+      refundAudit
+    );
+
+    db.exec('COMMIT;');
+    return getPaymentByReference(paymentReference);
+  } catch (err) {
+    try {
+      db.exec('ROLLBACK;');
+    } catch (rbErr) {}
+    throw err;
+  }
+}
+
+function getRefundByPaymentReference(paymentReference) {
+  if (!paymentReference) return null;
+  const row = db.prepare('SELECT * FROM refunds WHERE payment_reference = ?').get(paymentReference);
+  if (!row) return null;
+  return {
+    ...row,
+    audit_log: JSON.parse(row.audit_log_json || '[]')
+  };
+}
+
 module.exports = {
   db,
+  normalizePhone,
   verifyPassword,
   hashPassword,
   getUserByPhoneOrEmail,
   getUserById,
+  checkPhoneOrEmailExists,
+  updateUserProfile,
   createUser,
   createSession,
   getUserBySessionToken,
@@ -721,5 +1147,14 @@ module.exports = {
   getRequestById,
   getAllRequests,
   updateRequestStatus,
-  recordWhatsAppDispatched
+  recordWhatsAppDispatched,
+  provisionAdminUser,
+  createPaymentRecord,
+  getPaymentByReference,
+  getPaymentByIdempotencyKey,
+  getPaymentsByCustomerId,
+  getAllPaymentsAdmin,
+  updatePaymentStatus,
+  executeRefundAtomic,
+  getRefundByPaymentReference
 };

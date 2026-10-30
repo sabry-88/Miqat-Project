@@ -157,6 +157,10 @@ function initSchema() {
   try { db.exec("ALTER TABLE payments ADD COLUMN package_total INTEGER"); } catch (e) {}
   try { db.exec("ALTER TABLE payments ADD COLUMN payment_option TEXT DEFAULT 'full'"); } catch (e) {}
   try { db.exec("ALTER TABLE payments ADD COLUMN remaining_amount INTEGER DEFAULT 0"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN company_name TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN responsible_person TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN license_number TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active'"); } catch (e) {}
 }
 
 /**
@@ -484,10 +488,69 @@ function seedTestCustomer() {
   );
 }
 
+/**
+ * Seed Test Existing Partner Company Account
+ * Target: AL DORRA TRAVEL
+ * Phone: 01156379990
+ * Email: aldorra@gmail.com
+ * Responsible Person: محمد سعيد
+ * License: 47852
+ * Governorate: الجيزة
+ * Password: Asabry753## (Secured with scrypt + salt. Never stored plaintext)
+ */
+function seedTestCompany() {
+  const phone = '01156379990';
+  const initialPassword = process.env.TEST_COMPANY_PASSWORD || 'Asabry753##';
+  const { salt, hash } = hashPassword(initialPassword);
+  const now = new Date().toISOString();
+
+  const existing = db.prepare('SELECT id FROM users WHERE phone = ?').get(phone);
+  if (existing) {
+    db.prepare(`
+      UPDATE users
+      SET name = 'AL DORRA TRAVEL',
+          company_name = 'AL DORRA TRAVEL',
+          responsible_person = 'محمد سعيد',
+          license_number = '47852',
+          email = 'aldorra@gmail.com',
+          governorate = 'الجيزة',
+          role = 'company',
+          status = 'active',
+          password_salt = ?,
+          password_hash = ?,
+          updated_at = ?
+      WHERE phone = ?
+    `).run(salt, hash, now, phone);
+    return;
+  }
+
+  db.prepare(`
+    INSERT INTO users (
+      id, name, phone, email, governorate, role, company_name, responsible_person, license_number, status, password_salt, password_hash, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'usr_comp_01156379990',
+    'AL DORRA TRAVEL',
+    phone,
+    'aldorra@gmail.com',
+    'الجيزة',
+    'company',
+    'AL DORRA TRAVEL',
+    'محمد سعيد',
+    '47852',
+    'active',
+    salt,
+    hash,
+    now,
+    now
+  );
+}
+
 // Initialize tables and initial data
 initSchema();
 seedPrograms();
 seedTestCustomer();
+seedTestCompany();
 
 /**
  * Repository Methods
@@ -508,7 +571,7 @@ function getUserByPhoneOrEmail(identifier) {
 
 function getUserById(id) {
   if (!id) return null;
-  return db.prepare('SELECT id, name, phone, email, governorate, role, created_at, updated_at FROM users WHERE id = ?').get(id);
+  return db.prepare('SELECT id, name, phone, email, governorate, role, company_name, responsible_person, license_number, status, created_at, updated_at FROM users WHERE id = ?').get(id);
 }
 
 function checkPhoneOrEmailExists(phone, email, excludeUserId) {
@@ -1149,6 +1212,7 @@ module.exports = {
   updateRequestStatus,
   recordWhatsAppDispatched,
   provisionAdminUser,
+  seedTestCompany,
   createPaymentRecord,
   getPaymentByReference,
   getPaymentByIdempotencyKey,

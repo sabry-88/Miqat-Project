@@ -13,6 +13,7 @@ const path = require('path');
 const db = require('./db');
 const whatsapp = require('./whatsapp');
 const mockPaymentService = require('./mockPaymentService');
+const companyMockData = require('./companyMockData');
 
 const PORT = process.env.PORT || 4173;
 const ROOT_DIR = path.resolve(__dirname, '..', 'Miqat UI-UX');
@@ -220,6 +221,10 @@ const server = http.createServer(async (req, res) => {
         email: user.email,
         governorate: user.governorate,
         role: user.role,
+        company_name: user.company_name || (user.role === 'company' ? user.name : null),
+        responsible_person: user.responsible_person || null,
+        license_number: user.license_number || null,
+        status: user.status || 'active',
         created_at: user.created_at
       };
 
@@ -368,6 +373,67 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       return sendJson(res, 500, { success: false, error: 'SERVER_ERROR', message: err.message });
     }
+  }
+
+  // 7c. GET /api/company/dashboard (Partner Company Dashboard Analytics)
+  if (pathname === '/api/company/dashboard' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const period = searchParams.get('period') || 'all';
+    const specificDate = searchParams.get('date') || null;
+    const metrics = companyMockData.getDashboardMetrics(period, specificDate);
+
+    // Merge authoritative session user details
+    metrics.company = {
+      ...metrics.company,
+      id: sessionUser.id,
+      name: sessionUser.name,
+      responsible_person: sessionUser.responsible_person || 'محمد سعيد',
+      phone: sessionUser.phone,
+      email: sessionUser.email,
+      governorate: sessionUser.governorate || 'الجيزة',
+      license_number: sessionUser.license_number || '47852',
+      status: sessionUser.status || 'active'
+    };
+
+    return sendJson(res, 200, {
+      success: true,
+      data: metrics
+    });
+  }
+
+  // 7d. GET /api/company/profile (Partner Company Profile)
+  if (pathname === '/api/company/profile' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    return sendJson(res, 200, {
+      success: true,
+      company: {
+        id: sessionUser.id,
+        name: sessionUser.name,
+        company_name: sessionUser.company_name || sessionUser.name,
+        responsible_person: sessionUser.responsible_person || 'محمد سعيد',
+        phone: sessionUser.phone,
+        email: sessionUser.email,
+        governorate: sessionUser.governorate || 'الجيزة',
+        license_number: sessionUser.license_number || '47852',
+        role: sessionUser.role,
+        status: sessionUser.status || 'active',
+        created_at: sessionUser.created_at
+      }
+    });
   }
 
   // 8. POST /api/requests (Submit Program Details Inquiry)

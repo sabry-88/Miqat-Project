@@ -1221,14 +1221,27 @@
           } catch (e) {}
         }
 
-        // Determine Customer Dashboard target route
-        let target = 'programs.html';
+        // Determine role-based target route
+        let defaultTarget = 'programs.html';
+        if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
+          defaultTarget = 'company-dashboard.html';
+        } else if (result.user && result.user.role === 'admin') {
+          defaultTarget = 'admin-transactions.html';
+        }
+
+        let target = defaultTarget;
         try {
           const params = new URLSearchParams(window.location.search);
           const redirectParam = params.get('redirect');
           if (redirectParam) {
             const decoded = decodeURIComponent(redirectParam).trim();
-            if (decoded === 'program' || decoded === 'programs') {
+            if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
+              if (decoded.includes('company')) {
+                target = decoded.endsWith('.html') ? decoded : `${decoded}.html`;
+              } else {
+                target = 'company-dashboard.html';
+              }
+            } else if (decoded === 'program' || decoded === 'programs') {
               params.delete('redirect');
               const remaining = params.toString();
               target = remaining ? `programs.html?${remaining}` : 'programs.html';
@@ -1241,7 +1254,7 @@
             }
           }
         } catch (e) {
-          target = 'programs.html';
+          target = defaultTarget;
         }
 
         // Immediate redirect to existing Customer Dashboard

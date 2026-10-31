@@ -145,6 +145,19 @@
     const remainingAmount = totalPrice - paidAmount;
     const refNum = 1045 - i;
 
+    // Canonical booking status and payment status tokens
+    let bookingStatus = 'new';
+    if (status === 'Confirmed') bookingStatus = 'confirmed';
+    else if (status === 'Pending') bookingStatus = 'under_review';
+    else if (status === 'Rejected') bookingStatus = 'rejected';
+
+    let paymentStatus = 'unpaid';
+    if (paidAmount === totalPrice && totalPrice > 0) {
+      paymentStatus = 'fully_paid';
+    } else if (paidAmount > 0) {
+      paymentStatus = (paidAmount === Math.round(totalPrice * 0.3)) ? 'deposit_paid' : 'partially_paid';
+    }
+
     RAW_BOOKINGS.push({
       id: `bkg_${1000 + i}`,
       reference: `BK-2026-${String(refNum).padStart(4, '0')}`,
@@ -162,6 +175,8 @@
       paidAmount,
       remainingAmount,
       status,
+      bookingStatus,
+      paymentStatus,
       bookingDate: date,
       currency: 'EGP'
     });
@@ -461,6 +476,78 @@
     };
   }
 
+  /**
+   * Multi-criteria filter query evaluator for company bookings
+   */
+  function getBookings(filters = {}) {
+    let list = [...RAW_BOOKINGS];
+
+    if (!filters) return list;
+
+    const { search, program, programId, dateFrom, dateTo, bookingDate, bookingStatus, paymentStatus } = filters;
+
+    if (search && search.trim()) {
+      const q = search.trim().toLowerCase();
+      list = list.filter(b => 
+        b.reference.toLowerCase().includes(q) ||
+        (b.customerName_ar && b.customerName_ar.toLowerCase().includes(q)) ||
+        (b.customerName_en && b.customerName_en.toLowerCase().includes(q))
+      );
+    }
+
+    if (program && program !== 'all' && program !== 'All') {
+      list = list.filter(b => 
+        b.programId === program || 
+        b.programName_en.toLowerCase() === program.toLowerCase() || 
+        b.programName_ar === program
+      );
+    }
+
+    if (programId && programId !== 'all') {
+      list = list.filter(b => b.programId === programId);
+    }
+
+    if (dateFrom) {
+      list = list.filter(b => b.bookingDate >= dateFrom);
+    }
+
+    if (dateTo) {
+      list = list.filter(b => b.bookingDate <= dateTo);
+    }
+
+    if (bookingDate) {
+      list = list.filter(b => b.bookingDate === bookingDate);
+    }
+
+    if (bookingStatus && bookingStatus !== 'all' && bookingStatus !== 'All') {
+      const bs = bookingStatus.toLowerCase();
+      list = list.filter(b => {
+        const bStatus = (b.bookingStatus || '').toLowerCase();
+        const sStatus = (b.status || '').toLowerCase();
+        if (bs === 'under_review' || bs === 'pending') {
+          return bStatus === 'under_review' || sStatus === 'pending';
+        }
+        return bStatus === bs || sStatus === bs;
+      });
+    }
+
+    if (paymentStatus && paymentStatus !== 'all' && paymentStatus !== 'All') {
+      const ps = paymentStatus.toLowerCase();
+      list = list.filter(b => (b.paymentStatus || '').toLowerCase() === ps);
+    }
+
+    return list;
+  }
+
+  function getBookingById(idOrRef) {
+    if (!idOrRef) return null;
+    const target = String(idOrRef).trim().toLowerCase();
+    return RAW_BOOKINGS.find(b => 
+      b.id.toLowerCase() === target || 
+      b.reference.toLowerCase() === target
+    ) || null;
+  }
+
   return {
     COMPANY_INFO,
     PROGRAMS,
@@ -468,7 +555,9 @@
     RAW_BOOKINGS,
     ACTIVITIES_FEED,
     NOTIFICATIONS,
-    getDashboardMetrics
+    getDashboardMetrics,
+    getBookings,
+    getBookingById
   };
 });
 

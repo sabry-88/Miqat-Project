@@ -436,6 +436,55 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  // 7e. GET /api/company/bookings (Partner Company Bookings List)
+  if (pathname === '/api/company/bookings' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const search = searchParams.get('search') || '';
+    const program = searchParams.get('program') || '';
+    const dateFrom = searchParams.get('dateFrom') || '';
+    const dateTo = searchParams.get('dateTo') || '';
+    const bookingStatus = searchParams.get('bookingStatus') || '';
+    const paymentStatus = searchParams.get('paymentStatus') || '';
+
+    const bookings = companyMockData.getBookings({ search, program, dateFrom, dateTo, bookingStatus, paymentStatus });
+
+    return sendJson(res, 200, {
+      success: true,
+      totalCount: companyMockData.RAW_BOOKINGS.length,
+      filteredCount: bookings.length,
+      data: bookings
+    });
+  }
+
+  // 7f. GET /api/company/bookings/:id (Single Booking Details)
+  if (pathname.startsWith('/api/company/bookings/') && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const bookingId = decodeURIComponent(pathname.replace('/api/company/bookings/', '').trim());
+    const booking = companyMockData.getBookingById(bookingId);
+    if (!booking) {
+      return sendJson(res, 404, { success: false, error: 'Booking not found' });
+    }
+
+    return sendJson(res, 200, {
+      success: true,
+      data: booking
+    });
+  }
+
   // 8. POST /api/requests (Submit Program Details Inquiry)
   if (pathname === '/api/requests' && req.method === 'POST') {
     try {

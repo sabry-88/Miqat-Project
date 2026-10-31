@@ -108,7 +108,8 @@
     });
 
     updateDateDisplay();
-    renderDashboard(currentPeriod);
+    if (currentUser) updateCompanyIdentityUI(currentUser);
+    renderCurrentPage();
   }
 
   // --- Theme Toggle ---
@@ -243,6 +244,7 @@
 
   // --- Render Dashboard with Mock Data Engine ---
   function renderDashboard(period = 'all', specificDate = null) {
+    if (document.body && document.body.dataset.pageId !== 'company-dashboard') return;
     currentPeriod = period;
     currentSpecificDate = specificDate;
 
@@ -1211,9 +1213,14 @@
     }
 
     document.querySelectorAll('[data-company-section]').forEach(el => {
+      const sec = el.getAttribute('data-company-section');
+      const href = el.getAttribute('href');
+      // If element is a real page link, let it navigate normally
+      if (sec === 'dashboard' || sec === 'bookings') return;
+      if (href && !href.startsWith('#')) return;
+
       el.addEventListener('click', (e) => {
         e.preventDefault();
-        const sec = el.getAttribute('data-company-section');
         openModal(sec);
       });
     });
@@ -1460,6 +1467,642 @@
     });
   }
 
+  // =========================================================================
+  // PAGE DISPATCHER & BOOKINGS ENGINE (SECTION 2 & 3)
+  // =========================================================================
+
+  function renderCurrentPage() {
+    const pageId = document.body ? document.body.dataset.pageId : '';
+    if (pageId === 'company-dashboard') {
+      renderDashboard(currentPeriod, currentSpecificDate);
+    } else if (pageId === 'company-bookings') {
+      renderBookingsPage();
+    } else if (pageId === 'company-booking-details') {
+      renderBookingDetailsPage();
+    }
+  }
+
+  let bookingsFilterState = {
+    search: '',
+    program: '',
+    dateFrom: '',
+    dateTo: '',
+    bookingStatus: '',
+    paymentStatus: ''
+  };
+
+  const BOOKING_STATUS_MAP = {
+    confirmed: { ar: 'مؤكد', en: 'Confirmed', class: 'status-confirmed' },
+    new: { ar: 'جديد', en: 'New', class: 'status-new' },
+    under_review: { ar: 'تحت الإجراء', en: 'Under Review', class: 'status-under_review' },
+    pending: { ar: 'تحت الإجراء', en: 'Under Review', class: 'status-under_review' },
+    rejected: { ar: 'مرفوض', en: 'Rejected', class: 'status-rejected' },
+    cancelled: { ar: 'ملغي', en: 'Cancelled', class: 'status-cancelled' },
+    changed: { ar: 'معدل', en: 'Changed', class: 'status-changed' }
+  };
+
+  const PAYMENT_STATUS_MAP = {
+    fully_paid: { ar: 'مسدد بالكامل', en: 'Fully Paid', class: 'status-fully_paid' },
+    paid: { ar: 'مسدد بالكامل', en: 'Fully Paid', class: 'status-fully_paid' },
+    deposit_paid: { ar: 'مسدد الدفعة المقدمة', en: 'Deposit Paid', class: 'status-deposit_paid' },
+    partially_paid: { ar: 'مسدد جزئياً', en: 'Partially Paid', class: 'status-partially_paid' },
+    unpaid: { ar: 'غير مسدد', en: 'Unpaid', class: 'status-unpaid' },
+    refund_pending: { ar: 'قيد استرداد المبلغ', en: 'Refund Pending', class: 'status-refund_pending' },
+    refunded: { ar: 'مسترد', en: 'Refunded', class: 'status-refunded' }
+  };
+
+  function setupBookingsPage() {
+    const searchInput = document.getElementById('bookingsSearchInput');
+    const clearSearchBtn = document.getElementById('btnClearSearch');
+    const progSelect = document.getElementById('filterProgramSelect');
+    const dateFromInput = document.getElementById('filterDateFrom');
+    const dateToInput = document.getElementById('filterDateTo');
+    const bStatusSelect = document.getElementById('filterBookingStatusSelect');
+    const pStatusSelect = document.getElementById('filterPaymentStatusSelect');
+    const resetBtn = document.getElementById('btnResetAllFilters');
+    const emptyResetBtn = document.getElementById('btnEmptyStateReset');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        bookingsFilterState.search = e.target.value.trim();
+        if (clearSearchBtn) clearSearchBtn.style.display = bookingsFilterState.search ? 'flex' : 'none';
+        renderBookingsPage();
+      });
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        bookingsFilterState.search = '';
+        clearSearchBtn.style.display = 'none';
+        renderBookingsPage();
+      });
+    }
+
+    if (progSelect) {
+      progSelect.addEventListener('change', (e) => {
+        bookingsFilterState.program = e.target.value;
+        renderBookingsPage();
+      });
+    }
+
+    if (dateFromInput) {
+      dateFromInput.addEventListener('change', (e) => {
+        bookingsFilterState.dateFrom = e.target.value;
+        renderBookingsPage();
+      });
+    }
+
+    if (dateToInput) {
+      dateToInput.addEventListener('change', (e) => {
+        bookingsFilterState.dateTo = e.target.value;
+        renderBookingsPage();
+      });
+    }
+
+    if (bStatusSelect) {
+      bStatusSelect.addEventListener('change', (e) => {
+        bookingsFilterState.bookingStatus = e.target.value;
+        updateSummaryCardsActiveState(bookingsFilterState.bookingStatus);
+        renderBookingsPage();
+      });
+    }
+
+    if (pStatusSelect) {
+      pStatusSelect.addEventListener('change', (e) => {
+        bookingsFilterState.paymentStatus = e.target.value;
+        renderBookingsPage();
+      });
+    }
+
+    const resetHandler = () => {
+      bookingsFilterState = {
+        search: '',
+        program: '',
+        dateFrom: '',
+        dateTo: '',
+        bookingStatus: '',
+        paymentStatus: ''
+      };
+      if (searchInput) searchInput.value = '';
+      if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+      if (progSelect) progSelect.value = '';
+      if (dateFromInput) dateFromInput.value = '';
+      if (dateToInput) dateToInput.value = '';
+      if (bStatusSelect) bStatusSelect.value = '';
+      if (pStatusSelect) pStatusSelect.value = '';
+      updateSummaryCardsActiveState('all');
+      renderBookingsPage();
+    };
+
+    if (resetBtn) resetBtn.addEventListener('click', resetHandler);
+    if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetHandler);
+
+    // Bookings View Switcher (Table vs Cards)
+    const btnTable = document.getElementById('btnViewTable');
+    const btnCards = document.getElementById('btnViewCards');
+    const wrapper = document.getElementById('bookingsWrapper');
+
+    function setBookingsView(viewMode) {
+      if (wrapper) wrapper.setAttribute('data-bookings-view', viewMode);
+      if (btnTable) {
+        const isActive = viewMode === 'table';
+        btnTable.classList.toggle('is-active', isActive);
+        btnTable.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      }
+      if (btnCards) {
+        const isActive = viewMode === 'cards';
+        btnCards.classList.toggle('is-active', isActive);
+        btnCards.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      }
+      try {
+        localStorage.setItem('miqat_bookings_view', viewMode);
+      } catch (e) {}
+    }
+
+    if (btnTable) {
+      btnTable.addEventListener('click', () => setBookingsView('table'));
+    }
+    if (btnCards) {
+      btnCards.addEventListener('click', () => setBookingsView('cards'));
+    }
+
+    try {
+      const savedView = localStorage.getItem('miqat_bookings_view');
+      if (savedView === 'cards' || savedView === 'table') {
+        setBookingsView(savedView);
+      }
+    } catch (e) {}
+
+    // Summary Cards click actions
+    document.querySelectorAll('.bookings-summary-card[data-summary-filter]').forEach(card => {
+      const filterKey = card.getAttribute('data-summary-filter');
+      const handleFilterClick = () => {
+        if (filterKey === 'all') {
+          bookingsFilterState.bookingStatus = '';
+          if (bStatusSelect) bStatusSelect.value = '';
+        } else {
+          bookingsFilterState.bookingStatus = filterKey;
+          if (bStatusSelect) bStatusSelect.value = filterKey;
+        }
+        updateSummaryCardsActiveState(filterKey);
+        renderBookingsPage();
+      };
+      card.addEventListener('click', handleFilterClick);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleFilterClick();
+        }
+      });
+    });
+  }
+
+  function updateSummaryCardsActiveState(activeKey) {
+    document.querySelectorAll('.bookings-summary-card[data-summary-filter]').forEach(c => {
+      const key = c.getAttribute('data-summary-filter');
+      const isMatch = (key === activeKey) || (!activeKey && key === 'all') || (activeKey === '' && key === 'all');
+      c.classList.toggle('is-active-filter', isMatch);
+      c.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+    });
+  }
+
+  function renderBookingsPage() {
+    if (document.body && document.body.dataset.pageId !== 'company-bookings') return;
+    if (typeof window.MiqatCompanyMockData === 'undefined') return;
+
+    const allBookings = window.MiqatCompanyMockData.RAW_BOOKINGS || [];
+    const totalCount = allBookings.length;
+
+    // 1. Calculate Summary Indicators from Authoritative Dataset
+    let totalBookingsCount = totalCount;
+    let newBookingsCount = 0;
+    let confirmedBookingsCount = 0;
+    let pendingBookingsCount = 0;
+
+    allBookings.forEach(b => {
+      const bSt = (b.bookingStatus || '').toLowerCase();
+      const st = (b.status || '').toLowerCase();
+      if (bSt === 'new' || st === 'new') newBookingsCount++;
+      else if (bSt === 'confirmed' || st === 'confirmed') confirmedBookingsCount++;
+      else if (bSt === 'under_review' || st === 'pending') pendingBookingsCount++;
+    });
+
+    const elSumTotal = document.getElementById('summaryTotalCount');
+    const elSumNew = document.getElementById('summaryNewCount');
+    const elSumConfirmed = document.getElementById('summaryConfirmedCount');
+    const elSumPending = document.getElementById('summaryPendingCount');
+
+    if (elSumTotal) elSumTotal.textContent = formatNumber(totalBookingsCount);
+    if (elSumNew) elSumNew.textContent = formatNumber(newBookingsCount);
+    if (elSumConfirmed) elSumConfirmed.textContent = formatNumber(confirmedBookingsCount);
+    if (elSumPending) elSumPending.textContent = formatNumber(pendingBookingsCount);
+
+    // 2. Multi-Filter AND Logic Evaluation
+    const filteredBookings = window.MiqatCompanyMockData.getBookings(bookingsFilterState);
+    const filteredCount = filteredBookings.length;
+
+    // 3. Update Bookings Counter Badge
+    const counterTextEl = document.getElementById('bookingsCounterText');
+    if (counterTextEl) {
+      if (currentLang === 'ar') {
+        counterTextEl.innerHTML = `عرض <strong class="counter-highlight font-numeric">${formatNumber(filteredCount)}</strong> من أصل <strong class="counter-highlight font-numeric">${formatNumber(totalCount)}</strong> حجز`;
+      } else {
+        counterTextEl.innerHTML = `Showing <strong class="counter-highlight font-numeric">${formatNumber(filteredCount)}</strong> of <strong class="counter-highlight font-numeric">${formatNumber(totalCount)}</strong> bookings`;
+      }
+    }
+
+    // 4. Update Active Filter Tags Chips Bar
+    renderActiveFilterTags(totalCount);
+
+    // 5. Render Bookings Table & Mobile Cards or Empty State
+    const tbody = document.getElementById('bookingsTableTbody');
+    const mobileList = document.getElementById('bookingsMobileCardsList');
+    const emptyState = document.getElementById('bookingsEmptyState');
+    const tableResponsive = document.querySelector('.bookings-table-responsive');
+
+    if (filteredCount === 0) {
+      if (tbody) tbody.innerHTML = '';
+      if (mobileList) mobileList.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'block';
+      if (tableResponsive) tableResponsive.style.display = 'none';
+      if (mobileList) mobileList.style.display = 'none';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (tableResponsive) tableResponsive.style.display = '';
+    if (mobileList) mobileList.style.display = '';
+
+    let rowsHtml = '';
+    let cardsHtml = '';
+
+    filteredBookings.forEach(b => {
+      const custName = currentLang === 'ar' ? b.customerName_ar : b.customerName_en;
+      const progName = currentLang === 'ar' ? b.programName_ar : b.programName_en;
+
+      const bStKey = (b.bookingStatus || (b.status === 'Pending' ? 'under_review' : b.status.toLowerCase())).toLowerCase();
+      const bSt = BOOKING_STATUS_MAP[bStKey] || { ar: b.status, en: b.status, class: 'status-pending' };
+      const bStatusLabel = currentLang === 'ar' ? bSt.ar : bSt.en;
+
+      const pStKey = (b.paymentStatus || 'unpaid').toLowerCase();
+      const pSt = PAYMENT_STATUS_MAP[pStKey] || { ar: pStKey, en: pStKey, class: 'status-unpaid' };
+      const pStatusLabel = currentLang === 'ar' ? pSt.ar : pSt.en;
+
+      const detailsUrl = `company-booking-details.html?id=${encodeURIComponent(b.id)}`;
+      const viewDetailsText = currentLang === 'ar' ? 'عرض التفاصيل' : 'View Details';
+
+      // Table Row
+      rowsHtml += `
+        <tr tabindex="0" role="button" data-booking-url="${detailsUrl}" aria-label="${currentLang === 'ar' ? 'عرض تفاصيل الحجز ' + b.reference : 'View booking details for ' + b.reference}">
+          <td><strong class="booking-ref-badge font-numeric">${b.reference}</strong></td>
+          <td>
+            <div class="customer-cell-wrap">
+              <span class="customer-name-bold">${custName}</span>
+              <span class="customer-phone-sub font-numeric">${b.customerPhone}</span>
+            </div>
+          </td>
+          <td><span class="booking-program-name">${progName}</span></td>
+          <td><span class="font-numeric">${b.bookingDate}</span></td>
+          <td><strong class="price-main font-numeric">${formatCurrency(b.totalPrice)}</strong></td>
+          <td><span class="paid-amount-cell font-numeric">${formatCurrency(b.paidAmount)}</span></td>
+          <td><span class="remaining-amount-cell font-numeric">${formatCurrency(b.remainingAmount)}</span></td>
+          <td><span class="status-pill ${bSt.class}">${bStatusLabel}</span></td>
+          <td><span class="pay-status-pill ${pSt.class}">${pStatusLabel}</span></td>
+          <td>
+            <a href="${detailsUrl}" class="btn-row-details" onclick="event.stopPropagation();" title="${viewDetailsText}">
+              <span>${viewDetailsText}</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="rtl-flip" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </td>
+        </tr>
+      `;
+
+      // Category & Travelers formatting
+      const catLabel = currentLang === 'ar'
+        ? (b.category === 'umrah' ? 'عمرة' : (b.category === 'hajj' ? 'حج' : (b.category || 'عمرة')))
+        : (b.category === 'umrah' ? 'Umrah' : (b.category === 'hajj' ? 'Hajj' : (b.category || 'Umrah')));
+
+      const travelersCountText = currentLang === 'ar'
+        ? (b.travelers === 1 ? 'مسافر واحد' : (b.travelers === 2 ? 'مسافران' : `${b.travelers} مسافرين`))
+        : `${b.travelers} ${b.travelers === 1 ? 'Traveler' : 'Travelers'}`;
+
+      const lblCustomer = currentLang === 'ar' ? 'العميل:' : 'Customer:';
+      const lblPhone = currentLang === 'ar' ? 'الهاتف:' : 'Phone:';
+      const lblProgram = currentLang === 'ar' ? 'البرنامج:' : 'Program:';
+      const lblTotalPrice = currentLang === 'ar' ? 'إجمالي السعر:' : 'Total Price:';
+      const lblPaidAmount = currentLang === 'ar' ? 'المبلغ المدفوع:' : 'Paid Amount:';
+      const lblRemainingAmount = currentLang === 'ar' ? 'المبلغ المتبقي:' : 'Remaining Amount:';
+
+      const cardAria = currentLang === 'ar' 
+        ? `عرض تفاصيل الحجز ${b.reference}` 
+        : `View booking details for ${b.reference}`;
+
+      // Card Layout displaying ALL booking fields
+      cardsHtml += `
+        <article class="booking-card booking-mobile-card" tabindex="0" role="button" data-booking-url="${detailsUrl}" aria-label="${cardAria}">
+          <div class="card-top-row booking-card-header">
+            <strong class="booking-ref-badge font-numeric">${b.reference}</strong>
+            <div class="card-status-badges">
+              <span class="status-pill ${bSt.class}">${bStatusLabel}</span>
+              <span class="pay-status-pill ${pSt.class}">${pStatusLabel}</span>
+            </div>
+          </div>
+          
+          <div class="booking-card-body">
+            <!-- Customer Row -->
+            <div class="card-entity-row card-customer-row">
+              <div class="card-entity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div class="card-entity-content">
+                <div class="card-customer-header">
+                  <span class="card-entity-label">${lblCustomer}</span>
+                  <strong class="card-customer-name">${custName}</strong>
+                </div>
+                <div class="card-customer-phone-wrap">
+                  <span class="card-entity-label">${lblPhone}</span>
+                  <span class="card-customer-phone font-numeric" dir="ltr">${b.customerPhone}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Program Row & Meta Chips -->
+            <div class="card-entity-row card-program-row">
+              <div class="card-entity-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <div class="card-entity-content">
+                <div class="card-program-header">
+                  <span class="card-entity-label">${lblProgram}</span>
+                  <span class="card-program-title">${progName}</span>
+                </div>
+                <div class="card-meta-chips-group">
+                  <span class="card-meta-chip category-chip">${catLabel}</span>
+                  <span class="card-meta-chip travelers-chip">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>${travelersCountText}</span>
+                  </span>
+                  <span class="card-meta-chip date-chip">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span class="font-numeric">${b.bookingDate}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial Breakdown Box -->
+            <div class="card-financial-box">
+              <div class="fin-item">
+                <span class="fin-label">${lblTotalPrice}</span>
+                <strong class="fin-val font-numeric">${formatCurrency(b.totalPrice)}</strong>
+              </div>
+              <div class="fin-item">
+                <span class="fin-label">${lblPaidAmount}</span>
+                <span class="fin-val fin-paid paid-amount-cell font-numeric">${formatCurrency(b.paidAmount)}</span>
+              </div>
+              <div class="fin-item">
+                <span class="fin-label">${lblRemainingAmount}</span>
+                <span class="fin-val fin-remaining remaining-amount-cell font-numeric">${formatCurrency(b.remainingAmount)}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Footer Action -->
+          <div class="booking-card-footer">
+            <a href="${detailsUrl}" class="btn-row-details btn-card-details" onclick="event.stopPropagation();" title="${viewDetailsText}">
+              <span>${viewDetailsText}</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="rtl-flip" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </article>
+      `;
+    });
+
+    if (tbody) tbody.innerHTML = rowsHtml;
+    if (mobileList) mobileList.innerHTML = cardsHtml;
+
+    // Attach row/card navigation handlers
+    document.querySelectorAll('[data-booking-url]').forEach(el => {
+      const url = el.getAttribute('data-booking-url');
+      const navigateToDetails = () => {
+        window.location.href = url;
+      };
+      el.addEventListener('click', (e) => {
+        if (e.target.closest('a') || e.target.closest('button')) return;
+        navigateToDetails();
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (e.target.closest('a') || e.target.closest('button')) return;
+          e.preventDefault();
+          navigateToDetails();
+        }
+      });
+    });
+  }
+
+  function renderActiveFilterTags(totalCount) {
+    const bar = document.getElementById('activeFilterTagsBar');
+    const container = document.getElementById('activeFilterTagsContainer');
+    if (!bar || !container) return;
+
+    const tags = [];
+
+    if (bookingsFilterState.search) {
+      tags.push({
+        label: `${currentLang === 'ar' ? 'بحث' : 'Search'}: "${bookingsFilterState.search}"`,
+        clear: () => {
+          bookingsFilterState.search = '';
+          const inp = document.getElementById('bookingsSearchInput');
+          const clr = document.getElementById('btnClearSearch');
+          if (inp) inp.value = '';
+          if (clr) clr.style.display = 'none';
+        }
+      });
+    }
+
+    if (bookingsFilterState.program) {
+      const progObj = (window.MiqatCompanyMockData.PROGRAMS || []).find(p => p.id === bookingsFilterState.program);
+      const progName = progObj ? (currentLang === 'ar' ? progObj.name_ar : progObj.name_en) : bookingsFilterState.program;
+      tags.push({
+        label: `${currentLang === 'ar' ? 'البرنامج' : 'Program'}: ${progName}`,
+        clear: () => {
+          bookingsFilterState.program = '';
+          const sel = document.getElementById('filterProgramSelect');
+          if (sel) sel.value = '';
+        }
+      });
+    }
+
+    if (bookingsFilterState.dateFrom) {
+      tags.push({
+        label: `${currentLang === 'ar' ? 'من' : 'From'}: ${bookingsFilterState.dateFrom}`,
+        clear: () => {
+          bookingsFilterState.dateFrom = '';
+          const inp = document.getElementById('filterDateFrom');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (bookingsFilterState.dateTo) {
+      tags.push({
+        label: `${currentLang === 'ar' ? 'إلى' : 'To'}: ${bookingsFilterState.dateTo}`,
+        clear: () => {
+          bookingsFilterState.dateTo = '';
+          const inp = document.getElementById('filterDateTo');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (bookingsFilterState.bookingStatus) {
+      const bStKey = bookingsFilterState.bookingStatus.toLowerCase();
+      const bSt = BOOKING_STATUS_MAP[bStKey];
+      const bLabel = bSt ? (currentLang === 'ar' ? bSt.ar : bSt.en) : bookingsFilterState.bookingStatus;
+      tags.push({
+        label: `${currentLang === 'ar' ? 'حالة الحجز' : 'Booking Status'}: ${bLabel}`,
+        clear: () => {
+          bookingsFilterState.bookingStatus = '';
+          const sel = document.getElementById('filterBookingStatusSelect');
+          if (sel) sel.value = '';
+          updateSummaryCardsActiveState('all');
+        }
+      });
+    }
+
+    if (bookingsFilterState.paymentStatus) {
+      const pStKey = bookingsFilterState.paymentStatus.toLowerCase();
+      const pSt = PAYMENT_STATUS_MAP[pStKey];
+      const pLabel = pSt ? (currentLang === 'ar' ? pSt.ar : pSt.en) : bookingsFilterState.paymentStatus;
+      tags.push({
+        label: `${currentLang === 'ar' ? 'حالة السداد' : 'Payment Status'}: ${pLabel}`,
+        clear: () => {
+          bookingsFilterState.paymentStatus = '';
+          const sel = document.getElementById('filterPaymentStatusSelect');
+          if (sel) sel.value = '';
+        }
+      });
+    }
+
+    if (tags.length === 0) {
+      bar.style.display = 'none';
+      container.innerHTML = '';
+      return;
+    }
+
+    bar.style.display = 'flex';
+    container.innerHTML = '';
+
+    tags.forEach(t => {
+      const chip = document.createElement('span');
+      chip.className = 'active-filter-tag-chip';
+      chip.innerHTML = `
+        <span>${t.label}</span>
+        <button type="button" aria-label="${currentLang === 'ar' ? 'إزالة التصفية' : 'Remove filter'}">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      `;
+      chip.querySelector('button').addEventListener('click', () => {
+        t.clear();
+        renderBookingsPage();
+      });
+      container.appendChild(chip);
+    });
+  }
+
+  // =========================================================================
+  // BOOKING DETAILS PAGE ENGINE (SECTION 5)
+  // =========================================================================
+  function setupBookingDetailsPage() {
+    // Read-only details view setup
+  }
+
+  function renderBookingDetailsPage() {
+    if (document.body && document.body.dataset.pageId !== 'company-booking-details') return;
+    if (typeof window.MiqatCompanyMockData === 'undefined') return;
+
+    const params = new URLSearchParams(window.location.search);
+    const targetIdOrRef = params.get('id') || params.get('ref') || 'bkg_1000';
+
+    const booking = window.MiqatCompanyMockData.getBookingById(targetIdOrRef);
+
+    const grid = document.getElementById('bookingDetailsGrid');
+    const notFoundState = document.getElementById('bookingNotFoundState');
+
+    if (!booking) {
+      if (grid) grid.style.display = 'none';
+      if (notFoundState) notFoundState.style.display = 'block';
+      return;
+    }
+
+    if (grid) grid.style.display = 'grid';
+    if (notFoundState) notFoundState.style.display = 'none';
+
+    // Populate Details
+    const elRef = document.getElementById('detailsBookingRef');
+    const elDate = document.getElementById('detailsBookingDate');
+    const elStatusPill = document.getElementById('detailsBookingStatusPill');
+    const elPayPill = document.getElementById('detailsPaymentStatusPill');
+    const elCustName = document.getElementById('detailsCustomerName');
+    const elCustPhone = document.getElementById('detailsCustomerPhone');
+    const elCustId = document.getElementById('detailsCustomerId');
+    const elProgName = document.getElementById('detailsProgramName');
+    const elCategory = document.getElementById('detailsCategory');
+    const elTravelers = document.getElementById('detailsTravelers');
+    const elUnitPrice = document.getElementById('detailsUnitPrice');
+    const elTotalPrice = document.getElementById('detailsTotalPrice');
+    const elPaidAmount = document.getElementById('detailsPaidAmount');
+    const elRemainingAmount = document.getElementById('detailsRemainingAmount');
+    const elPayStatusText = document.getElementById('detailsPaymentStatusText');
+
+    const custName = currentLang === 'ar' ? booking.customerName_ar : booking.customerName_en;
+    const progName = currentLang === 'ar' ? booking.programName_ar : booking.programName_en;
+
+    const bStKey = (booking.bookingStatus || (booking.status === 'Pending' ? 'under_review' : booking.status.toLowerCase())).toLowerCase();
+    const bSt = BOOKING_STATUS_MAP[bStKey] || { ar: booking.status, en: booking.status, class: 'status-pending' };
+
+    const pStKey = (booking.paymentStatus || 'unpaid').toLowerCase();
+    const pSt = PAYMENT_STATUS_MAP[pStKey] || { ar: pStKey, en: pStKey, class: 'status-unpaid' };
+
+    if (elRef) elRef.textContent = booking.reference;
+    if (elDate) elDate.textContent = booking.bookingDate;
+
+    if (elStatusPill) {
+      elStatusPill.textContent = currentLang === 'ar' ? bSt.ar : bSt.en;
+      elStatusPill.className = `status-pill ${bSt.class}`;
+    }
+
+    if (elPayPill) {
+      elPayPill.textContent = currentLang === 'ar' ? pSt.ar : pSt.en;
+      elPayPill.className = `pay-status-pill ${pSt.class}`;
+    }
+
+    if (elCustName) elCustName.textContent = custName;
+    if (elCustPhone) elCustPhone.textContent = booking.customerPhone;
+    if (elCustId) elCustId.textContent = booking.customerId;
+
+    if (elProgName) elProgName.textContent = progName;
+    if (elCategory) {
+      const isUmrah = booking.category === 'umrah';
+      elCategory.textContent = isUmrah ? (currentLang === 'ar' ? 'برامج العمرة' : 'Umrah Programs') : (currentLang === 'ar' ? 'برامج الحج' : 'Hajj Programs');
+    }
+    if (elTravelers) elTravelers.textContent = `${booking.travelers} ${currentLang === 'ar' ? 'أفراد' : 'travelers'}`;
+    if (elUnitPrice) elUnitPrice.textContent = formatCurrency(booking.unitPrice);
+
+    if (elTotalPrice) elTotalPrice.textContent = formatCurrency(booking.totalPrice);
+    if (elPaidAmount) elPaidAmount.textContent = formatCurrency(booking.paidAmount);
+    if (elRemainingAmount) elRemainingAmount.textContent = formatCurrency(booking.remainingAmount);
+    if (elPayStatusText) elPayStatusText.textContent = currentLang === 'ar' ? pSt.ar : pSt.en;
+  }
+
   // --- Page Initialization ---
   async function initCompanyPortal() {
     applyTheme(currentTheme);
@@ -1471,8 +2114,16 @@
     const user = await verifyCompanyAuth();
     if (!user) return;
 
-    // Initial render
-    renderDashboard(currentPeriod);
+    const pageId = document.body ? document.body.dataset.pageId : '';
+    if (pageId === 'company-dashboard') {
+      renderDashboard(currentPeriod);
+    } else if (pageId === 'company-bookings') {
+      setupBookingsPage();
+      renderBookingsPage();
+    } else if (pageId === 'company-booking-details') {
+      setupBookingDetailsPage();
+      renderBookingDetailsPage();
+    }
   }
 
   if (document.readyState === 'loading') {

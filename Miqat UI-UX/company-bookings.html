@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ميقات — بوابة الشركات الشريكة المعتمدة | إدارة ومتابعة حجوزات المعتمرين والحجاج">
+  <title data-i18n="company.bookings_page_title">إدارة الحجوزات | ميقات</title>
+  
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="company-portal-page company-bookings-page" data-page-id="company-bookings" data-page-title-key="company.bookings_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & SEVEN-SECTION NAVIGATION ==================== -->
+  <header class="site-header company-portal-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="46" height="46">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="46" height="46">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="company.portal_brand">بوابة الشركاء</span>
+        </div>
+      </a>
+
+      <!-- Desktop Seven-Section Navigation -->
+      <nav class="nav-desktop company-nav-desktop" aria-label="تنقل بوابة الشركة الشريكة">
+        
+        <!-- 1. Dashboard -->
+        <a href="company-dashboard.html" class="nav-link" id="navCompanyDashboard" title="لوحة التحكم">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+
+        <!-- 2. Bookings (Active) -->
+        <a href="company-bookings.html" class="nav-link is-active" aria-current="page" id="navCompanyBookings" title="الحجوزات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+
+        <!-- 3. Booking Details -->
+        <a href="company-booking-details.html" class="nav-link" id="navCompanyBookingDetails" title="تفاصيل الحجز">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+
+        <!-- 4. Financial Overview -->
+        <a href="#financial-overview" class="nav-link" data-company-section="financial" title="الملخص المالي">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+
+        <!-- 5. Programs & Trips -->
+        <a href="#programs-trips" class="nav-link" data-company-section="programs" title="البرامج والرحلات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Notifications -->
+        <a href="#notifications" class="nav-link nav-link-badge-wrap" data-company-section="notifications" title="الإشعارات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="navNotificationsCount">3</span>
+        </a>
+
+        <!-- 7. Company Profile -->
+        <a href="#company-profile" class="nav-link" data-company-section="profile" title="بيانات الشركة">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 21h18"></path>
+            <path d="M5 21V7l8-4v18"></path>
+            <path d="M19 21V11l-6-4"></path>
+            <line x1="9" y1="9" x2="9" y2="9.01"></line>
+            <line x1="9" y1="13" x2="9" y2="13.01"></line>
+            <line x1="9" y1="17" x2="9" y2="17.01"></line>
+          </svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher Button -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تبديل وضع العرض" title="تبديل وضع العرض">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Company Identity Badge in Top Bar (Interactive Group - Section Profile) -->
+        <div class="company-header-identity" id="companyHeaderIdentity" role="button" tabindex="0" data-company-section="profile" aria-label="بيانات الشركة — شركة الدرة للسياحة" title="بيانات الشركة — شركة الدرة للسياحة">
+          <div class="client-avatar company-avatar-medallion" id="companyAvatarMedallion" role="img" aria-label="شعار الشركة" title="شركة الدرة للسياحة">
+            <span class="client-avatar-initial" id="companyAvatarInitial">د</span>
+          </div>
+          <div class="company-header-text">
+            <span class="company-header-name" id="companyHeaderName">AL DORRA TRAVEL</span>
+            <span class="company-header-license" id="companyHeaderLicense">ترخيص 47852</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح قائمة الشركة" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE SLIDING DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Company Identity Card in Mobile Drawer -->
+      <div class="mobile-client-card company-mobile-card" id="mobileCompanyCard">
+        <div class="client-avatar company-avatar-medallion" id="mobileCompanyAvatar">
+          <span class="client-avatar-initial" id="mobileCompanyInitial">د</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileCompanyName">AL DORRA TRAVEL</span>
+          <span class="mobile-client-badge" data-i18n="company.tag_contracted">شركة معتمدة</span>
+        </div>
+      </div>
+
+      <!-- Seven Navigation Sections in Mobile Drawer -->
+      <nav class="mobile-nav-links company-mobile-nav" aria-label="قائمة تنقل الشركة للهواتف">
+        <a href="company-dashboard.html" class="mobile-nav-link" id="mobileNavDashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="company-bookings.html" class="mobile-nav-link is-active" aria-current="page" id="mobileNavCompanyBookings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+        <a href="company-booking-details.html" class="mobile-nav-link" id="mobileNavCompanyBookingDetails">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+        <a href="#financial-overview" class="mobile-nav-link" data-company-section="financial">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+        <a href="#programs-trips" class="mobile-nav-link" data-company-section="programs">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+        <a href="#notifications" class="mobile-nav-link nav-link-badge-wrap" data-company-section="notifications">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+        </a>
+        <a href="#company-profile" class="mobile-nav-link" data-company-section="profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تبديل وضع العرض">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-drawer-logout-btn" id="mobileLogoutBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Role Authorization Guard Banner (for Non-Company Users) -->
+  <div id="companyUnauthorizedBanner" class="company-unauthorized-banner" style="display: none;">
+    <div class="container unauth-container">
+      <div class="unauth-card">
+        <div class="unauth-icon-wrap">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h2 data-i18n="company.unauthorized_title">غير مصرح بالدخول</h2>
+        <p data-i18n="company.unauthorized_desc">هذه البوابة مخصصة حصرياً لشركات السياحة الشريكة والمتعاقدة مع منصة ميقات.</p>
+        <div class="unauth-actions">
+          <a href="index.html" class="btn btn-secondary" data-i18n="company.btn_back_home">العودة للرئيسية</a>
+          <a href="programs.html" class="btn btn-primary" data-i18n="company.btn_customer_portal">الانتقال لرحلات الحج والعمرة</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN BOOKINGS CONTENT ==================== -->
+  <main id="main-content" class="company-main-container">
+    <div class="container company-content-wrapper" id="companyMainContent">
+
+      <!-- A. Page Header (Section 3A) -->
+      <section class="company-bookings-header" aria-labelledby="pageBookingsTitle">
+        <div class="page-title-group">
+          <h1 id="pageBookingsTitle" class="page-main-title" data-i18n="company.bookings_heading">إدارة الحجوزات</h1>
+          <p class="page-subtitle" data-i18n="company.bookings_subheading">عرض وإدارة كافة حجوزات المعتمرين والحجاج لبرامج الشركة ومتابعة حالات الدفع والسداد</p>
+        </div>
+        <div class="bookings-header-meta">
+          <div class="bookings-counter-badge" id="bookingsCounterBadge" aria-live="polite">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span id="bookingsCounterText" class="font-numeric">عرض 36 من أصل 36 حجز</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- B. Bookings Summary Indicators (Section 3B: 4 Compact Cards) -->
+      <section class="bookings-summary-section" aria-label="ملخص إحصاءات الحجوزات">
+        <div class="bookings-summary-grid">
+          
+          <!-- Card 1: Total Bookings -->
+          <div class="bookings-summary-card is-active-filter" id="cardSummaryTotal" role="button" tabindex="0" data-summary-filter="all" data-i18n-attr="aria-label:company.card_total_aria" aria-label="عرض إجمالي الحجوزات">
+            <div class="summary-card-icon-wrap icon-total">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+            </div>
+            <div class="summary-card-info">
+              <span class="summary-card-val font-numeric" id="summaryTotalCount">36</span>
+              <span class="summary-card-label" data-i18n="company.summary_total_bookings">إجمالي الحجوزات</span>
+            </div>
+          </div>
+
+          <!-- Card 2: New Bookings -->
+          <div class="bookings-summary-card" id="cardSummaryNew" role="button" tabindex="0" data-summary-filter="new" data-i18n-attr="aria-label:company.card_new_aria" aria-label="تصفية حسب الحجوزات الجديدة">
+            <div class="summary-card-icon-wrap icon-new">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 5v14M5 12h14"></path>
+              </svg>
+            </div>
+            <div class="summary-card-info">
+              <span class="summary-card-val font-numeric" id="summaryNewCount">6</span>
+              <span class="summary-card-label" data-i18n="company.summary_new_bookings">حجوزات جديدة</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Confirmed Bookings -->
+          <div class="bookings-summary-card" id="cardSummaryConfirmed" role="button" tabindex="0" data-summary-filter="confirmed" data-i18n-attr="aria-label:company.card_confirmed_aria" aria-label="تصفية حسب الحجوزات المؤكدة">
+            <div class="summary-card-icon-wrap icon-confirmed">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="summary-card-info">
+              <span class="summary-card-val font-numeric" id="summaryConfirmedCount">23</span>
+              <span class="summary-card-label" data-i18n="company.summary_confirmed_bookings">حجوزات مؤكدة</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Pending / Under Review Bookings -->
+          <div class="bookings-summary-card" id="cardSummaryPending" role="button" tabindex="0" data-summary-filter="under_review" data-i18n-attr="aria-label:company.card_pending_aria" aria-label="تصفية حسب الحجوزات تحت الإجراء">
+            <div class="summary-card-icon-wrap icon-pending">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="summary-card-info">
+              <span class="summary-card-val font-numeric" id="summaryPendingCount">5</span>
+              <span class="summary-card-label" data-i18n="company.summary_pending_bookings">حجوزات تحت الإجراء</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- C. Search and Filtering Area (Section 3C) -->
+      <section class="bookings-filter-bar" aria-label="أدوات البحث وتصفية الحجوزات">
+        <form id="bookingsFilterForm" class="filter-grid-layout" onsubmit="return false;">
+          
+          <!-- 1. Global Search (Ref or Customer) -->
+          <div class="filter-col-group search-group">
+            <label for="bookingsSearchInput" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span data-i18n="company.filter_search_label">بحث سريع</span>
+            </label>
+            <div class="filter-search-box">
+              <svg class="filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="bookingsSearchInput" class="filter-search-input" placeholder="البحث برقم المرجع أو اسم العميل..." data-i18n-attr="placeholder:company.filter_search_placeholder" autocomplete="off">
+              <button type="button" class="filter-search-clear" id="btnClearSearch" style="display: none;" aria-label="مسح البحث">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Program Filter -->
+          <div class="filter-col-group">
+            <label for="filterProgramSelect" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              <span data-i18n="company.filter_program_label">البرنامج</span>
+            </label>
+            <select id="filterProgramSelect" class="filter-select-input">
+              <option value="" data-i18n="company.filter_all_programs">كافة البرامج</option>
+              <option value="prog_umrah_econ" data-i18n="company.prog_umrah_econ">عمرة اقتصادية</option>
+              <option value="prog_umrah_prem" data-i18n="company.prog_umrah_prem">عمرة متميزة</option>
+              <option value="prog_umrah_vip" data-i18n="company.prog_umrah_vip">عمرة فاخرة VIP</option>
+              <option value="prog_umrah_ramadan" data-i18n="company.prog_umrah_ramadan">عمرة رمضان</option>
+              <option value="prog_hajj_tourist" data-i18n="company.prog_hajj_tourist">حج سياحي</option>
+              <option value="prog_hajj_vip" data-i18n="company.prog_hajj_vip">حج فاخر VIP</option>
+            </select>
+          </div>
+
+          <!-- 3. Booking Date From -->
+          <div class="filter-col-group">
+            <label for="filterDateFrom" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span data-i18n="company.filter_date_from">من تاريخ</span>
+            </label>
+            <input type="date" id="filterDateFrom" class="filter-date-input font-numeric">
+          </div>
+
+          <!-- 4. Booking Date To -->
+          <div class="filter-col-group">
+            <label for="filterDateTo" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span data-i18n="company.filter_date_to">إلى تاريخ</span>
+            </label>
+            <input type="date" id="filterDateTo" class="filter-date-input font-numeric">
+          </div>
+
+          <!-- 5. Booking Status Filter -->
+          <div class="filter-col-group">
+            <label for="filterBookingStatusSelect" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              <span data-i18n="company.filter_booking_status">حالة الحجز</span>
+            </label>
+            <select id="filterBookingStatusSelect" class="filter-select-input">
+              <option value="" data-i18n="company.filter_all_booking_statuses">كافة حالات الحجز</option>
+              <option value="new" data-i18n="company.status_new">جديد</option>
+              <option value="under_review" data-i18n="company.status_under_review">تحت الإجراء</option>
+              <option value="confirmed" data-i18n="company.status_confirmed">مؤكد</option>
+              <option value="rejected" data-i18n="company.status_rejected">مرفوض</option>
+              <option value="cancelled" data-i18n="company.status_cancelled">ملغي</option>
+              <option value="changed" data-i18n="company.status_changed">معدل</option>
+            </select>
+          </div>
+
+          <!-- 6. Payment Status Filter -->
+          <div class="filter-col-group">
+            <label for="filterPaymentStatusSelect" class="filter-col-label">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              <span data-i18n="company.filter_payment_status">حالة السداد</span>
+            </label>
+            <select id="filterPaymentStatusSelect" class="filter-select-input">
+              <option value="" data-i18n="company.filter_all_payment_statuses">كافة حالات السداد</option>
+              <option value="unpaid" data-i18n="company.pay_unpaid">غير مسدد</option>
+              <option value="deposit_paid" data-i18n="company.pay_deposit_paid">مسدد الدفعة المقدمة</option>
+              <option value="partially_paid" data-i18n="company.pay_partially_paid">مسدد جزئياً</option>
+              <option value="fully_paid" data-i18n="company.pay_fully_paid">مسدد بالكامل</option>
+              <option value="refund_pending" data-i18n="company.pay_refund_pending">قيد استرداد المبلغ</option>
+              <option value="refunded" data-i18n="company.pay_refunded">مسترد</option>
+            </select>
+          </div>
+
+          <!-- Reset All Button -->
+          <div class="filter-col-group">
+            <button type="button" class="filter-btn-reset" id="btnResetAllFilters" aria-label="إعادة ضبط كافة الفلاتر">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              <span data-i18n="company.filter_btn_reset_all">إعادة ضبط</span>
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Active Filter Tags Bar -->
+        <div class="active-filter-tags-bar" id="activeFilterTagsBar" style="display: none;">
+          <span class="active-filter-tags-label">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            <span data-i18n="company.filter_active_label">الفلاتر النشطة:</span>
+          </span>
+          <div class="active-filter-tags-container" id="activeFilterTagsContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <!-- Dynamically populated tags with individual remove buttons -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 4. Main Bookings Table Section (Section 4) -->
+      <section class="bookings-table-section" aria-labelledby="tableSectionHeading">
+        <div class="table-section-header">
+          <div class="table-section-title-wrap">
+            <h2 id="tableSectionHeading" class="section-title" data-i18n="company.table_section_title">جدول الحجوزات الكامل</h2>
+            <p class="section-subtitle" data-i18n="company.table_section_subtitle">قائمة تفصيلية بجميع الحجوزات المسجلة وحالات الحجز والمدفوعات</p>
+          </div>
+          <div class="bookings-view-switch-group" role="group" aria-label="طريقة عرض الحجوزات" data-i18n-attr="aria-label:company.view_mode_group">
+            <button type="button" class="view-switch-btn is-active" id="btnViewTable" aria-pressed="true" data-i18n-attr="aria-label:company.view_table" title="جدول">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+              <span data-i18n="company.view_table">جدول</span>
+            </button>
+            <button type="button" class="view-switch-btn" id="btnViewCards" aria-pressed="false" data-i18n-attr="aria-label:company.view_cards" title="بطاقات">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+              <span data-i18n="company.view_cards">بطاقات</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bookings-table-wrapper" id="bookingsWrapper" data-bookings-view="table">
+          <!-- Desktop / Tablet Table -->
+          <div class="bookings-table-responsive" id="bookingsTableResponsive">
+            <table class="bookings-main-table" id="bookingsMainTable">
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="company.col_ref">رقم المرجع</th>
+                  <th scope="col" data-i18n="company.col_customer">العميل</th>
+                  <th scope="col" data-i18n="company.col_program">البرنامج</th>
+                  <th scope="col" data-i18n="company.col_booking_date">تاريخ الحجز</th>
+                  <th scope="col" data-i18n="company.col_total_price">إجمالي السعر</th>
+                  <th scope="col" data-i18n="company.col_paid_amount">المدفوع</th>
+                  <th scope="col" data-i18n="company.col_remaining_amount">المتبقي</th>
+                  <th scope="col" data-i18n="company.col_booking_status">حالة الحجز</th>
+                  <th scope="col" data-i18n="company.col_payment_status">حالة السداد</th>
+                  <th scope="col" data-i18n="company.col_actions">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="bookingsTableTbody">
+                <!-- Dynamically rendered rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Cards Grid (Shown in Cards mode or <= 768px) -->
+          <div class="bookings-cards-grid bookings-mobile-cards-list" id="bookingsMobileCardsList">
+            <!-- Dynamically populated mobile card items -->
+          </div>
+
+          <!-- Empty Results State -->
+          <div class="bookings-empty-state" id="bookingsEmptyState">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <h3 class="bookings-empty-title" data-i18n="company.filter_empty_title">لا توجد حجوزات مطابقة</h3>
+            <p class="bookings-empty-desc" data-i18n="company.filter_empty_desc">لم يتم العثور على أية حجوزات تطابق معايير البحث والتصفية المحددة.</p>
+            <button type="button" class="btn btn-secondary" id="btnEmptyStateReset" data-i18n="company.filter_empty_reset">إعادة ضبط معايير البحث</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== FUTURE SCOPE PLACEHOLDER MODAL ==================== -->
+  <div class="company-future-modal" id="companyFutureModal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="modal-backdrop" id="futureModalBackdrop"></div>
+    <div class="modal-dialog-content">
+      <div class="modal-header-band">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" class="modal-band-icon" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <button type="button" class="modal-close-icon-btn" id="btnCloseFutureModal" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body-content">
+        <h3 id="futureModalTitle" class="modal-section-title" data-i18n="company.future_title">قسم قيد التطوير</h3>
+        <p id="futureModalMessage" class="modal-section-text" data-i18n="company.future_msg">هذا القسم ضمن خطة التوسعة القادمة لبوابة الشركات الشريكة لمنصة ميقات.</p>
+        <div class="modal-btn-row">
+          <button type="button" class="btn btn-primary" id="btnConfirmFutureModal" data-i18n="company.future_btn">فهمت ذلك</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./company-mock-data.js"></script>
+  <script src="./company-portal.js"></script>
+</body>
+</html>

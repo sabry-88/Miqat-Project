@@ -1216,7 +1216,7 @@
       const sec = el.getAttribute('data-company-section');
       const href = el.getAttribute('href');
       // If element is a real page link, let it navigate normally
-      if (sec === 'dashboard' || sec === 'bookings') return;
+      if (sec === 'dashboard' || sec === 'bookings' || sec === 'financial' || sec === 'booking-details') return;
       if (href && !href.startsWith('#')) return;
 
       el.addEventListener('click', (e) => {
@@ -1479,6 +1479,8 @@
       renderBookingsPage();
     } else if (pageId === 'company-booking-details') {
       renderBookingDetailsPage();
+    } else if (pageId === 'company-financial-overview') {
+      renderFinancialOverviewPage();
     }
   }
 
@@ -2021,10 +2023,475 @@
   // =========================================================================
   // BOOKING DETAILS PAGE ENGINE (SECTION 5)
   // =========================================================================
-  function setupBookingDetailsPage() {
-    // Read-only details view setup
+  // =========================================================================
+  // TOAST NOTIFICATIONS HELPER
+  // =========================================================================
+  function showCompanyToast(message, type = 'success') {
+    let container = document.getElementById('companyToastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'companyToastContainer';
+      container.className = 'company-toast-container';
+      container.setAttribute('aria-live', 'polite');
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `company-toast toast-${type}`;
+    
+    const iconSvg = type === 'success'
+      ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--color-accent); flex-shrink: 0;"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+      : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--color-error); flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+    toast.innerHTML = `${iconSvg}<span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 3800);
   }
 
+  function openCompanyActionModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 60);
+    }
+  }
+
+  function closeCompanyActionModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  // =========================================================================
+  // BOOKING DETAILS: SETUP & INTERACTIVITY
+  // =========================================================================
+  function setupBookingDetailsPage() {
+    if (document.body && document.body.dataset.pageId !== 'company-booking-details') return;
+
+    // Helper to get active booking
+    function getActiveBooking() {
+      const params = new URLSearchParams(window.location.search);
+      const targetIdOrRef = params.get('id') || params.get('ref') || 'bkg_1000';
+      return window.MiqatCompanyMockData ? window.MiqatCompanyMockData.getBookingById(targetIdOrRef) : null;
+    }
+
+    // Modal Close Triggers
+    const modalClosers = [
+      { btn: 'btnCloseConfirmModal', modal: 'modalConfirmBooking' },
+      { btn: 'btnCancelConfirm', modal: 'modalConfirmBooking' },
+      { btn: 'backdropConfirmBooking', modal: 'modalConfirmBooking' },
+      { btn: 'btnCloseReportModal', modal: 'modalReportPayment' },
+      { btn: 'btnCancelReportPayment', modal: 'modalReportPayment' },
+      { btn: 'backdropReportPayment', modal: 'modalReportPayment' },
+      { btn: 'btnCloseRejectModal', modal: 'modalRejectBooking' },
+      { btn: 'btnCancelRejectBooking', modal: 'modalRejectBooking' },
+      { btn: 'backdropRejectBooking', modal: 'modalRejectBooking' },
+      { btn: 'btnCloseChangeModal', modal: 'modalRequestProgramChange' },
+      { btn: 'btnCancelRequestChange', modal: 'modalRequestProgramChange' },
+      { btn: 'backdropRequestChange', modal: 'modalRequestProgramChange' }
+    ];
+
+    modalClosers.forEach(item => {
+      const el = document.getElementById(item.btn);
+      if (el) {
+        el.addEventListener('click', () => closeCompanyActionModal(item.modal));
+      }
+    });
+
+    // Escape Key Handler for All Action Modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        ['modalConfirmBooking', 'modalReportPayment', 'modalRejectBooking', 'modalRequestProgramChange'].forEach(id => {
+          closeCompanyActionModal(id);
+        });
+      }
+    });
+
+    // 1. CONFIRM BOOKING MODAL & ACTION
+    const btnActionConfirm = document.getElementById('btnActionConfirm');
+    if (btnActionConfirm) {
+      btnActionConfirm.addEventListener('click', () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const refEl = document.getElementById('modalConfirmRef');
+        const custEl = document.getElementById('modalConfirmCustomer');
+        const progEl = document.getElementById('modalConfirmProgram');
+
+        if (refEl) refEl.textContent = booking.reference;
+        if (custEl) custEl.textContent = currentLang === 'ar' ? booking.customerName_ar : booking.customerName_en;
+        if (progEl) progEl.textContent = currentLang === 'ar' ? booking.programName_ar : booking.programName_en;
+
+        openCompanyActionModal('modalConfirmBooking');
+      });
+    }
+
+    const btnSubmitConfirmBooking = document.getElementById('btnSubmitConfirmBooking');
+    if (btnSubmitConfirmBooking) {
+      btnSubmitConfirmBooking.addEventListener('click', async () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        btnSubmitConfirmBooking.disabled = true;
+        try {
+          let updatedBooking = null;
+          try {
+            const resp = await fetch(`/api/company/bookings/${encodeURIComponent(booking.id)}/confirm`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' }
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              if (data.success && data.booking) updatedBooking = data.booking;
+            }
+          } catch (netErr) {
+            console.warn('API call failed, using client mock mutation fallback:', netErr);
+          }
+
+          if (!updatedBooking && window.MiqatCompanyMockData) {
+            const res = window.MiqatCompanyMockData.confirmBooking(booking.id, currentCompanyUser);
+            if (res.success) updatedBooking = res.booking;
+          }
+
+          closeCompanyActionModal('modalConfirmBooking');
+          const msg = getTranslation('company.toast_confirm_success') || (currentLang === 'ar' ? 'تم تأكيد واعتماد الحجز وإشعار العميل بنجاح' : 'Booking successfully confirmed and certified');
+          showCompanyToast(msg, 'success');
+          renderBookingDetailsPage();
+        } catch (err) {
+          console.error('Error confirming booking:', err);
+          showCompanyToast(getTranslation('company.toast_action_error') || 'حدث خطأ أثناء تنفيذ الإجراء', 'error');
+        } finally {
+          btnSubmitConfirmBooking.disabled = false;
+        }
+      });
+    }
+
+    // 2. REPORT PAYMENT MODAL & ACTION
+    const btnActionReportPayment = document.getElementById('btnActionReportPayment');
+    if (btnActionReportPayment) {
+      btnActionReportPayment.addEventListener('click', () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const amountInput = document.getElementById('reportPaymentAmount');
+        const dateInput = document.getElementById('reportPaymentDate');
+        const refInput = document.getElementById('reportPaymentRef');
+        const notesInput = document.getElementById('reportPaymentNotes');
+
+        if (amountInput) {
+          amountInput.value = booking.remainingAmount > 0 ? booking.remainingAmount : '';
+          amountInput.max = booking.remainingAmount;
+        }
+        if (dateInput) {
+          dateInput.value = new Date().toISOString().split('T')[0];
+        }
+        if (refInput) {
+          refInput.value = `REC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        }
+        if (notesInput) {
+          notesInput.value = '';
+        }
+
+        openCompanyActionModal('modalReportPayment');
+      });
+    }
+
+    const btnSubmitReportPayment = document.getElementById('btnSubmitReportPayment');
+    if (btnSubmitReportPayment) {
+      btnSubmitReportPayment.addEventListener('click', async () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const amountInput = document.getElementById('reportPaymentAmount');
+        const dateInput = document.getElementById('reportPaymentDate');
+        const methodSelect = document.getElementById('reportPaymentMethod');
+        const refInput = document.getElementById('reportPaymentRef');
+        const notesInput = document.getElementById('reportPaymentNotes');
+
+        const amount = parseFloat(amountInput ? amountInput.value : 0);
+        if (isNaN(amount) || amount <= 0) {
+          alert(currentLang === 'ar' ? 'يرجى إدخال مبلغ صحيح أكبر من الصفر' : 'Please enter a valid amount greater than zero');
+          if (amountInput) amountInput.focus();
+          return;
+        }
+        if (amount > booking.remainingAmount) {
+          alert(currentLang === 'ar' ? `المبلغ المدخل (${amount}) يتجاوز المتبقي المطلوب (${booking.remainingAmount})` : `Entered amount exceeds remaining balance (${booking.remainingAmount})`);
+          if (amountInput) amountInput.focus();
+          return;
+        }
+
+        const payload = {
+          amount: amount,
+          date: dateInput && dateInput.value ? dateInput.value : new Date().toISOString().split('T')[0],
+          method: methodSelect ? methodSelect.value : 'cash',
+          reference: refInput && refInput.value ? refInput.value.trim() : `REC-${Date.now()}`,
+          notes: notesInput ? notesInput.value.trim() : ''
+        };
+
+        btnSubmitReportPayment.disabled = true;
+        try {
+          let updatedBooking = null;
+          try {
+            const resp = await fetch(`/api/company/bookings/${encodeURIComponent(booking.id)}/report-payment`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              if (data.success && data.booking) updatedBooking = data.booking;
+            }
+          } catch (netErr) {
+            console.warn('API call failed, using client mock mutation fallback:', netErr);
+          }
+
+          if (!updatedBooking && window.MiqatCompanyMockData) {
+            const res = window.MiqatCompanyMockData.reportPayment(booking.id, payload, currentCompanyUser);
+            if (res.success) updatedBooking = res.booking;
+          }
+
+          closeCompanyActionModal('modalReportPayment');
+          const msg = getTranslation('company.toast_report_success') || (currentLang === 'ar' ? 'تم تسجيل الدفعة النقدية بنجاح وإضافتها إلى سجل الحجز' : 'Payment successfully recorded');
+          showCompanyToast(msg, 'success');
+          renderBookingDetailsPage();
+        } catch (err) {
+          console.error('Error reporting payment:', err);
+          showCompanyToast(getTranslation('company.toast_action_error') || 'حدث خطأ أثناء تسجيل الدفعة', 'error');
+        } finally {
+          btnSubmitReportPayment.disabled = false;
+        }
+      });
+    }
+
+    // 3. REJECT BOOKING MODAL & ACTION
+    const btnActionReject = document.getElementById('btnActionReject');
+    if (btnActionReject) {
+      btnActionReject.addEventListener('click', () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const reasonSelect = document.getElementById('rejectBookingReason');
+        const notesInput = document.getElementById('rejectBookingNotes');
+
+        if (reasonSelect) reasonSelect.value = '';
+        if (notesInput) notesInput.value = '';
+
+        openCompanyActionModal('modalRejectBooking');
+      });
+    }
+
+    const btnSubmitRejectBooking = document.getElementById('btnSubmitRejectBooking');
+    if (btnSubmitRejectBooking) {
+      btnSubmitRejectBooking.addEventListener('click', async () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const reasonSelect = document.getElementById('rejectBookingReason');
+        const notesInput = document.getElementById('rejectBookingNotes');
+
+        if (!reasonSelect || !reasonSelect.value) {
+          alert(currentLang === 'ar' ? 'يرجى اختيار سبب الرفض الإلزامي' : 'Please select a mandatory rejection reason');
+          if (reasonSelect) reasonSelect.focus();
+          return;
+        }
+
+        const payload = {
+          reason: reasonSelect.value,
+          notes: notesInput ? notesInput.value.trim() : ''
+        };
+
+        btnSubmitRejectBooking.disabled = true;
+        try {
+          let updatedBooking = null;
+          try {
+            const resp = await fetch(`/api/company/bookings/${encodeURIComponent(booking.id)}/reject`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              if (data.success && data.booking) updatedBooking = data.booking;
+            }
+          } catch (netErr) {
+            console.warn('API call failed, using client mock mutation fallback:', netErr);
+          }
+
+          if (!updatedBooking && window.MiqatCompanyMockData) {
+            const res = window.MiqatCompanyMockData.rejectBooking(booking.id, payload, currentCompanyUser);
+            if (res.success) updatedBooking = res.booking;
+          }
+
+          closeCompanyActionModal('modalRejectBooking');
+          const msg = getTranslation('company.toast_reject_success') || (currentLang === 'ar' ? 'تم تسجيل رفض الحجز وتحويل الملف للمراجعة المالية' : 'Booking rejected and flagged for refund review');
+          showCompanyToast(msg, 'success');
+          renderBookingDetailsPage();
+        } catch (err) {
+          console.error('Error rejecting booking:', err);
+          showCompanyToast(getTranslation('company.toast_action_error') || 'حدث خطأ أثناء رفض الحجز', 'error');
+        } finally {
+          btnSubmitRejectBooking.disabled = false;
+        }
+      });
+    }
+
+    // 4. REQUEST PROGRAM CHANGE MODAL & ACTION
+    const btnActionRequestChange = document.getElementById('btnActionRequestChange');
+    if (btnActionRequestChange) {
+      btnActionRequestChange.addEventListener('click', () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const currentProgEl = document.getElementById('changeCurrentProgramName');
+        const progSelect = document.getElementById('changeReplacementProgramSelect');
+        const priceInput = document.getElementById('changeProposedPriceInput');
+        const varianceEl = document.getElementById('changePriceVarianceDisplay');
+        const reasonInput = document.getElementById('changeReasonNotes');
+
+        if (currentProgEl) {
+          currentProgEl.textContent = currentLang === 'ar' ? booking.programName_ar : booking.programName_en;
+        }
+
+        if (progSelect && window.MiqatCompanyMockData && window.MiqatCompanyMockData.PROGRAMS) {
+          progSelect.innerHTML = '';
+          window.MiqatCompanyMockData.PROGRAMS.forEach(prog => {
+            const opt = document.createElement('option');
+            opt.value = prog.id;
+            const progName = currentLang === 'ar' ? prog.name_ar : prog.name_en;
+            const estPrice = prog.unitPrice * (booking.travelers || 1);
+            opt.textContent = `${progName} — (${formatCurrency(estPrice)})`;
+            opt.dataset.unitPrice = prog.unitPrice;
+            if (prog.id === booking.programId) {
+              opt.textContent += currentLang === 'ar' ? ' [البرنامج الحالي]' : ' [Current]';
+            }
+            progSelect.appendChild(opt);
+          });
+        }
+
+        // Set initial proposed price
+        const initialPrice = booking.totalPrice;
+        if (priceInput) {
+          priceInput.value = initialPrice;
+        }
+
+        function updateVariance() {
+          const newPrice = parseFloat(priceInput ? priceInput.value : 0) || 0;
+          const diff = newPrice - (booking.totalPrice || 0);
+          if (varianceEl) {
+            if (diff > 0) {
+              varianceEl.textContent = `+${formatCurrency(diff)}`;
+              varianceEl.style.color = 'var(--color-primary)';
+            } else if (diff < 0) {
+              varianceEl.textContent = formatCurrency(diff);
+              varianceEl.style.color = 'var(--color-accent)';
+            } else {
+              varianceEl.textContent = formatCurrency(0);
+              varianceEl.style.color = 'var(--color-text-muted)';
+            }
+          }
+        }
+
+        if (progSelect) {
+          progSelect.onchange = () => {
+            const selectedOpt = progSelect.selectedOptions[0];
+            if (selectedOpt && selectedOpt.dataset.unitPrice && priceInput) {
+              const uPrice = parseFloat(selectedOpt.dataset.unitPrice);
+              priceInput.value = uPrice * (booking.travelers || 1);
+              updateVariance();
+            }
+          };
+        }
+
+        if (priceInput) {
+          priceInput.oninput = updateVariance;
+        }
+
+        if (reasonInput) reasonInput.value = '';
+        updateVariance();
+
+        openCompanyActionModal('modalRequestProgramChange');
+      });
+    }
+
+    const btnSubmitRequestChange = document.getElementById('btnSubmitRequestChange');
+    if (btnSubmitRequestChange) {
+      btnSubmitRequestChange.addEventListener('click', async () => {
+        const booking = getActiveBooking();
+        if (!booking) return;
+
+        const progSelect = document.getElementById('changeReplacementProgramSelect');
+        const priceInput = document.getElementById('changeProposedPriceInput');
+        const reasonInput = document.getElementById('changeReasonNotes');
+
+        const replacementProgramId = progSelect ? progSelect.value : '';
+        const newPrice = parseFloat(priceInput ? priceInput.value : 0);
+
+        if (!replacementProgramId) {
+          alert(currentLang === 'ar' ? 'يرجى اختيار البرنامج البديل المقترح' : 'Please select proposed replacement program');
+          return;
+        }
+        if (isNaN(newPrice) || newPrice < 0) {
+          alert(currentLang === 'ar' ? 'يرجى إدخال سعر مقترح صحيح' : 'Please enter a valid proposed price');
+          if (priceInput) priceInput.focus();
+          return;
+        }
+
+        const payload = {
+          replacementProgramId: replacementProgramId,
+          newPrice: newPrice,
+          reason: reasonInput ? reasonInput.value.trim() : ''
+        };
+
+        btnSubmitRequestChange.disabled = true;
+        try {
+          let updatedBooking = null;
+          try {
+            const resp = await fetch(`/api/company/bookings/${encodeURIComponent(booking.id)}/request-program-change`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              if (data.success && data.booking) updatedBooking = data.booking;
+            }
+          } catch (netErr) {
+            console.warn('API call failed, using client mock mutation fallback:', netErr);
+          }
+
+          if (!updatedBooking && window.MiqatCompanyMockData) {
+            const res = window.MiqatCompanyMockData.requestProgramChange(booking.id, payload, currentCompanyUser);
+            if (res.success) updatedBooking = res.booking;
+          }
+
+          closeCompanyActionModal('modalRequestProgramChange');
+          const msg = getTranslation('company.toast_change_success') || (currentLang === 'ar' ? 'تم إرسال مقترح تعديل البرنامج بانتظار موافقة العميل' : 'Program change request submitted for customer agreement');
+          showCompanyToast(msg, 'success');
+          renderBookingDetailsPage();
+        } catch (err) {
+          console.error('Error submitting program change:', err);
+          showCompanyToast(getTranslation('company.toast_action_error') || 'حدث خطأ أثناء إرسال مقترح التعديل', 'error');
+        } finally {
+          btnSubmitRequestChange.disabled = false;
+        }
+      });
+    }
+  }
+
+  // =========================================================================
+  // BOOKING DETAILS: FULL PROFESSIONAL RENDER
+  // =========================================================================
   function renderBookingDetailsPage() {
     if (document.body && document.body.dataset.pageId !== 'company-booking-details') return;
     if (typeof window.MiqatCompanyMockData === 'undefined') return;
@@ -2034,75 +2501,1434 @@
 
     const booking = window.MiqatCompanyMockData.getBookingById(targetIdOrRef);
 
-    const grid = document.getElementById('bookingDetailsGrid');
+    const mainLayout = document.getElementById('bookingDetailsMainLayout');
+    const kpiBar = document.querySelector('.details-kpi-bar');
+    const headerSec = document.querySelector('.booking-details-header');
+    const breadcrumbs = document.querySelector('.details-breadcrumbs');
     const notFoundState = document.getElementById('bookingNotFoundState');
 
     if (!booking) {
-      if (grid) grid.style.display = 'none';
+      if (mainLayout) mainLayout.style.display = 'none';
+      if (kpiBar) kpiBar.style.display = 'none';
+      if (headerSec) headerSec.style.display = 'none';
+      if (breadcrumbs) breadcrumbs.style.display = 'none';
       if (notFoundState) notFoundState.style.display = 'block';
       return;
     }
 
-    if (grid) grid.style.display = 'grid';
+    if (mainLayout) mainLayout.style.display = 'grid';
+    if (kpiBar) kpiBar.style.display = 'grid';
+    if (headerSec) headerSec.style.display = 'flex';
+    if (breadcrumbs) breadcrumbs.style.display = 'flex';
     if (notFoundState) notFoundState.style.display = 'none';
 
-    // Populate Details
-    const elRef = document.getElementById('detailsBookingRef');
-    const elDate = document.getElementById('detailsBookingDate');
-    const elStatusPill = document.getElementById('detailsBookingStatusPill');
-    const elPayPill = document.getElementById('detailsPaymentStatusPill');
-    const elCustName = document.getElementById('detailsCustomerName');
-    const elCustPhone = document.getElementById('detailsCustomerPhone');
-    const elCustId = document.getElementById('detailsCustomerId');
-    const elProgName = document.getElementById('detailsProgramName');
-    const elCategory = document.getElementById('detailsCategory');
-    const elTravelers = document.getElementById('detailsTravelers');
-    const elUnitPrice = document.getElementById('detailsUnitPrice');
-    const elTotalPrice = document.getElementById('detailsTotalPrice');
-    const elPaidAmount = document.getElementById('detailsPaidAmount');
-    const elRemainingAmount = document.getElementById('detailsRemainingAmount');
-    const elPayStatusText = document.getElementById('detailsPaymentStatusText');
-
-    const custName = currentLang === 'ar' ? booking.customerName_ar : booking.customerName_en;
-    const progName = currentLang === 'ar' ? booking.programName_ar : booking.programName_en;
-
+    // Status Mappings
     const bStKey = (booking.bookingStatus || (booking.status === 'Pending' ? 'under_review' : booking.status.toLowerCase())).toLowerCase();
     const bSt = BOOKING_STATUS_MAP[bStKey] || { ar: booking.status, en: booking.status, class: 'status-pending' };
 
     const pStKey = (booking.paymentStatus || 'unpaid').toLowerCase();
     const pSt = PAYMENT_STATUS_MAP[pStKey] || { ar: pStKey, en: pStKey, class: 'status-unpaid' };
 
+    // 1. Breadcrumbs & Reference Badges
+    const breadcrumbRef = document.getElementById('breadcrumbRef');
+    const elRef = document.getElementById('detailsBookingRef');
+    if (breadcrumbRef) breadcrumbRef.textContent = booking.reference;
     if (elRef) elRef.textContent = booking.reference;
-    if (elDate) elDate.textContent = booking.bookingDate;
 
+    // 2. Status Pills in Header
+    const elStatusPill = document.getElementById('detailsBookingStatusPill');
+    const elPayPill = document.getElementById('detailsPaymentStatusPill');
     if (elStatusPill) {
       elStatusPill.textContent = currentLang === 'ar' ? bSt.ar : bSt.en;
       elStatusPill.className = `status-pill ${bSt.class}`;
     }
-
     if (elPayPill) {
       elPayPill.textContent = currentLang === 'ar' ? pSt.ar : pSt.en;
       elPayPill.className = `pay-status-pill ${pSt.class}`;
     }
 
+    // 3. Quick Indicators KPI Bar
+    const kpiTotal = document.getElementById('detailsKpiTotal');
+    const kpiPaid = document.getElementById('detailsKpiPaid');
+    const kpiRemaining = document.getElementById('detailsKpiRemaining');
+    const kpiTravelers = document.getElementById('detailsKpiTravelers');
+
+    if (kpiTotal) kpiTotal.textContent = formatCurrency(booking.totalPrice);
+    if (kpiPaid) kpiPaid.textContent = formatCurrency(booking.paidAmount);
+    if (kpiRemaining) kpiRemaining.textContent = formatCurrency(booking.remainingAmount);
+    if (kpiTravelers) kpiTravelers.textContent = `${booking.travelers} ${currentLang === 'ar' ? 'أفراد' : 'travelers'}`;
+
+    // 4. Customer Information Card
+    const elCustName = document.getElementById('detailsCustomerName');
+    const elCustId = document.getElementById('detailsCustomerId');
+    const elCustPhone = document.getElementById('detailsCustomerPhone');
+    const elCustWhatsapp = document.getElementById('detailsCustomerWhatsapp');
+    const elCustEmail = document.getElementById('detailsCustomerEmail');
+    const elCustGov = document.getElementById('detailsCustomerGov');
+    const elBookingDate = document.getElementById('detailsBookingDate');
+
+    const custName = currentLang === 'ar' ? booking.customerName_ar : booking.customerName_en;
     if (elCustName) elCustName.textContent = custName;
-    if (elCustPhone) elCustPhone.textContent = booking.customerPhone;
     if (elCustId) elCustId.textContent = booking.customerId;
 
+    const rawPhone = booking.customerPhone || '+20 100 000 0000';
+    const cleanDigits = rawPhone.replace(/\D/g, '');
+    const cleanPhone = cleanDigits.startsWith('0') ? '2' + cleanDigits : (cleanDigits.startsWith('2') ? cleanDigits : '20' + cleanDigits);
+
+    if (elCustPhone) {
+      const phoneTextSpan = elCustPhone.querySelector('span') || elCustPhone;
+      phoneTextSpan.textContent = rawPhone;
+      elCustPhone.href = `tel:${rawPhone.replace(/\s+/g, '')}`;
+    }
+
+    if (elCustWhatsapp) {
+      const waPhone = booking.customerWhatsapp || rawPhone;
+      const waTextSpan = elCustWhatsapp.querySelector('span') || elCustWhatsapp;
+      waTextSpan.textContent = waPhone;
+      elCustWhatsapp.href = `https://wa.me/${cleanPhone}`;
+    }
+
+    if (elCustEmail) {
+      const email = booking.customerEmail || `${booking.customerId.toLowerCase()}@customer.miqat.me`;
+      const emailTextSpan = elCustEmail.querySelector('span') || elCustEmail;
+      emailTextSpan.textContent = email;
+      elCustEmail.href = `mailto:${email}`;
+    }
+
+    if (elCustGov) {
+      elCustGov.textContent = currentLang === 'ar'
+        ? (booking.customerGovernorate_ar || 'القاهرة')
+        : (booking.customerGovernorate_en || 'Cairo');
+    }
+
+    if (elBookingDate) elBookingDate.textContent = booking.bookingDate;
+
+    // 5. Program & Trip Information Card
+    const elProgName = document.getElementById('detailsProgramName');
+    const elCategory = document.getElementById('detailsCategory');
+    const elTripType = document.getElementById('detailsTripType');
+    const elTravelers = document.getElementById('detailsTravelers');
+    const elUnitPrice = document.getElementById('detailsUnitPrice');
+    const elDepDate = document.getElementById('detailsDepartureDate');
+    const elRetDate = document.getElementById('detailsReturnDate');
+    const elHotelMakkah = document.getElementById('detailsHotelMakkah');
+    const elHotelMadinah = document.getElementById('detailsHotelMadinah');
+    const elRoomType = document.getElementById('detailsRoomType');
+    const elSpecialReq = document.getElementById('detailsSpecialRequests');
+
+    const progName = currentLang === 'ar' ? booking.programName_ar : booking.programName_en;
     if (elProgName) elProgName.textContent = progName;
+
     if (elCategory) {
       const isUmrah = booking.category === 'umrah';
-      elCategory.textContent = isUmrah ? (currentLang === 'ar' ? 'برامج العمرة' : 'Umrah Programs') : (currentLang === 'ar' ? 'برامج الحج' : 'Hajj Programs');
+      elCategory.textContent = isUmrah
+        ? (currentLang === 'ar' ? 'برامج العمرة' : 'Umrah Programs')
+        : (currentLang === 'ar' ? 'برامج الحج' : 'Hajj Programs');
     }
+
+    if (elTripType) {
+      elTripType.textContent = currentLang === 'ar'
+        ? (booking.tripType_ar || 'طيران مباشر')
+        : (booking.tripType_en || 'Direct Flight');
+    }
+
     if (elTravelers) elTravelers.textContent = `${booking.travelers} ${currentLang === 'ar' ? 'أفراد' : 'travelers'}`;
     if (elUnitPrice) elUnitPrice.textContent = formatCurrency(booking.unitPrice);
+    if (elDepDate) elDepDate.textContent = booking.departureDate || booking.bookingDate;
+    if (elRetDate) elRetDate.textContent = booking.returnDate || '--';
+
+    if (elHotelMakkah) {
+      elHotelMakkah.textContent = currentLang === 'ar'
+        ? (booking.hotelMakkah_ar || 'سويس أوتيل مكة (5 نجوم)')
+        : (booking.hotelMakkah_en || 'Swissôtel Makkah (5-Star)');
+    }
+
+    if (elHotelMadinah) {
+      elHotelMadinah.textContent = currentLang === 'ar'
+        ? (booking.hotelMadinah_ar || 'دار التقوى المدينة (5 نجوم)')
+        : (booking.hotelMadinah_en || 'Dar Al Taqwa Madinah (5-Star)');
+    }
+
+    if (elRoomType) {
+      elRoomType.textContent = currentLang === 'ar'
+        ? (booking.roomType_ar || 'غرفة ثنائية مطلة')
+        : (booking.roomType_en || 'Double Room with View');
+    }
+
+    if (elSpecialReq) {
+      elSpecialReq.textContent = currentLang === 'ar'
+        ? (booking.specialRequests_ar || 'لا توجد طلبات خاصة مسجلة.')
+        : (booking.specialRequests_en || 'No special requests recorded.');
+    }
+
+    // Proposed Program Change Banner
+    const bannerChange = document.getElementById('detailsProposedChangeBanner');
+    const proposedProgEl = document.getElementById('proposedProgramName');
+    const proposedPriceEl = document.getElementById('proposedProgramPrice');
+
+    if (bannerChange) {
+      if (booking.proposedChange && booking.proposedChange.status === 'pending_customer_agreement') {
+        bannerChange.style.display = 'block';
+        if (proposedProgEl) {
+          proposedProgEl.textContent = currentLang === 'ar'
+            ? (booking.proposedChange.programName_ar || booking.proposedChange.replacementProgramId)
+            : (booking.proposedChange.programName_en || booking.proposedChange.replacementProgramId);
+        }
+        if (proposedPriceEl) {
+          proposedPriceEl.textContent = formatCurrency(booking.proposedChange.newPrice);
+        }
+      } else {
+        bannerChange.style.display = 'none';
+      }
+    }
+
+    // 6. Financial Summary & Progress Card
+    const elTotalPrice = document.getElementById('detailsTotalPrice');
+    const elPaidAmount = document.getElementById('detailsPaidAmount');
+    const elRemainingAmount = document.getElementById('detailsRemainingAmount');
+    const elPayStatusText = document.getElementById('detailsPaymentStatusText');
+    const elProgressPct = document.getElementById('detailsPaymentProgressPct');
+    const elProgressFill = document.getElementById('detailsPaymentProgressFill');
 
     if (elTotalPrice) elTotalPrice.textContent = formatCurrency(booking.totalPrice);
     if (elPaidAmount) elPaidAmount.textContent = formatCurrency(booking.paidAmount);
     if (elRemainingAmount) elRemainingAmount.textContent = formatCurrency(booking.remainingAmount);
     if (elPayStatusText) elPayStatusText.textContent = currentLang === 'ar' ? pSt.ar : pSt.en;
+
+    const paidPct = Math.min(100, Math.max(0, Math.round((booking.paidAmount / (booking.totalPrice || 1)) * 100)));
+    if (elProgressPct) elProgressPct.textContent = `${paidPct}%`;
+    if (elProgressFill) elProgressFill.style.width = `${paidPct}%`;
+
+    // 7. Payment History and Itemized Transactions Table
+    const paymentsTbody = document.getElementById('paymentsTableBody');
+    const paymentsEmpty = document.getElementById('paymentsEmptyState');
+    const paymentsTable = document.getElementById('paymentsTable');
+
+    if (paymentsTbody) {
+      paymentsTbody.innerHTML = '';
+      if (booking.payments && booking.payments.length > 0) {
+        if (paymentsTable) paymentsTable.style.display = 'table';
+        if (paymentsEmpty) paymentsEmpty.style.display = 'none';
+
+        booking.payments.forEach(pay => {
+          const tr = document.createElement('tr');
+          
+          const methodLabel = pay.method === 'gateway' ? (currentLang === 'ar' ? 'بوابة ميقات الإلكترونية' : 'Miqat Online Gateway')
+            : pay.method === 'bank_deposit' ? (currentLang === 'ar' ? 'إيداع بنكي' : 'Bank Deposit')
+            : pay.method === 'cheque' ? (currentLang === 'ar' ? 'شيك مصرفي' : 'Bank Cheque')
+            : (currentLang === 'ar' ? 'تحصيل نقدي بالفرع' : 'Branch Cash');
+
+          const statusBadgeHtml = pay.verifiedByMiqat
+            ? `<span class="pay-badge-verified"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> ${currentLang === 'ar' ? 'موثق عبر ميقات' : 'Verified by Miqat'}</span>`
+            : `<span class="pay-badge-reported"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> ${currentLang === 'ar' ? 'مسجل بالفرع (مراجعة)' : 'Company-Reported'}</span>`;
+
+          const recordedByLabel = pay.recordedBy === 'gateway' ? (currentLang === 'ar' ? 'بوابة الدفع الإلكتروني' : 'Payment Gateway')
+            : pay.recordedBy === 'company' ? (currentLang === 'ar' ? 'إدارة الشركة (الفرع)' : 'Company Branch')
+            : pay.recordedBy === 'finance' ? (currentLang === 'ar' ? 'مالية ميقات' : 'Miqat Finance')
+            : pay.recordedBy;
+
+          tr.innerHTML = `
+            <td class="font-numeric" style="font-weight: 700;">${pay.ref || '--'}</td>
+            <td class="font-numeric">${pay.date || '--'}</td>
+            <td class="font-numeric" style="font-weight: 800; color: var(--color-text);">${formatCurrency(pay.amount)}</td>
+            <td>${methodLabel}</td>
+            <td>${statusBadgeHtml}</td>
+            <td style="font-size: 0.8rem; color: var(--color-text-muted);">${recordedByLabel}</td>
+          `;
+          paymentsTbody.appendChild(tr);
+        });
+      } else {
+        if (paymentsTable) paymentsTable.style.display = 'none';
+        if (paymentsEmpty) paymentsEmpty.style.display = 'block';
+      }
+    }
+
+    // 8. Authorized Operational Actions Buttons State
+    const rawStatus = (booking.status || '').toLowerCase();
+    const rawBkgStatus = (booking.bookingStatus || '').toLowerCase();
+    const isConfirmed = rawStatus === 'confirmed' || rawBkgStatus === 'confirmed';
+    const isCancelledOrRejected = rawStatus === 'cancelled' || rawStatus === 'rejected' || rawBkgStatus === 'cancelled' || rawBkgStatus === 'rejected';
+    const isFullyPaid = booking.remainingAmount <= 0;
+
+    const btnActionConfirm = document.getElementById('btnActionConfirm');
+    const btnActionReportPayment = document.getElementById('btnActionReportPayment');
+    const btnActionRequestChange = document.getElementById('btnActionRequestChange');
+    const btnActionReject = document.getElementById('btnActionReject');
+
+    if (btnActionConfirm) {
+      btnActionConfirm.disabled = isConfirmed || isCancelledOrRejected;
+      const textSpan = btnActionConfirm.querySelector('span');
+      if (textSpan) {
+        if (isConfirmed) {
+          textSpan.textContent = getTranslation('company.btn_already_confirmed') || (currentLang === 'ar' ? 'الحجز معتمد ومؤكد بالفعل' : 'Booking Already Confirmed');
+        } else {
+          textSpan.textContent = getTranslation('company.btn_confirm_booking') || (currentLang === 'ar' ? 'تأكيد واعتماد الحجز' : 'Confirm Booking');
+        }
+      }
+    }
+
+    if (btnActionReportPayment) {
+      btnActionReportPayment.disabled = isFullyPaid || isCancelledOrRejected;
+      const textSpan = btnActionReportPayment.querySelector('span');
+      if (textSpan) {
+        if (isFullyPaid) {
+          textSpan.textContent = getTranslation('company.btn_fully_paid') || (currentLang === 'ar' ? 'الحجز مسدد بالكامل' : 'Fully Paid');
+        } else {
+          textSpan.textContent = getTranslation('company.btn_report_payment') || (currentLang === 'ar' ? 'تسجيل استلام دفعة نقدية' : 'Report Payment Received');
+        }
+      }
+    }
+
+    if (btnActionRequestChange) {
+      btnActionRequestChange.disabled = isCancelledOrRejected;
+    }
+
+    if (btnActionReject) {
+      btnActionReject.disabled = isConfirmed || isCancelledOrRejected;
+    }
+
+    // 9. Booking Activity Timeline
+    const timelineList = document.getElementById('timelineList');
+    const timelineEmpty = document.getElementById('timelineEmptyState');
+
+    if (timelineList) {
+      timelineList.innerHTML = '';
+      if (booking.timeline && booking.timeline.length > 0) {
+        if (timelineEmpty) timelineEmpty.style.display = 'none';
+
+        booking.timeline.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'timeline-item';
+
+          const markerClass = item.type === 'confirmed' ? 'marker-confirmed'
+            : item.type === 'rejected' ? 'marker-rejected'
+            : '';
+
+          const iconSvg = item.type === 'confirmed'
+            ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+            : item.type === 'rejected'
+            ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+            : '<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"></circle></svg>';
+
+          const actorName = currentLang === 'ar'
+            ? (item.actor_ar || (item.actor === 'customer' ? 'العميل' : item.actor === 'company' ? 'الشركة الشريكة' : item.actor === 'miqat_gateway' ? 'بوابة ميقات' : item.actor === 'miqat_finance' ? 'مالية ميقات' : 'النظام الآلي'))
+            : (item.actor_en || (item.actor === 'customer' ? 'Customer' : item.actor === 'company' ? 'Partner Company' : item.actor === 'miqat_gateway' ? 'Miqat Gateway' : item.actor === 'miqat_finance' ? 'Miqat Finance' : 'System'));
+
+          const title = currentLang === 'ar' ? item.title_ar : item.title_en;
+          const desc = currentLang === 'ar' ? item.description_ar : item.description_en;
+
+          li.innerHTML = `
+            <div class="timeline-marker-dot ${markerClass}">${iconSvg}</div>
+            <div class="timeline-item-header">
+              <span class="timeline-item-title">${title}</span>
+              <span class="timeline-item-time font-numeric">${item.timestamp}</span>
+            </div>
+            <p class="timeline-item-desc">${desc}</p>
+            <span class="timeline-actor-pill">${actorName}</span>
+          `;
+          timelineList.appendChild(li);
+        });
+      } else {
+        if (timelineEmpty) timelineEmpty.style.display = 'block';
+      }
+    }
   }
 
+  // =========================================================================
+  // FINANCIAL OVERVIEW & AUTHORITATIVE COLLECTIONS ENGINE (SECTION 4)
+  // =========================================================================
+
+  let financialFilterState = {
+    period: 'all',
+    date: null,
+    search: '',
+    program: 'all',
+    source: 'all',
+    method: 'all',
+    verification: 'all'
+  };
+
+  // --- Date Picker Display Formatter (Fix 2B) ---
+  function updateFinDateDisplay(dateStr) {
+    const dateEl = document.getElementById('finDateDisplay');
+    if (!dateEl) return;
+    let d;
+    if (dateStr) {
+      const parts = dateStr.split('-');
+      d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    } else {
+      d = new Date(2026, 9, 30);
+    }
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    try {
+      dateEl.textContent = d.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-US', options);
+    } catch (e) {
+      dateEl.textContent = dateStr || (currentLang === 'ar' ? 'الجمعة، 30 أكتوبر 2026' : 'Friday, October 30, 2026');
+    }
+  }
+
+  // --- Genuine Binary XLSX Workbook Generator (Fix 6B) ---
+  const _crcTable = new Int32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let k = 0; k < 8; k++) {
+      c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    }
+    _crcTable[i] = c;
+  }
+
+  function _calcCrc32(buf) {
+    let crc = 0 ^ (-1);
+    for (let i = 0; i < buf.length; i++) {
+      crc = (crc >>> 8) ^ _crcTable[(crc ^ buf[i]) & 0xFF];
+    }
+    return (crc ^ (-1)) >>> 0;
+  }
+
+  function _createZipBlob(files) {
+    const textEnc = new TextEncoder();
+    const parts = [];
+    const entries = [];
+    let offset = 0;
+
+    for (const f of files) {
+      const nameBytes = textEnc.encode(f.name);
+      const dataBytes = f.data instanceof Uint8Array ? f.data : textEnc.encode(f.data);
+      const crc = _calcCrc32(dataBytes);
+
+      const header = new Uint8Array(30 + nameBytes.length);
+      const view = new DataView(header.buffer);
+      view.setUint32(0, 0x04034b50, true);
+      view.setUint16(4, 20, true);
+      view.setUint16(6, 0, true);
+      view.setUint16(8, 0, true); // compression: 0 = store
+      view.setUint16(10, 0, true);
+      view.setUint16(12, 0, true);
+      view.setUint32(14, crc, true);
+      view.setUint32(18, dataBytes.length, true);
+      view.setUint32(22, dataBytes.length, true);
+      view.setUint16(26, nameBytes.length, true);
+      view.setUint16(28, 0, true);
+      header.set(nameBytes, 30);
+
+      entries.push({
+        nameBytes,
+        crc,
+        size: dataBytes.length,
+        offset
+      });
+
+      parts.push(header);
+      parts.push(dataBytes);
+      offset += header.length + dataBytes.length;
+    }
+
+    const cdStart = offset;
+    let cdSize = 0;
+
+    for (const entry of entries) {
+      const cdHeader = new Uint8Array(46 + entry.nameBytes.length);
+      const view = new DataView(cdHeader.buffer);
+      view.setUint32(0, 0x02014b50, true);
+      view.setUint16(4, 20, true);
+      view.setUint16(6, 20, true);
+      view.setUint16(8, 0, true);
+      view.setUint16(10, 0, true);
+      view.setUint16(12, 0, true);
+      view.setUint16(14, 0, true);
+      view.setUint32(16, entry.crc, true);
+      view.setUint32(20, entry.size, true);
+      view.setUint32(24, entry.size, true);
+      view.setUint16(28, entry.nameBytes.length, true);
+      view.setUint16(30, 0, true);
+      view.setUint16(32, 0, true);
+      view.setUint16(34, 0, true);
+      view.setUint16(36, 0, true);
+      view.setUint32(38, 0, true);
+      view.setUint32(42, entry.offset, true);
+      cdHeader.set(entry.nameBytes, 46);
+
+      parts.push(cdHeader);
+      cdSize += cdHeader.length;
+    }
+
+    const eocd = new Uint8Array(22);
+    const eocdView = new DataView(eocd.buffer);
+    eocdView.setUint32(0, 0x06054b50, true);
+    eocdView.setUint16(4, 0, true);
+    eocdView.setUint16(6, 0, true);
+    eocdView.setUint16(8, entries.length, true);
+    eocdView.setUint16(10, entries.length, true);
+    eocdView.setUint32(12, cdSize, true);
+    eocdView.setUint32(16, cdStart, true);
+    eocdView.setUint16(20, 0, true);
+    parts.push(eocd);
+
+    return new Blob(parts, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+
+  function _escapeXml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  }
+
+  function _colLetter(colIdx) {
+    let letter = '';
+    while (colIdx >= 0) {
+      letter = String.fromCharCode((colIdx % 26) + 65) + letter;
+      colIdx = Math.floor(colIdx / 26) - 1;
+    }
+    return letter;
+  }
+
+  function buildXlsxWorkbook(headers, rows) {
+    const contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+      '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' +
+      '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' +
+      '</Types>';
+
+    const rootRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>' +
+      '</Relationships>';
+
+    const wbRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>' +
+      '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>' +
+      '</Relationships>';
+
+    const workbookXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
+      '<sheets>' +
+      '<sheet name="Company Bookings Statement" sheetId="1" r:id="rId1"/>' +
+      '</sheets>' +
+      '</workbook>';
+
+    const stylesXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+      '<fonts count="2">' +
+      '<font><sz val="11"/><name val="Segoe UI"/></font>' +
+      '<font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Segoe UI"/></font>' +
+      '</fonts>' +
+      '<fills count="3">' +
+      '<fill><patternFill patternType="none"/></fill>' +
+      '<fill><patternFill patternType="gray125"/></fill>' +
+      '<fill><patternFill patternType="solid"><fgColor rgb="FF183653"/></patternFill></fill>' +
+      '</fills>' +
+      '<borders count="1">' +
+      '<border><left/><right/><top/><bottom/><diagonal/></border>' +
+      '</borders>' +
+      '<cellStyleXfs count="1">' +
+      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>' +
+      '</cellStyleXfs>' +
+      '<cellXfs count="3">' +
+      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
+      '<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/>' +
+      '<xf numFmtId="3" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>' +
+      '</cellXfs>' +
+      '</styleSheet>';
+
+    let sheetXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+      '<sheetData>';
+
+    // Header row
+    sheetXml += '<row r="1">';
+    headers.forEach((h, cIdx) => {
+      const cellRef = _colLetter(cIdx) + '1';
+      sheetXml += `<c r="${cellRef}" t="inlineStr" s="1"><is><t>${_escapeXml(h)}</t></is></c>`;
+    });
+    sheetXml += '</row>';
+
+    // Data rows
+    rows.forEach((row, rIdx) => {
+      const rowNum = rIdx + 2;
+      sheetXml += `<row r="${rowNum}">`;
+      row.forEach((val, cIdx) => {
+        const cellRef = _colLetter(cIdx) + rowNum;
+        if (typeof val === 'number') {
+          sheetXml += `<c r="${cellRef}" t="n" s="2"><v>${val}</v></c>`;
+        } else {
+          sheetXml += `<c r="${cellRef}" t="inlineStr" s="0"><is><t>${_escapeXml(val)}</t></is></c>`;
+        }
+      });
+      sheetXml += '</row>';
+    });
+
+    sheetXml += '</sheetData></worksheet>';
+
+    return _createZipBlob([
+      { name: '[Content_Types].xml', data: contentTypes },
+      { name: '_rels/.rels', data: rootRels },
+      { name: 'xl/_rels/workbook.xml.rels', data: wbRels },
+      { name: 'xl/workbook.xml', data: workbookXml },
+      { name: 'xl/styles.xml', data: stylesXml },
+      { name: 'xl/worksheets/sheet1.xml', data: sheetXml }
+    ]);
+  }
+
+  function exportCompanyBookingsToExcel() {
+    if (!window.MiqatCompanyMockData || !window.MiqatCompanyMockData.RAW_BOOKINGS) {
+      showCompanyToast(
+        currentLang === 'ar' ? 'تعذر الوصول لبيانات حجوزات الشركة' : 'Could not access company bookings data',
+        'error'
+      );
+      return;
+    }
+
+    const allBookings = window.MiqatCompanyMockData.RAW_BOOKINGS;
+    if (!allBookings || allBookings.length === 0) {
+      showCompanyToast(
+        currentLang === 'ar' ? 'لا توجد حجوزات مسجلة للشركة لتصديرها' : 'No bookings available to export',
+        'error'
+      );
+      return;
+    }
+
+    showCompanyToast(
+      currentLang === 'ar'
+        ? `جاري إنشاء وتحميل كشف الحساب المعتمد لجميع الحجوزات (${allBookings.length} حجزاً بصيغة Excel)...`
+        : `Generating and downloading official statement for all bookings (${allBookings.length} bookings in Excel)...`,
+      'info'
+    );
+
+    try {
+      const isAr = currentLang === 'ar';
+      const headers = isAr ? [
+        "رقم الحجز",
+        "اسم المعتمر / العميل",
+        "رقم الهاتف",
+        "البرنامج",
+        "فئة البرنامج",
+        "تاريخ الحجز",
+        "إجمالي قيمة الحجز (ج.م)",
+        "المحصل عبر ميقات (ج.م)",
+        "التحصيل المباشر بالشركة (ج.م)",
+        "المبلغ المتبقي (ج.م)",
+        "حالة الحجز",
+        "حالة السداد",
+        "عدد المعتمرين"
+      ] : [
+        "Booking Ref",
+        "Customer Name",
+        "Phone Number",
+        "Program Name",
+        "Category",
+        "Booking Date",
+        "Total Value (EGP)",
+        "Paid via Miqat (EGP)",
+        "Company Direct (EGP)",
+        "Remaining (EGP)",
+        "Booking Status",
+        "Payment Status",
+        "Travelers"
+      ];
+
+      const rows = allBookings.map(b => {
+        const customerName = isAr ? b.customerName_ar : b.customerName_en;
+        const progName = isAr ? b.programName_ar : b.programName_en;
+        
+        let platformPaid = 0;
+        let companyPaid = 0;
+        if (b.payments && b.payments.length) {
+          b.payments.forEach(p => {
+            if (p.source === 'company') {
+              companyPaid += (p.amount || 0);
+            } else {
+              platformPaid += (p.amount || 0);
+            }
+          });
+        } else {
+          platformPaid = b.paidAmount || 0;
+        }
+
+        let bookingStatusText = '';
+        if (b.status === 'Confirmed' || b.bookingStatus === 'confirmed') {
+          bookingStatusText = isAr ? 'مؤكد' : 'Confirmed';
+        } else if (b.status === 'Pending' || b.bookingStatus === 'under_review') {
+          bookingStatusText = isAr ? 'قيد المراجعة' : 'Under Review';
+        } else if (b.status === 'New' || b.bookingStatus === 'new') {
+          bookingStatusText = isAr ? 'جديد' : 'New';
+        } else if (b.status === 'Rejected' || b.bookingStatus === 'rejected') {
+          bookingStatusText = isAr ? 'ملغي' : 'Cancelled';
+        } else {
+          bookingStatusText = b.status;
+        }
+
+        let paymentStatusText = '';
+        if (b.paymentStatus === 'fully_paid') {
+          paymentStatusText = isAr ? 'مسدد بالكامل' : 'Fully Paid';
+        } else if (b.paymentStatus === 'deposit_paid' || b.paymentStatus === 'partially_paid') {
+          paymentStatusText = isAr ? 'مسدد جزئياً' : 'Partially Paid';
+        } else {
+          paymentStatusText = isAr ? 'غير مسدد' : 'Unpaid';
+        }
+
+        const catName = isAr
+          ? (b.category === 'vip' ? 'فاخر VIP' : (b.category === 'premium' ? 'متميز' : (b.category === 'ramadan' ? 'رمضان' : 'اقتصادي')))
+          : (b.category === 'vip' ? 'VIP Luxury' : (b.category === 'premium' ? 'Premium' : (b.category === 'ramadan' ? 'Ramadan' : 'Economy')));
+
+        return [
+          b.reference,
+          customerName,
+          b.customerPhone || '',
+          progName,
+          catName,
+          b.bookingDate,
+          b.totalPrice,
+          platformPaid,
+          companyPaid,
+          b.remainingAmount,
+          bookingStatusText,
+          paymentStatusText,
+          b.travelers || 1
+        ];
+      });
+
+      const xlsxBlob = buildXlsxWorkbook(headers, rows);
+      const today = new Date().toISOString().split('T')[0];
+      const filename = `Miqat_AlDorraTravel_Bookings_Statement_${today}.xlsx`;
+
+      const downloadUrl = URL.createObjectURL(xlsxBlob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 2000);
+
+      showCompanyToast(
+        isAr
+          ? 'تم تنزيل كشف الحساب بصيغة Excel (.xlsx) بنجاح لجميع حجوزات الشركة'
+          : 'Excel statement (.xlsx) successfully downloaded for all company bookings',
+        'success'
+      );
+    } catch (err) {
+      console.error('Excel Export Error:', err);
+      showCompanyToast(
+        currentLang === 'ar' ? 'حدث خطأ أثناء تصدير كشف الحساب' : 'Failed to generate Excel statement',
+        'error'
+      );
+    }
+  }
+
+  // Expose Excel helper methods for direct execution / testing
+  window.buildXlsxWorkbook = buildXlsxWorkbook;
+  window.exportCompanyBookingsToExcel = exportCompanyBookingsToExcel;
+
+  // --- Collection Details Modal (Fix 6C) ---
+  function openCollectionDetailsModal(tx) {
+    if (!tx) return;
+    const modal = document.getElementById('collectionDetailsModal');
+    if (!modal) return;
+
+    const isAr = currentLang === 'ar';
+    const formatMoney = (n) => Number(n || 0).toLocaleString('en-US');
+
+    const customerName = isAr ? tx.customerName_ar : tx.customerName_en;
+    const methodText = isAr ? tx.method_ar : tx.method_en;
+    const sourceText = tx.source === 'platform'
+      ? (isAr ? 'منصة ميقات (إيداع إلكتروني)' : 'Miqat Platform (Electronic)')
+      : (isAr ? 'فرع الشركة (تحصيل مباشر)' : 'Company Branch (Direct)');
+    const recordedBy = isAr ? tx.recordedBy_ar : tx.recordedBy_en;
+    const statusText = isAr ? (tx.status_ar || 'معتمد') : (tx.status_en || 'Verified');
+    const notesText = isAr ? (tx.notes_ar || 'لا توجد ملاحظات إضافية') : (tx.notes_en || 'No additional notes');
+
+    let verifText = '';
+    if (tx.verifiedByMiqat) {
+      verifText = isAr ? 'معتمد وموثق من ميقات' : 'Verified by Miqat';
+    } else {
+      verifText = isAr ? 'مسجل بالشركة (قيد التدقيق المحاسبي بميقات)' : 'Company-Reported (Pending Miqat Verification)';
+    }
+
+    const setText = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setText('modalDetailTxRef', tx.transactionRef || tx.reference);
+    setText('modalDetailBookingRef', tx.bookingRef);
+    setText('modalDetailCustomerName', customerName);
+    setText('modalDetailAmount', `${formatMoney(tx.amount)} ${isAr ? 'ج.م' : 'EGP'}`);
+    setText('modalDetailDateTime', tx.date);
+    setText('modalDetailSource', sourceText);
+    setText('modalDetailMethod', methodText);
+    setText('modalDetailStatus', statusText);
+    setText('modalDetailVerification', verifText);
+    setText('modalDetailRecordedBy', recordedBy);
+    setText('modalDetailReceiptRef', tx.receiptRef || (tx.source === 'platform' ? 'E-RCP-' + tx.reference : 'REC-OFFICE-8821'));
+    setText('modalDetailNotes', notesText);
+
+    const bookingBtn = document.getElementById('btnModalViewBooking');
+    if (bookingBtn) {
+      bookingBtn.href = `company-booking-details.html?id=${encodeURIComponent(tx.bookingId)}`;
+    }
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeCollectionDetailsModal() {
+    const modal = document.getElementById('collectionDetailsModal');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function setupFinancialOverviewPage() {
+    // 1. Period Pills
+    const pillsGroup = document.getElementById('finPeriodPillsGroup');
+    if (pillsGroup) {
+      pillsGroup.querySelectorAll('.fin-period-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          pillsGroup.querySelectorAll('.fin-period-pill').forEach(p => {
+            p.classList.remove('is-active');
+            p.setAttribute('aria-selected', 'false');
+          });
+          pill.classList.add('is-active');
+          pill.setAttribute('aria-selected', 'true');
+          financialFilterState.date = null;
+          financialFilterState.period = pill.getAttribute('data-period') || 'all';
+          
+          const resetFinDateBtn = document.getElementById('resetFinDateFilterBtn');
+          if (resetFinDateBtn) resetFinDateBtn.style.display = 'none';
+          
+          const finDatePicker = document.getElementById('finDatePicker');
+          if (finDatePicker) finDatePicker.value = '2026-10-30';
+          updateFinDateDisplay('2026-10-30');
+
+          renderFinancialOverviewPage();
+        });
+      });
+    }
+
+    // 2. Calendar Date Picker Filter Control (Fix 2B)
+    const finDatePicker = document.getElementById('finDatePicker');
+    const resetFinDateBtn = document.getElementById('resetFinDateFilterBtn');
+
+    if (finDatePicker) {
+      finDatePicker.addEventListener('change', () => {
+        const val = finDatePicker.value;
+        if (!val) return;
+        financialFilterState.date = val;
+        updateFinDateDisplay(val);
+        if (resetFinDateBtn) resetFinDateBtn.style.display = 'inline-flex';
+
+        // Deselect period pills
+        document.querySelectorAll('.fin-period-pill').forEach(b => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+
+        renderFinancialOverviewPage();
+      });
+    }
+
+    if (resetFinDateBtn) {
+      resetFinDateBtn.addEventListener('click', () => {
+        financialFilterState.date = null;
+        if (finDatePicker) finDatePicker.value = '2026-10-30';
+        updateFinDateDisplay('2026-10-30');
+        resetFinDateBtn.style.display = 'none';
+
+        document.querySelectorAll('.fin-period-pill').forEach(b => {
+          const isAll = b.getAttribute('data-period') === 'all';
+          b.classList.toggle('is-active', isAll);
+          b.setAttribute('aria-selected', isAll ? 'true' : 'false');
+        });
+        financialFilterState.period = 'all';
+
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // Initialize date display
+    updateFinDateDisplay('2026-10-30');
+
+    // 3. Search Text
+    const searchInput = document.getElementById('finSearchInput');
+    if (searchInput) {
+      let debounceTimer = null;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          financialFilterState.search = e.target.value.trim();
+          renderFinancialOverviewPage();
+        }, 250);
+      });
+    }
+
+    // 4. Program Select
+    const progSelect = document.getElementById('finProgramSelect');
+    if (progSelect) {
+      progSelect.addEventListener('change', (e) => {
+        financialFilterState.program = e.target.value;
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // 5. Source Select
+    const sourceSelect = document.getElementById('finSourceSelect');
+    if (sourceSelect) {
+      sourceSelect.addEventListener('change', (e) => {
+        financialFilterState.source = e.target.value;
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // 6. Method Select
+    const methodSelect = document.getElementById('finMethodSelect');
+    if (methodSelect) {
+      methodSelect.addEventListener('change', (e) => {
+        financialFilterState.method = e.target.value;
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // 7. Verification Status Select
+    const verifSelect = document.getElementById('finVerificationSelect');
+    if (verifSelect) {
+      verifSelect.addEventListener('change', (e) => {
+        financialFilterState.verification = e.target.value;
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // 8. Apply Filters Button (Fix 5)
+    const applyBtn = document.getElementById('finApplyFiltersBtn');
+    if (applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        if (searchInput) financialFilterState.search = searchInput.value.trim();
+        if (progSelect) financialFilterState.program = progSelect.value;
+        if (sourceSelect) financialFilterState.source = sourceSelect.value;
+        if (methodSelect) financialFilterState.method = methodSelect.value;
+        if (verifSelect) financialFilterState.verification = verifSelect.value;
+        renderFinancialOverviewPage();
+      });
+    }
+
+    // 9. Reset Filters Button (Fix 5)
+    function resetFilters() {
+      financialFilterState.search = '';
+      financialFilterState.program = 'all';
+      financialFilterState.source = 'all';
+      financialFilterState.method = 'all';
+      financialFilterState.verification = 'all';
+
+      if (searchInput) searchInput.value = '';
+      if (progSelect) progSelect.value = 'all';
+      if (sourceSelect) sourceSelect.value = 'all';
+      if (methodSelect) methodSelect.value = 'all';
+      if (verifSelect) verifSelect.value = 'all';
+
+      renderFinancialOverviewPage();
+    }
+
+    const resetBtn = document.getElementById('finResetFiltersBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+
+    const emptyResetBtn = document.getElementById('finEmptyResetBtn');
+    if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetFilters);
+
+    // 10. Export Statement Button (Fix 6B: Genuine .xlsx with all 36 company bookings)
+    const exportBtn = document.getElementById('finExportBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        exportCompanyBookingsToExcel();
+      });
+    }
+
+    // 11. Modal Close Handlers (Fix 6C)
+    const closeBtn = document.getElementById('btnCloseCollectionModal');
+    const cancelBtn = document.getElementById('btnCancelCollectionModal');
+    const backdrop = document.getElementById('backdropCollectionModal');
+    if (closeBtn) closeBtn.addEventListener('click', closeCollectionDetailsModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeCollectionDetailsModal);
+    if (backdrop) backdrop.addEventListener('click', closeCollectionDetailsModal);
+  }
+
+  function renderFinancialOverviewPage() {
+    if (!window.MiqatCompanyMockData) return;
+
+    const data = window.MiqatCompanyMockData.getFinancialOverviewData(financialFilterState);
+    if (!data) return;
+
+    const isAr = currentLang === 'ar';
+    const currSym = isAr ? 'ج.م' : 'EGP';
+    // Fix 1: Number localization for Financial Summary Cards
+    // Uses existing formatNumber() so Arabic mode uses Arabic-Indic digits (ar-EG)
+    // and English mode uses standard English digits (en-US)
+    const formatFinNum = (n) => formatNumber(Number(n || 0));
+    const formatMoney = (n) => Number(n || 0).toLocaleString('en-US');
+
+    // Update date filter display with active language
+    updateFinDateDisplay(financialFilterState.date || '2026-10-30');
+
+    // 1. Update KPI Card 1: Total Booking Value
+    const kpiValEl = document.getElementById('kpiTotalBookingValue');
+    if (kpiValEl) kpiValEl.textContent = formatFinNum(data.summary.totalBookingValue);
+
+    const kpiBookingsBadge = document.getElementById('kpiTotalBookingsCountBadge');
+    if (kpiBookingsBadge) {
+      kpiBookingsBadge.textContent = isAr
+        ? `${formatFinNum(data.summary.totalBookingsCount)} حجزاً معتمداً`
+        : `${formatFinNum(data.summary.totalBookingsCount)} Confirmed Bookings`;
+    }
+
+    // 2. Update KPI Card 2: Platform Collections
+    const kpiPlatEl = document.getElementById('kpiPlatformCollected');
+    if (kpiPlatEl) kpiPlatEl.textContent = formatFinNum(data.summary.platformCollections);
+
+    const kpiPlatRateBadge = document.getElementById('kpiPlatformRateBadge');
+    if (kpiPlatRateBadge) {
+      kpiPlatRateBadge.textContent = isAr
+        ? `${formatFinNum(data.summary.platformRate)}% من الإجمالي`
+        : `${formatFinNum(data.summary.platformRate)}% of Total`;
+    }
+
+    // 3. Update KPI Card 3: Reported Company Direct Collections
+    const kpiCompEl = document.getElementById('kpiCompanyReported');
+    if (kpiCompEl) kpiCompEl.textContent = formatFinNum(data.summary.companyReportedCollections);
+
+    const kpiCompRateBadge = document.getElementById('kpiCompanyRateBadge');
+    if (kpiCompRateBadge) {
+      kpiCompRateBadge.textContent = isAr
+        ? `${formatFinNum(data.summary.companyRate)}% من الإجمالي`
+        : `${formatFinNum(data.summary.companyRate)}% of Total`;
+    }
+
+    const countPending = data.transactions.filter(t => t.source === 'company' && !t.verifiedByMiqat).length;
+    const kpiCompPendingAmt = document.getElementById('kpiCompanyPendingAmount');
+    if (kpiCompPendingAmt) {
+      kpiCompPendingAmt.textContent = `${formatFinNum(data.summary.companyReportedPending)} ${currSym}`;
+    }
+
+    const kpiCompPendingCount = document.getElementById('kpiCompanyPendingCount');
+    if (kpiCompPendingCount) {
+      kpiCompPendingCount.textContent = isAr ? `${formatFinNum(countPending)} إيصالات` : `${formatFinNum(countPending)} Receipts`;
+    }
+
+    const countVerified = data.transactions.filter(t => t.source === 'company' && t.verifiedByMiqat).length;
+    const kpiCompVerifAmt = document.getElementById('kpiCompanyVerifiedAmount');
+    if (kpiCompVerifAmt) {
+      kpiCompVerifAmt.textContent = `${formatFinNum(data.summary.companyReportedVerified)} ${currSym}`;
+    }
+
+    const kpiCompVerifCount = document.getElementById('kpiCompanyVerifiedCount');
+    if (kpiCompVerifCount) {
+      kpiCompVerifCount.textContent = isAr ? `${formatFinNum(countVerified)} إيصال` : `${formatFinNum(countVerified)} Receipts`;
+    }
+
+    // 4. Update KPI Card 4: Remaining Outstanding
+    const kpiRemEl = document.getElementById('kpiRemainingOutstanding');
+    if (kpiRemEl) kpiRemEl.textContent = formatFinNum(data.summary.remainingOutstanding);
+
+    const kpiRemRateBadge = document.getElementById('kpiRemainingRateBadge');
+    if (kpiRemRateBadge) {
+      kpiRemRateBadge.textContent = isAr
+        ? `${formatFinNum(data.summary.remainingRate)}% متبقي`
+        : `${formatFinNum(data.summary.remainingRate)}% Remaining`;
+    }
+
+    // Currency spans in cards (Fix 7A)
+    document.querySelectorAll('.fin-kpi-card .fin-card-currency').forEach(el => {
+      el.textContent = currSym;
+    });
+
+    // 5. Render Monthly Collections Bar Chart (Dual Bar: Platform vs Company Direct)
+    renderFinMonthlyChart(data.monthlyActivity);
+
+    // 6. Render Program Category Financial Breakdown (Fix 2: Remove nested cards, clean progress bars)
+    renderFinProgramBreakdown(data.programBreakdown);
+
+    // 7. Render Settlement Distribution Widget (Fix 2: Remove nested cards, clean stacked bar & legend)
+    renderFinSettlementWidget(data.summary);
+
+    // 8. Update Results Meta
+    const resultsCountEl = document.getElementById('finResultsCountText');
+    if (resultsCountEl) {
+      resultsCountEl.textContent = isAr
+        ? `عرض ${data.filteredCount} من أصل ${data.allTransactionsCount} معاملة مالية`
+        : `Showing ${data.filteredCount} of ${data.allTransactionsCount} transactions`;
+    }
+
+    const resultsSumEl = document.getElementById('finResultsSumText');
+    if (resultsSumEl) {
+      resultsSumEl.textContent = isAr
+        ? `إجمالي المعروض: ${formatMoney(data.filteredSum)} ج.م`
+        : `Total Displayed: ${formatMoney(data.filteredSum)} EGP`;
+    }
+
+    // 9. Render Ledger Table & Mobile Cards
+    renderFinTransactionsLedger(data.transactions);
+  }
+
+  function renderFinMonthlyChart(monthlyActivity) {
+    const wrapper = document.getElementById('finMonthlyChartWrapper');
+    if (!wrapper || !monthlyActivity || !monthlyActivity.length) return;
+
+    const maxVal = Math.max(...monthlyActivity.map(m => Math.max(m.platformCollections, m.companyCollections, 1)));
+    const svgWidth = 840;
+    const svgHeight = 240;
+    const chartHeight = 160;
+    const topMargin = 25;
+    const colWidth = svgWidth / monthlyActivity.length;
+
+    let barsHtml = '';
+
+    monthlyActivity.forEach((m, idx) => {
+      const xCenter = idx * colWidth + colWidth / 2;
+      const barWidth = 24;
+      const gap = 6;
+
+      const pHeight = Math.max(4, Math.round((m.platformCollections / maxVal) * chartHeight));
+      const cHeight = Math.max(4, Math.round((m.companyCollections / maxVal) * chartHeight));
+
+      const pX = xCenter - barWidth - gap / 2;
+      const cX = xCenter + gap / 2;
+
+      const pY = topMargin + (chartHeight - pHeight);
+      const cY = topMargin + (chartHeight - cHeight);
+
+      const monthLabel = currentLang === 'ar' ? m.name_ar : m.name_en;
+
+      barsHtml += `
+        <g class="chart-month-group" data-month="${m.monthKey}">
+          <!-- Platform Bar -->
+          <rect x="${pX}" y="${pY}" width="${barWidth}" height="${pHeight}" rx="4" class="bar-platform">
+            <title>${currentLang === 'ar' ? 'منصة ميقات: ' + m.platformCollections.toLocaleString('en-US') + ' ج.م' : 'Miqat Platform: ' + m.platformCollections.toLocaleString('en-US') + ' EGP'}</title>
+          </rect>
+          <!-- Company Bar -->
+          <rect x="${cX}" y="${cY}" width="${barWidth}" height="${cHeight}" rx="4" class="bar-company">
+            <title>${currentLang === 'ar' ? 'مباشر بالشركة: ' + m.companyCollections.toLocaleString('en-US') + ' ج.م' : 'Company Direct: ' + m.companyCollections.toLocaleString('en-US') + ' EGP'}</title>
+          </rect>
+          <!-- Month Label -->
+          <text x="${xCenter}" y="${svgHeight - 14}" text-anchor="middle" class="chart-axis-label">${monthLabel}</text>
+        </g>
+      `;
+    });
+
+    wrapper.innerHTML = `
+      <svg viewBox="0 0 ${svgWidth} ${svgHeight}" width="100%" height="100%" class="fin-timeline-svg" preserveAspectRatio="xMidYMid meet">
+        <line x1="20" y1="${topMargin}" x2="${svgWidth - 20}" y2="${topMargin}" class="chart-grid-line" stroke-dasharray="4,4" />
+        <line x1="20" y1="${topMargin + chartHeight / 2}" x2="${svgWidth - 20}" y2="${topMargin + chartHeight / 2}" class="chart-grid-line" stroke-dasharray="4,4" />
+        <line x1="20" y1="${topMargin + chartHeight}" x2="${svgWidth - 20}" y2="${topMargin + chartHeight}" class="chart-baseline" />
+        ${barsHtml}
+      </svg>
+    `;
+  }
+
+  function renderFinProgramBreakdown(programBreakdown) {
+    const list = document.getElementById('finProgramBreakdownList');
+    if (!list || !programBreakdown) return;
+
+    list.innerHTML = '';
+    const isAr = currentLang === 'ar';
+    const currLabel = isAr ? 'ج.م' : 'EGP';
+    const formatMoney = (n) => Number(n || 0).toLocaleString('en-US');
+
+    programBreakdown.forEach(p => {
+      // Fix 2A: Remove unnecessary nested cards — clean list row container
+      const row = document.createElement('div');
+      row.className = 'prog-breakdown-row';
+
+      const progTitle = isAr ? p.name_ar : p.name_en;
+      const categoryLabel = p.category === 'umrah'
+        ? (isAr ? 'عمرة' : 'Umrah')
+        : (isAr ? 'حج' : 'Hajj');
+      const countWord = isAr ? 'حجز' : 'Bookings';
+
+      row.innerHTML = `
+        <div class="prog-breakdown-header">
+          <div class="prog-title-wrap">
+            <span class="prog-name">${progTitle}</span>
+            <span class="prog-category-badge badge-${p.category}">${categoryLabel}</span>
+            <span class="prog-count-pill font-numeric">${p.bookingsCount} ${countWord}</span>
+          </div>
+          <div class="prog-revenue-wrap">
+            <span class="prog-revenue-val font-numeric">${formatMoney(p.totalRevenue)} <small>${currLabel}</small></span>
+          </div>
+        </div>
+        <div class="prog-progress-track">
+          <div class="prog-progress-fill fill-${p.category}" style="width: ${p.collectionRate}%;"></div>
+        </div>
+        <div class="prog-breakdown-footer font-numeric">
+          <span class="footer-stat text-teal">${isAr ? 'المحصل: ' : 'Collected: '} ${formatMoney(p.collectedAmount)}</span>
+          <span class="footer-stat text-muted">${isAr ? 'المتبقي: ' : 'Remaining: '} ${formatMoney(p.remainingAmount)}</span>
+          <span class="footer-rate-pill">${p.collectionRate}% ${isAr ? 'سداد' : 'Settled'}</span>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  function renderFinSettlementWidget(summary) {
+    const widget = document.getElementById('finSettlementWidget');
+    if (!widget || !summary) return;
+
+    const isAr = currentLang === 'ar';
+    const currLabel = isAr ? 'ج.م' : 'EGP';
+    const formatMoney = (n) => Number(n || 0).toLocaleString('en-US');
+
+    // Fix 2A: Remove unnecessary nested cards — clean ratio bar and legend rows
+    widget.innerHTML = `
+      <div class="settlement-stacked-bar-wrap">
+        <div class="settlement-stacked-bar">
+          <div class="bar-segment seg-platform" style="width: ${summary.platformRate}%;" title="${isAr ? 'منصة ميقات: ' + summary.platformRate + '%' : 'Miqat Platform: ' + summary.platformRate + '%'}"></div>
+          <div class="bar-segment seg-company" style="width: ${summary.companyRate}%;" title="${isAr ? 'مباشر بالشركة: ' + summary.companyRate + '%' : 'Company Direct: ' + summary.companyRate + '%'}"></div>
+          <div class="bar-segment seg-remaining" style="width: ${summary.remainingRate}%;" title="${isAr ? 'متبقي: ' + summary.remainingRate + '%' : 'Remaining: ' + summary.remainingRate + '%'}"></div>
+        </div>
+      </div>
+      <div class="settlement-legend-list">
+        <div class="settlement-stat-row">
+          <div class="stat-left">
+            <span class="stat-bullet bullet-platform"></span>
+            <span class="stat-name">${isAr ? 'محصل عبر منصة ميقات' : 'Miqat Platform'}</span>
+          </div>
+          <div class="stat-right">
+            <span class="stat-val font-numeric">${formatMoney(summary.platformCollections)} ${currLabel}</span>
+            <span class="stat-pct font-numeric pct-platform">${summary.platformRate}%</span>
+          </div>
+        </div>
+        <div class="settlement-stat-row">
+          <div class="stat-left">
+            <span class="stat-bullet bullet-company"></span>
+            <span class="stat-name">${isAr ? 'مسجل بالشركة (مباشر)' : 'Company Direct'}</span>
+          </div>
+          <div class="stat-right">
+            <span class="stat-val font-numeric">${formatMoney(summary.companyReportedCollections)} ${currLabel}</span>
+            <span class="stat-pct font-numeric pct-company">${summary.companyRate}%</span>
+          </div>
+        </div>
+        <div class="settlement-stat-row">
+          <div class="stat-left">
+            <span class="stat-bullet bullet-remaining"></span>
+            <span class="stat-name">${isAr ? 'متبقي غير محصل' : 'Remaining Dues'}</span>
+          </div>
+          <div class="stat-right">
+            <span class="stat-val font-numeric">${formatMoney(summary.remainingOutstanding)} ${currLabel}</span>
+            <span class="stat-pct font-numeric pct-remaining">${summary.remainingRate}%</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderFinTransactionsLedger(transactions) {
+    const tableBody = document.getElementById('finLedgerTableBody');
+    const tableContainer = document.querySelector('.fin-table-container');
+    const cardsContainer = document.getElementById('finCardsMobileContainer');
+    const emptyState = document.getElementById('finEmptyState');
+
+    if (!transactions || transactions.length === 0) {
+      if (tableContainer) tableContainer.style.display = 'none';
+      if (cardsContainer) cardsContainer.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+
+    if (tableContainer) tableContainer.style.display = '';
+    if (cardsContainer) cardsContainer.style.display = '';
+    if (emptyState) emptyState.style.display = 'none';
+
+    const formatMoney = (n) => Number(n || 0).toLocaleString('en-US');
+
+    // 1. Desktop / Tablet Table
+    if (tableBody) {
+      tableBody.innerHTML = '';
+      transactions.forEach(tx => {
+        const tr = document.createElement('tr');
+        tr.className = 'fin-ledger-row';
+        tr.setAttribute('tabindex', '0');
+        tr.setAttribute('role', 'button');
+        tr.setAttribute('aria-label', currentLang === 'ar' ? `عرض تفاصيل المعاملة ${tx.transactionRef || tx.reference}` : `View transaction details ${tx.transactionRef || tx.reference}`);
+
+        const customerName = currentLang === 'ar' ? tx.customerName_ar : tx.customerName_en;
+        const progName = currentLang === 'ar' ? tx.programName_ar : tx.programName_en;
+        const methodText = currentLang === 'ar' ? tx.method_ar : tx.method_en;
+        const sourceText = tx.source === 'platform'
+          ? (currentLang === 'ar' ? 'منصة ميقات' : 'Miqat Platform')
+          : (currentLang === 'ar' ? 'فرع الشركة' : 'Company Branch');
+        const recordedBy = currentLang === 'ar' ? tx.recordedBy_ar : tx.recordedBy_en;
+
+        const isVerified = tx.verifiedByMiqat;
+        const verifClass = isVerified ? 'verif-approved' : 'verif-pending';
+        let verifText = '';
+        if (isVerified) {
+          verifText = tx.source === 'company'
+            ? (currentLang === 'ar' ? 'مسجل بالشركة (معتمد)' : 'Company-Reported (Verified)')
+            : (currentLang === 'ar' ? 'معتمد من ميقات' : 'Verified by Miqat');
+        } else {
+          verifText = currentLang === 'ar' ? 'مسجل بالشركة (قيد التدقيق)' : 'Company-Reported (Pending)';
+        }
+
+        tr.innerHTML = `
+          <td>
+            <span class="fin-code-pill font-numeric">${tx.transactionRef || tx.reference}</span>
+          </td>
+          <td>
+            <a href="company-booking-details.html?id=${encodeURIComponent(tx.bookingId)}" class="fin-booking-ref-link font-numeric" title="${currentLang === 'ar' ? 'عرض تفاصيل الحجز' : 'View Booking Details'}">
+              ${tx.bookingRef}
+            </a>
+          </td>
+          <td>
+            <div class="fin-customer-stack">
+              <span class="fin-customer-name">${customerName}</span>
+              <span class="fin-customer-phone font-numeric">${tx.customerPhone}</span>
+            </div>
+          </td>
+          <td>
+            <span class="fin-prog-badge badge-${tx.category}">${progName}</span>
+          </td>
+          <td>
+            <span class="fin-datetime font-numeric">${tx.date}</span>
+          </td>
+          <td>
+            <span class="fin-source-badge badge-${tx.source}">${sourceText}</span>
+          </td>
+          <td>
+            <span class="fin-method-text">${methodText}</span>
+          </td>
+          <td>
+            <span class="fin-amount-cell font-numeric">${formatMoney(tx.amount)} <small>${currentLang === 'ar' ? 'ج.م' : 'EGP'}</small></span>
+          </td>
+          <td>
+            <span class="fin-verif-badge ${verifClass}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                ${isVerified ? '<polyline points="20 6 9 17 4 12"></polyline>' : '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>'}
+              </svg>
+              <span>${verifText}</span>
+            </span>
+          </td>
+          <td>
+            <span class="fin-recorded-by" title="${recordedBy}">${recordedBy}</span>
+          </td>
+          <td class="td-actions">
+            <a href="company-booking-details.html?id=${encodeURIComponent(tx.bookingId)}" class="fin-action-link" title="${currentLang === 'ar' ? 'عرض تفاصيل الحجز الكاملة' : 'View Full Booking Details'}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span>${currentLang === 'ar' ? 'عرض الحجز' : 'View Booking'}</span>
+            </a>
+          </td>
+        `;
+
+        // Row click opens Collection Details Modal (Fix 6C) unless link clicked
+        tr.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          openCollectionDetailsModal(tx);
+        });
+
+        tr.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (e.target.closest('a')) return;
+            e.preventDefault();
+            openCollectionDetailsModal(tx);
+          }
+        });
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // 2. Mobile Cards
+    if (cardsContainer) {
+      cardsContainer.innerHTML = '';
+      transactions.forEach(tx => {
+        const card = document.createElement('article');
+        card.className = 'fin-mobile-card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', currentLang === 'ar' ? `عرض تفاصيل المعاملة ${tx.transactionRef || tx.reference}` : `View transaction details ${tx.transactionRef || tx.reference}`);
+
+        const customerName = currentLang === 'ar' ? tx.customerName_ar : tx.customerName_en;
+        const progName = currentLang === 'ar' ? tx.programName_ar : tx.programName_en;
+        const methodText = currentLang === 'ar' ? tx.method_ar : tx.method_en;
+        const sourceText = tx.source === 'platform'
+          ? (currentLang === 'ar' ? 'منصة ميقات' : 'Miqat Platform')
+          : (currentLang === 'ar' ? 'فرع الشركة' : 'Company Branch');
+        const recordedBy = currentLang === 'ar' ? tx.recordedBy_ar : tx.recordedBy_en;
+
+        const isVerified = tx.verifiedByMiqat;
+        const verifClass = isVerified ? 'verif-approved' : 'verif-pending';
+        let verifText = '';
+        if (isVerified) {
+          verifText = tx.source === 'company'
+            ? (currentLang === 'ar' ? 'مسجل بالشركة (معتمد)' : 'Company-Reported (Verified)')
+            : (currentLang === 'ar' ? 'معتمد من ميقات' : 'Verified by Miqat');
+        } else {
+          verifText = currentLang === 'ar' ? 'مسجل بالشركة (قيد التدقيق)' : 'Company-Reported (Pending)';
+        }
+
+        card.innerHTML = `
+          <div class="mobile-card-top">
+            <div class="mobile-top-left">
+              <span class="fin-code-pill font-numeric">${tx.transactionRef || tx.reference}</span>
+              <a href="company-booking-details.html?id=${encodeURIComponent(tx.bookingId)}" class="fin-booking-ref-link font-numeric">${tx.bookingRef}</a>
+            </div>
+            <span class="fin-amount-cell font-numeric">${formatMoney(tx.amount)} <small>${currentLang === 'ar' ? 'ج.م' : 'EGP'}</small></span>
+          </div>
+          <div class="mobile-card-customer">
+            <span class="mobile-cust-name">${customerName}</span>
+            <span class="mobile-cust-phone font-numeric">${tx.customerPhone}</span>
+          </div>
+          <div class="mobile-card-meta-row">
+            <span class="fin-prog-badge badge-${tx.category}">${progName}</span>
+            <span class="fin-source-badge badge-${tx.source}">${sourceText}</span>
+            <span class="fin-datetime font-numeric">${tx.date}</span>
+          </div>
+          <div class="mobile-card-status-row">
+            <span class="fin-verif-badge ${verifClass}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                ${isVerified ? '<polyline points="20 6 9 17 4 12"></polyline>' : '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>'}
+              </svg>
+              <span>${verifText}</span>
+            </span>
+            <span class="fin-method-text">${methodText}</span>
+          </div>
+          <div class="mobile-card-footer">
+            <span class="mobile-recorded-by" title="${recordedBy}">${recordedBy}</span>
+            <a href="company-booking-details.html?id=${encodeURIComponent(tx.bookingId)}" class="fin-action-link">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span>${currentLang === 'ar' ? 'عرض تفاصيل الحجز' : 'View Booking'}</span>
+            </a>
+          </div>
+        `;
+
+        // Card click opens Collection Details Modal (Fix 6C) unless link clicked
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          openCollectionDetailsModal(tx);
+        });
+
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (e.target.closest('a')) return;
+            e.preventDefault();
+            openCollectionDetailsModal(tx);
+          }
+        });
+
+        cardsContainer.appendChild(card);
+      });
+    }
+  }
   // --- Page Initialization ---
   async function initCompanyPortal() {
     applyTheme(currentTheme);
@@ -2123,6 +3949,9 @@
     } else if (pageId === 'company-booking-details') {
       setupBookingDetailsPage();
       renderBookingDetailsPage();
+    } else if (pageId === 'company-financial-overview') {
+      setupFinancialOverviewPage();
+      renderFinancialOverviewPage();
     }
   }
 

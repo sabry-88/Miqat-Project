@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="الملخص المالي للشركات الشريكة — منصة ميقات: متابعة تفصيلية للمتحصلات، الدفعات، أرصدة الحجوزات، والتحصيلات المباشرة">
+  <title data-i18n="company.financial_page_title">الملخص المالي للشركة — بوابة الشركات | منصة ميقات</title>
+  
+  <!-- Preload Essential Fonts -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="company-portal-page company-financial-overview-page" data-page-id="company-financial-overview" data-page-title-key="company.financial_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="a11y.skip_to_main">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & SEVEN-SECTION NAVIGATION ==================== -->
+  <header class="site-header company-portal-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="46" height="46">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="46" height="46">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="company.portal_brand">بوابة الشركاء</span>
+        </div>
+      </a>
+
+      <!-- Desktop Seven-Section Navigation -->
+      <nav class="nav-desktop company-nav-desktop" aria-label="تنقل بوابة الشركة الشريكة">
+        
+        <!-- 1. Dashboard -->
+        <a href="company-dashboard.html" class="nav-link" id="navCompanyDashboard" title="لوحة التحكم">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+
+        <!-- 2. Bookings -->
+        <a href="company-bookings.html" class="nav-link" id="navCompanyBookings" title="الحجوزات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+
+        <!-- 3. Booking Details -->
+        <a href="company-booking-details.html" class="nav-link" id="navCompanyBookingDetails" title="تفاصيل الحجز">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+
+        <!-- 4. Financial Overview (Active) -->
+        <a href="company-financial-overview.html" class="nav-link is-active" aria-current="page" id="navCompanyFinancial" title="الملخص المالي">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+
+        <!-- 5. Programs & Trips -->
+        <a href="#programs-trips" class="nav-link" data-company-section="programs" title="البرامج والرحلات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Notifications -->
+        <a href="#notifications" class="nav-link nav-link-badge-wrap" data-company-section="notifications" title="الإشعارات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="navNotificationsCount">3</span>
+        </a>
+
+        <!-- 7. Company Profile -->
+        <a href="#company-profile" class="nav-link" data-company-section="profile" title="بيانات الشركة">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 21h18"></path>
+            <path d="M5 21V7l8-4v18"></path>
+            <path d="M19 21V11l-6-4"></path>
+            <line x1="9" y1="9" x2="9" y2="9.01"></line>
+            <line x1="9" y1="13" x2="9" y2="13.01"></line>
+            <line x1="9" y1="17" x2="9" y2="17.01"></line>
+          </svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher Button -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تبديل وضع العرض" title="تبديل وضع العرض">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Company Identity Badge in Top Bar (Interactive Group - Section Profile) -->
+        <div class="company-header-identity" id="companyHeaderIdentity" role="button" tabindex="0" data-company-section="profile" aria-label="بيانات الشركة — شركة الدرة للسياحة" title="بيانات الشركة — شركة الدرة للسياحة">
+          <div class="client-avatar company-avatar-medallion" id="companyAvatarMedallion" role="img" aria-label="شعار الشركة" title="شركة الدرة للسياحة">
+            <span class="client-avatar-initial" id="companyAvatarInitial">د</span>
+          </div>
+          <div class="company-header-text">
+            <span class="company-header-name" id="companyHeaderName">AL DORRA TRAVEL</span>
+            <span class="company-header-license" id="companyHeaderLicense">ترخيص 47852</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح قائمة الشركة" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE SLIDING DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Company Identity Card in Mobile Drawer -->
+      <div class="mobile-client-card company-mobile-card" id="mobileCompanyCard">
+        <div class="client-avatar company-avatar-medallion" id="mobileCompanyAvatar">
+          <span class="client-avatar-initial" id="mobileCompanyInitial">د</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileCompanyName">AL DORRA TRAVEL</span>
+          <span class="mobile-client-badge" data-i18n="company.tag_contracted">شركة معتمدة</span>
+        </div>
+      </div>
+
+      <!-- Seven Navigation Sections in Mobile Drawer -->
+      <nav class="mobile-nav-links company-mobile-nav" aria-label="قائمة تنقل الشركة للهواتف">
+        <a href="company-dashboard.html" class="mobile-nav-link" id="mobileNavDashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="company-bookings.html" class="mobile-nav-link" id="mobileNavCompanyBookings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+        <a href="company-booking-details.html" class="mobile-nav-link" id="mobileNavCompanyBookingDetails">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+        <a href="company-financial-overview.html" class="mobile-nav-link is-active" aria-current="page" id="mobileNavFinancial">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+        <a href="#programs-trips" class="mobile-nav-link" data-company-section="programs">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+        <a href="#notifications" class="mobile-nav-link" data-company-section="notifications">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+        </a>
+        <a href="#company-profile" class="mobile-nav-link" data-company-section="profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تبديل وضع العرض">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-drawer-logout-btn" id="mobileLogoutBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Role Authorization Guard Banner (for Non-Company Users) -->
+  <div id="companyUnauthorizedBanner" class="company-unauthorized-banner" style="display: none;">
+    <div class="container unauth-container">
+      <div class="unauth-card">
+        <div class="unauth-icon-wrap">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h2 data-i18n="company.unauthorized_title">غير مصرح بالدخول</h2>
+        <p data-i18n="company.unauthorized_desc">هذه البوابة مخصصة حصرياً لشركات السياحة الشريكة والمتعاقدة مع منصة ميقات.</p>
+        <div class="unauth-actions">
+          <a href="index.html" class="btn btn-secondary" data-i18n="company.btn_back_home">العودة للرئيسية</a>
+          <a href="programs.html" class="btn btn-primary" data-i18n="company.btn_customer_portal">الانتقال لرحلات الحج والعمرة</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN FINANCIAL OVERVIEW CONTENT ==================== -->
+  <main id="main-content" class="company-main-container">
+    <div class="container company-content-wrapper" id="companyMainContent">
+
+      <!-- Breadcrumbs Navigation (Fix 2A) -->
+      <nav class="details-breadcrumbs" aria-label="مسار التنقل">
+        <a href="company-dashboard.html" class="breadcrumb-link" data-i18n="company.nav_dashboard">لوحة التحكم</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="breadcrumb-current" data-i18n="company.nav_financial">الملخص المالي</span>
+      </nav>
+
+      <!-- Section Header with Title, Subtitle, and Calendar Date Filter (Fix 2A & 2B) -->
+      <section class="company-financial-header" aria-labelledby="pageFinancialTitle">
+        <div class="page-title-group">
+          <h1 id="pageFinancialTitle" class="page-main-title" data-i18n="company.financial_title">الملخص المالي والتحصيلات</h1>
+          <p class="page-subtitle" data-i18n="company.financial_subtitle">متابعة شاملة وموثقة للمتحصلات المالية، أرصدة الحجوزات، الدفعات المباشرة، والمبالغ المستحقة لشركة الدرة للسياحة</p>
+        </div>
+
+        <div class="header-controls-block fin-header-controls">
+          <!-- Calendar Date Filter Control (Fix 2B) -->
+          <div class="dashboard-date-filter-wrap" id="finDateFilterWrap">
+            <div class="date-input-group">
+              <svg class="date-picker-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <input type="date" id="finDatePicker" class="dashboard-date-picker font-numeric" min="2026-05-01" max="2026-10-31" value="2026-10-30" aria-label="تصفية حسب التاريخ" data-i18n-attr="aria-label:company.date_filter_label">
+              <button type="button" class="date-filter-reset-btn" id="resetFinDateFilterBtn" title="إعادة ضبط التاريخ" aria-label="إعادة ضبط التاريخ" data-i18n-attr="title:company.date_filter_reset,aria-label:company.date_filter_reset" style="display: none;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            <span id="finDateDisplay" class="date-display-hint font-numeric">الجمعة، 30 أكتوبر 2026</span>
+          </div>
+
+          <!-- Quick Financial Period Selector Pills -->
+          <div class="dashboard-period-selector fin-period-pills-group" id="finPeriodPillsGroup" role="tablist" aria-label="تحديد الفترة المالية">
+            <button type="button" class="period-btn fin-period-pill is-active" data-period="all" role="tab" aria-selected="true" data-i18n="company.fin_period_all">كل الفترات</button>
+            <button type="button" class="period-btn fin-period-pill" data-period="season" role="tab" aria-selected="false" data-i18n="company.fin_period_season">موسم 1447هـ</button>
+            <button type="button" class="period-btn fin-period-pill" data-period="month" role="tab" aria-selected="false" data-i18n="company.fin_period_month">هذا الشهر</button>
+            <button type="button" class="period-btn fin-period-pill" data-period="week" role="tab" aria-selected="false" data-i18n="company.fin_period_week">هذا الأسبوع</button>
+            <button type="button" class="period-btn fin-period-pill" data-period="today" role="tab" aria-selected="false" data-i18n="company.fin_period_today">اليوم</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 1: PRIMARY FINANCIAL KPIS (Fix 3) ==================== -->
+      <section class="financial-kpi-section" aria-labelledby="finKpisHeading">
+        <div class="section-title-wrap fin-section-title-wrap">
+          <h2 class="section-title" id="finKpisHeading" data-i18n="company.fin_summary_heading">ملخص المؤشرات المالية</h2>
+          <p class="section-subtitle" data-i18n="company.fin_summary_subheading">نظرة شاملة ومحدثة على حركة السيولة، قيم الحجوزات، والمبالغ المحصلة والمتبقية</p>
+        </div>
+
+        <div class="financial-kpi-grid" id="finKpiGrid">
+          
+          <!-- Card 1: Total Booking Value -->
+          <article class="fin-kpi-card fin-card-total-value">
+            <div class="fin-card-header">
+              <span class="fin-card-title" data-i18n="company.kpi_fin_total_booking_val">إجمالي قيمة الحجوزات</span>
+              <div class="fin-card-icon-bubble fin-icon-total">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="fin-card-body">
+              <div class="fin-card-value-row">
+                <span class="fin-card-number font-numeric" id="kpiTotalBookingValue">٦,٢٤٢,٠٠٠</span>
+                <span class="fin-card-currency" data-i18n="currency.egp">ج.م</span>
+              </div>
+              <p class="fin-card-desc" data-i18n="company.kpi_fin_total_booking_desc">القيمة الكلية لجميع الحجوزات المؤكدة والجارية خلال الموسم</p>
+            </div>
+            <div class="fin-card-footer">
+              <span class="fin-badge fin-badge-neutral" id="kpiTotalBookingsCountBadge">٣٦ حجزاً معتمداً</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Collected via Miqat Platform -->
+          <article class="fin-kpi-card fin-card-platform">
+            <div class="fin-card-header">
+              <span class="fin-card-title" data-i18n="company.kpi_fin_platform_collected">المبالغ المحصلة عبر منصة ميقات</span>
+              <div class="fin-card-icon-bubble fin-icon-platform">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+                  <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="fin-card-body">
+              <div class="fin-card-value-row">
+                <span class="fin-card-number font-numeric text-teal" id="kpiPlatformCollected">٢,٥٠٧,٩٠٠</span>
+                <span class="fin-card-currency text-teal" data-i18n="currency.egp">ج.م</span>
+              </div>
+              <p class="fin-card-desc" data-i18n="company.kpi_fin_platform_desc">مبالغ موثقة ومودعة من بوابة الدفع الإلكتروني والتحويل البنكي المعتمد</p>
+            </div>
+            <div class="fin-card-footer">
+              <span class="fin-badge fin-badge-teal" id="kpiPlatformRateBadge">٤٠% من الإجمالي</span>
+              <span class="fin-meta-badge" data-i18n="company.kpi_fin_platform_badge">إيداع إلكتروني معتمد</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Reported Company Direct Collections -->
+          <article class="fin-kpi-card fin-card-company-direct">
+            <div class="fin-card-header">
+              <span class="fin-card-title" data-i18n="company.kpi_fin_company_reported">المبالغ المسجلة كتحصيل مباشر بالشركة</span>
+              <div class="fin-card-icon-bubble fin-icon-company">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M3 21h18"></path>
+                  <path d="M5 21V7l8-4v18"></path>
+                  <path d="M19 21V11l-6-4"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="fin-card-body">
+              <div class="fin-card-value-row">
+                <span class="fin-card-number font-numeric text-gold" id="kpiCompanyReported">٥١٩,٤٠٠</span>
+                <span class="fin-card-currency text-gold" data-i18n="currency.egp">ج.م</span>
+              </div>
+              <p class="fin-card-desc" data-i18n="company.kpi_fin_company_desc">متحصلات نقدية وإيصالات تم استلامها مباشرة بمقر وفروع الشركة</p>
+              
+              <!-- Direct Sub-metrics Breakdown (Strict Audit Separation) -->
+              <div class="fin-direct-breakdown-box">
+                <div class="direct-breakdown-row">
+                  <span class="breakdown-label" data-i18n="company.kpi_fin_pending_audit">قيد التدقيق المحاسبي بميقات:</span>
+                  <span class="breakdown-val font-numeric" id="kpiCompanyPendingAmount">١٥١,٩٠٠ ج.م</span>
+                  <span class="breakdown-pill pill-pending" id="kpiCompanyPendingCount">٣ إيصالات</span>
+                </div>
+                <div class="direct-breakdown-row">
+                  <span class="breakdown-label" data-i18n="company.kpi_fin_accounting_verified">معتمد محاسبياً:</span>
+                  <span class="breakdown-val font-numeric" id="kpiCompanyVerifiedAmount">٣٦٧,٥٠٠ ج.م</span>
+                  <span class="breakdown-pill pill-verified" id="kpiCompanyVerifiedCount">٢ إيصال</span>
+                </div>
+              </div>
+            </div>
+            <div class="fin-card-footer">
+              <span class="fin-badge fin-badge-gold" id="kpiCompanyRateBadge">٨% من الإجمالي</span>
+              <span class="fin-notice-tag" data-i18n="company.kpi_fin_audit_notice">مبالغ نقدية مسجلة من الفرع (تحت التدقيق المحاسبي بميقات)</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Remaining Outstanding Amounts -->
+          <article class="fin-kpi-card fin-card-outstanding">
+            <div class="fin-card-header">
+              <span class="fin-card-title" data-i18n="company.kpi_fin_remaining_outstanding">المبالغ المتبقية غير المحصلة</span>
+              <div class="fin-card-icon-bubble fin-icon-outstanding">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="fin-card-body">
+              <div class="fin-card-value-row">
+                <span class="fin-card-number font-numeric text-muted" id="kpiRemainingOutstanding">٣,٢١٤,٧٠٠</span>
+                <span class="fin-card-currency text-muted" data-i18n="currency.egp">ج.م</span>
+              </div>
+              <p class="fin-card-desc" data-i18n="company.kpi_fin_remaining_desc">أقساط ومستحقات واجبة التحصيل قبل مواعيد تفويج الرحلات</p>
+            </div>
+            <div class="fin-card-footer">
+              <span class="fin-badge fin-badge-muted" id="kpiRemainingRateBadge">٥٢% متبقي</span>
+              <span class="fin-due-tag" data-i18n="company.kpi_fin_due_soon">مستحقة السداد</span>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 2: FINANCIAL ANALYTICS & INSIGHTS (Fix 4) ==================== -->
+      <section class="financial-analytics-section" aria-labelledby="finAnalyticsHeading">
+        <div class="section-title-wrap fin-section-title-wrap">
+          <h2 class="section-title" id="finAnalyticsHeading" data-i18n="company.fin_analytics_heading">التحليلات والمؤشرات البيانية</h2>
+          <p class="section-subtitle" data-i18n="company.fin_analytics_subheading">رؤى بيانية وتوزيعات تفصيلية للمتحصلات عبر فئات البرامج ونسب السداد التراكمية</p>
+        </div>
+        
+        <div class="financial-charts-grid">
+          
+          <!-- Chart 1: Collections Over Time (Platform vs Company Direct) -->
+          <div class="financial-chart-card card-collections-timeline">
+            <div class="chart-card-header">
+              <div class="chart-header-text">
+                <h3 class="chart-card-title" data-i18n="company.chart_fin_collections_title">المتحصلات المالية عبر الأشهر</h3>
+                <p class="chart-card-subtitle" data-i18n="company.chart_fin_collections_desc">مقارنة شهرية بين متحصلات بوابة ميقات والتحصيلات المباشرة المسجلة بالشركة (مايو — أكتوبر 2026)</p>
+              </div>
+              <div class="chart-legend-box" aria-hidden="true">
+                <div class="legend-item">
+                  <span class="legend-swatch swatch-teal"></span>
+                  <span class="legend-label" data-i18n="company.chart_legend_platform">متحصلات منصة ميقات</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-swatch swatch-gold"></span>
+                  <span class="legend-label" data-i18n="company.chart_legend_company">تحصيلات مباشرة بالشركة</span>
+                </div>
+              </div>
+            </div>
+            <div class="chart-card-body">
+              <div class="fin-svg-chart-wrapper" id="finMonthlyChartWrapper" role="img" aria-label="رسم بياني يوضح المتحصلات المالية الشهرية">
+                <!-- Monthly Bar Chart dynamically rendered via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 2: Program Category Financial Breakdown -->
+          <div class="financial-chart-card card-program-breakdown">
+            <div class="chart-card-header">
+              <div class="chart-header-text">
+                <h3 class="chart-card-title" data-i18n="company.chart_fin_programs_title">الإيرادات حسب فئة البرامج</h3>
+                <p class="chart-card-subtitle" data-i18n="company.chart_fin_programs_desc">توزيع إجمالي قيمة الحجوزات، المبالغ المحصلة، ونسبة السداد لكل فئة برنامج</p>
+              </div>
+            </div>
+            <div class="chart-card-body">
+              <div class="program-breakdown-list" id="finProgramBreakdownList">
+                <!-- Dynamically populated program breakdown progress cards -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 3: Collection Rate & Settlement Distribution Ratio -->
+          <div class="financial-chart-card card-settlement-distribution">
+            <div class="chart-card-header">
+              <div class="chart-header-text">
+                <h3 class="chart-card-title" data-i18n="company.chart_fin_distribution_title">معدل التحصيل ونسب السداد الكلية</h3>
+                <p class="chart-card-subtitle" data-i18n="company.chart_fin_distribution_desc">النسبة المئوية للمتحصلات المعتمدة والمباشرة مقارنة بالمتبقي غير المحصل</p>
+              </div>
+            </div>
+            <div class="chart-card-body">
+              <div class="settlement-distribution-widget" id="finSettlementWidget">
+                <!-- Dynamically populated segmented progress and circular indicators -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 3: MULTI-FACET FILTERING BAR (Fix 5) ==================== -->
+      <section class="financial-filters-section" aria-labelledby="finFiltersHeading">
+        <div class="fin-filter-card">
+          <div class="fin-filter-header">
+            <div class="filter-header-title-wrap">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              <h2 id="finFiltersHeading" class="fin-filter-title" data-i18n="company.fin_filters_heading">تصفية واستعلام المعاملات المالية</h2>
+            </div>
+            <div class="fin-results-meta" id="finResultsMeta" aria-live="polite">
+              <span class="meta-count-pill font-numeric" id="finResultsCountText">عرض 42 معاملة مالية</span>
+              <span class="meta-sum-pill font-numeric" id="finResultsSumText">الإجمالي: 3,027,300 ج.م</span>
+            </div>
+          </div>
+
+          <!-- Controls Grid -->
+          <div class="fin-filter-controls-grid">
+            
+            <!-- Search Text -->
+            <div class="fin-filter-item item-search">
+              <label for="finSearchInput" class="fin-control-label" data-i18n="company.fin_filter_search_label">بحث في المعاملات</label>
+              <div class="search-input-wrap">
+                <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="finSearchInput" class="fin-control-input" placeholder="رقم المعاملة، رقم الحجز، اسم المعتمر، الهاتف..." data-i18n-attr="placeholder:company.fin_filter_search_placeholder">
+              </div>
+            </div>
+
+            <!-- Program Selector -->
+            <div class="fin-filter-item">
+              <label for="finProgramSelect" class="fin-control-label" data-i18n="company.fin_filter_program_label">البرنامج</label>
+              <select id="finProgramSelect" class="fin-control-select">
+                <option value="all" data-i18n="company.fin_filter_all_programs">جميع البرامج</option>
+                <option value="prog_umrah_econ">عمرة اقتصادية</option>
+                <option value="prog_umrah_prem">عمرة متميزة</option>
+                <option value="prog_umrah_vip">عمرة فاخرة VIP</option>
+                <option value="prog_umrah_ramadan">عمرة رمضان</option>
+                <option value="prog_hajj_tourist">حج سياحي</option>
+                <option value="prog_hajj_vip">حج فاخر VIP</option>
+              </select>
+            </div>
+
+            <!-- Collection Source -->
+            <div class="fin-filter-item">
+              <label for="finSourceSelect" class="fin-control-label" data-i18n="company.fin_filter_source_label">جهة التحصيل</label>
+              <select id="finSourceSelect" class="fin-control-select">
+                <option value="all" data-i18n="company.fin_filter_source_all">جميع جهات التحصيل</option>
+                <option value="platform" data-i18n="company.fin_filter_source_platform">منصة ميقات</option>
+                <option value="company" data-i18n="company.fin_filter_source_company">مقر الشركة (مباشر)</option>
+              </select>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="fin-filter-item">
+              <label for="finMethodSelect" class="fin-control-label" data-i18n="company.fin_filter_method_label">طريقة الدفع</label>
+              <select id="finMethodSelect" class="fin-control-select">
+                <option value="all" data-i18n="company.fin_filter_method_all">جميع طرق الدفع</option>
+                <option value="electronic_card" data-i18n="company.fin_filter_method_card">بطاقة بنكية (مدى / فيزا)</option>
+                <option value="bank_transfer" data-i18n="company.fin_filter_method_transfer">تحويل بنكي رسمي</option>
+                <option value="cash_office" data-i18n="company.fin_filter_method_cash">نقداً بمقر الشركة</option>
+                <option value="bank_deposit" data-i18n="company.fin_filter_method_deposit">إيداع بنكي مباشر</option>
+              </select>
+            </div>
+
+            <!-- Verification Status -->
+            <div class="fin-filter-item">
+              <label for="finVerificationSelect" class="fin-control-label" data-i18n="company.fin_filter_verif_label">حالة الاعتماد</label>
+              <select id="finVerificationSelect" class="fin-control-select">
+                <option value="all" data-i18n="company.fin_filter_verif_all">جميع حالات الاعتماد</option>
+                <option value="verified" data-i18n="company.fin_filter_verif_platform">معتمد وموثق من ميقات</option>
+                <option value="pending" data-i18n="company.fin_filter_verif_pending">مسجل بالشركة (قيد تدقيق ميقات)</option>
+              </select>
+            </div>
+
+            <!-- Buttons: Apply and Reset (Fix 5) -->
+            <div class="fin-filter-actions">
+              <button type="button" class="btn btn-primary fin-btn-apply" id="finApplyFiltersBtn" data-i18n="company.fin_filter_apply">تطبيق الفلتر</button>
+              <button type="button" class="btn btn-secondary fin-btn-reset" id="finResetFiltersBtn" data-i18n="company.fin_filter_reset">إعادة تعيين</button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 4: TRANSACTIONS LEDGER (Fix 6) ==================== -->
+      <section class="financial-ledger-section" aria-labelledby="finLedgerHeading">
+        <div class="fin-ledger-card">
+          <div class="ledger-card-header">
+            <div class="ledger-header-text">
+              <h2 id="finLedgerHeading" class="ledger-card-title" data-i18n="company.ledger_title">سجل المعاملات والتحصيلات المالية</h2>
+              <p class="ledger-card-subtitle" data-i18n="company.ledger_desc">كشف تفصيلي بالعمليات المالية المودعة والمسجلة لحجوزات الشركة مع حالة الاعتماد وتفاصيل الإيصال</p>
+            </div>
+            <div class="ledger-header-actions">
+              <!-- Export Statement Button (Fix 6B: Genuine .xlsx with all 36 bookings) -->
+              <button type="button" class="btn btn-secondary btn-sm" id="finExportBtn" aria-label="تصدير كشف الحساب Excel">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span data-i18n="company.fin_export_btn">تصدير كشف الحساب</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Desktop / Tablet Table View -->
+          <div class="fin-table-container">
+            <table class="fin-ledger-table" id="finLedgerTable" aria-label="جدول المعاملات المالية">
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="company.col_tx_ref">رقم المعاملة / الإيصال</th>
+                  <th scope="col" data-i18n="company.col_booking_ref">رقم الحجز</th>
+                  <th scope="col" data-i18n="company.col_customer_name">اسم المعتمر / العميل</th>
+                  <th scope="col" data-i18n="company.col_program_name">البرنامج</th>
+                  <th scope="col" data-i18n="company.col_date_time">التاريخ والوقت</th>
+                  <th scope="col" data-i18n="company.col_source">جهة التحصيل</th>
+                  <th scope="col" data-i18n="company.col_method">طريقة الدفع</th>
+                  <th scope="col" data-i18n="company.col_amount">المبلغ (ج.م)</th>
+                  <th scope="col" data-i18n="company.col_verification">حالة الاعتماد</th>
+                  <th scope="col" data-i18n="company.col_recorded_by">الجهة المسجلة</th>
+                  <th scope="col" class="th-actions" data-i18n="company.col_actions">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="finLedgerTableBody">
+                <!-- Transactions rendered dynamically via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile Cards View -->
+          <div class="fin-cards-mobile-container" id="finCardsMobileContainer" aria-label="قائمة المعاملات المالية للهواتف">
+            <!-- Mobile transaction cards rendered dynamically via JavaScript -->
+          </div>
+
+          <!-- Empty State -->
+          <div class="fin-empty-state" id="finEmptyState" style="display: none;">
+            <div class="fin-empty-icon">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+            </div>
+            <h3 class="fin-empty-title" data-i18n="company.fin_no_transactions">لا توجد معاملات مالية مطابقة لمعايير البحث الحالية</h3>
+            <p class="fin-empty-desc" data-i18n="company.fin_no_transactions_hint">جرب تغيير نطاق الفترة الزمنية أو إعادة تعيين الفلاتر لعرض كافة السجلات</p>
+            <button type="button" class="btn btn-secondary btn-sm" id="finEmptyResetBtn" data-i18n="company.fin_filter_reset">إعادة تعيين الفلاتر</button>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== COLLECTION DETAILS MODAL (Fix 6C) ==================== -->
+  <div class="company-action-modal" id="collectionDetailsModal" role="dialog" aria-modal="true" aria-labelledby="collectionDetailsModalTitle" aria-hidden="true" style="display: none;">
+    <div class="modal-backdrop" id="backdropCollectionModal"></div>
+    <div class="modal-dialog-content">
+      <div class="company-modal-header">
+        <h3 class="company-modal-title" id="collectionDetailsModalTitle">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary);" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.modal_tx_details_title">تفاصيل المعاملة والتحصيل المالي</span>
+        </h3>
+        <button type="button" class="modal-close-icon-btn" id="btnCloseCollectionModal" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="company-modal-body">
+        <div class="modal-details-grid">
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_ref">رقم المعاملة:</span>
+            <span class="detail-value font-numeric" id="modalDetailTxRef">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_booking_ref">رقم الحجز المرتبط:</span>
+            <span class="detail-value font-numeric" id="modalDetailBookingRef">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_customer_name">اسم المعتمر / العميل:</span>
+            <span class="detail-value" id="modalDetailCustomerName">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_amount">مبلغ المعاملة:</span>
+            <span class="detail-value font-numeric text-teal" id="modalDetailAmount" style="font-size: 1.15rem; font-weight: 800;">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_datetime">التاريخ والوقت:</span>
+            <span class="detail-value font-numeric" id="modalDetailDateTime">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_source">جهة التحصيل:</span>
+            <span class="detail-value" id="modalDetailSource">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_method">طريقة الدفع:</span>
+            <span class="detail-value" id="modalDetailMethod">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_status">حالة السداد:</span>
+            <span class="detail-value" id="modalDetailStatus">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_verification">حالة الاعتماد المحاسبي:</span>
+            <span class="detail-value" id="modalDetailVerification">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_recorded_by">الجهة المسجلة:</span>
+            <span class="detail-value" id="modalDetailRecordedBy">--</span>
+          </div>
+          <div class="modal-detail-item">
+            <span class="detail-label" data-i18n="company.modal_tx_receipt_ref">رقم الإيصال الورقي / المرجعي:</span>
+            <span class="detail-value font-numeric" id="modalDetailReceiptRef">--</span>
+          </div>
+          <div class="modal-detail-item full-width">
+            <span class="detail-label" data-i18n="company.modal_tx_notes">ملاحظات إضافية:</span>
+            <p class="detail-value" id="modalDetailNotes" style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">--</p>
+          </div>
+        </div>
+      </div>
+      <div class="company-modal-footer">
+        <button type="button" class="btn btn-secondary" id="btnCancelCollectionModal" data-i18n="company.modal_btn_close">إغلاق</button>
+        <a href="#" class="btn btn-primary" id="btnModalViewBooking" data-i18n="company.modal_btn_view_booking">عرض تفاصيل الحجز</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== APPROVED CANONICAL FOOTER (Fix 8) ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-title">مـيـقـات</span>
+        <span class="brand-tagline">MIQAT PLATFORM — PARTNER PORTAL</span>
+      </div>
+      <p class="footer-copy" data-i18n="company.footer_copy">© 2026 جميع الحقوق محفوظة لمنصة ميقات. بوابة الشركات السياحية المعتمدة والمرخصة.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== FUTURE SCOPE PLACEHOLDER MODAL ==================== -->
+  <div id="companyFutureModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="companyModalBackdrop"></div>
+    <div class="company-modal-dialog">
+      <div class="modal-icon-wrap">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="modal-dialog-title" id="futureModalTitle" data-i18n="company.future_title">قسم قيد التطوير</h3>
+      <p class="modal-dialog-message" id="futureModalMessage" data-i18n="company.future_msg">هذا القسم ضمن خطة التوسعة القادمة لبوابة الشركات الشريكة لمنصة ميقات.</p>
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-primary" id="futureModalCloseBtn" data-i18n="company.future_btn">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="company-toast-container" id="companyToastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts -->
+  <script src="./company-mock-data.js"></script>
+  <script src="./company-portal.js"></script>
+</body>
+</html>

@@ -463,6 +463,50 @@ const server = http.createServer(async (req, res) => {
     });
   }
 
+  // 7e-2. GET /api/company/financial-overview (Partner Company Authoritative Financial Overview & Ledger)
+  if (pathname === '/api/company/financial-overview' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const period = searchParams.get('period') || 'all';
+    const search = searchParams.get('search') || '';
+    const program = searchParams.get('program') || 'all';
+    const source = searchParams.get('source') || 'all';
+    const method = searchParams.get('method') || 'all';
+    const verification = searchParams.get('verification') || 'all';
+
+    const finData = companyMockData.getFinancialOverviewData({
+      period,
+      search,
+      program,
+      source,
+      method,
+      verification
+    });
+
+    finData.company = {
+      ...finData.company,
+      id: sessionUser.id,
+      name: sessionUser.name,
+      responsible_person: sessionUser.responsible_person || 'محمد سعيد',
+      phone: sessionUser.phone,
+      email: sessionUser.email,
+      governorate: sessionUser.governorate || 'الجيزة',
+      license_number: sessionUser.license_number || '47852',
+      status: sessionUser.status || 'active'
+    };
+
+    return sendJson(res, 200, {
+      success: true,
+      data: finData
+    });
+  }
+
   // 7f. GET /api/company/bookings/:id (Single Booking Details)
   if (pathname.startsWith('/api/company/bookings/') && req.method === 'GET') {
     const sessionUser = getSessionUser(req);
@@ -483,6 +527,61 @@ const server = http.createServer(async (req, res) => {
       success: true,
       data: booking
     });
+  }
+
+  // 7g. POST /api/company/bookings/:id/confirm (Confirm Booking)
+  if (pathname.startsWith('/api/company/bookings/') && pathname.endsWith('/confirm') && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+    const bookingId = decodeURIComponent(pathname.replace('/api/company/bookings/', '').replace('/confirm', '').trim());
+    const result = companyMockData.confirmBooking(bookingId, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
+  }
+
+  // 7h. POST /api/company/bookings/:id/report-payment (Report Remaining Payment Received)
+  if (pathname.startsWith('/api/company/bookings/') && pathname.endsWith('/report-payment') && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+    const bookingId = decodeURIComponent(pathname.replace('/api/company/bookings/', '').replace('/report-payment', '').trim());
+    const body = await parseJsonBody(req);
+    const result = companyMockData.reportPayment(bookingId, body, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
+  }
+
+  // 7i. POST /api/company/bookings/:id/reject (Reject Booking with Reason)
+  if (pathname.startsWith('/api/company/bookings/') && pathname.endsWith('/reject') && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+    const bookingId = decodeURIComponent(pathname.replace('/api/company/bookings/', '').replace('/reject', '').trim());
+    const body = await parseJsonBody(req);
+    const result = companyMockData.rejectBooking(bookingId, body, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
+  }
+
+  // 7j. POST /api/company/bookings/:id/request-program-change (Propose Program Replacement)
+  if (pathname.startsWith('/api/company/bookings/') && pathname.endsWith('/request-program-change') && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+    const bookingId = decodeURIComponent(pathname.replace('/api/company/bookings/', '').replace('/request-program-change', '').trim());
+    const body = await parseJsonBody(req);
+    const result = companyMockData.requestProgramChange(bookingId, body, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
   }
 
   // 8. POST /api/requests (Submit Program Details Inquiry)

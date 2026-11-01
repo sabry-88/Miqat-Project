@@ -122,6 +122,50 @@
     2, 1, 2, 1, 2, 3
   ];
 
+  const GOVERNORATES = [
+    { ar: 'الجيزة', en: 'Giza' },
+    { ar: 'القاهرة', en: 'Cairo' },
+    { ar: 'الإسكندرية', en: 'Alexandria' },
+    { ar: 'الدقهلية', en: 'Dakahlia' },
+    { ar: 'الغربية', en: 'Gharbia' },
+    { ar: 'الشرقية', en: 'Sharqia' },
+    { ar: 'المنوفية', en: 'Monufia' },
+    { ar: 'القليوبية', en: 'Qalyubia' },
+    { ar: 'البحيرة', en: 'Beheira' },
+    { ar: 'دمياط', en: 'Damietta' },
+    { ar: 'بورسعيد', en: 'Port Said' },
+    { ar: 'أسيوط', en: 'Asyut' }
+  ];
+
+  const HOTELS_MAKKAH = [
+    { ar: 'فندق فيرمونت برج الساعة (مكة)', en: 'Fairmont Makkah Clock Royal Tower' },
+    { ar: 'فندق سويس أوتيل المقام (مكة)', en: 'Swissôtel Al Maqam Makkah' },
+    { ar: 'فندق ريف العالمية (مكة)', en: 'Reef Global Hotel Makkah' },
+    { ar: 'فندق إعمار الأندلسية (ش المعلاة)', en: 'Emaar Al Andalusiah Hotel' }
+  ];
+
+  const HOTELS_MADINAH = [
+    { ar: 'فندق أوبروي المدينة المنورة', en: 'The Oberoi Madinah' },
+    { ar: 'فندق دار التقوى (المنطقة المركزية)', en: 'Dar Al Taqwa Hotel Madinah' },
+    { ar: 'فندق شذا المدينة', en: 'Shaza Madinah' },
+    { ar: 'فندق ديار المدينة المنورة', en: 'Deyar Al Madinah Hotel' }
+  ];
+
+  const ROOM_TYPES = [
+    { ar: 'غرفة ثنائية فاخرة', en: 'Luxury Double Room' },
+    { ar: 'غرفة مفردة خاصة', en: 'Private Single Room' },
+    { ar: 'غرفة ثلاثية متميزة', en: 'Premium Triple Room' },
+    { ar: 'غرفة رباعية عائلية', en: 'Family Quad Room' }
+  ];
+
+  const SPECIAL_REQUESTS = [
+    { ar: 'طلب مقاعد متجاورة بالطائرة وتوفير كرسي متحرك للمسافر عند الوصول.', en: 'Adjacent flight seats requested with airport wheelchair assistance.' },
+    { ar: 'تفضيل غرفة بإطلالة مباشرة على الحرم وسرير إضافي للأطفال.', en: 'Direct Haram view room preference with an extra child cot.' },
+    { ar: 'وجبات غذائية خاصة تناسب مرضى السكري وقريبة من المصاعد.', en: 'Diabetic dietary meal plan requested with room near elevator banks.' },
+    { ar: 'لا توجد طلبات أو اشتراطات خاصة مسجلة لهذا الحجز.', en: 'No special requests or dietary restrictions registered.' }
+  ];
+
+
   const RAW_BOOKINGS = [];
   for (let i = 0; i < 36; i++) {
     const cust = CUSTOMERS[i];
@@ -158,13 +202,207 @@
       paymentStatus = (paidAmount === Math.round(totalPrice * 0.3)) ? 'deposit_paid' : 'partially_paid';
     }
 
+    const gov = GOVERNORATES[i % GOVERNORATES.length];
+    const hotelMakkah = HOTELS_MAKKAH[i % HOTELS_MAKKAH.length];
+    const hotelMadinah = HOTELS_MADINAH[i % HOTELS_MADINAH.length];
+    const roomType = ROOM_TYPES[i % ROOM_TYPES.length];
+    const specReq = SPECIAL_REQUESTS[i % SPECIAL_REQUESTS.length];
+
+    const dDateObj = new Date(date);
+    dDateObj.setDate(dDateObj.getDate() + 21);
+    const departureDate = dDateObj.toISOString().split('T')[0];
+
+    const rDateObj = new Date(departureDate);
+    rDateObj.setDate(rDateObj.getDate() + 14);
+    const returnDate = rDateObj.toISOString().split('T')[0];
+
+    const tripType_ar = prog.category === 'hajj' 
+      ? 'طيران مباشر مجدول (مصر للطيران)' 
+      : (i % 3 === 0 ? 'طيران مباشر (مصر للطيران)' : (i % 3 === 1 ? 'طيران ترانزيت (الخطوط السعودية)' : 'حافلات برية حديثة VIP'));
+    const tripType_en = prog.category === 'hajj'
+      ? 'Scheduled Direct Flight (EgyptAir)'
+      : (i % 3 === 0 ? 'Direct Flight (EgyptAir)' : (i % 3 === 1 ? 'Transit Flight (Saudia)' : 'Modern Luxury VIP Overland Coach'));
+
+    const customerEmail = cust.phone === '01012345671' ? 'ahmed.elsherif@gmail.com' : (cust.name_en.toLowerCase().replace(/[^a-z]/g, '.') + '@gmail.com');
+    const customerWhatsapp = '+20' + cust.phone.slice(1);
+
+    // Initial itemized payment records
+    const payments = [];
+    if (paidAmount > 0) {
+      const depositPart = (status === 'Confirmed' && i % 2 === 0) ? Math.round(totalPrice * 0.3) : paidAmount;
+      payments.push({
+        id: 'pay_tx_' + (1000 + i) + '_1',
+        reference: 'PAY-2026-' + String(9000 + i).padStart(4, '0'),
+        date: date + ' 09:42',
+        amount: depositPart,
+        source: 'platform',
+        method_key: 'electronic_card',
+        method_ar: 'بطاقة بنكية (مدى / فيزا)',
+        method_en: 'Bank Card (Visa / Mada)',
+        status_key: 'verified',
+        status_ar: 'معتمد وموثق',
+        status_en: 'Verified by Miqat',
+        verifiedByMiqat: true,
+        recordedBy_ar: 'بوابة الدفع الإلكتروني — ميقات',
+        recordedBy_en: 'Miqat Payment Gateway',
+        transactionRef: 'TXN-EGP-' + (489200 + i),
+        notes_ar: 'سداد الدفعة المقدمة لتأكيد الحجز (30%)',
+        notes_en: 'Initial booking confirmation deposit (30%)'
+      });
+
+      if (paidAmount === totalPrice) {
+        const remainingSettlement = totalPrice - depositPart;
+        
+        // Distinct financial collection paths to reflect both Platform Gateways and Company Branch receipts
+        if (i === 14 || i === 22 || i === 30) {
+          // Company Direct Cash Collection at Branch Counter — Pending Miqat Finance Audit
+          payments.push({
+            id: 'pay_tx_' + (1000 + i) + '_2',
+            reference: 'RCP-2026-' + String(9500 + i).padStart(4, '0'),
+            date: date + ' 14:15',
+            amount: remainingSettlement,
+            source: 'company',
+            method_key: 'cash_office',
+            method_ar: 'نقداً بمقر الشركة',
+            method_en: 'Cash at Branch Office',
+            status_key: 'company_reported',
+            status_ar: 'مسدد للشركة (قيد تدقيق ميقات)',
+            status_en: 'Company-Reported (Pending Miqat)',
+            verifiedByMiqat: false,
+            recordedBy_ar: 'شركة الدرة للسياحة (فرع الجيزة)',
+            recordedBy_en: 'AL DORRA TRAVEL (Giza Branch)',
+            transactionRef: 'RCP-2026-' + (8400 + i),
+            notes_ar: 'استلام الدفعة المتبقية نقداً بخزينة فرع الشركة، قيد التدقيق المحاسبي من منصة ميقات',
+            notes_en: 'Remaining balance received in cash at company branch counter, pending Miqat finance audit'
+          });
+        } else if (i === 18 || i === 26) {
+          // Company Direct Bank Deposit — Audited and Verified by Miqat Accounting
+          payments.push({
+            id: 'pay_tx_' + (1000 + i) + '_2',
+            reference: 'RCP-2026-' + String(9500 + i).padStart(4, '0'),
+            date: date + ' 14:15',
+            amount: remainingSettlement,
+            source: 'company',
+            method_key: 'bank_deposit',
+            method_ar: 'إيداع بنكي مباشر بالشركة',
+            method_en: 'Direct Company Bank Deposit',
+            status_key: 'company_verified',
+            status_ar: 'مسجل بالشركة (معتمد محاسبياً)',
+            status_en: 'Company-Reported (Verified)',
+            verifiedByMiqat: true,
+            recordedBy_ar: 'شركة الدرة للسياحة (معتمد من تدقيق ميقات)',
+            recordedBy_en: 'AL DORRA TRAVEL (Audited by Miqat)',
+            transactionRef: 'RCP-2026-' + (8400 + i),
+            notes_ar: 'إيداع بنكي مباشر في حساب الشركة، تم مراجعته واعتماده محاسبياً من ميقات',
+            notes_en: 'Direct deposit to company bank account, audited and verified by Miqat finance'
+          });
+        } else {
+          // Official Miqat Platform Clearing & Verified Wire
+          payments.push({
+            id: 'pay_tx_' + (1000 + i) + '_2',
+            reference: 'PAY-2026-' + String(9500 + i).padStart(4, '0'),
+            date: date + ' 14:15',
+            amount: remainingSettlement,
+            source: 'platform',
+            method_key: 'bank_transfer',
+            method_ar: 'تحويل بنكي رسمي',
+            method_en: 'Official Bank Transfer',
+            status_key: 'verified',
+            status_ar: 'معتمد وموثق',
+            status_en: 'Verified by Miqat',
+            verifiedByMiqat: true,
+            recordedBy_ar: 'الإدارة المالية — ميقات',
+            recordedBy_en: 'Miqat Finance Dept',
+            transactionRef: 'TXN-EGP-' + (589200 + i),
+            notes_ar: 'سداد باقي قيمة الحجز بالكامل واعتماد المخالصة عبر منصة ميقات',
+            notes_en: 'Remaining balance settlement and final clearance verified via Miqat Platform'
+          });
+        }
+      }
+    }
+
+    // Chronological Activity Timeline
+    const timeline = [];
+    timeline.push({
+      id: 'evt_' + (1000 + i) + '_1',
+      timestamp: date + ' 09:30',
+      type: 'created',
+      title_ar: 'إنشاء طلب الحجز',
+      title_en: 'Booking Created & Registered',
+      desc_ar: 'تم استلام طلب الحجز إلكترونياً وتخصيص الرقم المرجعي BK-2026-' + String(refNum).padStart(4, '0') + '.',
+      desc_en: 'Booking request received electronically and assigned reference BK-2026-' + String(refNum).padStart(4, '0') + '.',
+      actor_ar: 'العميل (' + cust.name_ar + ')',
+      actor_en: 'Customer (' + cust.name_en + ')',
+      party: 'customer'
+    });
+
+    if (paidAmount > 0) {
+      timeline.push({
+        id: 'evt_' + (1000 + i) + '_2',
+        timestamp: date + ' 09:42',
+        type: 'payment',
+        title_ar: 'توثيق سداد الدفعة المقدمة',
+        title_en: 'Deposit Payment Recorded',
+        desc_ar: 'تم استلام واعتماد دفعة تأكيد الحجز إلكترونياً بقيمة ' + Math.round(totalPrice * 0.3).toLocaleString('en-US') + ' ج.م عبر بوابة الدفع.',
+        desc_en: 'Booking confirmation deposit of ' + Math.round(totalPrice * 0.3).toLocaleString('en-US') + ' EGP verified via payment gateway.',
+        actor_ar: 'بوابة دفع ميقات الموحدة',
+        actor_en: 'Miqat Unified Payment Gateway',
+        party: 'system'
+      });
+    }
+
+    if (status === 'Confirmed') {
+      timeline.push({
+        id: 'evt_' + (1000 + i) + '_3',
+        timestamp: date + ' 11:15',
+        type: 'confirmed',
+        title_ar: 'اعتماد وتأكيد الحجز رسميًا',
+        title_en: 'Booking Officially Confirmed',
+        desc_ar: 'تمت مراجعة المقاعد وتأكيد الحجز وتخصيص باقة السفر للعميل من قبل شركة السياحة.',
+        desc_en: 'Availability verified, booking confirmed and travel package allocated by partner company.',
+        actor_ar: 'شركة الدرة للسياحة (مسؤول الحجوزات)',
+        actor_en: 'AL DORRA TRAVEL (Reservations Manager)',
+        party: 'company'
+      });
+    } else if (status === 'Rejected') {
+      timeline.push({
+        id: 'evt_' + (1000 + i) + '_3',
+        timestamp: date + ' 14:20',
+        type: 'rejected',
+        title_ar: 'رفض الحجز من شركة السياحة',
+        title_en: 'Booking Rejected by Company',
+        desc_ar: 'تم رفض الحجز لعدم توفر غرف شاغرة بالفندق المطلوب للفترة المحددة. تم إحالة الدفعة لبروتوكول الاسترداد.',
+        desc_en: 'Booking rejected due to hotel room unavailability for the specified dates. Forwarded to refund protocol.',
+        actor_ar: 'شركة الدرة للسياحة',
+        actor_en: 'AL DORRA TRAVEL',
+        party: 'company'
+      });
+    } else if (status === 'Pending') {
+      timeline.push({
+        id: 'evt_' + (1000 + i) + '_3',
+        timestamp: date + ' 10:05',
+        type: 'under_review',
+        title_ar: 'الحجز قيد المراجعة والتدقيق',
+        title_en: 'Booking Under Operational Review',
+        desc_ar: 'الحجز قيد مراجعة جوازات سفر المعتمرين وتوافر الغرف الفندقية مع الوكيل.',
+        desc_en: 'Booking undergoing pilgrim passport review and room allotment check.',
+        actor_ar: 'شركة الدرة للسياحة',
+        actor_en: 'AL DORRA TRAVEL',
+        party: 'company'
+      });
+    }
+
     RAW_BOOKINGS.push({
-      id: `bkg_${1000 + i}`,
-      reference: `BK-2026-${String(refNum).padStart(4, '0')}`,
-      customerId: `cust_${100 + i}`,
+      id: 'bkg_' + (1000 + i),
+      reference: 'BK-2026-' + String(refNum).padStart(4, '0'),
+      customerId: 'cust_' + (100 + i),
       customerName_ar: cust.name_ar,
       customerName_en: cust.name_en,
       customerPhone: cust.phone,
+      customerWhatsapp,
+      customerEmail,
+      customerGovernorate_ar: gov.ar,
+      customerGovernorate_en: gov.en,
       programId: prog.id,
       programName_ar: prog.name_ar,
       programName_en: prog.name_en,
@@ -178,6 +416,21 @@
       bookingStatus,
       paymentStatus,
       bookingDate: date,
+      tripType_ar,
+      tripType_en,
+      departureDate,
+      returnDate,
+      hotelMakkah_ar: hotelMakkah.ar,
+      hotelMakkah_en: hotelMakkah.en,
+      hotelMadinah_ar: hotelMadinah.ar,
+      hotelMadinah_en: hotelMadinah.en,
+      roomType_ar: roomType.ar,
+      roomType_en: roomType.en,
+      specialRequests_ar: specReq.ar,
+      specialRequests_en: specReq.en,
+      payments,
+      timeline,
+      proposedChange: null,
       currency: 'EGP'
     });
   }
@@ -548,6 +801,432 @@
     ) || null;
   }
 
+  function confirmBooking(idOrRef, companyUser) {
+    const booking = getBookingById(idOrRef);
+    if (!booking) return { success: false, error: 'Booking not found' };
+    if (booking.bookingStatus === 'confirmed' || booking.status === 'Confirmed') {
+      return { success: false, error: 'Booking is already confirmed' };
+    }
+    if (booking.bookingStatus === 'rejected' || booking.bookingStatus === 'cancelled') {
+      return { success: false, error: 'Cannot confirm a cancelled or rejected booking' };
+    }
+
+    booking.bookingStatus = 'confirmed';
+    booking.status = 'Confirmed';
+
+    const now = new Date();
+    const timeStr = now.toISOString().replace('T', ' ').slice(0, 16);
+    booking.timeline.push({
+      id: 'evt_act_' + Date.now(),
+      timestamp: timeStr,
+      type: 'confirmed',
+      title_ar: 'تأكيد الحجز بنجاح',
+      title_en: 'Booking Successfully Confirmed',
+      desc_ar: 'تم تأكيد الحجز رسمياً واعتماد وثائق المعتمرين وتخصيص باقة السفر للعميل.',
+      desc_en: 'Booking officially confirmed, pilgrim documents verified, and package allocated.',
+      actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة (مسؤول الحجوزات)',
+      actor_en: companyUser ? (companyUser.name_en || companyUser.name || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL (Reservations Manager)',
+      party: 'company'
+    });
+
+    return { success: true, booking };
+  }
+
+  function reportPayment(idOrRef, paymentData, companyUser) {
+    const booking = getBookingById(idOrRef);
+    if (!booking) return { success: false, error: 'Booking not found' };
+
+    const amount = Number(paymentData.amount);
+    if (isNaN(amount) || amount <= 0) {
+      return { success: false, error: 'Payment amount must be greater than zero' };
+    }
+    if (amount > booking.remainingAmount) {
+      return { success: false, error: 'Reported amount cannot exceed remaining balance' };
+    }
+
+    booking.paidAmount += amount;
+    booking.remainingAmount = booking.totalPrice - booking.paidAmount;
+    if (booking.remainingAmount === 0) {
+      booking.paymentStatus = 'fully_paid';
+    } else {
+      booking.paymentStatus = 'partially_paid';
+    }
+
+    const now = new Date();
+    const dateStr = paymentData.receiptDate || now.toISOString().split('T')[0];
+    const timeStr = dateStr + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+    const methodLabels = {
+      cash_office: { ar: 'نقداً بمقر الشركة', en: 'Cash at Branch Office' },
+      bank_deposit: { ar: 'إيداع / تحويل بنكي', en: 'Direct Bank Deposit' },
+      cheque: { ar: 'شيك بنكي معتمد', en: 'Certified Bank Cheque' }
+    };
+    const methodInfo = methodLabels[paymentData.paymentMethod] || { ar: paymentData.paymentMethod || 'نقداً', en: paymentData.paymentMethod || 'Cash' };
+
+    const txId = 'pay_rep_' + Date.now();
+    const receiptRef = paymentData.receiptRef || ('RCP-' + String(Date.now()).slice(-6));
+
+    const newPayment = {
+      id: txId,
+      reference: receiptRef,
+      date: timeStr,
+      amount,
+      source: 'company',
+      method_key: paymentData.paymentMethod || 'cash_office',
+      method_ar: methodInfo.ar,
+      method_en: methodInfo.en,
+      status_key: 'company_reported',
+      status_ar: 'مسدد للشركة (قيد تدقيق ميقات)',
+      status_en: 'Company-Reported (Pending Miqat)',
+      verifiedByMiqat: false,
+      recordedBy_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
+      recordedBy_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
+      transactionRef: receiptRef,
+      notes_ar: paymentData.notes || 'تم استلام الدفعة النقدية بمقر الشركة.',
+      notes_en: paymentData.notes || 'Payment received directly at branch office.'
+    };
+    booking.payments.push(newPayment);
+
+    booking.timeline.push({
+      id: 'evt_rep_' + Date.now(),
+      timestamp: timeStr,
+      type: 'payment_reported',
+      title_ar: 'تسجيل استلام دفعة نقدية بالشركة',
+      title_en: 'Cash Receipt Reported by Company',
+      desc_ar: 'قامت الشركة بتسجيل استلام دفعة بقيمة ' + amount.toLocaleString('en-US') + ' ج.م بموجب إيصال رقم (' + receiptRef + '). الإيصال قيد تدقيق الإدارة المالية بميقات.',
+      desc_en: 'Company reported receiving payment of ' + amount.toLocaleString('en-US') + ' EGP under receipt (' + receiptRef + '). Pending Miqat finance verification.',
+      actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
+      actor_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
+      party: 'company'
+    });
+
+    return { success: true, booking, payment: newPayment };
+  }
+
+  function rejectBooking(idOrRef, rejectionData, companyUser) {
+    const booking = getBookingById(idOrRef);
+    if (!booking) return { success: false, error: 'Booking not found' };
+    if (booking.bookingStatus === 'rejected') {
+      return { success: false, error: 'Booking is already rejected' };
+    }
+
+    const reason = (rejectionData && rejectionData.reason) ? rejectionData.reason.trim() : '';
+    if (!reason) {
+      return { success: false, error: 'Rejection reason is mandatory' };
+    }
+
+    booking.bookingStatus = 'rejected';
+    booking.status = 'Rejected';
+
+    const now = new Date();
+    const timeStr = now.toISOString().replace('T', ' ').slice(0, 16);
+
+    const notes = (rejectionData && rejectionData.notes) ? rejectionData.notes.trim() : '';
+    const descAr = 'تم رفض الحجز من قبل الشركة. السبب: ' + reason + (notes ? ' (' + notes + ')' : '') + '. في حال وجود دفعة مقدمة سيتم إحالتها لإجراءات الاسترداد المعتمدة بميقات.';
+    const descEn = 'Booking rejected by partner company. Reason: ' + reason + (notes ? ' (' + notes + ')' : '') + '. Any deposit paid enters Miqat refund protocol.';
+
+    booking.timeline.push({
+      id: 'evt_rej_' + Date.now(),
+      timestamp: timeStr,
+      type: 'rejected',
+      title_ar: 'رفض طلب الحجز',
+      title_en: 'Booking Rejected by Company',
+      desc_ar: descAr,
+      desc_en: descEn,
+      actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
+      actor_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
+      party: 'company'
+    });
+
+    return { success: true, booking };
+  }
+
+  function requestProgramChange(idOrRef, changeData, companyUser) {
+    const booking = getBookingById(idOrRef);
+    if (!booking) return { success: false, error: 'Booking not found' };
+    if (booking.bookingStatus === 'rejected' || booking.bookingStatus === 'cancelled') {
+      return { success: false, error: 'Cannot propose program change for a closed booking' };
+    }
+
+    const replacementId = changeData ? changeData.replacementProgramId : '';
+    const replacementProg = PROGRAMS.find(p => p.id === replacementId);
+    if (!replacementProg) {
+      return { success: false, error: 'Valid replacement program must be selected' };
+    }
+
+    const proposedTotalPrice = replacementProg.unitPrice * booking.travelers;
+    const reason = (changeData && changeData.reason) ? changeData.reason.trim() : 'تعديل تشغيلي مقترح للبرنامج';
+
+    // Strict rule: DO NOT unilaterally change official booking program or price!
+    booking.proposedChange = {
+      programId: replacementProg.id,
+      programName_ar: replacementProg.name_ar,
+      programName_en: replacementProg.name_en,
+      category: replacementProg.category,
+      unitPrice: replacementProg.unitPrice,
+      totalPrice: proposedTotalPrice,
+      priceDiff: proposedTotalPrice - booking.totalPrice,
+      reason,
+      status: 'pending_customer_agreement',
+      requestedAt: new Date().toISOString()
+    };
+
+    const now = new Date();
+    const timeStr = now.toISOString().replace('T', ' ').slice(0, 16);
+
+    booking.timeline.push({
+      id: 'evt_chg_' + Date.now(),
+      timestamp: timeStr,
+      type: 'change_requested',
+      title_ar: 'اقتراح تعديل البرنامج (بانتظار موافقة العميل)',
+      title_en: 'Program Change Proposed (Pending Customer Agreement)',
+      desc_ar: 'قامت الشركة باقتراح استبدال البرنامج بـ (' + replacementProg.name_ar + '). طبقاً للقواعد التنظيمية، يظل البرنامج الأصلي سارياً ولا يعتمد التعديل إلا بعد تسجيل موافقة العميل رسمياً.',
+      desc_en: 'Company proposed replacing program with (' + replacementProg.name_en + '). In accordance with regulations, original package remains in effect until customer agreement is officially recorded.',
+      actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
+      actor_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
+      party: 'company'
+    });
+
+    return { success: true, booking, proposedChange: booking.proposedChange };
+  }
+
+  /**
+   * Authoritative Financial Overview & Collections Engine
+   * Strictly separates Platform-Verified collections from Company Direct Branch collections.
+   */
+  function getFinancialOverviewData(options = {}) {
+    const {
+      period = 'all',
+      date = null,
+      search = '',
+      program = 'all',
+      source = 'all',
+      method = 'all',
+      verification = 'all'
+    } = options;
+
+    let periodBookings = [...RAW_BOOKINGS];
+
+    // Filter bookings by period or specific date
+    if (date) {
+      periodBookings = periodBookings.filter(b => b.bookingDate === date);
+    } else if (period === 'today') {
+      periodBookings = periodBookings.filter(b => b.bookingDate === '2026-10-29' || b.bookingDate === '2026-10-30');
+    } else if (period === 'week') {
+      periodBookings = periodBookings.filter(b => b.bookingDate >= '2026-10-24' && b.bookingDate <= '2026-10-30');
+    } else if (period === 'month') {
+      periodBookings = periodBookings.filter(b => b.bookingDate.startsWith('2026-10'));
+    } else if (period === 'last30') {
+      periodBookings = periodBookings.filter(b => b.bookingDate >= '2026-10-01');
+    }
+
+    // Authoritative totals across period bookings
+    let totalBookingValue = 0;
+    let remainingOutstanding = 0;
+    periodBookings.forEach(b => {
+      totalBookingValue += b.totalPrice;
+      remainingOutstanding += b.remainingAmount;
+    });
+
+    // Extract itemized transactions for period bookings
+    const allPeriodTransactions = [];
+    periodBookings.forEach(b => {
+      if (b.payments && b.payments.length) {
+        b.payments.forEach(p => {
+          const isPlatform = p.source ? (p.source === 'platform') : (!p.status_key.startsWith('company'));
+          const txSource = isPlatform ? 'platform' : 'company';
+          allPeriodTransactions.push({
+            id: p.id,
+            reference: p.reference,
+            transactionRef: p.transactionRef || p.reference,
+            date: p.date,
+            amount: p.amount,
+            method_key: p.method_key,
+            method_ar: p.method_ar,
+            method_en: p.method_en,
+            status_key: p.status_key,
+            status_ar: p.status_ar,
+            status_en: p.status_en,
+            verifiedByMiqat: !!p.verifiedByMiqat,
+            recordedBy_ar: p.recordedBy_ar,
+            recordedBy_en: p.recordedBy_en,
+            notes_ar: p.notes_ar || '',
+            notes_en: p.notes_en || '',
+            source: txSource,
+            source_ar: isPlatform ? 'منصة ميقات' : 'فرع الشركة',
+            source_en: isPlatform ? 'Miqat Platform' : 'Company Branch',
+            bookingId: b.id,
+            bookingRef: b.reference,
+            customerId: b.customerId,
+            customerName_ar: b.customerName_ar,
+            customerName_en: b.customerName_en,
+            customerPhone: b.customerPhone,
+            programId: b.programId,
+            programName_ar: b.programName_ar,
+            programName_en: b.programName_en,
+            category: b.category,
+            bookingDate: b.bookingDate
+          });
+        });
+      }
+    });
+
+    // Authoritative Collections Split
+    let platformCollections = 0;
+    let companyReportedCollections = 0;
+    let companyReportedPending = 0;
+    let companyReportedVerified = 0;
+
+    allPeriodTransactions.forEach(tx => {
+      if (tx.source === 'platform') {
+        platformCollections += tx.amount;
+      } else {
+        companyReportedCollections += tx.amount;
+        if (tx.verifiedByMiqat) {
+          companyReportedVerified += tx.amount;
+        } else {
+          companyReportedPending += tx.amount;
+        }
+      }
+    });
+
+    const totalPaid = platformCollections + companyReportedCollections;
+    const collectionRate = totalBookingValue > 0 ? Math.round((totalPaid / totalBookingValue) * 100) : 0;
+    const platformRate = totalBookingValue > 0 ? Math.round((platformCollections / totalBookingValue) * 100) : 0;
+    const companyRate = totalBookingValue > 0 ? Math.round((companyReportedCollections / totalBookingValue) * 100) : 0;
+    const remainingRate = totalBookingValue > 0 ? Math.round((remainingOutstanding / totalBookingValue) * 100) : 0;
+
+    // Monthly Activity Timeline (Platform vs Company)
+    const MONTHS = [
+      { key: '2026-05', name_ar: 'مايو 2026', name_en: 'May 2026' },
+      { key: '2026-06', name_ar: 'يونيو 2026', name_en: 'Jun 2026' },
+      { key: '2026-07', name_ar: 'يوليو 2026', name_en: 'Jul 2026' },
+      { key: '2026-08', name_ar: 'أغسطس 2026', name_en: 'Aug 2026' },
+      { key: '2026-09', name_ar: 'سبتمبر 2026', name_en: 'Sep 2026' },
+      { key: '2026-10', name_ar: 'أكتوبر 2026', name_en: 'Oct 2026' }
+    ];
+
+    const monthlyActivity = MONTHS.map(m => {
+      const monthBookings = RAW_BOOKINGS.filter(b => b.bookingDate.startsWith(m.key));
+      const totalVal = monthBookings.reduce((sum, b) => sum + b.totalPrice, 0);
+
+      let pSum = 0;
+      let cSum = 0;
+      monthBookings.forEach(b => {
+        (b.payments || []).forEach(p => {
+          const isPlat = p.source ? (p.source === 'platform') : (!p.status_key.startsWith('company'));
+          if (isPlat) pSum += p.amount;
+          else cSum += p.amount;
+        });
+      });
+
+      return {
+        monthKey: m.key,
+        name_ar: m.name_ar,
+        name_en: m.name_en,
+        bookingsCount: monthBookings.length,
+        totalValue: totalVal,
+        platformCollections: pSum,
+        companyCollections: cSum,
+        totalCollected: pSum + cSum
+      };
+    });
+
+    // Program Category Financial Breakdown
+    const programBreakdown = PROGRAMS.map(prog => {
+      const progBookings = periodBookings.filter(b => b.programId === prog.id);
+      const count = progBookings.length;
+      const rev = progBookings.reduce((sum, b) => sum + b.totalPrice, 0);
+      const paid = progBookings.reduce((sum, b) => sum + b.paidAmount, 0);
+      const remaining = progBookings.reduce((sum, b) => sum + b.remainingAmount, 0);
+      return {
+        id: prog.id,
+        name_ar: prog.name_ar,
+        name_en: prog.name_en,
+        category: prog.category,
+        unitPrice: prog.unitPrice,
+        bookingsCount: count,
+        totalRevenue: rev,
+        collectedAmount: paid,
+        remainingAmount: remaining,
+        collectionRate: rev > 0 ? Math.round((paid / rev) * 100) : 0
+      };
+    });
+
+    // Multi-Facet Filtering on Transactions
+    let filteredTransactions = [...allPeriodTransactions];
+
+    if (search && search.trim()) {
+      const q = search.trim().toLowerCase();
+      filteredTransactions = filteredTransactions.filter(tx => {
+        return (
+          (tx.transactionRef && tx.transactionRef.toLowerCase().includes(q)) ||
+          (tx.reference && tx.reference.toLowerCase().includes(q)) ||
+          (tx.bookingRef && tx.bookingRef.toLowerCase().includes(q)) ||
+          (tx.customerName_ar && tx.customerName_ar.toLowerCase().includes(q)) ||
+          (tx.customerName_en && tx.customerName_en.toLowerCase().includes(q)) ||
+          (tx.customerPhone && tx.customerPhone.includes(q))
+        );
+      });
+    }
+
+    if (program && program !== 'all') {
+      filteredTransactions = filteredTransactions.filter(tx => tx.programId === program);
+    }
+
+    if (source && source !== 'all') {
+      filteredTransactions = filteredTransactions.filter(tx => tx.source === source);
+    }
+
+    if (method && method !== 'all') {
+      filteredTransactions = filteredTransactions.filter(tx => tx.method_key === method);
+    }
+
+    if (verification && verification !== 'all') {
+      if (verification === 'verified') {
+        filteredTransactions = filteredTransactions.filter(tx => tx.verifiedByMiqat === true);
+      } else if (verification === 'pending') {
+        filteredTransactions = filteredTransactions.filter(tx => tx.verifiedByMiqat === false);
+      } else if (verification === 'verified_platform') {
+        filteredTransactions = filteredTransactions.filter(tx => tx.source === 'platform' && tx.verifiedByMiqat === true);
+      } else if (verification === 'verified_company') {
+        filteredTransactions = filteredTransactions.filter(tx => tx.source === 'company' && tx.verifiedByMiqat === true);
+      }
+    }
+
+    // Sort descending by date
+    filteredTransactions.sort((a, b) => (b.date > a.date ? 1 : -1));
+
+    const filteredSum = filteredTransactions.reduce((s, tx) => s + tx.amount, 0);
+
+    return {
+      period,
+      company: COMPANY_INFO,
+      summary: {
+        totalBookingValue,
+        platformCollections,
+        companyReportedCollections,
+        companyReportedPending,
+        companyReportedVerified,
+        remainingOutstanding,
+        totalPaid,
+        collectionRate,
+        platformRate,
+        companyRate,
+        remainingRate,
+        totalBookingsCount: periodBookings.length,
+        totalTransactionsCount: allPeriodTransactions.length,
+        currency: 'EGP'
+      },
+      monthlyActivity,
+      programBreakdown,
+      transactions: filteredTransactions,
+      allTransactionsCount: allPeriodTransactions.length,
+      filteredCount: filteredTransactions.length,
+      filteredSum
+    };
+  }
+
   return {
     COMPANY_INFO,
     PROGRAMS,
@@ -557,7 +1236,12 @@
     NOTIFICATIONS,
     getDashboardMetrics,
     getBookings,
-    getBookingById
+    getBookingById,
+    confirmBooking,
+    reportPayment,
+    rejectBooking,
+    requestProgramChange,
+    getFinancialOverviewData
   };
 });
 

@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>البرامج والرحلات | ميقات</title>
+  <meta name="description" content="إدارة وتنظيم برامج ورحلات الحج والعمرة للشركة السياحية الشريكة لمنصة ميقات — تعديل الأسعار، المواعيد، السعة، وحالة العرض.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="company-portal-page company-programs-page" data-page-id="company-programs" data-page-title-key="company.programs_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="nav.skip_to_content">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & SEVEN-SECTION NAVIGATION ==================== -->
+  <header class="site-header company-portal-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="46" height="46">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="46" height="46">
+        <div class="brand-wordmark">
+          <span class="brand-title">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="company.portal_brand">بوابة الشركاء</span>
+        </div>
+      </a>
+
+      <!-- Desktop Seven-Section Navigation -->
+      <nav class="nav-desktop company-nav-desktop" aria-label="تنقل بوابة الشركة الشريكة">
+        
+        <!-- 1. Dashboard -->
+        <a href="company-dashboard.html" class="nav-link" id="navCompanyDashboard" title="لوحة التحكم">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+
+        <!-- 2. Bookings -->
+        <a href="company-bookings.html" class="nav-link" id="navCompanyBookings" title="الحجوزات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+
+        <!-- 3. Booking Details -->
+        <a href="company-booking-details.html" class="nav-link" id="navCompanyBookingDetails" title="تفاصيل الحجز">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+
+        <!-- 4. Financial Overview -->
+        <a href="company-financial-overview.html" class="nav-link" id="navCompanyFinancial" title="الملخص المالي">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+
+        <!-- 5. Programs & Trips (ACTIVE SECTION) -->
+        <a href="company-programs.html" class="nav-link is-active" aria-current="page" id="navCompanyPrograms" title="البرامج والرحلات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Notifications -->
+        <a href="#notifications" class="nav-link nav-link-badge-wrap" data-company-section="notifications" title="الإشعارات">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="navNotificationsCount">3</span>
+        </a>
+
+        <!-- 7. Company Profile -->
+        <a href="#company-profile" class="nav-link" data-company-section="profile" title="بيانات الشركة">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 21h18"></path>
+            <path d="M5 21V7l8-4v18"></path>
+            <path d="M19 21V11l-6-4"></path>
+            <line x1="9" y1="9" x2="9" y2="9.01"></line>
+            <line x1="9" y1="13" x2="9" y2="13.01"></line>
+            <line x1="9" y1="17" x2="9" y2="17.01"></line>
+          </svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher Button -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تبديل وضع العرض" title="تبديل وضع العرض">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Company Identity Badge in Top Bar -->
+        <div class="company-header-identity" id="companyHeaderIdentity" role="button" tabindex="0" data-company-section="profile" aria-label="بيانات الشركة — شركة الدرة للسياحة" title="بيانات الشركة — شركة الدرة للسياحة">
+          <div class="client-avatar company-avatar-medallion" id="companyAvatarMedallion" role="img" aria-label="شعار الشركة" title="شركة الدرة للسياحة">
+            <span class="client-avatar-initial" id="companyAvatarInitial">د</span>
+          </div>
+          <div class="company-header-text">
+            <span class="company-header-name" id="companyHeaderName">AL DORRA TRAVEL</span>
+            <span class="company-header-license" id="companyHeaderLicense">ترخيص 47852</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح قائمة الشركة" aria-expanded="false" aria-controls="mobileNavDrawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE SLIDING DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Company Identity Card in Mobile Drawer -->
+      <div class="mobile-client-card company-mobile-card" id="mobileCompanyCard">
+        <div class="client-avatar company-avatar-medallion" id="mobileCompanyAvatar">
+          <span class="client-avatar-initial" id="mobileCompanyInitial">د</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileCompanyName">AL DORRA TRAVEL</span>
+          <span class="mobile-client-badge" data-i18n="company.tag_contracted">شركة معتمدة</span>
+        </div>
+      </div>
+
+      <!-- Seven Navigation Sections in Mobile Drawer -->
+      <nav class="mobile-nav-links company-mobile-nav" aria-label="قائمة تنقل الشركة للهواتف">
+        <a href="company-dashboard.html" class="mobile-nav-link" id="mobileNavDashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="company-bookings.html" class="mobile-nav-link" id="mobileNavCompanyBookings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+        <a href="company-booking-details.html" class="mobile-nav-link" id="mobileNavCompanyBookingDetails">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+        <a href="company-financial-overview.html" class="mobile-nav-link" id="mobileNavFinancial">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+        <a href="company-programs.html" class="mobile-nav-link is-active" aria-current="page" id="mobileNavCompanyPrograms">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+        <a href="#notifications" class="mobile-nav-link" data-company-section="notifications">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+        </a>
+        <a href="#company-profile" class="mobile-nav-link" data-company-section="profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تبديل وضع العرض">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle></svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn">
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN PAGE CONTENT ==================== -->
+  <main id="main-content" class="portal-main programs-main" tabindex="-1">
+    <div class="container main-content-container">
+
+      <!-- Breadcrumbs & Header Section -->
+      <header class="company-programs-header">
+        <div class="header-breadcrumb-wrap">
+          <nav class="company-breadcrumb" aria-label="مسار التنقل">
+            <a href="company-dashboard.html" class="breadcrumb-link" data-i18n="company.breadcrumb_dashboard">لوحة التحكم</a>
+            <span class="breadcrumb-sep" aria-hidden="true">/</span>
+            <span class="breadcrumb-current" data-i18n="company.breadcrumb_programs">البرامج والرحلات</span>
+          </nav>
+          <div class="header-title-row">
+            <div class="title-meta-wrap">
+              <h1 class="page-main-title" data-i18n="company.programs_header_title">البرامج والرحلات</h1>
+              <p class="page-main-desc" data-i18n="company.programs_header_desc">إدارة وتنظيم باقات برامج العمرة والحج، وجداول الرحلات، وتحديث الأسعار والمقاعد المتاحة.</p>
+            </div>
+            <div class="header-actions-wrap">
+              <button type="button" class="btn btn-primary" id="btnAddProgram">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span data-i18n="company.btn_add_program">إضافة برنامج جديد</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==================== 1. PROGRAMS SUMMARY KPI CARDS ==================== -->
+      <section class="programs-summary-section" aria-label="ملخص إحصاءات البرامج والرحلات">
+        <div class="programs-kpi-grid">
+          
+          <!-- KPI 1: Total Programs -->
+          <div class="kpi-card" id="cardKpiTotalPrograms">
+            <div class="kpi-card-header">
+              <span class="kpi-label" data-i18n="company.kpi_total_programs">إجمالي البرامج</span>
+              <div class="kpi-icon-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-num" id="kpiTotalPrograms">0</span>
+            </div>
+            <p class="kpi-hint" data-i18n="company.portal_brand">بوابة الشركاء — شركة الدرة</p>
+          </div>
+
+          <!-- KPI 2: Active & Published -->
+          <div class="kpi-card" id="cardKpiActivePublished">
+            <div class="kpi-card-header">
+              <span class="kpi-label" data-i18n="company.kpi_active_published">برامج نشطة ومعروضة</span>
+              <div class="kpi-icon-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-num" id="kpiActivePublished">0</span>
+            </div>
+            <p class="kpi-hint" data-i18n="company.filter_status_published">معروض ونشط</p>
+          </div>
+
+          <!-- KPI 3: Upcoming Trips -->
+          <div class="kpi-card" id="cardKpiUpcomingTrips">
+            <div class="kpi-card-header">
+              <span class="kpi-label" data-i18n="company.kpi_upcoming_trips">رحلات قادمة</span>
+              <div class="kpi-icon-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-num" id="kpiUpcomingTrips">0</span>
+            </div>
+            <p class="kpi-hint" data-i18n="company.card_dates_label">مواعيد الرحلة</p>
+          </div>
+
+          <!-- KPI 4: Available Capacity -->
+          <div class="kpi-card" id="cardKpiAvailableCapacity">
+            <div class="kpi-card-header">
+              <span class="kpi-label" data-i18n="company.kpi_available_capacity">المقاعد المتاحة للحجز</span>
+              <div class="kpi-icon-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-num" id="kpiAvailableCapacity">0</span>
+              <span class="kpi-unit" data-i18n="company.kpi_seats_suffix">مقعد</span>
+            </div>
+            <p class="kpi-hint" data-i18n="company.card_capacity_label">إشغال المقاعد</p>
+          </div>
+
+          <!-- KPI 5: Draft / Unpublished -->
+          <div class="kpi-card" id="cardKpiDraftUnpublished">
+            <div class="kpi-card-header">
+              <span class="kpi-label" data-i18n="company.kpi_draft_unpublished">مسودات قيد الإعداد</span>
+              <div class="kpi-icon-badge">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="12" y1="18" x2="12" y2="12"></line>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-num" id="kpiDraftUnpublished">0</span>
+            </div>
+            <p class="kpi-hint" data-i18n="company.filter_status_draft">مسودة</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== 2. SEARCH & ADVANCED FILTER CONTAINER ==================== -->
+      <section class="programs-filter-section" aria-label="البحث وتصفية البرامج">
+        <div class="filter-panel-card">
+          
+          <div class="filter-panel-header">
+            <div class="filter-header-title-wrap">
+              <div class="filter-header-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+              </div>
+              <div>
+                <h2 class="filter-panel-title" data-i18n="company.filter_header_title">تصفية واستعلام البرامج</h2>
+                <p class="filter-panel-desc" data-i18n="company.filter_header_desc">خيارات التصفية المتعددة والبحث السريع في باقات الشركة</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search Header Row -->
+          <div class="filter-search-row">
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="progSearchInput" class="form-control prog-search-input" placeholder="البحث باسم البرنامج، الرمز، الوجهة، أو الفندق..." data-i18n-attr="placeholder:company.filter_search_placeholder">
+              <button type="button" class="clear-search-btn" id="btnClearProgSearch" aria-label="إفراغ البحث" style="display: none;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Multi-Criteria Controls Grid -->
+          <div class="filter-controls-grid">
+            
+            <!-- Category -->
+            <div class="filter-field-group">
+              <label for="filterCategorySelect" class="filter-label" data-i18n="company.filter_category_label">تصنيف البرنامج</label>
+              <select id="filterCategorySelect" class="form-select filter-select">
+                <option value="all" data-i18n="company.filter_all_categories">جميع التصنيفات</option>
+                <option value="umrah" data-i18n="company.filter_cat_umrah">برامج العمرة</option>
+                <option value="hajj" data-i18n="company.filter_cat_hajj">برامج الحج</option>
+              </select>
+            </div>
+
+            <!-- Type -->
+            <div class="filter-field-group">
+              <label for="filterTypeSelect" class="filter-label" data-i18n="company.filter_type_label">نوع الباقة</label>
+              <select id="filterTypeSelect" class="form-select filter-select">
+                <option value="all" data-i18n="company.filter_all_types">جميع الأنواع</option>
+                <option value="economy" data-i18n="company.filter_type_economy">اقتصادي</option>
+                <option value="premium" data-i18n="company.filter_type_premium">متميز 5 نجوم</option>
+                <option value="vip" data-i18n="company.filter_type_vip">فاخر VIP</option>
+                <option value="ramadan" data-i18n="company.filter_type_ramadan">موسم رمضان</option>
+                <option value="tourist" data-i18n="company.filter_type_tourist">سياحي</option>
+                <option value="family" data-i18n="company.filter_type_family">عائلي</option>
+              </select>
+            </div>
+
+            <!-- Status -->
+            <div class="filter-field-group">
+              <label for="filterStatusSelect" class="filter-label" data-i18n="company.filter_status_label">حالة البرنامج</label>
+              <select id="filterStatusSelect" class="form-select filter-select">
+                <option value="all" data-i18n="company.filter_all_statuses">جميع الحالات</option>
+                <option value="published" data-i18n="company.filter_status_published">معروض ونشط</option>
+                <option value="draft" data-i18n="company.filter_status_draft">مسودة</option>
+                <option value="archived" data-i18n="company.filter_status_archived">مؤرشف</option>
+              </select>
+            </div>
+
+            <!-- Availability -->
+            <div class="filter-field-group">
+              <label for="filterAvailabilitySelect" class="filter-label" data-i18n="company.filter_avail_label">حالة الإتاحة</label>
+              <select id="filterAvailabilitySelect" class="form-select filter-select">
+                <option value="all" data-i18n="company.filter_all_avail">جميع حالات الإتاحة</option>
+                <option value="available" data-i18n="company.filter_avail_available">متاح للحجز</option>
+                <option value="limited" data-i18n="company.filter_avail_limited">مقاعد محدودة</option>
+                <option value="full" data-i18n="company.filter_avail_full">مكتمل العدد</option>
+                <option value="unavailable" data-i18n="company.filter_avail_unavailable">غير متاح</option>
+              </select>
+            </div>
+
+            <!-- Date From -->
+            <div class="filter-field-group">
+              <label for="filterDateFrom" class="filter-label" data-i18n="company.filter_date_from">تاريخ السفر من</label>
+              <input type="date" id="filterDateFrom" class="form-control filter-input">
+            </div>
+
+            <!-- Date To -->
+            <div class="filter-field-group">
+              <label for="filterDateTo" class="filter-label" data-i18n="company.filter_date_to">تاريخ السفر إلى</label>
+              <input type="date" id="filterDateTo" class="form-control filter-input">
+            </div>
+
+            <!-- Price Min -->
+            <div class="filter-field-group">
+              <label for="filterPriceMin" class="filter-label" data-i18n="company.filter_min_price">أدنى سعر (ج.م)</label>
+              <input type="number" id="filterPriceMin" class="form-control filter-input" placeholder="0" min="0" step="5000">
+            </div>
+
+            <!-- Price Max -->
+            <div class="filter-field-group">
+              <label for="filterPriceMax" class="filter-label" data-i18n="company.filter_max_price">أقصى سعر (ج.م)</label>
+              <input type="number" id="filterPriceMax" class="form-control filter-input" placeholder="500000" min="0" step="10000">
+            </div>
+
+          </div>
+
+          <!-- Filter Action Buttons & Reset -->
+          <div class="filter-actions-bar">
+            <div class="filter-actions-left">
+              <button type="button" class="btn btn-secondary filter-btn-reset" id="btnResetFilters">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                </svg>
+                <span data-i18n="company.btn_reset_filters">إعادة ضبط</span>
+              </button>
+              <button type="button" class="btn btn-primary filter-btn-apply" id="btnApplyFilters">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span data-i18n="company.btn_apply_filters">تطبيق التصفية</span>
+              </button>
+            </div>
+            <div class="filter-actions-right">
+              <span class="programs-count-badge" id="programsResultsCount">عرض 6 من 6 برامج</span>
+            </div>
+          </div>
+
+          <!-- Active Filter Chips Area -->
+          <div class="active-chips-container" id="activeFilterChipsContainer" style="display: none;">
+            <div class="active-chips-label-wrap">
+              <span class="chips-title" data-i18n="company.filter_active_count">فلاتر نشطة:</span>
+            </div>
+            <div class="active-chips-list" id="activeFilterChipsList">
+              <!-- Dynamically rendered chips -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== 3. PROGRAMS LISTING SECTION ==================== -->
+      <section class="programs-listing-section" aria-label="قائمة البرامج والرحلات">
+        
+        <!-- Programs Cards Grid (CRITICAL: ZERO IMAGES INSIDE CARDS) -->
+        <div class="programs-cards-grid" id="programsCardsGrid">
+          <!-- Dynamically populated program cards -->
+        </div>
+
+        <!-- Empty State (Shown when filters yield 0 results) -->
+        <div class="programs-empty-state" id="programsEmptyState" style="display: none;">
+          <div class="empty-state-icon-wrap">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="empty-state-title" data-i18n="company.empty_programs_title">لا توجد برامج مطابقة لخيارات البحث</h3>
+          <p class="empty-state-desc" data-i18n="company.empty_programs_desc">لم نتمكن من العثور على أي برامج تطابق معايير التصفية المحددة. جرب تعديل مصطلحات البحث أو إعادة تعيين الفلاتر.</p>
+          <button type="button" class="btn btn-secondary" id="btnResetEmptyState" data-i18n="company.btn_reset_empty">إعادة ضبط معايير البحث</button>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== 4. ADD / EDIT PROGRAM MODAL (7 SECTIONS) ==================== -->
+  <div id="programFormModal" class="company-modal form-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="programModalBackdrop"></div>
+    <div class="company-modal-dialog modal-dialog-large">
+      
+      <!-- Modal Header -->
+      <div class="modal-dialog-header">
+        <div class="modal-title-wrap">
+          <h2 class="modal-dialog-title" id="programModalTitle" data-i18n="company.modal_add_title">إضافة برنامج رحلة جديد</h2>
+          <span class="modal-dialog-subtitle" id="programModalSubtitle" data-i18n="company.programs_header_desc">إدارة وتنظيم باقات برامج العمرة والحج، وجداول الرحلات، وتحديث الأسعار والمقاعد المتاحة.</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="programModalCloseBtn" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (7 Structured Sections Form) -->
+      <form id="programForm" class="modal-dialog-body form-sections-container" novalidate>
+        <input type="hidden" id="formProgramId" value="">
+
+        <!-- SECTION 1: PROGRAM IDENTITY & IMAGE UPLOAD -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">1</span>
+            <span data-i18n="company.form_sec1_title">1. هوية البرنامج والبيانات الأساسية</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec1_desc">اسم البرنامج ورمزه وتصنيفه ونوعه مع الوصف والصورة التعريفية</p>
+          
+          <div class="form-fields-grid">
+            
+            <div class="form-field full-width">
+              <label for="formNameAr" class="form-label">
+                <span data-i18n="company.form_field_name_ar">اسم البرنامج (بالعربية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formNameAr" class="form-control" required placeholder="مثال: عمرة متميزة 5 نجوم — أبراج الساعة" data-i18n-attr="placeholder:company.placeholder_name_ar">
+              <span class="field-error" id="errNameAr"></span>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formNameEn" class="form-label">
+                <span data-i18n="company.form_field_name_en">اسم البرنامج (بالإنجليزية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formNameEn" class="form-control" required placeholder="e.g. Umrah Premium 5-Star — Clock Towers" data-i18n-attr="placeholder:company.placeholder_name_en">
+              <span class="field-error" id="errNameEn"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formCode" class="form-label" data-i18n="company.form_field_code">رمز البرنامج التعريفي</label>
+              <input type="text" id="formCode" class="form-control" placeholder="UMR-2026-PR02">
+            </div>
+
+            <div class="form-field">
+              <label for="formCategory" class="form-label">
+                <span data-i18n="company.form_field_category">التصنيف الرئيسي</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <select id="formCategory" class="form-select" required>
+                <option value="umrah" data-i18n="company.filter_cat_umrah">برامج العمرة</option>
+                <option value="hajj" data-i18n="company.filter_cat_hajj">برامج الحج</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="formType" class="form-label">
+                <span data-i18n="company.form_field_type">نوع الباقة</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <select id="formType" class="form-select" required>
+                <option value="economy" data-i18n="company.filter_type_economy">اقتصادي</option>
+                <option value="premium" data-i18n="company.filter_type_premium">متميز 5 نجوم</option>
+                <option value="vip" data-i18n="company.filter_type_vip">فاخر VIP</option>
+                <option value="ramadan" data-i18n="company.filter_type_ramadan">موسم رمضان</option>
+                <option value="tourist" data-i18n="company.filter_type_tourist">سياحي</option>
+                <option value="family" data-i18n="company.filter_type_family">عائلي</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="formStatus" class="form-label" data-i18n="company.form_field_status">حالة النشر والعرض</label>
+              <select id="formStatus" class="form-select">
+                <option value="published" data-i18n="company.filter_status_published">معروض ونشط</option>
+                <option value="draft" data-i18n="company.filter_status_draft">مسودة</option>
+                <option value="archived" data-i18n="company.filter_status_archived">مؤرشف</option>
+              </select>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formShortDescAr" class="form-label" data-i18n="company.form_field_short_desc_ar">نبذة مختصرة (بالعربية)</label>
+              <input type="text" id="formShortDescAr" class="form-control" placeholder="نبذة موجزة تبرز أهم مميزات الرحلة" data-i18n-attr="placeholder:company.placeholder_short_desc_ar">
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formShortDescEn" class="form-label" data-i18n="company.form_field_short_desc_en">نبذة مختصرة (بالإنجليزية)</label>
+              <input type="text" id="formShortDescEn" class="form-control" placeholder="Brief summary highlighting the key package points" data-i18n-attr="placeholder:company.placeholder_short_desc_en">
+            </div>
+
+            <!-- Image Upload Area with Preview, Replace, and Remove -->
+            <div class="form-field full-width image-upload-field">
+              <label class="form-label" data-i18n="company.form_image_upload_label">صورة البرنامج التعريفية (تظهر في التفاصيل فقط)</label>
+              <p class="field-hint" data-i18n="company.form_image_hint">الصيغ المدعومة: JPG, PNG, WebP (الحد الأقصى 5 ميجابايت). ملاحظة: الصور لا تظهر داخل بطاقات القائمة احتراماً لمعايير العرض التشغيلي.</p>
+              
+              <div class="upload-dropzone" id="uploadDropzone">
+                <input type="file" id="formImageFile" accept="image/jpeg,image/png,image/webp" style="display: none;">
+                
+                <!-- Placeholder / Upload Prompt -->
+                <div class="upload-placeholder" id="uploadPlaceholder">
+                  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <span class="upload-prompt-text" data-i18n="company.form_image_choose_btn">اختر صورة البرنامج</span>
+                  <span class="upload-prompt-sub">JPG, PNG, WebP (Max 5MB)</span>
+                  <button type="button" class="btn btn-secondary upload-trigger-btn" id="btnTriggerImageUpload" data-i18n="company.form_image_choose_btn">اختر صورة البرنامج</button>
+                </div>
+
+                <!-- Live Preview Container -->
+                <div class="upload-preview-container" id="uploadPreviewContainer" style="display: none;">
+                  <img src="" alt="معاينة صورة البرنامج" id="uploadPreviewImg" class="upload-preview-thumb">
+                  <div class="preview-actions">
+                    <span class="preview-filename" id="uploadPreviewFilename">image.jpg</span>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnReplaceImage" data-i18n="company.form_image_replace_btn">استبدال الصورة</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnRemoveImage" data-i18n="company.form_image_remove_btn">حذف الصورة</button>
+                  </div>
+                </div>
+
+                <input type="hidden" id="formImageUrl" value="./assets/kaaba-kiswah.jpg">
+              </div>
+              <span class="field-error" id="errImage"></span>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 2: TRIP SCHEDULE & DATES -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">2</span>
+            <span data-i18n="company.form_sec2_title">2. جدول الرحلة ومواعيد السفر</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec2_desc">تاريخ ومواعيد السفر والعودة وموسم الرحلة وموعد إغلاق الحجز</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field">
+              <label for="formDepartureDate" class="form-label">
+                <span data-i18n="company.form_field_departure_date">تاريخ المغادرة / السفر</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="date" id="formDepartureDate" class="form-control" required>
+              <span class="field-error" id="errDepartureDate"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formReturnDate" class="form-label">
+                <span data-i18n="company.form_field_return_date">تاريخ العودة</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="date" id="formReturnDate" class="form-control" required>
+              <span class="field-error" id="errReturnDate"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formDepartureTime" class="form-label" data-i18n="company.form_field_departure_time">وقت إقلاع رحلة الذهاب</label>
+              <input type="time" id="formDepartureTime" class="form-control" value="09:00">
+            </div>
+
+            <div class="form-field">
+              <label for="formReturnTime" class="form-label" data-i18n="company.form_field_return_time">وقت إقلاع رحلة العودة</label>
+              <input type="time" id="formReturnTime" class="form-control" value="18:00">
+            </div>
+
+            <div class="form-field">
+              <label for="formSeason" class="form-label" data-i18n="company.form_field_season">الموسم / الحملة</label>
+              <input type="text" id="formSeason" class="form-control" value="1447H / 2026">
+            </div>
+
+            <div class="form-field">
+              <label for="formBookingDeadline" class="form-label" data-i18n="company.form_field_booking_deadline">الموعد النهائي لتلقي الحجوزات</label>
+              <input type="date" id="formBookingDeadline" class="form-control">
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 3: ACCOMMODATION & HOTELS -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">3</span>
+            <span data-i18n="company.form_sec3_title">3. الإقامة والفنادق</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec3_desc">فنادق مكة المكرمة والمدينة المنورة، عدد الليالي، والمسافة عن الحرم</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field full-width">
+              <label for="formMakkahHotelAr" class="form-label">
+                <span data-i18n="company.form_field_makkah_hotel_ar">فندق مكة المكرمة (بالعربية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formMakkahHotelAr" class="form-control" required placeholder="مثال: فندق سويس أوتيل المقام" data-i18n-attr="placeholder:company.placeholder_makkah_hotel_ar">
+              <span class="field-error" id="errMakkahHotelAr"></span>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formMakkahHotelEn" class="form-label">
+                <span data-i18n="company.form_field_makkah_hotel_en">فندق مكة المكرمة (بالإنجليزية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formMakkahHotelEn" class="form-control" required placeholder="Swissôtel Al Maqam Makkah" data-i18n-attr="placeholder:company.placeholder_makkah_hotel_en">
+              <span class="field-error" id="errMakkahHotelEn"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formMakkahNights" class="form-label" data-i18n="company.form_field_makkah_nights">عدد الليالي بمكة</label>
+              <input type="number" id="formMakkahNights" class="form-control" min="1" value="7">
+            </div>
+
+            <div class="form-field">
+              <label for="formMakkahDist" class="form-label" data-i18n="company.form_field_makkah_dist">المسافة عن الحرم المكي (بالمتر)</label>
+              <input type="number" id="formMakkahDist" class="form-control" min="0" step="50" value="100">
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formMadinahHotelAr" class="form-label">
+                <span data-i18n="company.form_field_madinah_hotel_ar">فندق المدينة المنورة (بالعربية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formMadinahHotelAr" class="form-control" required placeholder="مثال: فندق دار التقوى أوبروي" data-i18n-attr="placeholder:company.placeholder_madinah_hotel_ar">
+              <span class="field-error" id="errMadinahHotelAr"></span>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formMadinahHotelEn" class="form-label">
+                <span data-i18n="company.form_field_madinah_hotel_en">فندق المدينة المنورة (بالإنجليزية)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="text" id="formMadinahHotelEn" class="form-control" required placeholder="Dar Al Taqwa Hotel Madinah" data-i18n-attr="placeholder:company.placeholder_madinah_hotel_en">
+              <span class="field-error" id="errMadinahHotelEn"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formMadinahNights" class="form-label" data-i18n="company.form_field_madinah_nights">عدد الليالي بالمدينة</label>
+              <input type="number" id="formMadinahNights" class="form-control" min="1" value="6">
+            </div>
+
+            <div class="form-field">
+              <label for="formMadinahDist" class="form-label" data-i18n="company.form_field_madinah_dist">المسافة عن المسجد النبوي (بالمتر)</label>
+              <input type="number" id="formMadinahDist" class="form-control" min="0" step="50" value="80">
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 4: FLIGHTS & GROUND TRANSPORT -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">4</span>
+            <span data-i18n="company.form_sec4_title">4. الطيران ووسائل الانتقال</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec4_desc">شركة الطيران، نوع الرحلة، المطارات، ووسائل النقل البرية</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field full-width">
+              <label for="formAirlineAr" class="form-label" data-i18n="company.form_field_airline_ar">شركة الطيران والناقل الجوي (بالعربية)</label>
+              <input type="text" id="formAirlineAr" class="form-control" value="مصر للطيران — رحلة مباشرة">
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formAirlineEn" class="form-label" data-i18n="company.form_field_airline_en">شركة الطيران والناقل الجوي (بالإنجليزية)</label>
+              <input type="text" id="formAirlineEn" class="form-control" value="EgyptAir — Direct Flight">
+            </div>
+
+            <div class="form-field">
+              <label for="formFlightType" class="form-label" data-i18n="company.form_field_flight_type">طبيعة رحلة الطيران</label>
+              <select id="formFlightType" class="form-select">
+                <option value="direct" data-i18n="company.flight_type_direct">مباشر بدون توقف (Direct)</option>
+                <option value="transit" data-i18n="company.flight_type_transit">ترانزيت / غير مباشر (Transit)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="formDepAirport" class="form-label" data-i18n="company.form_field_dep_airport">مطار المغادرة</label>
+              <input type="text" id="formDepAirport" class="form-control" value="CAI — مطار القاهرة الدولي">
+            </div>
+
+            <div class="form-field">
+              <label for="formArrAirport" class="form-label" data-i18n="company.form_field_arr_airport">مطار الوصول</label>
+              <input type="text" id="formArrAirport" class="form-control" value="JED — مطار الملك عبد العزيز بجدة">
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formTransportAr" class="form-label" data-i18n="company.form_field_transport_ar">وسائل النقل البرية والانتقالات (بالعربية)</label>
+              <input type="text" id="formTransportAr" class="form-control" value="حافلات سياحية حديثة ومكيفة 49 راكب">
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 5: PRICING & ROOM PACKAGES -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">5</span>
+            <span data-i18n="company.form_sec5_title">5. التسعير وباقات الإشغال</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec5_desc">سعر البيع الأساسي، وفروق الغرف الثنائية والثلاثية والرباعية، وأسعار الأطفال</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field">
+              <label for="formBasePrice" class="form-label">
+                <span data-i18n="company.form_field_base_price">سعر البرنامج الأساسي للفرد (ج.م)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="number" id="formBasePrice" class="form-control" required min="1000" step="1000" value="45000">
+              <span class="field-error" id="errBasePrice"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formPriceDouble" class="form-label" data-i18n="company.form_field_price_double">سعر الفرد بالغرفة الثنائية (Double)</label>
+              <input type="number" id="formPriceDouble" class="form-control" min="1000" step="500" value="50000">
+            </div>
+
+            <div class="form-field">
+              <label for="formPriceTriple" class="form-label" data-i18n="company.form_field_price_triple">سعر الفرد بالغرفة الثلاثية (Triple)</label>
+              <input type="number" id="formPriceTriple" class="form-control" min="1000" step="500" value="47000">
+            </div>
+
+            <div class="form-field">
+              <label for="formPriceQuad" class="form-label" data-i18n="company.form_field_price_quad">سعر الفرد بالغرفة الرباعية (Quad)</label>
+              <input type="number" id="formPriceQuad" class="form-control" min="1000" step="500" value="45000">
+            </div>
+
+            <div class="form-field">
+              <label for="formPriceChild" class="form-label" data-i18n="company.form_field_price_child">سعر الطفل (مع سرير)</label>
+              <input type="number" id="formPriceChild" class="form-control" min="0" step="500" value="25000">
+            </div>
+
+            <div class="form-field">
+              <label for="formPriceInfant" class="form-label" data-i18n="company.form_field_price_infant">سعر الرضيع (بدون سرير)</label>
+              <input type="number" id="formPriceInfant" class="form-control" min="0" step="500" value="10000">
+            </div>
+
+            <div class="form-field">
+              <label for="formDeposit" class="form-label" data-i18n="company.form_field_deposit">مقدم الحجز المطلوب (ج.م)</label>
+              <input type="number" id="formDeposit" class="form-control" min="0" step="500" value="15000">
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 6: CAPACITY & AVAILABILITY -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">6</span>
+            <span data-i18n="company.form_sec6_title">6. السعة وإتاحة المقاعد</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec6_desc">السعة الإجمالية للرحلة، والحد الأدنى للمجموعات، وحالة الحجز الفورية</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field">
+              <label for="formCapacity" class="form-label">
+                <span data-i18n="company.form_field_capacity">إجمالي السعة (عدد المقاعد)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <input type="number" id="formCapacity" class="form-control" required min="1" max="500" value="45">
+              <span class="field-error" id="errCapacity"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="formMinGroup" class="form-label" data-i18n="company.form_field_min_group">الحد الأدنى لحجم المجموعة</label>
+              <input type="number" id="formMinGroup" class="form-control" min="1" max="50" value="1">
+            </div>
+
+            <div class="form-field">
+              <label for="formAvailability" class="form-label" data-i18n="company.form_field_availability">حالة إتاحة المقاعد</label>
+              <select id="formAvailability" class="form-select">
+                <option value="available" data-i18n="company.filter_avail_available">متاح للحجز</option>
+                <option value="limited" data-i18n="company.filter_avail_limited">مقاعد محدودة</option>
+                <option value="full" data-i18n="company.filter_avail_full">مكتمل العدد</option>
+                <option value="unavailable" data-i18n="company.filter_avail_unavailable">غير متاح</option>
+              </select>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- SECTION 7: INCLUSIONS, EXCLUSIONS & STAFF NOTES -->
+        <fieldset class="form-section-group">
+          <legend class="form-section-legend">
+            <span class="sec-step-pill">7</span>
+            <span data-i18n="company.form_sec7_title">7. الخدمات والملاحظات الإدارية</span>
+          </legend>
+          <p class="form-section-desc" data-i18n="company.form_sec7_desc">المميزات والخدمات المشمولة والمستثناة، وملاحظات العمل الداخلية للشركة</p>
+
+          <div class="form-fields-grid">
+            
+            <div class="form-field full-width">
+              <label for="formIncluded" class="form-label" data-i18n="company.form_field_included">الخدمات المشمولة (سطر لكل خدمة)</label>
+              <textarea id="formIncluded" class="form-control form-textarea" rows="4">تأشيرة العمرة / الحج الإلكترونية والتأمين الطبي الشامل
+تذاكر الطيران ذهاب وعودة (مصر للطيران)
+الإقامة الفندقية المصنفة بمكة المكرمة والمدينة المنورة
+الانتقالات الداخلية بحافلات سياحية حديثة ومكيفة
+مشرف ديني وإداري مرافق طوال فترة الرحلة
+مزارات مكة المكرمة والمدينة المنورة</textarea>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formExcluded" class="form-label" data-i18n="company.form_field_excluded">الخدمات غير المشمولة (سطر لكل خدمة)</label>
+              <textarea id="formExcluded" class="form-control form-textarea" rows="3">المصروفات والطلبات الشخصية
+الجولات السياحية والتاريخية الفردية غير المذكورة</textarea>
+            </div>
+
+            <div class="form-field full-width">
+              <label for="formInternalNotes" class="form-label" data-i18n="company.form_field_internal_notes">ملاحظات إدارية خاصة بالشركة (سرية — لا تظهر للعملاء)</label>
+              <textarea id="formInternalNotes" class="form-control form-textarea" rows="3" placeholder="ملاحظات تشغيلية داخلية خاصة بطاقم الشركة السياحية..." data-i18n-attr="placeholder:company.placeholder_internal_notes"></textarea>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- Modal Footer Actions -->
+        <div class="modal-dialog-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelProgramForm" data-i18n="company.btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveProgram">
+            <svg class="btn-spinner" viewBox="0 0 24 24" width="16" height="16" style="display: none;" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+            </svg>
+            <span class="btn-text" data-i18n="company.btn_save_program">حفظ ونشر البرنامج</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ==================== 5. QUICK "MANAGE PRICES & DATES" MODAL ==================== -->
+  <div id="quickPriceModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="quickPriceModalBackdrop"></div>
+    <div class="company-modal-dialog">
+      
+      <div class="modal-dialog-header">
+        <div class="modal-title-wrap">
+          <h2 class="modal-dialog-title" data-i18n="company.modal_quick_title">إدارة سريعة للأسعار والمواعيد</h2>
+          <span class="modal-dialog-subtitle" id="quickPriceProgramName">عمرة متميزة 5 نجوم</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="quickPriceCloseBtn" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="quickPriceForm" class="modal-dialog-body" novalidate>
+        <input type="hidden" id="quickProgramId" value="">
+
+        <div class="form-fields-grid">
+          
+          <div class="form-field">
+            <label for="quickDepartureDate" class="form-label">
+                <span data-i18n="company.form_field_departure_date">تاريخ المغادرة / السفر</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+            <input type="date" id="quickDepartureDate" class="form-control" required>
+          </div>
+
+          <div class="form-field">
+            <label for="quickReturnDate" class="form-label">
+                <span data-i18n="company.form_field_return_date">تاريخ العودة</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+            <input type="date" id="quickReturnDate" class="form-control" required>
+          </div>
+
+          <div class="form-field">
+            <label for="quickBasePrice" class="form-label">
+                <span data-i18n="company.form_field_base_price">سعر البرنامج الأساسي للفرد (ج.م)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+            <input type="number" id="quickBasePrice" class="form-control" required min="1000" step="500">
+          </div>
+
+          <div class="form-field">
+            <label for="quickCapacity" class="form-label">
+                <span data-i18n="company.form_field_capacity">إجمالي السعة (عدد المقاعد)</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+            <input type="number" id="quickCapacity" class="form-control" required min="1" max="500">
+          </div>
+
+          <div class="form-field">
+            <label for="quickPriceDouble" class="form-label" data-i18n="company.form_field_price_double">سعر الفرد بالغرفة الثنائية</label>
+            <input type="number" id="quickPriceDouble" class="form-control" min="1000" step="500">
+          </div>
+
+          <div class="form-field">
+            <label for="quickPriceTriple" class="form-label" data-i18n="company.form_field_price_triple">سعر الفرد بالغرفة الثلاثية</label>
+            <input type="number" id="quickPriceTriple" class="form-control" min="1000" step="500">
+          </div>
+
+          <div class="form-field">
+            <label for="quickPriceQuad" class="form-label" data-i18n="company.form_field_price_quad">سعر الفرد بالغرفة الرباعية</label>
+            <input type="number" id="quickPriceQuad" class="form-control" min="1000" step="500">
+          </div>
+
+          <div class="form-field">
+            <label for="quickAvailability" class="form-label" data-i18n="company.form_field_availability">حالة إتاحة المقاعد</label>
+            <select id="quickAvailability" class="form-select">
+              <option value="available" data-i18n="company.filter_avail_available">متاح للحجز</option>
+              <option value="limited" data-i18n="company.filter_avail_limited">مقاعد محدودة</option>
+              <option value="full" data-i18n="company.filter_avail_full">مكتمل العدد</option>
+              <option value="unavailable" data-i18n="company.filter_avail_unavailable">غير متاح</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="modal-dialog-footer">
+          <button type="button" class="btn btn-secondary" id="quickPriceCancelBtn" data-i18n="company.btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveQuickPrice">
+            <span data-i18n="company.btn_update_program">حفظ التعديلات</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ==================== 6. PROGRAM DETAILS VIEW MODAL (WITH IMAGE PREVIEW) ==================== -->
+  <div id="programDetailsModal" class="company-modal details-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="programDetailsModalBackdrop"></div>
+    <div class="company-modal-dialog modal-dialog-large">
+      
+      <div class="modal-dialog-header">
+        <div class="modal-title-wrap">
+          <h2 class="modal-dialog-title" data-i18n="company.details_modal_title">تفاصيل البرنامج الكاملة</h2>
+          <span class="modal-dialog-subtitle" id="detailsProgramCode">UMR-2026-PR02</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="programDetailsCloseBtn" aria-label="إغلاق النافذة">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-dialog-body program-details-body" id="programDetailsContent">
+        <!-- Rendered program details with hero image banner and full sections -->
+      </div>
+
+      <div class="modal-dialog-footer">
+        <button type="button" class="btn btn-secondary" id="btnEditFromDetails" data-i18n="company.btn_edit_program">تعديل البرنامج</button>
+        <button type="button" class="btn btn-primary" id="btnCloseDetailsModal" data-i18n="company.future_btn">فهمت ذلك</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== 7. SAFE ARCHIVE / DELETE CONFIRMATION MODAL (NO RED) ==================== -->
+  <div id="archiveDeleteModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="archiveDeleteBackdrop"></div>
+    <div class="company-modal-dialog">
+      
+      <div class="modal-icon-wrap subtle-navy">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <polyline points="21 8 21 21 3 21 3 8"></polyline>
+          <rect x="1" y="3" width="22" height="5"></rect>
+          <line x1="10" y1="12" x2="14" y2="12"></line>
+        </svg>
+      </div>
+
+      <h3 class="modal-dialog-title" id="archiveDeleteTitle" data-i18n="company.modal_delete_title">تأكيد إجراء الحذف أو الأرشفة</h3>
+      <p class="modal-dialog-message" id="archiveDeleteMessage">سيتم فحص الارتباط بالحجوزات القائمة لتحديد ما إذا كان البرنامج سيؤرشف بأمان للحفاظ على السجلات المالية أو سيتم حذفه.</p>
+      
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-secondary" id="archiveDeleteCancelBtn" data-i18n="company.btn_cancel">إلغاء</button>
+        <!-- STRICT ENFORCEMENT: Delete button is NOT red, uses secondary token -->
+        <button type="button" class="btn btn-secondary btn-safe-archive" id="btnConfirmArchiveDelete">
+          <span id="archiveDeleteBtnText" data-i18n="company.btn_confirm_archive">تأكيد أرشفة البرنامج بأمان</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== 8. FUTURE SCOPE ROADMAP MODAL ==================== -->
+  <div id="companyFutureModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="companyModalBackdrop"></div>
+    <div class="company-modal-dialog">
+      <div class="modal-icon-wrap">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="modal-dialog-title" id="futureModalTitle" data-i18n="company.future_title">قسم قيد التطوير</h3>
+      <p class="modal-dialog-message" id="futureModalMessage" data-i18n="company.future_msg">هذا القسم ضمن خطة التوسعة القادمة لبوابة الشركات الشريكة لمنصة ميقات.</p>
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-primary" id="futureModalCloseBtn" data-i18n="company.future_btn">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="company-toast-container" id="companyToastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ==================== APPROVED CANONICAL FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-title">مـيـقـات</span>
+        <span class="brand-tagline">MIQAT PLATFORM — PARTNER PORTAL</span>
+      </div>
+      <p class="footer-copy" data-i18n="company.footer_copy">© 2026 جميع الحقوق محفوظة لمنصة ميقات. بوابة الشركات السياحية المعتمدة والمرخصة.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./company-mock-data.js"></script>
+  <script src="./company-portal.js"></script>
+</body>
+</html>
+

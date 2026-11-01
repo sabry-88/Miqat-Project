@@ -66,9 +66,10 @@
   }
 
   function getTranslation(keyPath, dict) {
-    if (!keyPath || !dict) return keyPath;
+    const targetDict = dict || currentDict;
+    if (!keyPath || !targetDict) return keyPath;
     const parts = keyPath.split('.');
-    let val = dict;
+    let val = targetDict;
     for (const part of parts) {
       if (val && typeof val === 'object' && part in val) {
         val = val[part];
@@ -80,10 +81,12 @@
   }
 
   async function applyTranslations(lang) {
-    const dict = await loadTranslations(lang);
+    currentLang = lang || html.getAttribute('lang') || 'ar';
+    localStorage.setItem(STORAGE_LANG, currentLang);
+    const dict = await loadTranslations(currentLang);
     currentDict = dict;
-    html.setAttribute('lang', lang);
-    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    html.setAttribute('lang', currentLang);
+    html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 
     const titleKey = document.body.dataset.pageTitleKey;
     if (titleKey) {
@@ -1216,7 +1219,7 @@
       const sec = el.getAttribute('data-company-section');
       const href = el.getAttribute('href');
       // If element is a real page link, let it navigate normally
-      if (sec === 'dashboard' || sec === 'bookings' || sec === 'financial' || sec === 'booking-details') return;
+      if (sec === 'dashboard' || sec === 'bookings' || sec === 'financial' || sec === 'booking-details' || sec === 'programs') return;
       if (href && !href.startsWith('#')) return;
 
       el.addEventListener('click', (e) => {
@@ -1481,6 +1484,8 @@
       renderBookingDetailsPage();
     } else if (pageId === 'company-financial-overview') {
       renderFinancialOverviewPage();
+    } else if (pageId === 'company-programs') {
+      renderProgramsPage();
     }
   }
 
@@ -3929,6 +3934,1450 @@
       });
     }
   }
+  // =========================================================================
+  // PROGRAMS & TRIPS MANAGEMENT ENGINE (PAGE 5)
+  // =========================================================================
+
+  let programsFilterState = {
+    search: '',
+    category: 'all',
+    type: 'all',
+    status: 'all',
+    availability: 'all',
+    dateFrom: '',
+    dateTo: '',
+    minPrice: '',
+    maxPrice: '',
+    duration: 'all'
+  };
+
+  let cachedProgramsList = [];
+  let cachedProgramsSummary = null;
+  let isProgramFormDirty = false;
+  let programToArchiveOrDelete = null;
+
+  const PROGRAM_STATUS_MAP = {
+    published: { ar: 'معروض ونشط', en: 'Published & Active', class: 'prog-status-published' },
+    draft: { ar: 'مسودة قيد الإعداد', en: 'Draft', class: 'prog-status-draft' },
+    archived: { ar: 'مؤرشف', en: 'Archived', class: 'prog-status-archived' }
+  };
+
+  const PROGRAM_AVAIL_MAP = {
+    available: { ar: 'متاح للحجز', en: 'Available', class: 'prog-avail-available' },
+    limited: { ar: 'مقاعد محدودة', en: 'Limited Availability', class: 'prog-avail-limited' },
+    full: { ar: 'مكتمل العدد', en: 'Fully Booked', class: 'prog-avail-full' },
+    unavailable: { ar: 'غير متاح', en: 'Unavailable', class: 'prog-avail-unavailable' }
+  };
+
+  const PROGRAM_TYPE_MAP = {
+    economy: { ar: 'اقتصادي', en: 'Economy' },
+    premium: { ar: 'متميز 5 نجوم', en: 'Premium 5-Star' },
+    vip: { ar: 'فاخر VIP', en: 'VIP Luxury' },
+    ramadan: { ar: 'موسم رمضان', en: 'Ramadan Season' },
+    tourist: { ar: 'سياحي', en: 'Tourist' },
+    family: { ar: 'عائلي', en: 'Family' }
+  };
+
+  async function fetchCompanyPrograms(filters = {}) {
+    try {
+      const q = new URLSearchParams();
+      if (filters.search) q.append('search', filters.search);
+      if (filters.category && filters.category !== 'all') q.append('category', filters.category);
+      if (filters.type && filters.type !== 'all') q.append('type', filters.type);
+      if (filters.status && filters.status !== 'all') q.append('status', filters.status);
+      if (filters.availability && filters.availability !== 'all') q.append('availability', filters.availability);
+      if (filters.dateFrom) q.append('dateFrom', filters.dateFrom);
+      if (filters.dateTo) q.append('dateTo', filters.dateTo);
+      if (filters.minPrice) q.append('minPrice', filters.minPrice);
+      if (filters.maxPrice) q.append('maxPrice', filters.maxPrice);
+      if (filters.duration && filters.duration !== 'all') q.append('duration', filters.duration);
+
+      const res = await apiFetch(`/api/company/programs?${q.toString()}`);
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success) {
+          cachedProgramsList = json.data || [];
+          cachedProgramsSummary = json.summary || null;
+          return { programs: cachedProgramsList, summary: cachedProgramsSummary };
+        }
+      }
+    } catch (e) {
+      console.warn('API /api/company/programs fetch failed, using mock data:', e);
+    }
+
+    // Client mock data fallback
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    if (mockData) {
+      cachedProgramsList = mockData.getCompanyPrograms(filters);
+      cachedProgramsSummary = mockData.getCompanyProgramsSummary();
+      return { programs: cachedProgramsList, summary: cachedProgramsSummary };
+    }
+
+    return { programs: [], summary: null };
+  }
+
+  function setupProgramsPage() {
+    // 1. Search input with debounce & clear button
+    const searchInput = document.getElementById('progSearchInput');
+    const clearSearchBtn = document.getElementById('btnClearProgSearch');
+    let searchDebounceTimer = null;
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (clearSearchBtn) clearSearchBtn.style.display = val ? 'flex' : 'none';
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+          programsFilterState.search = val;
+          renderProgramsPage();
+        }, 250);
+      });
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        clearTimeout(searchDebounceTimer);
+        if (searchInput) searchInput.value = '';
+        clearSearchBtn.style.display = 'none';
+        programsFilterState.search = '';
+        renderProgramsPage();
+      });
+    }
+
+    // 2. Filter dropdowns & inputs
+    const catSelect = document.getElementById('filterCategorySelect');
+    const typeSelect = document.getElementById('filterTypeSelect');
+    const statusSelect = document.getElementById('filterStatusSelect');
+    const availSelect = document.getElementById('filterAvailabilitySelect');
+    const dateFromInput = document.getElementById('filterDateFrom');
+    const dateToInput = document.getElementById('filterDateTo');
+    const priceMinInput = document.getElementById('filterPriceMin');
+    const priceMaxInput = document.getElementById('filterPriceMax');
+
+    // 3. Filter Action Buttons
+    const btnApply = document.getElementById('btnApplyFilters');
+    const btnReset = document.getElementById('btnResetFilters');
+    const btnResetEmpty = document.getElementById('btnResetEmptyState');
+
+    function applyFilterInputs() {
+      programsFilterState.category = catSelect ? catSelect.value : 'all';
+      programsFilterState.type = typeSelect ? typeSelect.value : 'all';
+      programsFilterState.status = statusSelect ? statusSelect.value : 'all';
+      programsFilterState.availability = availSelect ? availSelect.value : 'all';
+      programsFilterState.dateFrom = dateFromInput ? dateFromInput.value : '';
+      programsFilterState.dateTo = dateToInput ? dateToInput.value : '';
+      programsFilterState.minPrice = priceMinInput ? priceMinInput.value : '';
+      programsFilterState.maxPrice = priceMaxInput ? priceMaxInput.value : '';
+      renderProgramsPage();
+    }
+
+    function resetAllFilters() {
+      programsFilterState = {
+        search: '',
+        category: 'all',
+        type: 'all',
+        status: 'all',
+        availability: 'all',
+        dateFrom: '',
+        dateTo: '',
+        minPrice: '',
+        maxPrice: '',
+        duration: 'all'
+      };
+
+      if (searchInput) searchInput.value = '';
+      if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+      if (catSelect) catSelect.value = 'all';
+      if (typeSelect) typeSelect.value = 'all';
+      if (statusSelect) statusSelect.value = 'all';
+      if (availSelect) availSelect.value = 'all';
+      if (dateFromInput) dateFromInput.value = '';
+      if (dateToInput) dateToInput.value = '';
+      if (priceMinInput) priceMinInput.value = '';
+      if (priceMaxInput) priceMaxInput.value = '';
+
+      renderProgramsPage();
+    }
+
+    if (btnApply) btnApply.addEventListener('click', applyFilterInputs);
+    if (btnReset) btnReset.addEventListener('click', resetAllFilters);
+    if (btnResetEmpty) btnResetEmpty.addEventListener('click', resetAllFilters);
+
+    // Auto-apply on dropdown changes for maximum usability
+    [catSelect, typeSelect, statusSelect, availSelect].forEach(el => {
+      if (el) el.addEventListener('change', applyFilterInputs);
+    });
+
+    // 4. Add New Program Modal Triggers
+    const btnAddProgram = document.getElementById('btnAddProgram');
+    if (btnAddProgram) {
+      btnAddProgram.addEventListener('click', () => {
+        openProgramFormModal();
+      });
+    }
+
+    // Modal close & backdrop setup
+    setupProgramModalsInteractions();
+  }
+
+  function setupProgramModalsInteractions() {
+    // A. Add/Edit Form Modal
+    const formModal = document.getElementById('programFormModal');
+    const formCloseBtn = document.getElementById('programModalCloseBtn');
+    const formCancelBtn = document.getElementById('btnCancelProgramForm');
+    const formBackdrop = document.getElementById('programModalBackdrop');
+    const formEl = document.getElementById('programForm');
+
+    function closeFormModalSafe() {
+      if (isProgramFormDirty) {
+        const confirmMsg = getTranslation('company.prompt_unsaved_changes') ||
+          (currentLang === 'ar' ? 'لديك تعديلات غير محفوظة، هل أنت متأكد من رغبتك في إغلاق النموذج وتجاهل التغييرات؟' : 'You have unsaved changes. Are you sure you want to discard them and close the form?');
+        if (!confirm(confirmMsg)) return;
+      }
+      if (formModal) {
+        formModal.style.display = 'none';
+        formModal.setAttribute('aria-hidden', 'true');
+      }
+      isProgramFormDirty = false;
+    }
+
+    if (formCloseBtn) formCloseBtn.addEventListener('click', closeFormModalSafe);
+    if (formCancelBtn) formCancelBtn.addEventListener('click', closeFormModalSafe);
+    if (formBackdrop) formBackdrop.addEventListener('click', closeFormModalSafe);
+
+    // Form Dirty Tracking
+    if (formEl) {
+      formEl.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('change', () => { isProgramFormDirty = true; });
+        el.addEventListener('input', () => { isProgramFormDirty = true; });
+      });
+
+      formEl.addEventListener('submit', handleProgramFormSubmit);
+    }
+
+    // Image Upload Dropzone Setup
+    const fileInput = document.getElementById('formImageFile');
+    const triggerUploadBtn = document.getElementById('btnTriggerImageUpload');
+    const replaceImageBtn = document.getElementById('btnReplaceImage');
+    const removeImageBtn = document.getElementById('btnRemoveImage');
+    const dropzone = document.getElementById('uploadDropzone');
+
+    if (triggerUploadBtn && fileInput) {
+      triggerUploadBtn.addEventListener('click', () => fileInput.click());
+    }
+    if (replaceImageBtn && fileInput) {
+      replaceImageBtn.addEventListener('click', () => fileInput.click());
+    }
+    if (removeImageBtn) {
+      removeImageBtn.addEventListener('click', () => {
+        const previewContainer = document.getElementById('uploadPreviewContainer');
+        const placeholder = document.getElementById('uploadPlaceholder');
+        const imgInput = document.getElementById('formImageUrl');
+        if (previewContainer) previewContainer.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'flex';
+        if (imgInput) imgInput.value = '';
+        if (fileInput) fileInput.value = '';
+        isProgramFormDirty = true;
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) handleImageFileSelection(file);
+      });
+    }
+
+    if (dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.add('is-dragover');
+        });
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.classList.remove('is-dragover');
+        });
+      });
+      dropzone.addEventListener('drop', (e) => {
+        const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) handleImageFileSelection(file);
+      });
+    }
+
+    // B. Quick Prices & Dates Modal
+    const quickModal = document.getElementById('quickPriceModal');
+    const quickCloseBtn = document.getElementById('quickPriceCloseBtn');
+    const quickCancelBtn = document.getElementById('quickPriceCancelBtn');
+    const quickBackdrop = document.getElementById('quickPriceModalBackdrop');
+    const quickForm = document.getElementById('quickPriceForm');
+
+    function closeQuickModal() {
+      if (quickModal) {
+        quickModal.style.display = 'none';
+        quickModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (quickCloseBtn) quickCloseBtn.addEventListener('click', closeQuickModal);
+    if (quickCancelBtn) quickCancelBtn.addEventListener('click', closeQuickModal);
+    if (quickBackdrop) quickBackdrop.addEventListener('click', closeQuickModal);
+    if (quickForm) quickForm.addEventListener('submit', handleQuickPriceFormSubmit);
+
+    // C. Program Details Modal
+    const detailsModal = document.getElementById('programDetailsModal');
+    const detailsCloseBtn = document.getElementById('programDetailsCloseBtn');
+    const detailsDoneBtn = document.getElementById('btnCloseDetailsModal');
+    const detailsBackdrop = document.getElementById('programDetailsModalBackdrop');
+    const detailsEditBtn = document.getElementById('btnEditFromDetails');
+
+    function closeDetailsModal() {
+      if (detailsModal) {
+        detailsModal.style.display = 'none';
+        detailsModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (detailsCloseBtn) detailsCloseBtn.addEventListener('click', closeDetailsModal);
+    if (detailsDoneBtn) detailsDoneBtn.addEventListener('click', closeDetailsModal);
+    if (detailsBackdrop) detailsBackdrop.addEventListener('click', closeDetailsModal);
+    if (detailsEditBtn) {
+      detailsEditBtn.addEventListener('click', () => {
+        const progId = detailsEditBtn.getAttribute('data-program-id');
+        closeDetailsModal();
+        if (progId) openProgramFormModal(progId);
+      });
+    }
+
+    // D. Safe Archive / Delete Modal
+    const archiveModal = document.getElementById('archiveDeleteModal');
+    const archiveCloseBtn = document.getElementById('archiveDeleteCancelBtn');
+    const archiveBackdrop = document.getElementById('archiveDeleteBackdrop');
+    const archiveConfirmBtn = document.getElementById('btnConfirmArchiveDelete');
+
+    function closeArchiveModal() {
+      if (archiveModal) {
+        archiveModal.style.display = 'none';
+        archiveModal.setAttribute('aria-hidden', 'true');
+      }
+      programToArchiveOrDelete = null;
+    }
+
+    if (archiveCloseBtn) archiveCloseBtn.addEventListener('click', closeArchiveModal);
+    if (archiveBackdrop) archiveBackdrop.addEventListener('click', closeArchiveModal);
+    if (archiveConfirmBtn) archiveConfirmBtn.addEventListener('click', handleConfirmArchiveDelete);
+
+    // Global ESC key closes whichever modal is open
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (formModal && formModal.style.display === 'flex') closeFormModalSafe();
+        if (quickModal && quickModal.style.display === 'flex') closeQuickModal();
+        if (detailsModal && detailsModal.style.display === 'flex') closeDetailsModal();
+        if (archiveModal && archiveModal.style.display === 'flex') closeArchiveModal();
+      }
+    });
+  }
+
+  async function handleImageFileSelection(file) {
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const errEl = document.getElementById('errImage');
+    if (errEl) errEl.textContent = '';
+
+    if (!validTypes.includes(file.type)) {
+      const msg = currentLang === 'ar'
+        ? 'نوع الملف غير مدعوم. يرجى اختيار صورة بصيغة JPG أو PNG أو WebP.'
+        : 'Unsupported file format. Please choose a JPG, PNG, or WebP image.';
+      if (errEl) errEl.textContent = msg;
+      showCompanyToast(msg, 'error');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      const msg = currentLang === 'ar'
+        ? 'حجم الصورة يتجاوز الحد المسموح به (5 ميجابايت).'
+        : 'Image file size exceeds the 5MB maximum limit.';
+      if (errEl) errEl.textContent = msg;
+      showCompanyToast(msg, 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const base64Data = e.target.result;
+      const previewImg = document.getElementById('uploadPreviewImg');
+      const filenameEl = document.getElementById('uploadPreviewFilename');
+      const previewContainer = document.getElementById('uploadPreviewContainer');
+      const placeholder = document.getElementById('uploadPlaceholder');
+      const imgInput = document.getElementById('formImageUrl');
+
+      if (previewImg) previewImg.src = base64Data;
+      if (filenameEl) filenameEl.textContent = file.name;
+      if (previewContainer) previewContainer.style.display = 'flex';
+      if (placeholder) placeholder.style.display = 'none';
+
+      // Attempt server persistence upload
+      try {
+        const uploadRes = await apiFetch('/api/company/upload', {
+          method: 'POST',
+          body: JSON.stringify({ image: base64Data, filename: file.name })
+        });
+        if (uploadRes.ok) {
+          const json = await uploadRes.json();
+          if (json.success && json.url) {
+            if (imgInput) imgInput.value = json.url;
+            isProgramFormDirty = true;
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Server image upload endpoint unavailable, storing local data URL:', err);
+      }
+
+      // Fallback: save data URL directly
+      if (imgInput) imgInput.value = base64Data;
+      isProgramFormDirty = true;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function openProgramFormModal(progId = null) {
+    const modal = document.getElementById('programFormModal');
+    const titleEl = document.getElementById('programModalTitle');
+    const formIdInput = document.getElementById('formProgramId');
+    const form = document.getElementById('programForm');
+    const previewContainer = document.getElementById('uploadPreviewContainer');
+    const placeholder = document.getElementById('uploadPlaceholder');
+    const previewImg = document.getElementById('uploadPreviewImg');
+    const filenameEl = document.getElementById('uploadPreviewFilename');
+    const imgInput = document.getElementById('formImageUrl');
+    const btnSaveText = document.querySelector('#btnSaveProgram .btn-text');
+
+    if (!modal) return;
+    isProgramFormDirty = false;
+
+    // Clear previous validation errors
+    document.querySelectorAll('#programForm .field-error').forEach(el => { el.textContent = ''; });
+    document.querySelectorAll('#programForm .has-error').forEach(el => { el.classList.remove('has-error'); });
+
+    if (progId) {
+      // EDIT MODE
+      const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+      const prog = cachedProgramsList.find(p => p.id === progId) || (mockData && mockData.getCompanyProgramById(progId));
+      if (!prog) return;
+
+      if (titleEl) {
+        titleEl.textContent = getTranslation('company.modal_edit_title') || (currentLang === 'ar' ? 'تعديل بيانات البرنامج' : 'Edit Program / Trip');
+      }
+      if (btnSaveText) {
+        btnSaveText.textContent = getTranslation('company.btn_update_program') || (currentLang === 'ar' ? 'حفظ التعديلات' : 'Save Changes');
+      }
+      if (formIdInput) formIdInput.value = prog.id;
+
+      // Populate Section 1
+      document.getElementById('formNameAr').value = prog.name_ar || '';
+      document.getElementById('formNameEn').value = prog.name_en || '';
+      document.getElementById('formCode').value = prog.code || '';
+      document.getElementById('formCategory').value = prog.category || 'umrah';
+      document.getElementById('formType').value = prog.type || 'economy';
+      document.getElementById('formStatus').value = prog.status || 'published';
+      document.getElementById('formShortDescAr').value = prog.shortDescription_ar || '';
+      document.getElementById('formShortDescEn').value = prog.shortDescription_en || '';
+
+      // Image preview
+      if (prog.imageUrl) {
+        if (imgInput) imgInput.value = prog.imageUrl;
+        if (previewImg) previewImg.src = prog.imageUrl;
+        if (filenameEl) filenameEl.textContent = prog.name_en || 'program-image.jpg';
+        if (previewContainer) previewContainer.style.display = 'flex';
+        if (placeholder) placeholder.style.display = 'none';
+      } else {
+        if (imgInput) imgInput.value = './assets/kaaba-kiswah.jpg';
+        if (previewContainer) previewContainer.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'flex';
+      }
+
+      // Populate Section 2
+      document.getElementById('formDepartureDate').value = prog.departureDate || '';
+      document.getElementById('formReturnDate').value = prog.returnDate || '';
+      document.getElementById('formDepartureTime').value = prog.departureTime || '09:00';
+      document.getElementById('formReturnTime').value = prog.returnTime || '18:00';
+      document.getElementById('formSeason').value = prog.season || '1447H / 2026';
+      document.getElementById('formBookingDeadline').value = prog.bookingDeadline || '';
+
+      // Populate Section 3
+      document.getElementById('formMakkahHotelAr').value = prog.makkahHotel_ar || '';
+      document.getElementById('formMakkahHotelEn').value = prog.makkahHotel_en || '';
+      document.getElementById('formMakkahNights').value = prog.makkahNights || 7;
+      document.getElementById('formMakkahDist').value = prog.makkahDistance || 100;
+      document.getElementById('formMadinahHotelAr').value = prog.madinahHotel_ar || '';
+      document.getElementById('formMadinahHotelEn').value = prog.madinahHotel_en || '';
+      document.getElementById('formMadinahNights').value = prog.madinahNights || 6;
+      document.getElementById('formMadinahDist').value = prog.madinahDistance || 80;
+
+      // Populate Section 4
+      document.getElementById('formAirlineAr').value = prog.airline_ar || '';
+      document.getElementById('formAirlineEn').value = prog.airline_en || '';
+      document.getElementById('formFlightType').value = prog.flightType || 'direct';
+      document.getElementById('formDepAirport').value = prog.departureAirport || 'CAI — مطار القاهرة الدولي';
+      document.getElementById('formArrAirport').value = prog.arrivalAirport || 'JED — مطار الملك عبد العزيز بجدة';
+      document.getElementById('formTransportAr').value = prog.transportType_ar || '';
+
+      // Populate Section 5
+      document.getElementById('formBasePrice').value = prog.unitPrice || prog.basePrice || 45000;
+      document.getElementById('formPriceDouble').value = prog.pricing?.doubleRoom || Math.round((prog.unitPrice || 45000) * 1.1);
+      document.getElementById('formPriceTriple').value = prog.pricing?.tripleRoom || Math.round((prog.unitPrice || 45000) * 1.05);
+      document.getElementById('formPriceQuad').value = prog.pricing?.quadRoom || prog.unitPrice || 45000;
+      document.getElementById('formPriceChild').value = prog.pricing?.childPrice || Math.round((prog.unitPrice || 45000) * 0.6);
+      document.getElementById('formPriceInfant').value = prog.pricing?.infantPrice || Math.round((prog.unitPrice || 45000) * 0.25);
+      document.getElementById('formDeposit').value = prog.pricing?.deposit || Math.round((prog.unitPrice || 45000) * 0.3);
+
+      // Populate Section 6
+      document.getElementById('formCapacity').value = prog.capacity || 45;
+      document.getElementById('formMinGroup').value = prog.minGroupSize || 1;
+      document.getElementById('formAvailability').value = prog.availability || 'available';
+
+      // Populate Section 7
+      document.getElementById('formIncluded').value = Array.isArray(prog.includedServices) ? prog.includedServices.join('\n') : '';
+      document.getElementById('formExcluded').value = Array.isArray(prog.excludedServices) ? prog.excludedServices.join('\n') : '';
+      document.getElementById('formInternalNotes').value = prog.internalNotes || '';
+
+    } else {
+      // ADD MODE
+      if (titleEl) {
+        titleEl.textContent = getTranslation('company.modal_add_title') || (currentLang === 'ar' ? 'إضافة برنامج رحلة جديد' : 'Add New Program / Trip');
+      }
+      if (btnSaveText) {
+        btnSaveText.textContent = getTranslation('company.btn_save_program') || (currentLang === 'ar' ? 'حفظ ونشر البرنامج' : 'Save & Publish Program');
+      }
+      if (formIdInput) formIdInput.value = '';
+      if (form) form.reset();
+
+      // Reset defaults
+      document.getElementById('formSeason').value = '1447H / 2026';
+      document.getElementById('formDepartureTime').value = '09:00';
+      document.getElementById('formReturnTime').value = '18:00';
+      document.getElementById('formMakkahNights').value = '7';
+      document.getElementById('formMakkahDist').value = '150';
+      document.getElementById('formMadinahNights').value = '6';
+      document.getElementById('formMadinahDist').value = '100';
+      document.getElementById('formDepAirport').value = 'CAI — مطار القاهرة الدولي';
+      document.getElementById('formArrAirport').value = 'JED — مطار الملك عبد العزيز بجدة';
+      document.getElementById('formBasePrice').value = '45000';
+      document.getElementById('formPriceDouble').value = '50000';
+      document.getElementById('formPriceTriple').value = '47500';
+      document.getElementById('formPriceQuad').value = '45000';
+      document.getElementById('formPriceChild').value = '25000';
+      document.getElementById('formPriceInfant').value = '10000';
+      document.getElementById('formDeposit').value = '15000';
+      document.getElementById('formCapacity').value = '45';
+      document.getElementById('formMinGroup').value = '1';
+      document.getElementById('formIncluded').value = `تأشيرة العمرة / الحج الإلكترونية والتأمين الطبي الشامل
+تذاكر الطيران ذهاب وعودة (مصر للطيران)
+الإقامة الفندقية المصنفة بمكة المكرمة والمدينة المنورة
+الانتقالات الداخلية بحافلات سياحية حديثة ومكيفة
+مشرف ديني وإداري مرافق طوال فترة الرحلة
+مزارات مكة المكرمة والمدينة المنورة`;
+      document.getElementById('formExcluded').value = `المصروفات والطلبات الشخصية
+الجولات السياحية والتاريخية الفردية غير المذكورة`;
+
+      if (imgInput) imgInput.value = './assets/kaaba-kiswah.jpg';
+      if (previewContainer) previewContainer.style.display = 'none';
+      if (placeholder) placeholder.style.display = 'flex';
+    }
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+    const firstInput = document.getElementById('formNameAr');
+    if (firstInput) firstInput.focus();
+  }
+
+  async function handleProgramFormSubmit(e) {
+    e.preventDefault();
+
+    const nameAr = document.getElementById('formNameAr').value.trim();
+    const nameEn = document.getElementById('formNameEn').value.trim();
+    const depDate = document.getElementById('formDepartureDate').value;
+    const retDate = document.getElementById('formReturnDate').value;
+    const basePrice = Number(document.getElementById('formBasePrice').value);
+    const capacity = Number(document.getElementById('formCapacity').value);
+    const progId = document.getElementById('formProgramId').value;
+
+    let hasError = false;
+
+    // Reset error messages
+    document.querySelectorAll('#programForm .field-error').forEach(el => { el.textContent = ''; });
+
+    if (!nameAr && !nameEn) {
+      document.getElementById('errNameAr').textContent = currentLang === 'ar' ? 'يرجى إدخال اسم البرنامج بالعربية أو الإنجليزية' : 'Please enter program title in Arabic or English';
+      hasError = true;
+    }
+
+    if (!depDate) {
+      document.getElementById('errDepartureDate').textContent = currentLang === 'ar' ? 'يرجى تحديد تاريخ السفر' : 'Please select departure date';
+      hasError = true;
+    }
+
+    if (!retDate) {
+      document.getElementById('errReturnDate').textContent = currentLang === 'ar' ? 'يرجى تحديد تاريخ العودة' : 'Please select return date';
+      hasError = true;
+    } else if (depDate && retDate < depDate) {
+      document.getElementById('errReturnDate').textContent = currentLang === 'ar' ? 'تاريخ العودة لا يمكن أن يكون قبل تاريخ المغادرة' : 'Return date cannot be earlier than departure date';
+      hasError = true;
+    }
+
+    if (!basePrice || basePrice <= 0) {
+      document.getElementById('errBasePrice').textContent = currentLang === 'ar' ? 'يرجى إدخال سعر صحيح للبرنامج' : 'Please enter a valid base price';
+      hasError = true;
+    }
+
+    if (!capacity || capacity <= 0) {
+      document.getElementById('errCapacity').textContent = currentLang === 'ar' ? 'يرجى تحديد سعة مقاعد صحيحة' : 'Please enter a valid seat capacity';
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    const payload = {
+      name_ar: nameAr || nameEn,
+      name_en: nameEn || nameAr,
+      code: document.getElementById('formCode').value.trim(),
+      category: document.getElementById('formCategory').value,
+      type: document.getElementById('formType').value,
+      status: document.getElementById('formStatus').value,
+      shortDescription_ar: document.getElementById('formShortDescAr').value.trim(),
+      shortDescription_en: document.getElementById('formShortDescEn').value.trim(),
+      imageUrl: document.getElementById('formImageUrl').value || './assets/kaaba-kiswah.jpg',
+      departureDate: depDate,
+      returnDate: retDate,
+      departureTime: document.getElementById('formDepartureTime').value,
+      returnTime: document.getElementById('formReturnTime').value,
+      season: document.getElementById('formSeason').value.trim() || '1447H / 2026',
+      bookingDeadline: document.getElementById('formBookingDeadline').value || depDate,
+      makkahHotel_ar: document.getElementById('formMakkahHotelAr').value.trim(),
+      makkahHotel_en: document.getElementById('formMakkahHotelEn').value.trim(),
+      makkahNights: Number(document.getElementById('formMakkahNights').value) || 7,
+      makkahDistance: Number(document.getElementById('formMakkahDist').value) || 100,
+      madinahHotel_ar: document.getElementById('formMadinahHotelAr').value.trim(),
+      madinahHotel_en: document.getElementById('formMadinahHotelEn').value.trim(),
+      madinahNights: Number(document.getElementById('formMadinahNights').value) || 6,
+      madinahDistance: Number(document.getElementById('formMadinahDist').value) || 80,
+      airline_ar: document.getElementById('formAirlineAr').value.trim(),
+      airline_en: document.getElementById('formAirlineEn').value.trim(),
+      flightType: document.getElementById('formFlightType').value,
+      departureAirport: document.getElementById('formDepAirport').value.trim(),
+      arrivalAirport: document.getElementById('formArrAirport').value.trim(),
+      transportType_ar: document.getElementById('formTransportAr').value.trim(),
+      unitPrice: basePrice,
+      basePrice: basePrice,
+      pricing: {
+        doubleRoom: Number(document.getElementById('formPriceDouble').value) || Math.round(basePrice * 1.1),
+        tripleRoom: Number(document.getElementById('formPriceTriple').value) || Math.round(basePrice * 1.05),
+        quadRoom: Number(document.getElementById('formPriceQuad').value) || basePrice,
+        childPrice: Number(document.getElementById('formPriceChild').value) || Math.round(basePrice * 0.6),
+        infantPrice: Number(document.getElementById('formPriceInfant').value) || Math.round(basePrice * 0.25),
+        deposit: Number(document.getElementById('formDeposit').value) || Math.round(basePrice * 0.3)
+      },
+      capacity: capacity,
+      minGroupSize: Number(document.getElementById('formMinGroup').value) || 1,
+      availability: document.getElementById('formAvailability').value,
+      includedServices: document.getElementById('formIncluded').value.split('\n').map(s => s.trim()).filter(Boolean),
+      excludedServices: document.getElementById('formExcluded').value.split('\n').map(s => s.trim()).filter(Boolean),
+      internalNotes: document.getElementById('formInternalNotes').value.trim()
+    };
+
+    const submitBtn = document.getElementById('btnSaveProgram');
+    const spinner = submitBtn ? submitBtn.querySelector('.btn-spinner') : null;
+    if (submitBtn) submitBtn.disabled = true;
+    if (spinner) spinner.style.display = 'inline-block';
+
+    try {
+      if (progId) {
+        // UPDATE existing
+        let success = false;
+        try {
+          const res = await apiFetch(`/api/company/programs/${progId}`, {
+            method: 'PUT',
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            const json = await res.json();
+            success = json.success;
+          }
+        } catch (e) {
+          console.warn('Backend PUT /api/company/programs failed, updating mock data:', e);
+        }
+
+        const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+        if (!success && mockData) {
+          const result = mockData.updateCompanyProgram(progId, payload);
+          success = result.success;
+        }
+
+        const msg = currentLang === 'ar'
+          ? 'تم حفظ وتحديث بيانات البرنامج بنجاح.'
+          : 'Program details successfully updated and saved.';
+        showCompanyToast(msg, 'success');
+
+      } else {
+        // CREATE new
+        let success = false;
+        try {
+          const res = await apiFetch('/api/company/programs', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            const json = await res.json();
+            success = json.success;
+          }
+        } catch (e) {
+          console.warn('Backend POST /api/company/programs failed, saving to mock data:', e);
+        }
+
+        const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+        if (!success && mockData) {
+          const result = mockData.createCompanyProgram(payload);
+          success = result.success;
+        }
+
+        const msg = currentLang === 'ar'
+          ? 'تم إضافة البرنامج الجديد ونشره بنجاح.'
+          : 'New program successfully created and published.';
+        showCompanyToast(msg, 'success');
+      }
+
+      isProgramFormDirty = false;
+      const modal = document.getElementById('programFormModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      await renderProgramsPage();
+
+    } catch (err) {
+      console.error('Error saving program:', err);
+      showCompanyToast(currentLang === 'ar' ? 'حدث خطأ أثناء حفظ البرنامج. يرجى المحاولة ثانية.' : 'Failed to save program. Please try again.', 'error');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+      if (spinner) spinner.style.display = 'none';
+    }
+  }
+
+  function openQuickPriceModal(progId) {
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    const prog = cachedProgramsList.find(p => p.id === progId) || (mockData && mockData.getCompanyProgramById(progId));
+    if (!prog) return;
+
+    const modal = document.getElementById('quickPriceModal');
+    if (!modal) return;
+
+    const progNameEl = document.getElementById('quickPriceProgramName');
+    if (progNameEl) progNameEl.textContent = (currentLang === 'ar' ? prog.name_ar : prog.name_en) + ` (${prog.code || ''})`;
+
+    document.getElementById('quickProgramId').value = prog.id;
+    document.getElementById('quickDepartureDate').value = prog.departureDate || '';
+    document.getElementById('quickReturnDate').value = prog.returnDate || '';
+    document.getElementById('quickBasePrice').value = prog.unitPrice || prog.basePrice || 45000;
+    document.getElementById('quickCapacity').value = prog.capacity || 45;
+    document.getElementById('quickPriceDouble').value = prog.pricing?.doubleRoom || Math.round((prog.unitPrice || 45000) * 1.1);
+    document.getElementById('quickPriceTriple').value = prog.pricing?.tripleRoom || Math.round((prog.unitPrice || 45000) * 1.05);
+    document.getElementById('quickPriceQuad').value = prog.pricing?.quadRoom || prog.unitPrice || 45000;
+    document.getElementById('quickAvailability').value = prog.availability || 'available';
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  async function handleQuickPriceFormSubmit(e) {
+    e.preventDefault();
+    const progId = document.getElementById('quickProgramId').value;
+    const depDate = document.getElementById('quickDepartureDate').value;
+    const retDate = document.getElementById('quickReturnDate').value;
+    const basePrice = Number(document.getElementById('quickBasePrice').value);
+    const capacity = Number(document.getElementById('quickCapacity').value);
+    const availability = document.getElementById('quickAvailability').value;
+
+    if (!depDate || !retDate) {
+      showCompanyToast(currentLang === 'ar' ? 'يرجى تحديد مواعيد السفر والعودة' : 'Please specify departure and return dates', 'error');
+      return;
+    }
+    if (retDate < depDate) {
+      showCompanyToast(currentLang === 'ar' ? 'تاريخ العودة لا يمكن أن يكون قبل تاريخ المغادرة' : 'Return date cannot be earlier than departure date', 'error');
+      return;
+    }
+
+    const payload = {
+      departureDate: depDate,
+      returnDate: retDate,
+      unitPrice: basePrice,
+      basePrice: basePrice,
+      capacity: capacity,
+      availability: availability,
+      pricing: {
+        doubleRoom: Number(document.getElementById('quickPriceDouble').value) || Math.round(basePrice * 1.1),
+        tripleRoom: Number(document.getElementById('quickPriceTriple').value) || Math.round(basePrice * 1.05),
+        quadRoom: Number(document.getElementById('quickPriceQuad').value) || basePrice
+      }
+    };
+
+    try {
+      let success = false;
+      try {
+        const res = await apiFetch(`/api/company/programs/${progId}`, {
+          method: 'PUT',
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const json = await res.json();
+          success = json.success;
+        }
+      } catch (err) {
+        console.warn('Quick price PUT failed, fallback to mock data:', err);
+      }
+
+      const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+      if (!success && mockData) {
+        const result = mockData.updateCompanyProgram(progId, payload);
+        success = result.success;
+      }
+
+      const modal = document.getElementById('quickPriceModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      showCompanyToast(currentLang === 'ar' ? 'تم تحديث الأسعار والمواعيد بنجاح.' : 'Prices and dates updated successfully.', 'success');
+      await renderProgramsPage();
+
+    } catch (err) {
+      console.error('Error updating quick price:', err);
+      showCompanyToast(currentLang === 'ar' ? 'فشل تحديث البيانات. يرجى المحاولة لاحقاً.' : 'Failed to update program.', 'error');
+    }
+  }
+
+  function openProgramDetailsModal(progId) {
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    const prog = cachedProgramsList.find(p => p.id === progId) || (mockData && mockData.getCompanyProgramById(progId));
+    if (!prog) return;
+
+    const modal = document.getElementById('programDetailsModal');
+    const contentEl = document.getElementById('programDetailsContent');
+    const subtitleEl = document.getElementById('detailsProgramCode');
+    const editBtn = document.getElementById('btnEditFromDetails');
+
+    if (!modal || !contentEl) return;
+    if (subtitleEl) subtitleEl.textContent = `${prog.code || ''} — ${currentLang === 'ar' ? prog.name_ar : prog.name_en}`;
+    if (editBtn) editBtn.setAttribute('data-program-id', prog.id);
+
+    const isAr = currentLang === 'ar';
+    const title = isAr ? prog.name_ar : prog.name_en;
+    const catLabel = isAr ? (prog.category === 'hajj' ? 'برنامج حج' : 'برنامج عمرة') : (prog.category === 'hajj' ? 'Hajj Program' : 'Umrah Program');
+    const typeObj = PROGRAM_TYPE_MAP[prog.type] || { ar: prog.type, en: prog.type };
+    const typeLabel = isAr ? typeObj.ar : typeObj.en;
+    const statusObj = PROGRAM_STATUS_MAP[prog.status] || { ar: prog.status, en: prog.status, class: 'prog-status-published' };
+    const availObj = PROGRAM_AVAIL_MAP[prog.availability] || { ar: prog.availability, en: prog.availability, class: 'prog-avail-available' };
+
+    const reserved = prog.reservedSeats || 0;
+    const cap = prog.capacity || 45;
+    const avail = prog.availableSeats !== undefined ? prog.availableSeats : Math.max(0, cap - reserved);
+    const pct = cap > 0 ? Math.min(100, Math.round((reserved / cap) * 100)) : 0;
+
+    let html = `
+      <!-- Details Hero Banner (SHOWS UPLOADED PROGRAM PHOTO HERE) -->
+      <div class="details-hero-banner">
+        <img src="${prog.imageUrl || './assets/kaaba-kiswah.jpg'}" alt="${title}" class="details-hero-img">
+        <div class="details-hero-overlay">
+          <div class="details-hero-badges">
+            <span class="prog-badge prog-badge-category">${catLabel}</span>
+            <span class="prog-badge prog-badge-type">${typeLabel}</span>
+            <span class="prog-status-pill ${statusObj.class}">${isAr ? statusObj.ar : statusObj.en}</span>
+            <span class="prog-avail-pill ${availObj.class}">${isAr ? availObj.ar : availObj.en}</span>
+          </div>
+          <h2 class="details-hero-title">${title}</h2>
+          <span class="details-hero-code">${prog.code || ''}</span>
+        </div>
+      </div>
+
+      <!-- Overview Cards Grid -->
+      <div class="details-sections-grid">
+        
+        <!-- Section: Schedule & Dates -->
+        <div class="details-card">
+          <h3 class="details-card-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            ${isAr ? 'مواعيد وجدول الرحلة' : 'Trip Schedule & Dates'}
+          </h3>
+          <div class="details-props-list">
+            <div class="prop-item"><span class="prop-key">${isAr ? 'تاريخ السفر / المغادرة:' : 'Departure Date:'}</span><span class="prop-val">${prog.departureDate || '—'} (${prog.departureTime || '09:00'})</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'تاريخ العودة:' : 'Return Date:'}</span><span class="prop-val">${prog.returnDate || '—'} (${prog.returnTime || '18:00'})</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'المدة الإجمالية:' : 'Total Duration:'}</span><span class="prop-val">${formatNumber(prog.durationDays || 10)} ${isAr ? 'أيام' : 'Days'} / ${formatNumber(prog.durationNights || 9)} ${isAr ? 'ليالٍ' : 'Nights'}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'الموسم / الحملة:' : 'Season:'}</span><span class="prop-val">${prog.season || '1447H / 2026'}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'الموعد النهائي لتلقي الحجز:' : 'Booking Deadline:'}</span><span class="prop-val">${prog.bookingDeadline || prog.departureDate || '—'}</span></div>
+          </div>
+        </div>
+
+        <!-- Section: Accommodations & Distance -->
+        <div class="details-card">
+          <h3 class="details-card-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+            ${isAr ? 'الإقامة الفندقية والقرب من الحرم' : 'Hotels & Haram Proximity'}
+          </h3>
+          <div class="details-props-list">
+            <div class="prop-item">
+              <span class="prop-key">${isAr ? 'فندق مكة المكرمة:' : 'Makkah Hotel:'}</span>
+              <span class="prop-val"><strong>${isAr ? (prog.makkahHotel_ar || prog.makkahHotel) : (prog.makkahHotel_en || prog.makkahHotel)}</strong> (${formatNumber(prog.makkahNights || 7)} ${isAr ? 'ليالٍ' : 'Nights'})</span>
+            </div>
+            <div class="prop-item">
+              <span class="prop-key">${isAr ? 'المسافة عن الحرم المكي:' : 'Distance to Haram:'}</span>
+              <span class="prop-val"><span class="distance-pill">${formatNumber(prog.makkahDistance || 100)} ${isAr ? 'متر' : 'meters'}</span></span>
+            </div>
+            <div class="prop-item">
+              <span class="prop-key">${isAr ? 'فندق المدينة المنورة:' : 'Madinah Hotel:'}</span>
+              <span class="prop-val"><strong>${isAr ? (prog.madinahHotel_ar || prog.madinahHotel) : (prog.madinahHotel_en || prog.madinahHotel)}</strong> (${formatNumber(prog.madinahNights || 6)} ${isAr ? 'ليالٍ' : 'Nights'})</span>
+            </div>
+            <div class="prop-item">
+              <span class="prop-key">${isAr ? 'المسافة عن المسجد النبوي:' : 'Distance to Prophet’s Mosque:'}</span>
+              <span class="prop-val"><span class="distance-pill">${formatNumber(prog.madinahDistance || 80)} ${isAr ? 'متر' : 'meters'}</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Flights & Transportation -->
+        <div class="details-card">
+          <h3 class="details-card-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            ${isAr ? 'الطيران والانتقالات' : 'Flights & Transfers'}
+          </h3>
+          <div class="details-props-list">
+            <div class="prop-item"><span class="prop-key">${isAr ? 'الناقل الجوي:' : 'Airline:'}</span><span class="prop-val">${isAr ? (prog.airline_ar || prog.airline) : (prog.airline_en || prog.airline)}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'نوع الرحلة:' : 'Flight Type:'}</span><span class="prop-val">${prog.flightType === 'transit' ? (isAr ? 'ترانزيت' : 'Transit') : (isAr ? 'مباشر بدون توقف' : 'Direct')}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'مطار المغادرة:' : 'Departure Airport:'}</span><span class="prop-val">${prog.departureAirport || 'CAI — مطار القاهرة الدولي'}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'مطار الوصول:' : 'Arrival Airport:'}</span><span class="prop-val">${prog.arrivalAirport || 'JED — مطار الملك عبد العزيز'}</span></div>
+            <div class="prop-item"><span class="prop-key">${isAr ? 'الانتقالات البرية:' : 'Ground Transport:'}</span><span class="prop-val">${isAr ? (prog.transportType_ar || 'حافلات سياحية حديثة') : (prog.transportType_en || 'Modern AC Buses')}</span></div>
+          </div>
+        </div>
+
+        <!-- Section: Room Pricing Breakdown -->
+        <div class="details-card">
+          <h3 class="details-card-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            ${isAr ? 'باقات وتسعير الغرف' : 'Room Rates & Pricing'}
+          </h3>
+          <div class="details-pricing-grid">
+            <div class="pricing-tile">
+              <span class="tile-label">${isAr ? 'سعر الأساس للفرد' : 'Base Rate (Quad)'}</span>
+              <span class="tile-val">${formatCurrency(prog.unitPrice || prog.basePrice || 45000)}</span>
+            </div>
+            <div class="pricing-tile">
+              <span class="tile-label">${isAr ? 'غرفة ثنائية (Double)' : 'Double Room'}</span>
+              <span class="tile-val">${formatCurrency(prog.pricing?.doubleRoom || Math.round((prog.unitPrice || 45000) * 1.1))}</span>
+            </div>
+            <div class="pricing-tile">
+              <span class="tile-label">${isAr ? 'غرفة ثلاثية (Triple)' : 'Triple Room'}</span>
+              <span class="tile-val">${formatCurrency(prog.pricing?.tripleRoom || Math.round((prog.unitPrice || 45000) * 1.05))}</span>
+            </div>
+            <div class="pricing-tile">
+              <span class="tile-label">${isAr ? 'مقدم الحجز المطلوب' : 'Deposit Required'}</span>
+              <span class="tile-val">${formatCurrency(prog.pricing?.deposit || Math.round((prog.unitPrice || 45000) * 0.3))}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Capacity & Booking Gauge -->
+      <div class="details-capacity-card">
+        <div class="capacity-gauge-header">
+          <span class="gauge-title">${isAr ? 'إشغال المقاعد وحالة الحجز' : 'Seat Occupancy & Availability'}</span>
+          <span class="gauge-stats">${isAr ? `تم حجز ${formatNumber(reserved)} من أصل ${formatNumber(cap)} مقعد (${formatNumber(avail)} مقعد متاح)` : `${formatNumber(reserved)} of ${formatNumber(cap)} seats booked (${formatNumber(avail)} available)`}</span>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill" style="width: ${pct}%;"></div>
+        </div>
+      </div>
+
+      <!-- Inclusions & Exclusions -->
+      <div class="details-inclusions-grid">
+        <div class="inclusions-column">
+          <h4 class="inc-col-title">${isAr ? 'الخدمات المشمولة بالباقة' : 'Included Services'}</h4>
+          <ul class="inc-list">
+            ${Array.isArray(prog.includedServices) ? prog.includedServices.map(s => `<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>${s}</span></li>`).join('') : ''}
+          </ul>
+        </div>
+        <div class="inclusions-column exclusions-col">
+          <h4 class="inc-col-title">${isAr ? 'الخدمات غير المشمولة' : 'Excluded Services'}</h4>
+          <ul class="inc-list">
+            ${Array.isArray(prog.excludedServices) ? prog.excludedServices.map(s => `<li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg><span>${s}</span></li>`).join('') : ''}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Itinerary Timeline -->
+      ${Array.isArray(prog.itinerary) && prog.itinerary.length ? `
+        <div class="details-itinerary-section">
+          <h4 class="itinerary-title">${isAr ? 'المسار والبرنامج اليومي' : 'Daily Itinerary & Milestones'}</h4>
+          <div class="itinerary-timeline">
+            ${prog.itinerary.map((it, idx) => `
+              <div class="itinerary-step">
+                <div class="step-num">${isAr ? `اليوم ${formatNumber(it.day || idx + 1)}` : `Day ${formatNumber(it.day || idx + 1)}`}</div>
+                <div class="step-content">${isAr ? (it.title_ar || it.title) : (it.title_en || it.title)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Internal Operations Notes (Staff Only) -->
+      ${prog.internalNotes ? `
+        <div class="details-internal-notes">
+          <div class="notes-header">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <strong>${isAr ? 'ملاحظات الشركة الداخلية (سرية — لطاقم العمل فقط):' : 'Internal Staff Notes (Restricted):'}</strong>
+          </div>
+          <p class="notes-body">${prog.internalNotes}</p>
+        </div>
+      ` : ''}
+    `;
+
+    contentEl.innerHTML = html;
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function openArchiveDeleteModal(progId) {
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    const prog = cachedProgramsList.find(p => p.id === progId) || (mockData && mockData.getCompanyProgramById(progId));
+    if (!prog) return;
+
+    programToArchiveOrDelete = prog;
+
+    const modal = document.getElementById('archiveDeleteModal');
+    const titleEl = document.getElementById('archiveDeleteTitle');
+    const msgEl = document.getElementById('archiveDeleteMessage');
+    const btnTextEl = document.getElementById('archiveDeleteBtnText');
+    const isAr = currentLang === 'ar';
+
+    // Check if bookings exist in RAW_BOOKINGS
+    const hasBookings = (mockData && mockData.RAW_BOOKINGS)
+      ? mockData.RAW_BOOKINGS.some(b => b.programId === prog.id)
+      : (prog.reservedSeats && prog.reservedSeats > 0);
+
+    const progName = isAr ? prog.name_ar : prog.name_en;
+
+    if (hasBookings) {
+      if (titleEl) titleEl.textContent = isAr ? `أرشفة البرنامج: ${progName}` : `Archive Program: ${progName}`;
+      if (msgEl) {
+        msgEl.textContent = isAr
+          ? `هذا البرنامج مرتبط بحجوزات فعلية لعملاء المنصة. حفاظاً على سلامة السجلات المالية والتعاقدية، سيتم أرشفة البرنامج وإيقاف تلقي حجوزات جديدة عليه بأمان دون حذف أي سجل تاريخي.`
+          : `This program has active customer bookings. To protect contractual and financial integrity, this program will be safely archived without deleting any historical booking records.`;
+      }
+      if (btnTextEl) btnTextEl.textContent = isAr ? 'تأكيد أرشفة البرنامج بأمان' : 'Safely Archive Program';
+    } else {
+      if (titleEl) titleEl.textContent = isAr ? `حذف البرنامج: ${progName}` : `Delete Program: ${progName}`;
+      if (msgEl) {
+        msgEl.textContent = isAr
+          ? `هل أنت متأكد من رغبتك في حذف هذا البرنامج نهائياً؟ لم يتم تسجيل أي حجوزات عليه حتى الآن. هذا الإجراء لا يمكن التراجع عنه.`
+          : `Are you sure you want to permanently delete this program? No bookings exist for it. This action cannot be undone.`;
+      }
+      if (btnTextEl) btnTextEl.textContent = isAr ? 'تأكيد حذف البرنامج' : 'Permanently Delete';
+    }
+
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  async function handleConfirmArchiveDelete() {
+    if (!programToArchiveOrDelete) return;
+    const progId = programToArchiveOrDelete.id;
+
+    try {
+      let result = null;
+      try {
+        const res = await apiFetch(`/api/company/programs/${progId}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          result = await res.json();
+        }
+      } catch (err) {
+        console.warn('Backend DELETE /api/company/programs failed, using mock data:', err);
+      }
+
+      const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+      if (!result && mockData) {
+        result = mockData.archiveOrDeleteCompanyProgram(progId);
+      }
+
+      const modal = document.getElementById('archiveDeleteModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      const msg = result && (currentLang === 'ar' ? result.message_ar : result.message_en)
+        ? (currentLang === 'ar' ? result.message_ar : result.message_en)
+        : (currentLang === 'ar' ? 'تمت العملية بنجاح.' : 'Operation completed successfully.');
+
+      showCompanyToast(msg, 'success');
+      await renderProgramsPage();
+
+    } catch (err) {
+      console.error('Error in archive/delete:', err);
+      showCompanyToast(currentLang === 'ar' ? 'حدث خطأ أثناء معالجة الطلب.' : 'Failed to process request.', 'error');
+    } finally {
+      programToArchiveOrDelete = null;
+    }
+  }
+
+  async function renderProgramsPage() {
+    const { programs, summary } = await fetchCompanyPrograms(programsFilterState);
+
+    // 1. Render Summary KPI Cards
+    if (summary) {
+      const elTotal = document.getElementById('kpiTotalPrograms');
+      const elActive = document.getElementById('kpiActivePublished');
+      const elUpcoming = document.getElementById('kpiUpcomingTrips');
+      const elCapacity = document.getElementById('kpiAvailableCapacity');
+      const elDraft = document.getElementById('kpiDraftUnpublished');
+
+      if (elTotal) elTotal.textContent = formatNumber(summary.totalPrograms);
+      if (elActive) elActive.textContent = formatNumber(summary.activePublished);
+      if (elUpcoming) elUpcoming.textContent = formatNumber(summary.upcomingTrips);
+      if (elCapacity) elCapacity.textContent = formatNumber(summary.totalAvailableCapacity);
+      if (elDraft) elDraft.textContent = formatNumber(summary.draftUnpublished);
+    }
+
+    // 2. Render Active Filter Chips
+    renderProgramsFilterChips();
+
+    // 3. Results Count
+    const countEl = document.getElementById('programsResultsCount');
+    if (countEl) {
+      const countStr = formatNumber(programs.length);
+      const totalStr = formatNumber(cachedProgramsSummary ? cachedProgramsSummary.totalPrograms : programs.length);
+      countEl.textContent = currentLang === 'ar'
+        ? `عرض ${countStr} من ${totalStr} برامج`
+        : `Showing ${countStr} of ${totalStr} programs`;
+    }
+
+    // 4. Render Programs Listing Grid (CRITICAL: ZERO IMAGES INSIDE CARDS)
+    const grid = document.getElementById('programsCardsGrid');
+    const emptyState = document.getElementById('programsEmptyState');
+
+    if (!grid) return;
+
+    if (!programs || programs.length === 0) {
+      grid.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+
+    const isAr = currentLang === 'ar';
+    let html = '';
+
+    programs.forEach(prog => {
+      const title = isAr ? prog.name_ar : prog.name_en;
+      const catLabel = isAr ? (prog.category === 'hajj' ? 'برنامج حج' : 'برنامج عمرة') : (prog.category === 'hajj' ? 'Hajj' : 'Umrah');
+      const typeObj = PROGRAM_TYPE_MAP[prog.type] || { ar: prog.type, en: prog.type };
+      const typeLabel = isAr ? typeObj.ar : typeObj.en;
+      const statusObj = PROGRAM_STATUS_MAP[prog.status] || { ar: prog.status, en: prog.status, class: 'prog-status-published' };
+      const availObj = PROGRAM_AVAIL_MAP[prog.availability] || { ar: prog.availability, en: prog.availability, class: 'prog-avail-available' };
+
+      const makkahHotel = isAr ? (prog.makkahHotel_ar || prog.makkahHotel) : (prog.makkahHotel_en || prog.makkahHotel);
+      const madinahHotel = isAr ? (prog.madinahHotel_ar || prog.madinahHotel) : (prog.madinahHotel_en || prog.madinahHotel);
+      const airline = isAr ? (prog.airline_ar || prog.airline) : (prog.airline_en || prog.airline);
+      const destination = isAr ? (prog.destination_ar || 'مكة المكرمة والمدينة المنورة') : (prog.destination_en || 'Makkah & Madinah');
+
+      const reserved = prog.reservedSeats || 0;
+      const cap = prog.capacity || 45;
+      const avail = prog.availableSeats !== undefined ? prog.availableSeats : Math.max(0, cap - reserved);
+      const pct = cap > 0 ? Math.min(100, Math.round((reserved / cap) * 100)) : 0;
+
+      // STRICT REQUIREMENT: Clean, information-focused cards with ZERO images/photos/thumbnails
+      html += `
+        <article class="program-card ${prog.status === 'archived' ? 'is-archived' : ''}" data-program-id="${prog.id}">
+          
+          <!-- Card Header Badges -->
+          <div class="program-card-header">
+            <div class="card-badges-left">
+              <span class="prog-badge prog-badge-category">${catLabel}</span>
+              <span class="prog-badge prog-badge-type">${typeLabel}</span>
+            </div>
+            <div class="card-badges-right">
+              <span class="prog-status-pill ${statusObj.class}">${isAr ? statusObj.ar : statusObj.en}</span>
+              <span class="prog-avail-pill ${availObj.class}">${isAr ? availObj.ar : availObj.en}</span>
+            </div>
+          </div>
+
+          <!-- Title & Reference Code -->
+          <div class="program-card-title-row">
+            <h3 class="program-card-title">${title}</h3>
+            <span class="program-card-code" title="${isAr ? 'رمز البرنامج' : 'Program Code'}">${prog.code || ''}</span>
+          </div>
+
+          <!-- Essential Information Grid -->
+          <div class="program-card-body">
+            
+            <!-- Dates & Duration -->
+            <div class="card-info-item">
+              <span class="card-info-label">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                ${isAr ? 'مواعيد الرحلة والمدة:' : 'Schedule & Duration:'}
+              </span>
+              <span class="card-info-val">
+                ${prog.departureDate || '—'} ➔ ${prog.returnDate || '—'} 
+                <span class="duration-highlight">(${formatNumber(prog.durationDays || 10)} ${isAr ? 'أيام' : 'Days'} / ${formatNumber(prog.durationNights || 9)} ${isAr ? 'ليالٍ' : 'Nights'})</span>
+              </span>
+            </div>
+
+            <!-- Destination & Routing -->
+            <div class="card-info-item">
+              <span class="card-info-label">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                ${isAr ? 'خط السير والوجهة:' : 'Routing & Destination:'}
+              </span>
+              <span class="card-info-val">${isAr ? (prog.departureCity_ar || 'القاهرة') : (prog.departureCity_en || 'Cairo')} ➔ ${destination}</span>
+            </div>
+
+            <!-- Accommodations -->
+            <div class="card-info-item">
+              <span class="card-info-label">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+                ${isAr ? 'الفنادق والإقامة:' : 'Hotels & Lodging:'}
+              </span>
+              <span class="card-info-val">
+                <span><strong>${isAr ? 'مكة:' : 'Makkah:'}</strong> ${makkahHotel || '—'} <span class="dist-tag">(${formatNumber(prog.makkahDistance || 100)}م)</span></span>
+                <span class="hotel-sep">|</span>
+                <span><strong>${isAr ? 'المدينة:' : 'Madinah:'}</strong> ${madinahHotel || '—'} <span class="dist-tag">(${formatNumber(prog.madinahDistance || 80)}م)</span></span>
+              </span>
+            </div>
+
+            <!-- Airline & Transport -->
+            <div class="card-info-item">
+              <span class="card-info-label">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                ${isAr ? 'الطيران والانتقالات:' : 'Airlines & Transport:'}
+              </span>
+              <span class="card-info-val">${airline || '—'} • ${isAr ? (prog.transportType_ar || 'حافلات حديثة') : (prog.transportType_en || 'Modern Coaches')}</span>
+            </div>
+
+            <!-- Capacity Progress Bar -->
+            <div class="card-capacity-box">
+              <div class="capacity-stats-row">
+                <span class="cap-label">${isAr ? 'إشغال المقاعد:' : 'Seat Occupancy:'}</span>
+                <span class="cap-stats-text">${isAr ? `تم حجز ${formatNumber(reserved)} من ${formatNumber(cap)} مقعد (${formatNumber(avail)} متاح)` : `${formatNumber(reserved)} of ${formatNumber(cap)} booked (${formatNumber(avail)} available)`}</span>
+              </div>
+              <div class="prog-capacity-bar">
+                <div class="prog-capacity-fill" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+
+            <!-- Pricing Row -->
+            <div class="card-pricing-row">
+              <div class="pricing-label-col">
+                <span class="price-eyebrow">${isAr ? 'يبدأ من' : 'Starting from'}</span>
+                <div class="price-value-wrap">
+                  <span class="price-amount">${formatCurrency(prog.unitPrice || prog.basePrice || 45000)}</span>
+                  <span class="price-unit">${isAr ? '/ للفرد' : '/ person'}</span>
+                </div>
+              </div>
+              <div class="status-date-col">
+                <span class="last-updated-text">${isAr ? 'الموسم:' : 'Season:'} ${prog.season || '1447H'}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Card Actions Toolbar -->
+          <div class="program-card-actions">
+            <button type="button" class="btn btn-primary btn-sm btn-action-view" onclick="window.MiqatCompanyPortal.openDetails('${prog.id}')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>${isAr ? 'عرض التفاصيل' : 'View Details'}</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm btn-action-edit" onclick="window.MiqatCompanyPortal.openEdit('${prog.id}')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              <span>${isAr ? 'تعديل البرنامج' : 'Edit Program'}</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm btn-action-quick" onclick="window.MiqatCompanyPortal.openQuickPrice('${prog.id}')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              <span>${isAr ? 'إدارة الأسعار والمواعيد' : 'Manage Prices & Dates'}</span>
+            </button>
+            <!-- STRICT RULE: Delete button is NOT red, uses secondary token -->
+            <button type="button" class="btn btn-secondary btn-sm btn-action-delete" onclick="window.MiqatCompanyPortal.openArchiveDelete('${prog.id}')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+              <span>${isAr ? 'حذف / أرشفة' : 'Delete / Archive'}</span>
+            </button>
+          </div>
+
+        </article>
+      `;
+    });
+
+    grid.innerHTML = html;
+  }
+
+  function renderProgramsFilterChips() {
+    const container = document.getElementById('activeFilterChipsContainer');
+    const list = document.getElementById('activeFilterChipsList');
+    if (!container || !list) return;
+
+    const isAr = currentLang === 'ar';
+    const chips = [];
+
+    if (programsFilterState.search) {
+      chips.push({
+        label: `${isAr ? 'بحث' : 'Search'}: "${programsFilterState.search}"`,
+        clear: () => {
+          programsFilterState.search = '';
+          const inp = document.getElementById('progSearchInput');
+          const btn = document.getElementById('btnClearProgSearch');
+          if (inp) inp.value = '';
+          if (btn) btn.style.display = 'none';
+        }
+      });
+    }
+
+    if (programsFilterState.category && programsFilterState.category !== 'all') {
+      const catLabel = programsFilterState.category === 'hajj' ? (isAr ? 'برامج الحج' : 'Hajj') : (isAr ? 'برامج العمرة' : 'Umrah');
+      chips.push({
+        label: `${isAr ? 'التصنيف' : 'Category'}: ${catLabel}`,
+        clear: () => {
+          programsFilterState.category = 'all';
+          const sel = document.getElementById('filterCategorySelect');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (programsFilterState.type && programsFilterState.type !== 'all') {
+      const typeObj = PROGRAM_TYPE_MAP[programsFilterState.type] || { ar: programsFilterState.type, en: programsFilterState.type };
+      chips.push({
+        label: `${isAr ? 'النوع' : 'Type'}: ${isAr ? typeObj.ar : typeObj.en}`,
+        clear: () => {
+          programsFilterState.type = 'all';
+          const sel = document.getElementById('filterTypeSelect');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (programsFilterState.status && programsFilterState.status !== 'all') {
+      const statusObj = PROGRAM_STATUS_MAP[programsFilterState.status] || { ar: programsFilterState.status, en: programsFilterState.status };
+      chips.push({
+        label: `${isAr ? 'الحالة' : 'Status'}: ${isAr ? statusObj.ar : statusObj.en}`,
+        clear: () => {
+          programsFilterState.status = 'all';
+          const sel = document.getElementById('filterStatusSelect');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (programsFilterState.availability && programsFilterState.availability !== 'all') {
+      const availObj = PROGRAM_AVAIL_MAP[programsFilterState.availability] || { ar: programsFilterState.availability, en: programsFilterState.availability };
+      chips.push({
+        label: `${isAr ? 'الإتاحة' : 'Availability'}: ${isAr ? availObj.ar : availObj.en}`,
+        clear: () => {
+          programsFilterState.availability = 'all';
+          const sel = document.getElementById('filterAvailabilitySelect');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (programsFilterState.dateFrom) {
+      chips.push({
+        label: `${isAr ? 'من' : 'From'}: ${programsFilterState.dateFrom}`,
+        clear: () => {
+          programsFilterState.dateFrom = '';
+          const inp = document.getElementById('filterDateFrom');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (programsFilterState.dateTo) {
+      chips.push({
+        label: `${isAr ? 'إلى' : 'To'}: ${programsFilterState.dateTo}`,
+        clear: () => {
+          programsFilterState.dateTo = '';
+          const inp = document.getElementById('filterDateTo');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (programsFilterState.minPrice) {
+      chips.push({
+        label: `${isAr ? 'أدنى سعر' : 'Min Price'}: ${formatNumber(Number(programsFilterState.minPrice))} ${isAr ? 'ج.م' : 'EGP'}`,
+        clear: () => {
+          programsFilterState.minPrice = '';
+          const inp = document.getElementById('filterPriceMin');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (programsFilterState.maxPrice) {
+      chips.push({
+        label: `${isAr ? 'أقصى سعر' : 'Max Price'}: ${formatNumber(Number(programsFilterState.maxPrice))} ${isAr ? 'ج.م' : 'EGP'}`,
+        clear: () => {
+          programsFilterState.maxPrice = '';
+          const inp = document.getElementById('filterPriceMax');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (chips.length === 0) {
+      container.style.display = 'none';
+      list.innerHTML = '';
+      return;
+    }
+
+    container.style.display = 'flex';
+    list.innerHTML = '';
+
+    chips.forEach((c, idx) => {
+      const chipEl = document.createElement('div');
+      chipEl.className = 'filter-chip';
+      chipEl.innerHTML = `
+        <span class="chip-text">${c.label}</span>
+        <button type="button" class="chip-remove-btn" aria-label="${isAr ? 'إزالة الفلتر' : 'Remove filter'}" data-chip-idx="${idx}">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      `;
+
+      const removeBtn = chipEl.querySelector('.chip-remove-btn');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', () => {
+          c.clear();
+          renderProgramsPage();
+        });
+      }
+
+      list.appendChild(chipEl);
+    });
+  }
+
+  // Global window helpers for inline onclick in cards
+  window.MiqatCompanyPortal = window.MiqatCompanyPortal || {};
+  window.MiqatCompanyPortal.openDetails = openProgramDetailsModal;
+  window.MiqatCompanyPortal.openEdit = openProgramFormModal;
+  window.MiqatCompanyPortal.openQuickPrice = openQuickPriceModal;
+  window.MiqatCompanyPortal.openArchiveDelete = openArchiveDeleteModal;
+  window.MiqatCompanyPortal.renderPrograms = renderProgramsPage;
+  window.MiqatCompanyPortal.programsFilterState = programsFilterState;
+
+
   // --- Page Initialization ---
   async function initCompanyPortal() {
     applyTheme(currentTheme);
@@ -3952,6 +5401,9 @@
     } else if (pageId === 'company-financial-overview') {
       setupFinancialOverviewPage();
       renderFinancialOverviewPage();
+    } else if (pageId === 'company-programs') {
+      setupProgramsPage();
+      renderProgramsPage();
     }
   }
 

@@ -584,6 +584,160 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, result);
   }
 
+  // 7k. GET /api/company/programs (Partner Company Programs List & Summary)
+  if (pathname === '/api/company/programs' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const filters = {
+      search: searchParams.get('search') || '',
+      category: searchParams.get('category') || 'all',
+      type: searchParams.get('type') || 'all',
+      status: searchParams.get('status') || 'all',
+      availability: searchParams.get('availability') || 'all',
+      dateFrom: searchParams.get('dateFrom') || '',
+      dateTo: searchParams.get('dateTo') || '',
+      minPrice: searchParams.get('minPrice') || '',
+      maxPrice: searchParams.get('maxPrice') || '',
+      duration: searchParams.get('duration') || 'all'
+    };
+
+    const programs = companyMockData.getCompanyPrograms(filters);
+    const summary = companyMockData.getCompanyProgramsSummary();
+
+    return sendJson(res, 200, {
+      success: true,
+      data: programs,
+      summary,
+      totalCount: programs.length
+    });
+  }
+
+  // 7l. GET /api/company/programs/:id (Single Program Details & Booking Stats)
+  if (pathname.startsWith('/api/company/programs/') && !pathname.includes('/upload') && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const programId = decodeURIComponent(pathname.replace('/api/company/programs/', '').trim());
+    const program = companyMockData.getCompanyProgramById(programId);
+    if (!program) {
+      return sendJson(res, 404, { success: false, error: 'Program not found' });
+    }
+
+    return sendJson(res, 200, {
+      success: true,
+      data: program
+    });
+  }
+
+  // 7m. POST /api/company/programs (Create New Program)
+  if (pathname === '/api/company/programs' && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const body = await parseJsonBody(req);
+    const result = companyMockData.createCompanyProgram(body, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 201, result);
+  }
+
+  // 7n. PUT /api/company/programs/:id (Update Program Details / Pricing / Dates)
+  if (pathname.startsWith('/api/company/programs/') && req.method === 'PUT') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const programId = decodeURIComponent(pathname.replace('/api/company/programs/', '').trim());
+    const body = await parseJsonBody(req);
+    const result = companyMockData.updateCompanyProgram(programId, body, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
+  }
+
+  // 7o. DELETE /api/company/programs/:id (Archive or Delete Program)
+  if (pathname.startsWith('/api/company/programs/') && req.method === 'DELETE') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const programId = decodeURIComponent(pathname.replace('/api/company/programs/', '').trim());
+    const result = companyMockData.archiveOrDeleteCompanyProgram(programId, sessionUser);
+    if (!result.success) return sendJson(res, 400, result);
+    return sendJson(res, 200, result);
+  }
+
+  // 7p. POST /api/company/upload (Image Upload with Persistence)
+  if (pathname === '/api/company/upload' && req.method === 'POST') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    try {
+      const body = await parseJsonBody(req);
+      const { image, filename } = body;
+      if (!image) {
+        return sendJson(res, 400, { success: false, error: 'No image data provided' });
+      }
+
+      // Check format and size
+      const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (!matches || matches.length !== 3) {
+        return sendJson(res, 400, { success: false, error: 'Invalid base64 image data' });
+      }
+
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      const buffer = Buffer.from(base64Data, 'base64');
+
+      if (buffer.length > 5 * 1024 * 1024) {
+        return sendJson(res, 400, { success: false, error: 'Image size exceeds maximum limit of 5MB' });
+      }
+
+      let ext = '.jpg';
+      if (mimeType === 'image/png') ext = '.png';
+      else if (mimeType === 'image/webp') ext = '.webp';
+      else if (mimeType === 'image/jpeg') ext = '.jpg';
+      else {
+        return sendJson(res, 400, { success: false, error: 'Unsupported image type. Allowed: JPG, PNG, WebP' });
+      }
+
+      const safeBaseName = (filename || 'program-img').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const uniqueName = `upload_${Date.now()}_${safeBaseName}${ext}`;
+      const uploadDir = path.join(ROOT_DIR, 'assets', 'uploads');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
+      const filePath = path.join(uploadDir, uniqueName);
+      fs.writeFileSync(filePath, buffer);
+
+      return sendJson(res, 200, {
+        success: true,
+        url: `./assets/uploads/${uniqueName}`,
+        filename: uniqueName,
+        size: buffer.length
+      });
+    } catch (err) {
+      console.error('Image upload error:', err);
+      return sendJson(res, 500, { success: false, error: 'Failed to process image upload' });
+    }
+  }
+
   // 8. POST /api/requests (Submit Program Details Inquiry)
   if (pathname === '/api/requests' && req.method === 'POST') {
     try {

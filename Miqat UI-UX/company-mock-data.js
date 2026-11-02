@@ -1032,53 +1032,336 @@
   const NOTIFICATIONS = [
     {
       id: 'notif_1',
+      companyId: 'comp_aldorra_01',
+      type: 'new_booking',
+      title_ar: 'طلب حجز إلكتروني جديد — BK-2026-1045',
+      title_en: 'New Online Booking Request — BK-2026-1045',
+      message_ar: 'تم استلام حجز جديد لعدد 2 معتمرين ببرنامج عمرة اقتصادية موفرة (انطلاق 15 نوفمبر 2026).',
+      message_en: 'New booking request received for 2 pilgrims in Economic Umrah Saver program (departure Nov 15, 2026).',
       unread: true,
-      title_ar: 'تحديث جدول رحلات الطيران',
-      title_en: 'Flight Schedule Updated',
-      message_ar: 'تم تحديث مواعيد رحلات مصر للطيران لموسم عمرة رجب وشعبان 1447هـ.',
-      message_en: 'EgyptAir flight schedules updated for Rajab & Shaban 1447H season.',
+      createdAt: '2026-10-29T10:15:00.000Z',
       date: '2026-10-29',
-      badge_ar: 'هام',
-      badge_en: 'Important',
-      badge: 'هام'
+      bookingId: 'bkg_1000',
+      bookingReference: 'BK-2026-1045',
+      customerName_ar: 'أحمد محمود الشريف',
+      customerName_en: 'Ahmed Mahmoud El-Sharif',
+      programTitle_ar: 'عمرة اقتصادية موفرة',
+      programTitle_en: 'Economic Umrah Saver',
+      amount: 76000,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1000'
     },
     {
       id: 'notif_2',
+      companyId: 'comp_aldorra_01',
+      type: 'deposit_received',
+      title_ar: 'تأكيد سداد الدفعة المقدمة عبر بوابة الدفع',
+      title_en: 'Deposit Payment Verified via Payment Gateway',
+      message_ar: 'تم بنجاح استلام دفعة جدية الحجز بمبلغ 22,800 ج.م للحجز BK-2026-1045 وتأكيد صلاحية الحجز مبدئياً.',
+      message_en: 'Booking deposit of 22,800 EGP successfully received for BK-2026-1045; reservation is pre-confirmed.',
       unread: true,
-      title_ar: 'إيداع مدفوعات إلكترونية',
-      title_en: 'Electronic Payments Credited',
-      message_ar: 'تم تحصيل 4 دفعات مقدمة جديدة بقيمة إجمالية 91,200 ج.م لحساب الشركة.',
-      message_en: '4 new deposit payments totaling 91,200 EGP received for company account.',
-      date: '2026-10-28',
-      badge_ar: 'مالي',
-      badge_en: 'Financial',
-      badge: 'مالي'
+      createdAt: '2026-10-29T09:42:00.000Z',
+      date: '2026-10-29',
+      bookingId: 'bkg_1000',
+      bookingReference: 'BK-2026-1045',
+      customerName_ar: 'أحمد محمود الشريف',
+      customerName_en: 'Ahmed Mahmoud El-Sharif',
+      programTitle_ar: 'عمرة اقتصادية موفرة',
+      programTitle_en: 'Economic Umrah Saver',
+      amount: 22800,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1000'
     },
     {
       id: 'notif_3',
+      companyId: 'comp_aldorra_01',
+      type: 'admin_update',
+      title_ar: 'تعميم وزاري رقم 84/1447: ضوابط البصمة الحيوية والتسكين الإلزامي',
+      title_en: 'Official Circular 84/1447: Biometric Verification & Mandatory Housing Rules',
+      message_ar: 'اعتماد الآلية التنفيذية الجديدة لإصدار تصاريح العمرة والربط المباشر مع منصة نسك للفنادق المؤهلة لموسم 1447هـ.',
+      message_en: 'Implementation directives approved for Umrah permits issuing and direct API integration with Nusuk portal for 1447H.',
       unread: true,
-      title_ar: 'طلب تعديل موعد رحلة',
-      title_en: 'Trip Date Change Request',
-      message_ar: 'طلب العميل عمر عبد العزيز تعديل موعد السفر لبرنامج عمرة متميزة.',
-      message_en: 'Customer Omar Abdel-Aziz requested a departure date change for Umrah Premium.',
-      date: '2026-10-27',
-      badge_ar: 'خدمة عملاء',
-      badge_en: 'Support',
-      badge: 'خدمة عملاء'
+      createdAt: '2026-10-29T08:30:00.000Z',
+      date: '2026-10-29',
+      bookingId: null,
+      bookingReference: null,
+      customerName_ar: null,
+      customerName_en: null,
+      programTitle_ar: null,
+      programTitle_en: null,
+      amount: null,
+      currency: 'EGP',
+      adminNotice: {
+        circularNumber: 'CIRC-1447-084',
+        issuer_ar: 'وزارة الحج والعمرة — الإدارة العامة لشركات العمرة الخارجية',
+        issuer_en: 'Ministry of Hajj & Umrah — General Directorate of External Umrah',
+        issueDate: '2026-10-29',
+        effectiveDate: '2026-11-01',
+        subject_ar: 'الربط التقني الموحد للبصمة الحيوية وإلزامية عقود الإسكان المصادقة عبر نسك مسار',
+        subject_en: 'Unified Biometric API Integration & Mandatory Certified Housing Contracts via Nusuk Masar',
+        body_ar: 'بناءً على التوجيهات الوزارية الصادرة لتنظيم موسم 1447هـ، يلزم على كافة الشركات السياحية المصرح لها التأكد من استكمال كافة بيانات البصمة الحيوية للمعتمرين وإرفاق عقود التسكين المصادقة إلكترونياً قبل موعد الرحلة بـ 72 ساعة على الأقل لتفادي تأخير إصدار التأشيرات وتفويج الأفواج بالمنافذ الجوية.',
+        body_en: 'In accordance with regulatory directives for season 1447H, all accredited tourism companies must complete pilgrim biometric verifications and upload electronic housing contracts via Nusuk Masar at least 72 hours prior to flight departure to prevent visa delays at ports of entry.'
+      },
+      actionUrl: '#modal-adminNoticeModal'
     },
     {
       id: 'notif_4',
+      companyId: 'comp_aldorra_01',
+      type: 'payment_update',
+      title_ar: 'توثيق دفعة مالية مستلمة بمقر الشركة',
+      title_en: 'Direct Payment Logged at Company Branch',
+      message_ar: 'تم توثيق سداد القسط الثاني بقيمة 78,000 ج.م نقداً / شيك مصرفي للحجز BK-2026-1039 وتحديث السجل المالي.',
+      message_en: 'Second installment of 78,000 EGP logged at company branch for BK-2026-1039 and ledger balance updated.',
+      unread: true,
+      createdAt: '2026-10-28T16:20:00.000Z',
+      date: '2026-10-28',
+      bookingId: 'bkg_1006',
+      bookingReference: 'BK-2026-1039',
+      customerName_ar: 'محمود حسن إبراهيم',
+      customerName_en: 'Mahmoud Hassan Ibrahim',
+      programTitle_ar: 'عمرة متميزة 5 نجوم',
+      programTitle_en: 'Umrah Premium 5-Star',
+      amount: 78000,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1006'
+    },
+    {
+      id: 'notif_5',
+      companyId: 'comp_aldorra_01',
+      type: 'program_change',
+      title_ar: 'طلب ترقية غرفة وتعديل موعد العودة',
+      title_en: 'Room Upgrade & Return Date Modification Request',
+      message_ar: 'تقدم العميل بطلب ترقية الغرفة من رباعية إلى ثنائية مع تعديل رحلة العودة لتكون يوم 30 نوفمبر.',
+      message_en: 'Customer submitted a request to upgrade from Quad to Double room with departure flight adjusted to Nov 30.',
+      unread: true,
+      createdAt: '2026-10-27T14:10:00.000Z',
+      date: '2026-10-27',
+      bookingId: 'bkg_1002',
+      bookingReference: 'BK-2026-1043',
+      customerName_ar: 'عمر عبد العزيز خليل',
+      customerName_en: 'Omar Abdel-Aziz Khalil',
+      programTitle_ar: 'عمرة اقتصادية موفرة',
+      programTitle_en: 'Economic Umrah Saver',
+      amount: null,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1002'
+    },
+    {
+      id: 'notif_6',
+      companyId: 'comp_aldorra_01',
+      type: 'booking_rejected',
+      title_ar: 'إلغاء حجز لعدم اكتمال سداد الدفعة المقدمة',
+      title_en: 'Booking Cancelled Due to Unpaid Deposit Deadline',
+      message_ar: 'تم إلغاء الحجز BK-2026-1042 تلقائياً بعد انقضاء مهلة السداد (72 ساعة) وإعادة إتاحة المقعدين في البرنامج.',
+      message_en: 'Booking BK-2026-1042 was cancelled following the expiration of the 72-hour payment window; seats released.',
       unread: false,
-      title_ar: 'اكتمال الطاقة الاستيعابية',
-      title_en: 'Capacity Reached',
-      message_ar: 'اكتملت 85% من مقاعد برنامج عمرة رمضان المبارك — العشر الأواخر.',
-      message_en: '85% capacity reached for Ramadan Umrah — Last Ten Days program.',
+      createdAt: '2026-10-26T11:45:00.000Z',
+      date: '2026-10-26',
+      bookingId: 'bkg_1003',
+      bookingReference: 'BK-2026-1042',
+      customerName_ar: 'مريم محمود النجار',
+      customerName_en: 'Maryam Mahmoud El-Naggar',
+      programTitle_ar: 'عمرة النخبة VIP المباشرة',
+      programTitle_en: 'Luxury Direct VIP Umrah',
+      amount: null,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1003'
+    },
+    {
+      id: 'notif_7',
+      companyId: 'comp_aldorra_01',
+      type: 'new_booking',
+      title_ar: 'طلب حجز جديد — موسم رمضان المبارك',
+      title_en: 'New Booking Request — Holy Ramadan Season',
+      message_ar: 'تم تسجيل حجز جديد لعدد 2 معتمرين لبرنامج العشر الأواخر من رمضان مع سداد دفعة تأكيد 51,000 ج.م.',
+      message_en: 'New booking registered for 2 pilgrims in Ramadan Last Ten Days program with 51,000 EGP confirmation deposit.',
+      unread: false,
+      createdAt: '2026-10-25T13:00:00.000Z',
       date: '2026-10-25',
-      badge_ar: 'تشغيلي',
-      badge_en: 'Operational',
-      badge: 'تشغيلي'
+      bookingId: 'bkg_1004',
+      bookingReference: 'BK-2026-1041',
+      customerName_ar: 'عبد الرحمن طارق الفقي',
+      customerName_en: 'Abdel-Rahman Tarek El-Fiqi',
+      programTitle_ar: 'عمرة شهر رمضان المبارك',
+      programTitle_en: 'Holy Ramadan Umrah',
+      amount: 170000,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1004'
+    },
+    {
+      id: 'notif_8',
+      companyId: 'comp_aldorra_01',
+      type: 'admin_update',
+      title_ar: 'اعتماد الحصة التقديرية لموسم الحج السياحي 1447هـ',
+      title_en: 'Approval of 1447H Tourism Hajj Quota Allocation',
+      message_ar: 'صدور الموافقة الرسمية على تخصيص حصة شركة الدرة للسياحة (فئة أ) بواقع 120 تأشيرة حج سياحي فاخر واقتصادي.',
+      message_en: 'Official approval issued allocating Al Dorra Travel (Tier A) 120 pilgrim visas across luxury and economic programs.',
+      unread: false,
+      createdAt: '2026-10-22T09:00:00.000Z',
+      date: '2026-10-22',
+      bookingId: null,
+      bookingReference: null,
+      customerName_ar: null,
+      customerName_en: null,
+      programTitle_ar: null,
+      programTitle_en: null,
+      amount: null,
+      currency: 'EGP',
+      adminNotice: {
+        circularNumber: 'CIRC-1447-079',
+        issuer_ar: 'لجنة الحج العليا — وزارة السياحة والآثار',
+        issuer_en: 'Supreme Hajj Committee — Ministry of Tourism & Antiquities',
+        issueDate: '2026-10-22',
+        effectiveDate: '2026-10-25',
+        subject_ar: 'تخصيص الحصص المعتمدة للشركات السياحية فئة (أ) لموسم حج 1447هـ',
+        subject_en: 'Allocation of Certified Quotas for Category (A) Tourism Companies for Hajj Season 1447H',
+        body_ar: 'تعلن اللجنة العليا للحج والعمرة عن اعتماد الحصة الرسمية للشركات ذات الملاءة والخبرة المتميزة، وقد تم تحديد حصة شركة الدرة للسياحة بـ 120 حاجاً موزعة بين باقات الحج السياحي الـ 5 نجوم والحج الاقتصادي، مع التأكيد على الالتزام بضوابط غرفة شركات السياحة.',
+        body_en: 'The Supreme Committee for Hajj and Umrah announces the official allocation of pilgrimage quotas for accredited companies. Al Dorra Travel has been granted 120 pilgrim visas across 5-star and economic programs, strictly adhering to Chamber guidelines.'
+      },
+      actionUrl: '#modal-adminNoticeModal'
+    },
+    {
+      id: 'notif_9',
+      companyId: 'comp_aldorra_01',
+      type: 'deposit_received',
+      title_ar: 'سداد دفعة إلكترونية للحجز BK-2026-1038',
+      title_en: 'Electronic Deposit Received for BK-2026-1038',
+      message_ar: 'تم استلام دفعة مقدمة بقيمة 22,800 ج.م عبر بطاقة ائتمانية وتأكيد الحجز برقم المرجع BK-2026-1038.',
+      message_en: 'Deposit of 22,800 EGP received via credit card; booking BK-2026-1038 confirmed.',
+      unread: false,
+      createdAt: '2026-10-18T10:30:00.000Z',
+      date: '2026-10-18',
+      bookingId: 'bkg_1007',
+      bookingReference: 'BK-2026-1038',
+      customerName_ar: 'هدى إبراهيم السيد',
+      customerName_en: 'Huda Ibrahim El-Sayed',
+      programTitle_ar: 'عمرة اقتصادية موفرة',
+      programTitle_en: 'Economic Umrah Saver',
+      amount: 22800,
+      currency: 'EGP',
+      adminNotice: null,
+      actionUrl: 'company-booking-details.html?id=bkg_1007'
     }
   ];
+
+  function getCompanyNotifications(filters = {}) {
+    let list = [...NOTIFICATIONS];
+
+    if (filters.period) {
+      const todayStr = '2026-10-29';
+      if (filters.period === 'today') {
+        list = list.filter(n => (n.createdAt || n.date || '').startsWith(todayStr));
+      } else if (filters.period === 'week') {
+        const minDate = new Date('2026-10-22T00:00:00.000Z');
+        list = list.filter(n => new Date(n.createdAt || n.date) >= minDate);
+      } else if (filters.period === 'month') {
+        const minDate = new Date('2026-09-29T00:00:00.000Z');
+        list = list.filter(n => new Date(n.createdAt || n.date) >= minDate);
+      }
+    }
+
+    if (filters.dateFrom) {
+      list = list.filter(n => (n.createdAt || n.date || '').slice(0, 10) >= filters.dateFrom);
+    }
+    if (filters.dateTo) {
+      list = list.filter(n => (n.createdAt || n.date || '').slice(0, 10) <= filters.dateTo);
+    }
+
+    if (filters.type && filters.type !== 'all' && filters.type !== 'All') {
+      if (Array.isArray(filters.type)) {
+        list = list.filter(n => filters.type.includes(n.type));
+      } else {
+        list = list.filter(n => n.type === filters.type);
+      }
+    }
+
+    if (filters.status && filters.status !== 'all' && filters.status !== 'All') {
+      if (filters.status === 'unread') {
+        list = list.filter(n => n.unread === true);
+      } else if (filters.status === 'read') {
+        list = list.filter(n => n.unread === false);
+      }
+    }
+
+    if (filters.bookingRef) {
+      const ref = filters.bookingRef.trim().toLowerCase();
+      list = list.filter(n => 
+        (n.bookingReference && n.bookingReference.toLowerCase().includes(ref)) ||
+        (n.bookingId && n.bookingId.toLowerCase().includes(ref))
+      );
+    }
+
+    if (filters.search) {
+      const q = filters.search.trim().toLowerCase();
+      list = list.filter(n =>
+        (n.title_ar && n.title_ar.toLowerCase().includes(q)) ||
+        (n.title_en && n.title_en.toLowerCase().includes(q)) ||
+        (n.message_ar && n.message_ar.toLowerCase().includes(q)) ||
+        (n.message_en && n.message_en.toLowerCase().includes(q)) ||
+        (n.customerName_ar && n.customerName_ar.toLowerCase().includes(q)) ||
+        (n.customerName_en && n.customerName_en.toLowerCase().includes(q)) ||
+        (n.programTitle_ar && n.programTitle_ar.toLowerCase().includes(q)) ||
+        (n.bookingReference && n.bookingReference.toLowerCase().includes(q))
+      );
+    }
+
+    return list.sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
+  }
+
+  function getCompanyNotificationsSummary() {
+    const todayStr = '2026-10-29';
+    const total = NOTIFICATIONS.length;
+    const unread = NOTIFICATIONS.filter(n => n.unread).length;
+    const read = NOTIFICATIONS.filter(n => !n.unread).length;
+    const today = NOTIFICATIONS.filter(n => (n.createdAt || n.date || '').startsWith(todayStr)).length;
+
+    return { total, unread, read, today };
+  }
+
+  function markCompanyNotificationRead(id, isUnread = false) {
+    const notif = NOTIFICATIONS.find(n => n.id === id);
+    if (!notif) return null;
+    notif.unread = Boolean(isUnread);
+    return notif;
+  }
+
+  function markAllCompanyNotificationsRead() {
+    NOTIFICATIONS.forEach(n => { n.unread = false; });
+    return true;
+  }
+
+  function createCompanyNotification(data) {
+    const newNotif = {
+      id: data.id || `notif_${Date.now()}_${Math.floor(Math.random()*1000)}`,
+      companyId: data.companyId || 'comp_aldorra_01',
+      type: data.type || 'new_booking',
+      title_ar: data.title_ar || '',
+      title_en: data.title_en || '',
+      message_ar: data.message_ar || '',
+      message_en: data.message_en || '',
+      unread: data.unread !== undefined ? Boolean(data.unread) : true,
+      createdAt: data.createdAt || new Date().toISOString(),
+      date: (data.createdAt || new Date().toISOString()).slice(0, 10),
+      bookingId: data.bookingId || null,
+      bookingReference: data.bookingReference || null,
+      customerName_ar: data.customerName_ar || null,
+      customerName_en: data.customerName_en || null,
+      programTitle_ar: data.programTitle_ar || null,
+      programTitle_en: data.programTitle_en || null,
+      amount: data.amount || null,
+      currency: data.currency || 'EGP',
+      adminNotice: data.adminNotice || null,
+      actionUrl: data.actionUrl || (data.bookingId ? `company-booking-details.html?id=${data.bookingId}` : null)
+    };
+    NOTIFICATIONS.unshift(newNotif);
+    return newNotif;
+  }
 
   function getDashboardMetrics(period = 'all', specificDate = null) {
     let filtered = RAW_BOOKINGS;
@@ -1365,6 +1648,21 @@
       party: 'company'
     });
 
+    createCompanyNotification({
+      type: 'deposit_received',
+      title_ar: `تأكيد حجز معتمد — ${booking.reference}`,
+      title_en: `Booking Officially Confirmed — ${booking.reference}`,
+      message_ar: `تم تأكيد حجز المعتمر ${booking.customerName_ar || ''} بنجاح واعتماد المقاعد المخصصة لبرنامج ${booking.programName_ar || ''}.`,
+      message_en: `Booking for ${booking.customerName_en || ''} officially confirmed for ${booking.programName_en || ''}.`,
+      bookingId: booking.id,
+      bookingReference: booking.reference,
+      customerName_ar: booking.customerName_ar,
+      customerName_en: booking.customerName_en,
+      programTitle_ar: booking.programName_ar,
+      programTitle_en: booking.programName_en,
+      amount: booking.paidAmount
+    });
+
     return { success: true, booking };
   }
 
@@ -1436,6 +1734,21 @@
       party: 'company'
     });
 
+    createCompanyNotification({
+      type: 'payment_update',
+      title_ar: `توثيق دفعة مالية للحجز ${booking.reference}`,
+      title_en: `Direct Payment Logged for ${booking.reference}`,
+      message_ar: `تم تسجيل دفعة مالية بقيمة ${amount.toLocaleString('en-US')} ج.م للعميل ${booking.customerName_ar || ''}.`,
+      message_en: `Payment of ${amount.toLocaleString('en-US')} EGP logged for ${booking.customerName_en || ''}.`,
+      bookingId: booking.id,
+      bookingReference: booking.reference,
+      customerName_ar: booking.customerName_ar,
+      customerName_en: booking.customerName_en,
+      programTitle_ar: booking.programName_ar,
+      programTitle_en: booking.programName_en,
+      amount: amount
+    });
+
     return { success: true, booking, payment: newPayment };
   }
 
@@ -1472,6 +1785,20 @@
       actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
       actor_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
       party: 'company'
+    });
+
+    createCompanyNotification({
+      type: 'booking_rejected',
+      title_ar: `تم إلغاء / رفض الحجز ${booking.reference}`,
+      title_en: `Booking Rejected / Cancelled — ${booking.reference}`,
+      message_ar: `تم رفض الحجز ${booking.reference} للعميل ${booking.customerName_ar || ''}. السبب: ${reason}.`,
+      message_en: `Booking ${booking.reference} for ${booking.customerName_en || ''} rejected. Reason: ${reason}.`,
+      bookingId: booking.id,
+      bookingReference: booking.reference,
+      customerName_ar: booking.customerName_ar,
+      customerName_en: booking.customerName_en,
+      programTitle_ar: booking.programName_ar,
+      programTitle_en: booking.programName_en
     });
 
     return { success: true, booking };
@@ -1521,6 +1848,20 @@
       actor_ar: companyUser ? (companyUser.name || 'شركة الدرة للسياحة') : 'شركة الدرة للسياحة',
       actor_en: companyUser ? (companyUser.name_en || 'AL DORRA TRAVEL') : 'AL DORRA TRAVEL',
       party: 'company'
+    });
+
+    createCompanyNotification({
+      type: 'program_change',
+      title_ar: `طلب تعديل برنامج للحجز ${booking.reference}`,
+      title_en: `Program Modification Proposed — ${booking.reference}`,
+      message_ar: `تم اقتراح استبدال البرنامج بـ (${replacementProg.name_ar}) للحجز ${booking.reference} للعميل ${booking.customerName_ar || ''}.`,
+      message_en: `Program replacement with (${replacementProg.name_en}) proposed for booking ${booking.reference} (${booking.customerName_en || ''}).`,
+      bookingId: booking.id,
+      bookingReference: booking.reference,
+      customerName_ar: booking.customerName_ar,
+      customerName_en: booking.customerName_en,
+      programTitle_ar: replacementProg.name_ar,
+      programTitle_en: replacementProg.name_en
     });
 
     return { success: true, booking, proposedChange: booking.proposedChange };
@@ -2168,7 +2509,12 @@
     createCompanyProgram,
     updateCompanyProgram,
     archiveOrDeleteCompanyProgram,
-    getCompanyProgramsSummary
+    getCompanyProgramsSummary,
+    getCompanyNotifications,
+    getCompanyNotificationsSummary,
+    markCompanyNotificationRead,
+    markAllCompanyNotificationsRead,
+    createCompanyNotification
   };
 });
 

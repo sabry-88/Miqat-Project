@@ -152,14 +152,51 @@ function initSchema() {
     CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
     CREATE INDEX IF NOT EXISTS idx_payments_created ON payments(created_at);
     CREATE INDEX IF NOT EXISTS idx_refunds_payment ON refunds(payment_reference);
+
+    CREATE TABLE IF NOT EXISTS company_notifications (
+      id TEXT PRIMARY KEY,
+      company_id TEXT NOT NULL,
+      type TEXT NOT NULL,
+      title_ar TEXT NOT NULL,
+      title_en TEXT NOT NULL,
+      message_ar TEXT NOT NULL,
+      message_en TEXT NOT NULL,
+      unread INTEGER NOT NULL DEFAULT 1,
+      created_at TEXT NOT NULL,
+      booking_id TEXT,
+      booking_reference TEXT,
+      customer_name_ar TEXT,
+      customer_name_en TEXT,
+      program_title_ar TEXT,
+      program_title_en TEXT,
+      amount REAL,
+      currency TEXT DEFAULT 'EGP',
+      admin_notice_json TEXT,
+      action_url TEXT
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_comp_notif_company ON company_notifications(company_id);
+    CREATE INDEX IF NOT EXISTS idx_comp_notif_created ON company_notifications(created_at);
+    CREATE INDEX IF NOT EXISTS idx_comp_notif_type ON company_notifications(type);
+    CREATE INDEX IF NOT EXISTS idx_comp_notif_unread ON company_notifications(unread);
   `);
 
   try { db.exec("ALTER TABLE payments ADD COLUMN package_total INTEGER"); } catch (e) {}
   try { db.exec("ALTER TABLE payments ADD COLUMN payment_option TEXT DEFAULT 'full'"); } catch (e) {}
   try { db.exec("ALTER TABLE payments ADD COLUMN remaining_amount INTEGER DEFAULT 0"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN company_name TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN company_name_en TEXT"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN responsible_person TEXT"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN license_number TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN whatsapp TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN address TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN commercial_registry TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN contract_ref TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN contract_start TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN contract_end TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN contract_signed_at TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN partnership_level TEXT DEFAULT 'platinum'"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN contract_status TEXT DEFAULT 'active'"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active'"); } catch (e) {}
 }
 
@@ -508,12 +545,22 @@ function seedTestCompany() {
   if (existing) {
     db.prepare(`
       UPDATE users
-      SET name = 'AL DORRA TRAVEL',
-          company_name = 'AL DORRA TRAVEL',
+      SET name = 'شركة الدرة للسياحة',
+          company_name = 'شركة الدرة للسياحة',
+          company_name_en = 'AL DORRA TRAVEL',
           responsible_person = 'محمد سعيد',
           license_number = '47852',
           email = 'aldorra@gmail.com',
           governorate = 'الجيزة',
+          address = 'شارع الهرم، الجيزة، مصر',
+          whatsapp = '01156379990',
+          commercial_registry = 'CR-104928',
+          contract_ref = 'MQ-CTR-2025-084',
+          contract_start = '2025-01-01',
+          contract_end = '2026-12-31',
+          contract_signed_at = '2024-12-20',
+          partnership_level = 'platinum',
+          contract_status = 'active',
           role = 'company',
           status = 'active',
           password_salt = ?,
@@ -526,18 +573,28 @@ function seedTestCompany() {
 
   db.prepare(`
     INSERT INTO users (
-      id, name, phone, email, governorate, role, company_name, responsible_person, license_number, status, password_salt, password_hash, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      id, name, phone, email, governorate, role, company_name, company_name_en, responsible_person, license_number, address, whatsapp, commercial_registry, contract_ref, contract_start, contract_end, contract_signed_at, partnership_level, contract_status, status, password_salt, password_hash, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     'usr_comp_01156379990',
-    'AL DORRA TRAVEL',
+    'شركة الدرة للسياحة',
     phone,
     'aldorra@gmail.com',
     'الجيزة',
     'company',
+    'شركة الدرة للسياحة',
     'AL DORRA TRAVEL',
     'محمد سعيد',
     '47852',
+    'شارع الهرم، الجيزة، مصر',
+    '01156379990',
+    'CR-104928',
+    'MQ-CTR-2025-084',
+    '2025-01-01',
+    '2026-12-31',
+    '2024-12-20',
+    'platinum',
+    'active',
     'active',
     salt,
     hash,
@@ -571,7 +628,14 @@ function getUserByPhoneOrEmail(identifier) {
 
 function getUserById(id) {
   if (!id) return null;
-  return db.prepare('SELECT id, name, phone, email, governorate, role, company_name, responsible_person, license_number, status, created_at, updated_at FROM users WHERE id = ?').get(id);
+  return db.prepare(`
+    SELECT id, name, phone, email, governorate, role, company_name, company_name_en, 
+           responsible_person, license_number, address, whatsapp, commercial_registry, 
+           contract_ref, contract_start, contract_end, contract_signed_at, 
+           partnership_level, contract_status, status, created_at, updated_at 
+    FROM users 
+    WHERE id = ? OR (id = 'usr_comp_01156379990' AND ? = 'comp_aldorra_01')
+  `).get(id, id);
 }
 
 function checkPhoneOrEmailExists(phone, email, excludeUserId) {
@@ -607,6 +671,37 @@ function updateUserProfile(userId, { phone, email } = {}) {
   `).run(newPhone, newEmail, now, userId);
 
   return getUserById(userId);
+}
+
+function updateCompanyProfile(userId, { responsible_person, phone, whatsapp, email, governorate, address } = {}) {
+  if (!userId) throw new Error('USER_ID_REQUIRED');
+  const user = getUserById(userId) || (userId === 'comp_aldorra_01' ? getUserByPhoneOrEmail('01156379990') : null);
+  if (!user) throw new Error('COMPANY_NOT_FOUND');
+
+  const now = new Date().toISOString();
+  const actualUserId = user.id;
+
+  const newResponsible = responsible_person !== undefined ? String(responsible_person).trim() : user.responsible_person;
+  const newPhone = phone !== undefined ? normalizePhone(phone) : user.phone;
+  const newWhatsapp = whatsapp !== undefined ? (whatsapp ? normalizePhone(whatsapp) : null) : user.whatsapp;
+  const newEmail = email !== undefined ? (email && String(email).trim() ? String(email).trim().toLowerCase() : null) : user.email;
+  const newGovernorate = governorate !== undefined ? String(governorate).trim() : user.governorate;
+  const newAddress = address !== undefined ? String(address).trim() : user.address;
+
+  // STRICT PROTECTION: company_name, license_number, role, and contract fields are never modified here
+  db.prepare(`
+    UPDATE users
+    SET responsible_person = ?,
+        phone = ?,
+        whatsapp = ?,
+        email = ?,
+        governorate = ?,
+        address = ?,
+        updated_at = ?
+    WHERE id = ?
+  `).run(newResponsible, newPhone, newWhatsapp, newEmail, newGovernorate, newAddress, now, actualUserId);
+
+  return getUserById(actualUserId);
 }
 
 function createUser({ name, phone, email, governorate, password, role = 'customer' }) {
@@ -1191,6 +1286,429 @@ function getRefundByPaymentReference(paymentReference) {
   };
 }
 
+/**
+ * Company Notifications Repository
+ */
+const SEED_COMPANY_NOTIFICATIONS = [
+  {
+    id: 'notif_1',
+    company_id: 'comp_aldorra_01',
+    type: 'new_booking',
+    title_ar: 'طلب حجز إلكتروني جديد — BK-2026-1045',
+    title_en: 'New Online Booking Request — BK-2026-1045',
+    message_ar: 'تم استلام حجز جديد لعدد 2 معتمرين ببرنامج عمرة اقتصادية موفرة (انطلاق 15 نوفمبر 2026).',
+    message_en: 'New booking request received for 2 pilgrims in Economic Umrah Saver program (departure Nov 15, 2026).',
+    unread: 1,
+    created_at: '2026-10-29T10:15:00.000Z',
+    booking_id: 'bkg_1000',
+    booking_reference: 'BK-2026-1045',
+    customer_name_ar: 'أحمد محمود الشريف',
+    customer_name_en: 'Ahmed Mahmoud El-Sharif',
+    program_title_ar: 'عمرة اقتصادية موفرة',
+    program_title_en: 'Economic Umrah Saver',
+    amount: 76000,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1000'
+  },
+  {
+    id: 'notif_2',
+    company_id: 'comp_aldorra_01',
+    type: 'deposit_received',
+    title_ar: 'تأكيد سداد الدفعة المقدمة عبر بوابة الدفع',
+    title_en: 'Deposit Payment Verified via Payment Gateway',
+    message_ar: 'تم بنجاح استلام دفعة جدية الحجز بمبلغ 22,800 ج.م للحجز BK-2026-1045 وتأكيد صلاحية الحجز مبدئياً.',
+    message_en: 'Booking deposit of 22,800 EGP successfully received for BK-2026-1045; reservation is pre-confirmed.',
+    unread: 1,
+    created_at: '2026-10-29T09:42:00.000Z',
+    booking_id: 'bkg_1000',
+    booking_reference: 'BK-2026-1045',
+    customer_name_ar: 'أحمد محمود الشريف',
+    customer_name_en: 'Ahmed Mahmoud El-Sharif',
+    program_title_ar: 'عمرة اقتصادية موفرة',
+    program_title_en: 'Economic Umrah Saver',
+    amount: 22800,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1000'
+  },
+  {
+    id: 'notif_3',
+    company_id: 'comp_aldorra_01',
+    type: 'admin_update',
+    title_ar: 'تعميم وزاري رقم 84/1447: ضوابط البصمة الحيوية والتسكين الإلزامي',
+    title_en: 'Official Circular 84/1447: Biometric Verification & Mandatory Housing Rules',
+    message_ar: 'اعتماد الآلية التنفيذية الجديدة لإصدار تصاريح العمرة والربط المباشر مع منصة نسك للفنادق المؤهلة لموسم 1447هـ.',
+    message_en: 'Implementation directives approved for Umrah permits issuing and direct API integration with Nusuk portal for 1447H.',
+    unread: 1,
+    created_at: '2026-10-29T08:30:00.000Z',
+    booking_id: null,
+    booking_reference: null,
+    customer_name_ar: null,
+    customer_name_en: null,
+    program_title_ar: null,
+    program_title_en: null,
+    amount: null,
+    currency: 'EGP',
+    admin_notice_json: JSON.stringify({
+      circularNumber: 'CIRC-1447-084',
+      issuer_ar: 'وزارة الحج والعمرة — الإدارة العامة لشركات العمرة الخارجية',
+      issuer_en: 'Ministry of Hajj & Umrah — General Directorate of External Umrah',
+      issueDate: '2026-10-29',
+      effectiveDate: '2026-11-01',
+      subject_ar: 'الربط التقني الموحد للبصمة الحيوية وإلزامية عقود الإسكان المصادقة عبر نسك مسار',
+      subject_en: 'Unified Biometric API Integration & Mandatory Certified Housing Contracts via Nusuk Masar',
+      body_ar: 'بناءً على التوجيهات الوزارية الصادرة لتنظيم موسم 1447هـ، يلزم على كافة الشركات السياحية المصرح لها التأكد من استكمال كافة بيانات البصمة الحيوية للمعتمرين وإرفاق عقود التسكين المصادقة إلكترونياً قبل موعد الرحلة بـ 72 ساعة على الأقل لتفادي تأخير إصدار التأشيرات وتفويج الأفواج بالمنافذ الجوية.',
+      body_en: 'In accordance with regulatory directives for season 1447H, all accredited tourism companies must complete pilgrim biometric verifications and upload electronic housing contracts via Nusuk Masar at least 72 hours prior to flight departure to prevent visa delays at ports of entry.'
+    }),
+    action_url: '#modal-adminNoticeModal'
+  },
+  {
+    id: 'notif_4',
+    company_id: 'comp_aldorra_01',
+    type: 'payment_update',
+    title_ar: 'توثيق دفعة مالية مستلمة بمقر الشركة',
+    title_en: 'Direct Payment Logged at Company Branch',
+    message_ar: 'تم توثيق سداد القسط الثاني بقيمة 78,000 ج.م نقداً / شيك مصرفي للحجز BK-2026-1039 وتحديث السجل المالي.',
+    message_en: 'Second installment of 78,000 EGP logged at company branch for BK-2026-1039 and ledger balance updated.',
+    unread: 1,
+    created_at: '2026-10-28T16:20:00.000Z',
+    booking_id: 'bkg_1006',
+    booking_reference: 'BK-2026-1039',
+    customer_name_ar: 'محمود حسن إبراهيم',
+    customer_name_en: 'Mahmoud Hassan Ibrahim',
+    program_title_ar: 'عمرة متميزة 5 نجوم',
+    program_title_en: 'Umrah Premium 5-Star',
+    amount: 78000,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1006'
+  },
+  {
+    id: 'notif_5',
+    company_id: 'comp_aldorra_01',
+    type: 'program_change',
+    title_ar: 'طلب ترقية غرفة وتعديل موعد العودة',
+    title_en: 'Room Upgrade & Return Date Modification Request',
+    message_ar: 'تقدم العميل بطلب ترقية الغرفة من رباعية إلى ثنائية مع تعديل رحلة العودة لتكون يوم 30 نوفمبر.',
+    message_en: 'Customer submitted a request to upgrade from Quad to Double room with departure flight adjusted to Nov 30.',
+    unread: 1,
+    created_at: '2026-10-27T14:10:00.000Z',
+    booking_id: 'bkg_1002',
+    booking_reference: 'BK-2026-1043',
+    customer_name_ar: 'عمر عبد العزيز خليل',
+    customer_name_en: 'Omar Abdel-Aziz Khalil',
+    program_title_ar: 'عمرة اقتصادية موفرة',
+    program_title_en: 'Economic Umrah Saver',
+    amount: null,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1002'
+  },
+  {
+    id: 'notif_6',
+    company_id: 'comp_aldorra_01',
+    type: 'booking_rejected',
+    title_ar: 'إلغاء حجز لعدم اكتمال سداد الدفعة المقدمة',
+    title_en: 'Booking Cancelled Due to Unpaid Deposit Deadline',
+    message_ar: 'تم إلغاء الحجز BK-2026-1042 تلقائياً بعد انقضاء مهلة السداد (72 ساعة) وإعادة إتاحة المقعدين في البرنامج.',
+    message_en: 'Booking BK-2026-1042 was cancelled following the expiration of the 72-hour payment window; seats released.',
+    unread: 0,
+    created_at: '2026-10-26T11:45:00.000Z',
+    booking_id: 'bkg_1003',
+    booking_reference: 'BK-2026-1042',
+    customer_name_ar: 'مريم محمود النجار',
+    customer_name_en: 'Maryam Mahmoud El-Naggar',
+    program_title_ar: 'عمرة النخبة VIP المباشرة',
+    program_title_en: 'Luxury Direct VIP Umrah',
+    amount: null,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1003'
+  },
+  {
+    id: 'notif_7',
+    company_id: 'comp_aldorra_01',
+    type: 'new_booking',
+    title_ar: 'طلب حجز جديد — موسم رمضان المبارك',
+    title_en: 'New Booking Request — Holy Ramadan Season',
+    message_ar: 'تم تسجيل حجز جديد لعدد 2 معتمرين لبرنامج العشر الأواخر من رمضان مع سداد دفعة تأكيد 51,000 ج.م.',
+    message_en: 'New booking registered for 2 pilgrims in Ramadan Last Ten Days program with 51,000 EGP confirmation deposit.',
+    unread: 0,
+    created_at: '2026-10-25T13:00:00.000Z',
+    booking_id: 'bkg_1004',
+    booking_reference: 'BK-2026-1041',
+    customer_name_ar: 'عبد الرحمن طارق الفقي',
+    customer_name_en: 'Abdel-Rahman Tarek El-Fiqi',
+    program_title_ar: 'عمرة شهر رمضان المبارك',
+    program_title_en: 'Holy Ramadan Umrah',
+    amount: 170000,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1004'
+  },
+  {
+    id: 'notif_8',
+    company_id: 'comp_aldorra_01',
+    type: 'admin_update',
+    title_ar: 'اعتماد الحصة التقديرية لموسم الحج السياحي 1447هـ',
+    title_en: 'Approval of 1447H Tourism Hajj Quota Allocation',
+    message_ar: 'صدور الموافقة الرسمية على تخصيص حصة شركة الدرة للسياحة (فئة أ) بواقع 120 تأشيرة حج سياحي فاخر واقتصادي.',
+    message_en: 'Official approval issued allocating Al Dorra Travel (Tier A) 120 pilgrim visas across luxury and economic programs.',
+    unread: 0,
+    created_at: '2026-10-22T09:00:00.000Z',
+    booking_id: null,
+    booking_reference: null,
+    customer_name_ar: null,
+    customer_name_en: null,
+    program_title_ar: null,
+    program_title_en: null,
+    amount: null,
+    currency: 'EGP',
+    admin_notice_json: JSON.stringify({
+      circularNumber: 'CIRC-1447-079',
+      issuer_ar: 'لجنة الحج العليا — وزارة السياحة والآثار',
+      issuer_en: 'Supreme Hajj Committee — Ministry of Tourism & Antiquities',
+      issueDate: '2026-10-22',
+      effectiveDate: '2026-10-25',
+      subject_ar: 'تخصيص الحصص المعتمدة للشركات السياحية فئة (أ) لموسم حج 1447هـ',
+      subject_en: 'Allocation of Certified Quotas for Category (A) Tourism Companies for Hajj Season 1447H',
+      body_ar: 'تعلن اللجنة العليا للحج والعمرة عن اعتماد الحصة الرسمية للشركات ذات الملاءة والخبرة المتميزة، وقد تم تحديد حصة شركة الدرة للسياحة بـ 120 حاجاً موزعة بين باقات الحج السياحي الـ 5 نجوم والحج الاقتصادي، مع التأكيد على الالتزام بضوابط غرفة شركات السياحة.',
+      body_en: 'The Supreme Committee for Hajj and Umrah announces the official allocation of pilgrimage quotas for accredited companies. Al Dorra Travel has been granted 120 pilgrim visas across 5-star and economic programs, strictly adhering to Chamber guidelines.'
+    }),
+    action_url: '#modal-adminNoticeModal'
+  },
+  {
+    id: 'notif_9',
+    company_id: 'comp_aldorra_01',
+    type: 'deposit_received',
+    title_ar: 'سداد دفعة إلكترونية للحجز BK-2026-1038',
+    title_en: 'Electronic Deposit Received for BK-2026-1038',
+    message_ar: 'تم استلام دفعة مقدمة بقيمة 22,800 ج.م عبر بطاقة ائتمانية وتأكيد الحجز برقم المرجع BK-2026-1038.',
+    message_en: 'Deposit of 22,800 EGP received via credit card; booking BK-2026-1038 confirmed.',
+    unread: 0,
+    created_at: '2026-10-18T10:30:00.000Z',
+    booking_id: 'bkg_1007',
+    booking_reference: 'BK-2026-1038',
+    customer_name_ar: 'هدى إبراهيم السيد',
+    customer_name_en: 'Huda Ibrahim El-Sayed',
+    program_title_ar: 'عمرة اقتصادية موفرة',
+    program_title_en: 'Economic Umrah Saver',
+    amount: 22800,
+    currency: 'EGP',
+    admin_notice_json: null,
+    action_url: 'company-booking-details.html?id=bkg_1007'
+  }
+];
+
+function seedCompanyNotifications(companyId = 'comp_aldorra_01') {
+  try {
+    const existing = db.prepare('SELECT COUNT(*) as cnt FROM company_notifications WHERE company_id = ?').get(companyId);
+    if (existing && existing.cnt > 0) return;
+
+    const stmt = db.prepare(`
+      INSERT INTO company_notifications (
+        id, company_id, type, title_ar, title_en, message_ar, message_en,
+        unread, created_at, booking_id, booking_reference, customer_name_ar, customer_name_en,
+        program_title_ar, program_title_en, amount, currency, admin_notice_json, action_url
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    for (const notif of SEED_COMPANY_NOTIFICATIONS) {
+      stmt.run(
+        notif.id,
+        notif.company_id,
+        notif.type,
+        notif.title_ar,
+        notif.title_en,
+        notif.message_ar,
+        notif.message_en,
+        notif.unread,
+        notif.created_at,
+        notif.booking_id,
+        notif.booking_reference,
+        notif.customer_name_ar,
+        notif.customer_name_en,
+        notif.program_title_ar,
+        notif.program_title_en,
+        notif.amount,
+        notif.currency,
+        notif.admin_notice_json,
+        notif.action_url
+      );
+    }
+  } catch (err) {
+    console.error('Error seeding company notifications:', err);
+  }
+}
+
+function getCompanyNotificationsFromDb(companyId = 'comp_aldorra_01', filters = {}) {
+  try {
+    seedCompanyNotifications(companyId);
+    let sql = 'SELECT * FROM company_notifications WHERE company_id = ?';
+    const params = [companyId];
+
+    if (filters.period) {
+      const todayStr = '2026-10-29';
+      if (filters.period === 'today') {
+        sql += ' AND date(created_at) = ?';
+        params.push(todayStr);
+      } else if (filters.period === 'week') {
+        sql += ' AND created_at >= date(?, "-7 days")';
+        params.push(todayStr);
+      } else if (filters.period === 'month') {
+        sql += ' AND created_at >= date(?, "-30 days")';
+        params.push(todayStr);
+      }
+    }
+
+    if (filters.dateFrom) {
+      sql += ' AND date(created_at) >= ?';
+      params.push(filters.dateFrom);
+    }
+
+    if (filters.dateTo) {
+      sql += ' AND date(created_at) <= ?';
+      params.push(filters.dateTo);
+    }
+
+    if (filters.type && filters.type !== 'all') {
+      if (Array.isArray(filters.type)) {
+        sql += ` AND type IN (${filters.type.map(() => '?').join(',')})`;
+        params.push(...filters.type);
+      } else {
+        sql += ' AND type = ?';
+        params.push(filters.type);
+      }
+    }
+
+    if (filters.status && filters.status !== 'all') {
+      if (filters.status === 'unread') {
+        sql += ' AND unread = 1';
+      } else if (filters.status === 'read') {
+        sql += ' AND unread = 0';
+      }
+    }
+
+    if (filters.bookingRef) {
+      sql += ' AND (booking_reference LIKE ? OR booking_id LIKE ?)';
+      params.push(`%${filters.bookingRef}%`, `%${filters.bookingRef}%`);
+    }
+
+    if (filters.search) {
+      sql += ' AND (title_ar LIKE ? OR title_en LIKE ? OR message_ar LIKE ? OR message_en LIKE ? OR customer_name_ar LIKE ? OR customer_name_en LIKE ? OR booking_reference LIKE ? OR program_title_ar LIKE ?)';
+      const s = `%${filters.search}%`;
+      params.push(s, s, s, s, s, s, s, s);
+    }
+
+    sql += ' ORDER BY created_at DESC';
+
+    const rows = db.prepare(sql).all(...params);
+    return rows.map(r => ({
+      ...r,
+      unread: Boolean(r.unread),
+      admin_notice: r.admin_notice_json ? JSON.parse(r.admin_notice_json) : null
+    }));
+  } catch (err) {
+    console.error('getCompanyNotificationsFromDb error:', err);
+    return [];
+  }
+}
+
+function getCompanyNotificationsSummaryFromDb(companyId = 'comp_aldorra_01') {
+  try {
+    seedCompanyNotifications(companyId);
+    const todayStr = '2026-10-29';
+    const totalRow = db.prepare('SELECT COUNT(*) as cnt FROM company_notifications WHERE company_id = ?').get(companyId);
+    const unreadRow = db.prepare('SELECT COUNT(*) as cnt FROM company_notifications WHERE company_id = ? AND unread = 1').get(companyId);
+    const readRow = db.prepare('SELECT COUNT(*) as cnt FROM company_notifications WHERE company_id = ? AND unread = 0').get(companyId);
+    const todayRow = db.prepare('SELECT COUNT(*) as cnt FROM company_notifications WHERE company_id = ? AND date(created_at) = ?').get(companyId, todayStr);
+
+    return {
+      total: totalRow ? totalRow.cnt : 0,
+      unread: unreadRow ? unreadRow.cnt : 0,
+      read: readRow ? readRow.cnt : 0,
+      today: todayRow ? todayRow.cnt : 0
+    };
+  } catch (err) {
+    console.error('getCompanyNotificationsSummaryFromDb error:', err);
+    return { total: 0, unread: 0, read: 0, today: 0 };
+  }
+}
+
+function markCompanyNotificationReadInDb(notificationId, isUnread = false) {
+  try {
+    const val = isUnread ? 1 : 0;
+    db.prepare('UPDATE company_notifications SET unread = ? WHERE id = ?').run(val, notificationId);
+    const row = db.prepare('SELECT * FROM company_notifications WHERE id = ?').get(notificationId);
+    if (!row) return null;
+    return {
+      ...row,
+      unread: Boolean(row.unread),
+      admin_notice: row.admin_notice_json ? JSON.parse(row.admin_notice_json) : null
+    };
+  } catch (err) {
+    console.error('markCompanyNotificationReadInDb error:', err);
+    return null;
+  }
+}
+
+function markAllCompanyNotificationsReadInDb(companyId = 'comp_aldorra_01') {
+  try {
+    db.prepare('UPDATE company_notifications SET unread = 0 WHERE company_id = ?').run(companyId);
+    return true;
+  } catch (err) {
+    console.error('markAllCompanyNotificationsReadInDb error:', err);
+    return false;
+  }
+}
+
+function createCompanyNotificationInDb(notification) {
+  try {
+    const id = notification.id || `notif_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+    const now = notification.created_at || new Date().toISOString();
+    const adminJson = notification.admin_notice ? JSON.stringify(notification.admin_notice) : (notification.admin_notice_json || null);
+
+    db.prepare(`
+      INSERT INTO company_notifications (
+        id, company_id, type, title_ar, title_en, message_ar, message_en,
+        unread, created_at, booking_id, booking_reference, customer_name_ar, customer_name_en,
+        program_title_ar, program_title_en, amount, currency, admin_notice_json, action_url
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      id,
+      notification.company_id || 'comp_aldorra_01',
+      notification.type,
+      notification.title_ar,
+      notification.title_en,
+      notification.message_ar,
+      notification.message_en,
+      notification.unread !== undefined ? (notification.unread ? 1 : 0) : 1,
+      now,
+      notification.booking_id || null,
+      notification.booking_reference || null,
+      notification.customer_name_ar || null,
+      notification.customer_name_en || null,
+      notification.program_title_ar || null,
+      notification.program_title_en || null,
+      notification.amount || null,
+      notification.currency || 'EGP',
+      adminJson,
+      notification.action_url || (notification.booking_id ? `company-booking-details.html?id=${notification.booking_id}` : null)
+    );
+
+    const row = db.prepare('SELECT * FROM company_notifications WHERE id = ?').get(id);
+    return {
+      ...row,
+      unread: Boolean(row.unread),
+      admin_notice: row.admin_notice_json ? JSON.parse(row.admin_notice_json) : null
+    };
+  } catch (err) {
+    console.error('createCompanyNotificationInDb error:', err);
+    return null;
+  }
+}
+
 module.exports = {
   db,
   normalizePhone,
@@ -1213,6 +1731,7 @@ module.exports = {
   recordWhatsAppDispatched,
   provisionAdminUser,
   seedTestCompany,
+  updateCompanyProfile,
   createPaymentRecord,
   getPaymentByReference,
   getPaymentByIdempotencyKey,
@@ -1220,5 +1739,11 @@ module.exports = {
   getAllPaymentsAdmin,
   updatePaymentStatus,
   executeRefundAtomic,
-  getRefundByPaymentReference
+  getRefundByPaymentReference,
+  seedCompanyNotifications,
+  getCompanyNotificationsFromDb,
+  getCompanyNotificationsSummaryFromDb,
+  markCompanyNotificationReadInDb,
+  markAllCompanyNotificationsReadInDb,
+  createCompanyNotificationInDb
 };

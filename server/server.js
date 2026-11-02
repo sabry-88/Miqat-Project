@@ -418,22 +418,154 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
     }
 
+    const freshUser = db.getUserById(sessionUser.id) || sessionUser;
+
     return sendJson(res, 200, {
       success: true,
       company: {
-        id: sessionUser.id,
-        name: sessionUser.name,
-        company_name: sessionUser.company_name || sessionUser.name,
-        responsible_person: sessionUser.responsible_person || 'محمد سعيد',
-        phone: sessionUser.phone,
-        email: sessionUser.email,
-        governorate: sessionUser.governorate || 'الجيزة',
-        license_number: sessionUser.license_number || '47852',
-        role: sessionUser.role,
-        status: sessionUser.status || 'active',
-        created_at: sessionUser.created_at
+        id: sessionUser.company_id || freshUser.id,
+        user_id: freshUser.id,
+        name: freshUser.name || 'شركة الدرة للسياحة',
+        company_name: freshUser.company_name || 'شركة الدرة للسياحة',
+        company_name_en: freshUser.company_name_en || 'AL DORRA TRAVEL',
+        responsible_person: freshUser.responsible_person || 'محمد سعيد',
+        phone: freshUser.phone || '01156379990',
+        whatsapp: freshUser.whatsapp || freshUser.phone || '01156379990',
+        email: freshUser.email || 'aldorra@gmail.com',
+        governorate: freshUser.governorate || 'الجيزة',
+        address: freshUser.address || 'شارع الهرم، الجيزة، مصر',
+        license_number: freshUser.license_number || '47852',
+        commercial_registry: freshUser.commercial_registry || 'CR-104928',
+        role: freshUser.role || 'company',
+        status: freshUser.status || 'active',
+        contract: {
+          ref: freshUser.contract_ref || 'MQ-CTR-2025-084',
+          start_date: freshUser.contract_start || '2025-01-01',
+          end_date: freshUser.contract_end || '2026-12-31',
+          signed_at: freshUser.contract_signed_at || '2024-12-20',
+          partnership_level: freshUser.partnership_level || 'platinum',
+          status: freshUser.contract_status || 'active'
+        },
+        created_at: freshUser.created_at,
+        updated_at: freshUser.updated_at
       }
     });
+  }
+
+  // 7d-2. PUT /api/company/profile (Update Permitted Company Contact Information)
+  if (pathname === '/api/company/profile' && req.method === 'PUT') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    try {
+      const body = await parseJsonBody(req);
+      const freshUser = db.getUserById(sessionUser.id) || sessionUser;
+
+      // 1. Strict Protected Fields Validation & Tampering Detection
+      // Reject any attempt to modify non-editable identity or contract fields
+      const protectedKeys = [
+        'company_name', 'company_name_en', 'license_number', 'commercial_registry',
+        'id', 'user_id', 'role', 'status', 'contract', 'contract_ref', 'contract_start',
+        'contract_end', 'contract_signed_at', 'contract_status', 'partnership_level'
+      ];
+
+      for (const key of protectedKeys) {
+        if (body[key] !== undefined) {
+          const currentVal = freshUser[key];
+          if (typeof body[key] === 'object' || (currentVal !== undefined && String(body[key]) !== String(currentVal))) {
+            return sendJson(res, 400, {
+              success: false,
+              error: `Protected field '${key}' cannot be modified. Official identity, licensing, and contract records are permanently read-only.`
+            });
+          }
+        }
+      }
+
+      // 2. Validate Permitted Fields
+      const { responsible_person, phone, whatsapp, email, governorate, address } = body;
+
+      if (!responsible_person || typeof responsible_person !== 'string' || responsible_person.trim().length < 2) {
+        return sendJson(res, 400, { success: false, error: 'Responsible person name is required (at least 2 characters)' });
+      }
+
+      const cleanPhone = phone ? String(phone).trim().replace(/\s+/g, '') : '';
+      if (!cleanPhone || !/^01[0125][0-9]{8}$/.test(cleanPhone)) {
+        return sendJson(res, 400, { success: false, error: 'Valid Egyptian mobile phone number is required (11 digits starting with 01)' });
+      }
+
+      let cleanWhatsapp = null;
+      if (whatsapp && String(whatsapp).trim()) {
+        cleanWhatsapp = String(whatsapp).trim().replace(/\s+/g, '');
+        if (!/^01[0125][0-9]{8}$/.test(cleanWhatsapp) && !/^\+?[0-9]{10,15}$/.test(cleanWhatsapp)) {
+          return sendJson(res, 400, { success: false, error: 'Invalid WhatsApp phone number format' });
+        }
+      }
+
+      let cleanEmail = null;
+      if (email && String(email).trim()) {
+        cleanEmail = String(email).trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+          return sendJson(res, 400, { success: false, error: 'Invalid email address format' });
+        }
+      }
+
+      if (!governorate || typeof governorate !== 'string' || governorate.trim().length === 0) {
+        return sendJson(res, 400, { success: false, error: 'Governorate is required' });
+      }
+
+      if (!address || typeof address !== 'string' || address.trim().length < 3) {
+        return sendJson(res, 400, { success: false, error: 'Headquarters address is required (at least 3 characters)' });
+      }
+
+      // 3. Persist authorized modifications via database helper
+      const updatedUser = db.updateCompanyProfile(freshUser.id, {
+        responsible_person: responsible_person.trim(),
+        phone: cleanPhone,
+        whatsapp: cleanWhatsapp,
+        email: cleanEmail,
+        governorate: governorate.trim(),
+        address: address.trim()
+      });
+
+      return sendJson(res, 200, {
+        success: true,
+        message: 'Company profile updated successfully',
+        company: {
+          id: sessionUser.company_id || updatedUser.id,
+          user_id: updatedUser.id,
+          name: updatedUser.name,
+          company_name: updatedUser.company_name,
+          company_name_en: updatedUser.company_name_en,
+          responsible_person: updatedUser.responsible_person,
+          phone: updatedUser.phone,
+          whatsapp: updatedUser.whatsapp,
+          email: updatedUser.email,
+          governorate: updatedUser.governorate,
+          address: updatedUser.address,
+          license_number: updatedUser.license_number,
+          commercial_registry: updatedUser.commercial_registry,
+          role: updatedUser.role,
+          status: updatedUser.status,
+          contract: {
+            ref: updatedUser.contract_ref,
+            start_date: updatedUser.contract_start,
+            end_date: updatedUser.contract_end,
+            signed_at: updatedUser.contract_signed_at,
+            partnership_level: updatedUser.partnership_level,
+            status: updatedUser.contract_status
+          },
+          updated_at: updatedUser.updated_at
+        }
+      });
+    } catch (err) {
+      console.error('Failed to update company profile:', err);
+      return sendJson(res, 500, { success: false, error: 'Failed to update company profile' });
+    }
   }
 
   // 7e. GET /api/company/bookings (Partner Company Bookings List)
@@ -736,6 +868,94 @@ const server = http.createServer(async (req, res) => {
       console.error('Image upload error:', err);
       return sendJson(res, 500, { success: false, error: 'Failed to process image upload' });
     }
+  }
+
+  // 7q. GET /api/company/notifications (Partner Company Notifications Feed & Filters)
+  if (pathname === '/api/company/notifications' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const period = searchParams.get('period') || '';
+    const dateFrom = searchParams.get('dateFrom') || '';
+    const dateTo = searchParams.get('dateTo') || '';
+    const type = searchParams.get('type') || '';
+    const status = searchParams.get('status') || '';
+    const bookingRef = searchParams.get('bookingRef') || '';
+    const search = searchParams.get('search') || '';
+
+    const filters = { period, dateFrom, dateTo, type, status, bookingRef, search };
+    let notifications = db.getCompanyNotificationsFromDb(sessionUser.company_id || 'comp_aldorra_01', filters);
+    if (!notifications || notifications.length === 0) {
+      notifications = companyMockData.getCompanyNotifications(filters);
+    }
+    const summary = db.getCompanyNotificationsSummaryFromDb(sessionUser.company_id || 'comp_aldorra_01');
+
+    return sendJson(res, 200, {
+      success: true,
+      totalCount: summary.total,
+      filteredCount: notifications.length,
+      data: notifications
+    });
+  }
+
+  // 7r. GET /api/company/notifications/summary (Partner Company Notifications Summary KPI)
+  if (pathname === '/api/company/notifications/summary' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    let summary = db.getCompanyNotificationsSummaryFromDb(sessionUser.company_id || 'comp_aldorra_01');
+    if (!summary || summary.total === 0) {
+      summary = companyMockData.getCompanyNotificationsSummary();
+    }
+
+    return sendJson(res, 200, {
+      success: true,
+      data: summary
+    });
+  }
+
+  // 7s. PUT /api/company/notifications/:id/read (Mark Single Notification Read / Unread)
+  if (pathname.startsWith('/api/company/notifications/') && pathname.endsWith('/read') && req.method === 'PUT') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    const notifId = decodeURIComponent(pathname.replace('/api/company/notifications/', '').replace('/read', '').trim());
+    const body = await parseJsonBody(req).catch(() => ({}));
+    const isUnread = Boolean(body.unread);
+
+    db.markCompanyNotificationReadInDb(notifId, isUnread);
+    const updated = companyMockData.markCompanyNotificationRead(notifId, isUnread);
+
+    return sendJson(res, 200, {
+      success: true,
+      data: updated || { id: notifId, unread: isUnread }
+    });
+  }
+
+  // 7t. PUT /api/company/notifications/mark-all-read (Mark All Notifications Read)
+  if (pathname === '/api/company/notifications/mark-all-read' && req.method === 'PUT') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    if (sessionUser.role !== 'company' && sessionUser.role !== 'partner_company') {
+      return sendJson(res, 403, { success: false, error: 'Partner company authorization required' });
+    }
+
+    db.markAllCompanyNotificationsReadInDb(sessionUser.company_id || 'comp_aldorra_01');
+    companyMockData.markAllCompanyNotificationsRead();
+
+    return sendJson(res, 200, {
+      success: true,
+      message: 'All notifications marked as read'
+    });
   }
 
   // 8. POST /api/requests (Submit Program Details Inquiry)

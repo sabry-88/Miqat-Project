@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مركز الإشعارات والتنبيهات | ميقات</title>
+  <meta name="description" content="مركز الإشعارات والتنبيهات التشغيلية لشركة السياحة الشريكة لمنصة ميقات — متابعة فورية للحجوزات، الدفعات، التعديلات، والتعميمات الرسمية.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="company-portal-page company-notifications-page" data-page-id="company-notifications" data-page-title-key="company.notifications_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="company.skip_to_content">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & SEVEN-SECTION NAVIGATION ==================== -->
+  <header class="site-header company-portal-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية" data-i18n-attr="aria-label:nav.home_aria">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="46" height="46">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="46" height="46">
+        <div class="brand-wordmark">
+          <span class="brand-title" data-i18n="company.brand_name">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="company.portal_brand">بوابة الشركاء</span>
+        </div>
+      </a>
+
+      <!-- Desktop Seven-Section Navigation -->
+      <nav class="nav-desktop company-nav-desktop" aria-label="تنقل بوابة الشركة الشريكة" data-i18n-attr="aria-label:company.nav_aria">
+        
+        <!-- 1. Dashboard -->
+        <a href="company-dashboard.html" class="nav-link" id="navCompanyDashboard" title="لوحة التحكم" data-i18n-attr="title:company.nav_dashboard">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+
+        <!-- 2. Bookings -->
+        <a href="company-bookings.html" class="nav-link" id="navCompanyBookings" title="الحجوزات" data-i18n-attr="title:company.nav_bookings">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+
+        <!-- 3. Booking Details -->
+        <a href="company-booking-details.html" class="nav-link" id="navCompanyBookingDetails" title="تفاصيل الحجز" data-i18n-attr="title:company.nav_booking_details">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+
+        <!-- 4. Financial Overview -->
+        <a href="company-financial-overview.html" class="nav-link" id="navCompanyFinancial" title="الملخص المالي" data-i18n-attr="title:company.nav_financial">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+
+        <!-- 5. Programs & Trips -->
+        <a href="company-programs.html" class="nav-link" id="navCompanyPrograms" title="البرامج والرحلات" data-i18n-attr="title:company.nav_programs">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Notifications (ACTIVE SECTION) -->
+        <a href="company-notifications.html" class="nav-link nav-link-badge-wrap is-active" aria-current="page" id="navCompanyNotifications" title="الإشعارات" data-i18n-attr="title:company.nav_notifications">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="navNotificationsCount">5</span>
+        </a>
+
+        <!-- 7. Company Profile -->
+        <a href="#company-profile" class="nav-link" data-company-section="profile" title="بيانات الشركة" data-i18n-attr="title:company.nav_profile">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 21h18"></path>
+            <path d="M5 21V7l8-4v18"></path>
+            <path d="M19 21V11l-6-4"></path>
+            <line x1="9" y1="9" x2="9" y2="9.01"></line>
+            <line x1="9" y1="13" x2="9" y2="13.01"></line>
+            <line x1="9" y1="17" x2="9" y2="17.01"></line>
+          </svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher Button -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة" data-i18n-attr="aria-label:company.toggle_lang,title:company.toggle_lang">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تبديل وضع العرض" title="تبديل وضع العرض" data-i18n-attr="aria-label:company.toggle_theme,title:company.toggle_theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Company Identity Badge in Top Bar -->
+        <div class="company-header-identity" id="companyHeaderIdentity" role="button" tabindex="0" data-company-section="profile" aria-label="بيانات الشركة — شركة الدرة للسياحة" title="بيانات الشركة — شركة الدرة للسياحة">
+          <div class="client-avatar company-avatar-medallion" id="companyAvatarMedallion" role="img" aria-label="شعار الشركة" title="شركة الدرة للسياحة">
+            <span class="client-avatar-initial" id="companyAvatarInitial">د</span>
+          </div>
+          <div class="company-header-text">
+            <span class="company-header-name" id="companyHeaderName">AL DORRA TRAVEL</span>
+            <span class="company-header-license" id="companyHeaderLicense">ترخيص 47852</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج" data-i18n-attr="aria-label:nav.sign_out,title:nav.sign_out">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="mobileNavDrawer" data-i18n-attr="aria-label:company.open_menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE SLIDING DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;" data-i18n="company.brand_name">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة" data-i18n-attr="aria-label:company.close_menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Company Identity Card in Mobile Drawer -->
+      <div class="mobile-client-card company-mobile-card" id="mobileCompanyCard">
+        <div class="client-avatar company-avatar-medallion" id="mobileCompanyAvatar">
+          <span class="client-avatar-initial" id="mobileCompanyInitial">د</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileCompanyName">AL DORRA TRAVEL</span>
+          <span class="mobile-client-badge" data-i18n="company.tag_contracted">شركة معتمدة</span>
+        </div>
+      </div>
+
+      <!-- Seven Navigation Sections in Mobile Drawer -->
+      <nav class="mobile-nav-links company-mobile-nav" aria-label="قائمة تنقل بوابة الشركة">
+        <a href="company-dashboard.html" class="mobile-nav-link" id="mobileNavDashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="company-bookings.html" class="mobile-nav-link" id="mobileNavCompanyBookings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+        <a href="company-booking-details.html" class="mobile-nav-link" id="mobileNavCompanyBookingDetails">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+        <a href="company-financial-overview.html" class="mobile-nav-link" id="mobileNavFinancial">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+        <a href="company-programs.html" class="mobile-nav-link" id="mobileNavCompanyPrograms">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+        <a href="company-notifications.html" class="mobile-nav-link is-active" aria-current="page" id="mobileNavNotifications">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="mobileNavNotificationsCount">5</span>
+        </a>
+        <a href="#company-profile" class="mobile-nav-link" data-company-section="profile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة" data-i18n-attr="aria-label:common.lang_toggle">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تبديل وضع العرض" data-i18n-attr="aria-label:common.theme_toggle">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle></svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn">
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main id="main-content" class="company-main-container portal-main-container">
+    <div class="container company-content-wrapper" id="companyMainContent">
+
+      <!-- Breadcrumbs Navigation -->
+      <nav class="details-breadcrumbs portal-breadcrumb-nav" aria-label="مسار التنقل" data-i18n-attr="aria-label:common.breadcrumb">
+        <a href="company-dashboard.html" class="breadcrumb-link" data-i18n="company.breadcrumb_dashboard">لوحة التحكم</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="breadcrumb-current" data-i18n="company.breadcrumb_notifications">الإشعارات</span>
+      </nav>
+
+      <!-- Page Header & Action Bar -->
+      <div class="portal-page-header notif-page-header">
+        <div class="header-title-wrap">
+          <div class="header-heading-row">
+            <h1 class="portal-page-title" data-i18n="company.notifications_header_title">مركز الإشعارات والتنبيهات التشغيلية</h1>
+            <span class="notif-active-badge" id="headerUnreadBadge">
+              <span class="unread-dot-pulse"></span>
+              <span id="headerUnreadText">5 إشعارات غير مقروءة</span>
+            </span>
+          </div>
+          <p class="portal-page-subtitle" data-i18n="company.notifications_header_desc">متابعة فورية للحجوزات الجديدة، الدفعات المستلمة، طلبات التعديل، والتعميمات الرسمية لشركة الدرة للسياحة</p>
+        </div>
+
+        <div class="portal-header-actions">
+          <!-- Mark All As Read Button -->
+          <button type="button" class="btn btn-secondary notif-action-btn" id="btnMarkAllRead" title="تحديد كافة الإشعارات كمقروءة" data-i18n-attr="title:company.btn_mark_all_read">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+              <polyline points="20 12 14 18"></polyline>
+            </svg>
+            <span data-i18n="company.btn_mark_all_read">تحديد الكل كمقروء</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== 4 SUMMARY KPI CARDS ==================== -->
+      <section class="notif-kpi-grid" id="notificationsKpiGrid" aria-label="ملخص إحصائيات الإشعارات" data-i18n-attr="aria-label:company.kpi_heading">
+        
+        <!-- KPI 1: Total Notifications -->
+        <div class="notif-kpi-card" id="kpiTotalNotificationsCard" data-kpi-filter="all" role="button" tabindex="0" title="عرض كافة الإشعارات" data-i18n-attr="title:company.kpi_total_notifications">
+          <div class="kpi-card-header">
+            <span class="kpi-card-label" data-i18n="company.kpi_total_notifications">إجمالي الإشعارات</span>
+            <div class="kpi-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="kpi-card-body">
+            <span class="kpi-value font-numeric" id="kpiTotalNotifications">9</span>
+          </div>
+          <div class="kpi-card-footer">
+            <span class="kpi-meta-hint" data-i18n="company.kpi_total_meta">سجل التنبيهات المعتمد</span>
+          </div>
+        </div>
+
+        <!-- KPI 2: Unread Notifications -->
+        <div class="notif-kpi-card is-active-filter" id="kpiUnreadNotificationsCard" data-kpi-filter="unread" role="button" tabindex="0" title="تصفية حسب غير المقروءة" data-i18n-attr="title:company.kpi_unread_notifications">
+          <div class="kpi-card-header">
+            <span class="kpi-card-label" data-i18n="company.kpi_unread_notifications">إشعارات غير مقروءة</span>
+            <div class="kpi-icon-wrap kpi-icon-unread" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="kpi-card-body">
+            <span class="kpi-value font-numeric" id="kpiUnreadNotifications">5</span>
+          </div>
+          <div class="kpi-card-footer">
+            <span class="kpi-meta-hint" data-i18n="company.kpi_unread_meta">تتطلب اتخاذ إجراء أو مراجعة</span>
+          </div>
+        </div>
+
+        <!-- KPI 3: Read Notifications -->
+        <div class="notif-kpi-card" id="kpiReadNotificationsCard" data-kpi-filter="read" role="button" tabindex="0" title="تصفية حسب المقروءة" data-i18n-attr="title:company.kpi_read_notifications">
+          <div class="kpi-card-header">
+            <span class="kpi-card-label" data-i18n="company.kpi_read_notifications">إشعارات تمت قراءتها</span>
+            <div class="kpi-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="kpi-card-body">
+            <span class="kpi-value font-numeric" id="kpiReadNotifications">4</span>
+          </div>
+          <div class="kpi-card-footer">
+            <span class="kpi-meta-hint" data-i18n="company.kpi_read_meta">تم الاطلاع عليها مسبقاً</span>
+          </div>
+        </div>
+
+        <!-- KPI 4: Today's Notifications -->
+        <div class="notif-kpi-card" id="kpiTodayNotificationsCard" data-kpi-filter="today" role="button" tabindex="0" title="تصفية إشعارات اليوم" data-i18n-attr="title:company.kpi_today_notifications">
+          <div class="kpi-card-header">
+            <span class="kpi-card-label" data-i18n="company.kpi_today_notifications">إشعارات اليوم</span>
+            <div class="kpi-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="kpi-card-body">
+            <span class="kpi-value font-numeric" id="kpiTodayNotifications">3</span>
+          </div>
+          <div class="kpi-card-footer">
+            <span class="kpi-meta-hint" data-i18n="company.kpi_today_meta">الواردة خلال اليوم الحالي</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================== ADVANCED FILTERING & SEARCH CONTROLS ==================== -->
+      <section class="notif-filter-section" id="notificationsFilterCard" aria-label="أدوات التصفية والبحث في الإشعارات" data-i18n-attr="aria-label:company.fin_filters_heading">
+        
+        <!-- Row 1: Quick Period Tabs -->
+        <div class="filter-quick-period-row">
+          <span class="filter-row-label" data-i18n="company.filter_quick_period">الفترة الزمنية السريعة:</span>
+          <div class="quick-period-tabs" role="tablist">
+            <button type="button" class="period-tab-btn is-active" id="btnPeriodAll" data-period="all" data-i18n="company.filter_period_all">كافة الإشعارات</button>
+            <button type="button" class="period-tab-btn" id="btnPeriodToday" data-period="today" data-i18n="company.filter_period_today">إشعارات اليوم</button>
+            <button type="button" class="period-tab-btn" id="btnPeriodWeek" data-period="week" data-i18n="company.filter_period_week">آخر 7 أيام</button>
+            <button type="button" class="period-tab-btn" id="btnPeriodMonth" data-period="month" data-i18n="company.filter_period_month">آخر 30 يوماً</button>
+          </div>
+        </div>
+
+        <!-- Row 2: Comprehensive Multi-Criteria Filters Form -->
+        <div class="notif-filters-grid">
+          
+          <!-- Filter 1: Notification Type -->
+          <div class="filter-field-group">
+            <label for="filterNotifType" class="field-label" data-i18n="company.filter_type_label">نوع الإشعار</label>
+            <select id="filterNotifType" class="form-select">
+              <option value="all" data-i18n="company.notif_type_all">جميع الأنواع</option>
+              <option value="new_booking" data-i18n="company.notif_type_new_booking">حجز جديد</option>
+              <option value="deposit_received" data-i18n="company.notif_type_deposit_received">سداد الدفعة المقدمة</option>
+              <option value="payment_update" data-i18n="company.notif_type_payment_update">تحديث دفعة مالية</option>
+              <option value="program_change" data-i18n="company.notif_type_program_change">طلب تعديل الرحلة</option>
+              <option value="booking_rejected" data-i18n="company.notif_type_booking_rejected">إلغاء / رفض الحجز</option>
+              <option value="admin_update" data-i18n="company.notif_type_admin_update">تعميم إداري رسمي</option>
+            </select>
+          </div>
+
+          <!-- Filter 2: Read Status -->
+          <div class="filter-field-group">
+            <label for="filterNotifStatus" class="field-label" data-i18n="company.filter_status_label">حالة القراءة</label>
+            <select id="filterNotifStatus" class="form-select">
+              <option value="all" data-i18n="company.filter_status_all">كافة الحالات</option>
+              <option value="unread" data-i18n="company.filter_status_unread">غير المقروءة فقط</option>
+              <option value="read" data-i18n="company.filter_status_read">المقروءة فقط</option>
+            </select>
+          </div>
+
+          <!-- Filter 3: Date From -->
+          <div class="filter-field-group">
+            <label for="filterNotifDateFrom" class="field-label" data-i18n="company.filter_date_from">من تاريخ</label>
+            <input type="date" id="filterNotifDateFrom" class="form-input">
+          </div>
+
+          <!-- Filter 4: Date To -->
+          <div class="filter-field-group">
+            <label for="filterNotifDateTo" class="field-label" data-i18n="company.filter_date_to">إلى تاريخ</label>
+            <input type="date" id="filterNotifDateTo" class="form-input">
+          </div>
+
+          <!-- Filter 5: Booking Reference -->
+          <div class="filter-field-group">
+            <label for="filterNotifBookingRef" class="field-label" data-i18n="company.filter_search_ref_label">الرقم المرجعي للحجز</label>
+            <div class="input-with-icon">
+              <input type="text" id="filterNotifBookingRef" class="form-input" placeholder="مثال: BK-2026-1045" data-i18n-attr="placeholder:company.filter_search_ref_placeholder">
+            </div>
+          </div>
+
+          <!-- Filter 6: Global Text Search -->
+          <div class="filter-field-group filter-field-grow">
+            <label for="filterNotifSearch" class="field-label" data-i18n="company.filter_search_text_label">البحث في محتوى الإشعارات</label>
+            <div class="input-with-icon">
+              <input type="search" id="filterNotifSearch" class="form-input" placeholder="اسم العميل، البرنامج، الموضوع..." data-i18n-attr="placeholder:company.filter_search_text_placeholder">
+            </div>
+          </div>
+
+          <!-- Filter Actions: Reset Button -->
+          <div class="filter-actions-col">
+            <button type="button" class="btn btn-secondary btn-reset-filters" id="btnResetNotifFilters" title="إعادة ضبط الفلاتر" data-i18n-attr="title:company.btn_reset_filters">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span data-i18n="company.btn_reset_filters">إعادة الضبط</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Row 3: Active Filters & Live Dynamic Results Count Bar -->
+        <div class="notif-meta-bar">
+          <div class="notif-active-chips" id="notifActiveChips">
+            <!-- Programmatically rendered chips -->
+          </div>
+          <div class="notif-results-count-wrap">
+            <span class="results-count-text" id="notifResultsCount">عرض 9 من أصل 9 إشعار</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================== NOTIFICATIONS FEED LIST ==================== -->
+      <section class="notif-feed-container" aria-label="قائمة الإشعارات والتنبيهات" data-i18n-attr="aria-label:company.notifications_title">
+        
+        <!-- Live Notifications Cards Feed -->
+        <div class="notif-cards-list" id="notificationsCardsList">
+          <!-- Programmatically populated by renderNotificationsPage() -->
+        </div>
+
+        <!-- Empty State (Shown when 0 results match active filters) -->
+        <div class="notif-empty-state" id="notificationsEmptyState" style="display: none;">
+          <div class="empty-icon-wrap subtle-navy">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </div>
+          <h3 class="empty-title" data-i18n="company.empty_notifications_title">لا توجد إشعارات مطابقة</h3>
+          <p class="empty-desc" data-i18n="company.empty_notifications_desc">لم يتم العثور على أي إشعارات تطابق معايير التصفية المحددة. جرب تغيير الفترة أو مسح الفلاتر.</p>
+          <button type="button" class="btn btn-secondary" id="btnEmptyReset" data-i18n="company.empty_notifications_reset_btn">مسح كافة الفلاتر</button>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== ADMINISTRATIVE CIRCULAR MODAL ==================== -->
+  <div id="adminNoticeModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="adminNoticeBackdrop"></div>
+    <div class="company-modal-dialog admin-notice-dialog">
+      
+      <div class="modal-dialog-header">
+        <div class="modal-header-icon-wrap subtle-gold">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div class="modal-header-text">
+          <h3 class="modal-dialog-title" data-i18n="company.admin_modal_title">تفاصيل التعميم الإداري والتوجيه الرسمي</h3>
+          <span class="modal-circular-badge" id="modalCircularNo">CIRC-1447-084</span>
+        </div>
+        <button type="button" class="modal-close-x" id="modalNoticeCloseX" aria-label="إغلاق" data-i18n-attr="aria-label:company.modal_btn_close">✕</button>
+      </div>
+
+      <div class="modal-dialog-body">
+        
+        <div class="notice-meta-grid">
+          <div class="notice-meta-item">
+            <span class="meta-label" data-i18n="company.admin_modal_issuer">الجهة المصدرة:</span>
+            <strong class="meta-val" id="modalIssuer" data-i18n="company.admin_default_issuer">وزارة الحج والعمرة</strong>
+          </div>
+          <div class="notice-meta-item">
+            <span class="meta-label" data-i18n="company.admin_modal_date">تاريخ الصدور:</span>
+            <span class="meta-val font-numeric" id="modalIssueDate">2026-10-29</span>
+          </div>
+          <div class="notice-meta-item">
+            <span class="meta-label" data-i18n="company.admin_modal_effective">تاريخ السريان الإلزامي:</span>
+            <span class="meta-val font-numeric" id="modalEffectiveDate">2026-11-01</span>
+          </div>
+        </div>
+
+        <div class="notice-subject-block">
+          <span class="meta-label" data-i18n="company.admin_modal_subject">موضوع التعميم:</span>
+          <h4 class="notice-subject-title" id="modalSubject" data-i18n="company.admin_default_subject">الربط التقني الموحد للبصمة الحيوية وإلزامية عقود الإسكان المصادقة</h4>
+        </div>
+
+        <div class="notice-content-card">
+          <div class="notice-content-label" data-i18n="company.admin_modal_body_title">النص الرسمي للقرار:</div>
+          <p class="notice-content-text" id="modalBody" data-i18n="company.admin_default_body">
+            بناءً على التوجيهات الوزارية الصادرة لتنظيم موسم 1447هـ، يلزم على كافة الشركات السياحية المصرح لها التأكد من استكمال كافة بيانات البصمة الحيوية للمعتمرين وإرفاق عقود التسكين المصادقة إلكترونياً قبل موعد الرحلة بـ 72 ساعة على الأقل.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-primary" id="modalAckBtn" data-i18n="company.admin_modal_ack_btn">تم الاطلاع والالتزام بالتوجيه</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== FUTURE SCOPE ROADMAP MODAL ==================== -->
+  <div id="companyFutureModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="companyModalBackdrop"></div>
+    <div class="company-modal-dialog">
+      <div class="modal-icon-wrap">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="modal-dialog-title" id="futureModalTitle" data-i18n="company.future_title">قسم قيد التطوير</h3>
+      <p class="modal-dialog-message" id="futureModalMessage" data-i18n="company.future_msg">هذا القسم ضمن خطة التوسعة القادمة لبوابة الشركات الشريكة لمنصة ميقات.</p>
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-primary" id="futureModalCloseBtn" data-i18n="company.future_btn">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="company-toast-container" id="companyToastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ==================== APPROVED CANONICAL FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-title" data-i18n="company.brand_name">مـيـقـات</span>
+        <span class="brand-tagline">MIQAT PLATFORM — PARTNER PORTAL</span>
+      </div>
+      <p class="footer-copy" data-i18n="company.footer_copy">© 2026 جميع الحقوق محفوظة لمنصة ميقات. بوابة الشركات السياحية المعتمدة والمرخصة.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./company-mock-data.js"></script>
+  <script src="./company-portal.js"></script>
+</body>
+</html>
+

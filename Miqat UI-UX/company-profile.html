@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="company.profile_page_title">بيانات الشركة | ميقات</title>
+  <meta name="description" content="الملف التعريفي والبيانات التشغيلية والتعاقدية لشركة السياحة الشريكة لمنصة ميقات — إدارة معلومات التواصل والمسؤول ومتابعة بيانات الاعتماد والترخيص.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="company-portal-page company-profile-page" data-page-id="company-profile" data-page-title-key="company.profile_page_title">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="company.skip_to_content">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== HEADER & SEVEN-SECTION NAVIGATION ==================== -->
+  <header class="site-header company-portal-header" id="siteHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="index.html" class="brand-wrapper" aria-label="ميقات — الصفحة الرئيسية" data-i18n-attr="aria-label:nav.home_aria">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="brand-logo-img logo-light" width="46" height="46">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="brand-logo-img logo-dark" width="46" height="46">
+        <div class="brand-wordmark">
+          <span class="brand-title" data-i18n="company.brand_name">مـيـقـات</span>
+          <span class="brand-tagline" data-i18n="company.portal_brand">بوابة الشركاء</span>
+        </div>
+      </a>
+
+      <!-- Desktop Seven-Section Navigation -->
+      <nav class="nav-desktop company-nav-desktop" aria-label="تنقل بوابة الشركة الشريكة" data-i18n-attr="aria-label:company.nav_aria">
+        
+        <!-- 1. Dashboard -->
+        <a href="company-dashboard.html" class="nav-link" id="navCompanyDashboard" title="لوحة التحكم" data-i18n-attr="title:company.nav_dashboard">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+
+        <!-- 2. Bookings -->
+        <a href="company-bookings.html" class="nav-link" id="navCompanyBookings" title="الحجوزات" data-i18n-attr="title:company.nav_bookings">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+
+        <!-- 3. Booking Details -->
+        <a href="company-booking-details.html" class="nav-link" id="navCompanyBookingDetails" title="تفاصيل الحجز" data-i18n-attr="title:company.nav_booking_details">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+
+        <!-- 4. Financial Overview -->
+        <a href="company-financial-overview.html" class="nav-link" id="navCompanyFinancial" title="الملخص المالي" data-i18n-attr="title:company.nav_financial">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+
+        <!-- 5. Programs & Trips -->
+        <a href="company-programs.html" class="nav-link" id="navCompanyPrograms" title="البرامج والرحلات" data-i18n-attr="title:company.nav_programs">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+          </svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Notifications -->
+        <a href="company-notifications.html" class="nav-link nav-link-badge-wrap" id="navCompanyNotifications" title="الإشعارات" data-i18n-attr="title:company.nav_notifications">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="navNotificationsCount">0</span>
+        </a>
+
+        <!-- 7. Company Profile (ACTIVE SECTION) -->
+        <a href="company-profile.html" class="nav-link is-active" aria-current="page" id="navCompanyProfile" title="بيانات الشركة" data-i18n-attr="title:company.nav_profile">
+          <svg class="nav-item-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 21h18"></path>
+            <path d="M5 21V7l8-4v18"></path>
+            <path d="M19 21V11l-6-4"></path>
+            <line x1="9" y1="9" x2="9" y2="9.01"></line>
+            <line x1="9" y1="13" x2="9" y2="13.01"></line>
+            <line x1="9" y1="17" x2="9" y2="17.01"></line>
+          </svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        
+        <!-- Language Switcher Button -->
+        <button type="button" class="control-btn" id="langToggleBtn" aria-label="تغيير اللغة" title="تغيير اللغة" data-i18n-attr="aria-label:company.toggle_lang,title:company.toggle_lang">
+          <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="control-btn" id="themeToggleBtn" aria-label="تبديل وضع العرض" title="تبديل وضع العرض" data-i18n-attr="aria-label:company.toggle_theme,title:company.toggle_theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Company Identity Badge in Top Bar -->
+        <div class="company-header-identity is-active" id="companyHeaderIdentity" role="button" tabindex="0" data-company-section="profile" aria-label="بيانات الشركة — شركة الدرة للسياحة" title="بيانات الشركة — شركة الدرة للسياحة">
+          <div class="client-avatar company-avatar-medallion" id="companyAvatarMedallion" role="img" aria-label="شعار الشركة" title="شركة الدرة للسياحة">
+            <span class="client-avatar-initial" id="companyAvatarInitial">د</span>
+          </div>
+          <div class="company-header-text">
+            <span class="company-header-name" id="companyHeaderName">شركة الدرة للسياحة</span>
+            <span class="company-header-license" id="companyHeaderLicense">ترخيص 47852</span>
+          </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button type="button" class="client-logout-btn" id="headerLogoutBtn" aria-label="تسجيل الخروج" title="تسجيل الخروج" data-i18n-attr="aria-label:nav.sign_out,title:nav.sign_out">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="client-logout-text" data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="control-btn menu-toggle-btn" id="mobileMenuToggle" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="mobileNavDrawer" data-i18n-attr="aria-label:company.open_menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE SLIDING DRAWER ==================== -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-backdrop"></div>
+    <div class="mobile-nav-content">
+      
+      <div class="mobile-nav-header">
+        <div class="brand-wrapper">
+          <img src="./assets/Miqat Logo Transparent.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-light">
+          <img src="./assets/Miqat Logo Dark.png" alt="ميقات" width="38" height="38" class="brand-logo-img logo-dark">
+          <span class="brand-title" style="font-size: 1.25rem;" data-i18n="company.brand_name">مـيـقـات</span>
+        </div>
+        <button type="button" class="control-btn" id="mobileNavClose" aria-label="إغلاق القائمة" data-i18n-attr="aria-label:company.close_menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Company Identity Card in Mobile Drawer -->
+      <div class="mobile-client-card company-mobile-card" id="mobileCompanyCard">
+        <div class="client-avatar company-avatar-medallion" id="mobileCompanyAvatar">
+          <span class="client-avatar-initial" id="mobileCompanyInitial">د</span>
+        </div>
+        <div class="mobile-client-info">
+          <span class="mobile-client-name" id="mobileCompanyName">شركة الدرة للسياحة</span>
+          <span class="mobile-client-badge" data-i18n="company.tag_contracted">شركة معتمدة</span>
+        </div>
+      </div>
+
+      <!-- Seven Navigation Sections in Mobile Drawer -->
+      <nav class="mobile-nav-links company-mobile-nav" aria-label="قائمة تنقل بوابة الشركة">
+        <a href="company-dashboard.html" class="mobile-nav-link" id="mobileNavDashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span data-i18n="company.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="company-bookings.html" class="mobile-nav-link" id="mobileNavCompanyBookings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span data-i18n="company.nav_bookings">الحجوزات</span>
+        </a>
+        <a href="company-booking-details.html" class="mobile-nav-link" id="mobileNavCompanyBookingDetails">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span data-i18n="company.nav_booking_details">تفاصيل الحجز</span>
+        </a>
+        <a href="company-financial-overview.html" class="mobile-nav-link" id="mobileNavFinancial">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="company.nav_financial">الملخص المالي</span>
+        </a>
+        <a href="company-programs.html" class="mobile-nav-link" id="mobileNavCompanyPrograms">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span data-i18n="company.nav_programs">البرامج والرحلات</span>
+        </a>
+        <a href="company-notifications.html" class="mobile-nav-link" id="mobileNavNotifications">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span data-i18n="company.nav_notifications">الإشعارات</span>
+          <span class="nav-counter-pill" id="mobileNavNotificationsCount">0</span>
+        </a>
+        <!-- Section 7 Profile Active in Mobile Drawer -->
+        <a href="company-profile.html" class="mobile-nav-link is-active" aria-current="page" id="mobileNavCompanyProfile">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path></svg>
+          <span data-i18n="company.nav_profile">بيانات الشركة</span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-controls-row">
+          <button type="button" class="control-btn" id="mobileLangToggleBtn" aria-label="تغيير اللغة" data-i18n-attr="aria-label:common.lang_toggle">
+            <span class="lang-label" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+          </button>
+          <button type="button" class="control-btn" id="mobileThemeToggleBtn" aria-label="تبديل وضع العرض" data-i18n-attr="aria-label:common.theme_toggle">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle></svg>
+          </button>
+        </div>
+        <button type="button" class="client-logout-btn mobile-logout-btn" id="mobileLogoutBtn">
+          <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main id="main-content" class="portal-main-wrapper profile-main-container">
+    <div class="container">
+
+      <!-- Breadcrumbs Navigation -->
+      <div class="company-breadcrumbs-container">
+        <nav class="details-breadcrumbs" aria-label="مسار التنقل">
+          <a href="company-dashboard.html" class="breadcrumb-item" data-i18n="company.nav_dashboard">لوحة التحكم</a>
+          <span class="breadcrumb-separator" aria-hidden="true">/</span>
+          <span class="breadcrumb-item current" aria-current="page" data-i18n="company.profile_title">بيانات الشركة</span>
+        </nav>
+      </div>
+
+      <!-- Page Header with Title, Badges and Action Controls -->
+      <div class="company-page-header profile-page-header">
+        <div class="header-titles">
+          <div class="header-title-badge-row">
+            <h1 class="page-title" data-i18n="company.profile_title">بيانات الشركة</h1>
+            <span class="profile-verified-badge" id="profileVerifiedBadge">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+              <span data-i18n="company.profile_badge_verified">شريك معتمد وموثق</span>
+            </span>
+          </div>
+          <p class="page-subtitle" data-i18n="company.profile_subtitle">الملف التعريفي والبيانات التشغيلية والتعاقدية لشركة السياحة المعتمدة لدى منصة ميقات</p>
+        </div>
+
+        <div class="profile-header-actions" id="profileHeaderActions">
+          <!-- View Mode Actions (Default) -->
+          <div class="profile-view-actions" id="profileViewActions">
+            <button type="button" class="btn-primary profile-btn" id="btnEditProfile">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              <span data-i18n="company.profile_btn_edit">تعديل البيانات</span>
+            </button>
+          </div>
+
+          <!-- Edit Mode Actions -->
+          <div class="profile-edit-actions" id="profileEditActions" style="display: none;">
+            <button type="button" class="btn-secondary profile-btn" id="btnCancelEditProfile">
+              <span data-i18n="company.profile_btn_cancel">إلغاء</span>
+            </button>
+            <button type="button" class="btn-primary profile-btn" id="btnSaveProfile">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span data-i18n="company.profile_btn_save">حفظ التغييرات</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback Alert Banner -->
+      <div id="profileFeedbackBanner" class="profile-feedback-banner" role="alert" aria-live="polite" style="display: none;"></div>
+
+      <!-- Form Container Wrapping Profile Sections -->
+      <form id="companyProfileForm" class="profile-form-grid" novalidate>
+
+        <!-- ==================== SECTION 1: OFFICIAL COMPANY IDENTITY (PROTECTED) ==================== -->
+        <section class="profile-card profile-card-overview" aria-labelledby="secOverviewTitle">
+          <div class="profile-card-header">
+            <div class="profile-card-header-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <path d="M16 2v4"></path>
+                <path d="M8 2v4"></path>
+                <path d="M3 10h18"></path>
+                <path d="M8 14h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M16 14h.01"></path>
+                <path d="M8 18h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M16 18h.01"></path>
+              </svg>
+            </div>
+            <div class="profile-card-header-text">
+              <h2 class="profile-card-title" id="secOverviewTitle" data-i18n="company.profile_sec_overview_title">بيانات الشركة الرسمية</h2>
+              <p class="profile-card-desc" data-i18n="company.profile_sec_overview_desc">البيانات المسجلة والترخيص السياحي المعتمد لدى وزارة السياحة ومنصة ميقات (حقول محمية)</p>
+            </div>
+          </div>
+
+          <div class="profile-fields-grid">
+            
+            <!-- Protected 1: Company Name -->
+            <div class="profile-field-group">
+              <span class="profile-field-label">
+                <span data-i18n="company.profile_label_company_name">اسم الشركة</span>
+                <span class="profile-lock-indicator" title="حقل محمي — غير قابل للتعديل" data-i18n-attr="title:company.profile_badge_protected">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+              </span>
+              <div class="profile-readonly-display" id="profileCompanyName">شركة الدرة للسياحة</div>
+              <div class="profile-field-hint" data-i18n="company.profile_badge_protected">حقل محمي — غير قابل للتعديل</div>
+            </div>
+
+            <!-- Protected 2: Tourism License Number -->
+            <div class="profile-field-group">
+              <span class="profile-field-label">
+                <span data-i18n="company.profile_label_license_number">رقم الترخيص السياحي</span>
+                <span class="profile-lock-indicator" title="حقل محمي — غير قابل للتعديل" data-i18n-attr="title:company.profile_badge_protected">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+              </span>
+              <div class="profile-readonly-display profile-code-display" id="profileLicenseNumber">47852</div>
+              <div class="profile-field-hint" data-i18n="company.profile_badge_protected">حقل محمي — غير قابل للتعديل</div>
+            </div>
+
+            <!-- Protected 3: Commercial Registry -->
+            <div class="profile-field-group">
+              <span class="profile-field-label">
+                <span data-i18n="company.profile_label_commercial_registry">السجل التجاري</span>
+                <span class="profile-lock-indicator" title="حقل محمي — غير قابل للتعديل" data-i18n-attr="title:company.profile_badge_protected">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+              </span>
+              <div class="profile-readonly-display profile-code-display" id="profileCommercialRegistry">CR-104928</div>
+            </div>
+
+            <!-- Protected 4: Partner Identifier -->
+            <div class="profile-field-group">
+              <span class="profile-field-label">
+                <span data-i18n="company.profile_label_company_id">معرّف الشريك</span>
+                <span class="profile-lock-indicator" title="حقل محمي — غير قابل للتعديل" data-i18n-attr="title:company.profile_badge_protected">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+              </span>
+              <div class="profile-readonly-display profile-code-display" id="profileCompanyId">comp_aldorra_01</div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==================== SECTION 2: CONTACT & OPERATIONAL INFORMATION (EDITABLE) ==================== -->
+        <section class="profile-card profile-card-contact" aria-labelledby="secContactTitle">
+          <div class="profile-card-header">
+            <div class="profile-card-header-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="profile-card-header-text">
+              <h2 class="profile-card-title" id="secContactTitle" data-i18n="company.profile_sec_contact_title">بيانات الاتصال والمسؤول</h2>
+              <p class="profile-card-desc" data-i18n="company.profile_sec_contact_desc">معلومات التواصل التشغيلية والمسؤول المباشر عن متابعة الرحلات والحجوزات</p>
+            </div>
+          </div>
+
+          <div class="profile-fields-grid">
+
+            <!-- Field 1: Responsible Person (REQUIRED -> Register Star) -->
+            <div class="profile-field-group">
+              <label class="form-label" for="profileResponsiblePerson">
+                <span data-i18n="company.profile_label_responsible_person">اسم الشخص المسؤول</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <div class="profile-input-wrapper">
+                <input 
+                  type="text" 
+                  id="profileResponsiblePerson" 
+                  name="responsible_person" 
+                  class="profile-input is-editable-input" 
+                  readonly 
+                  required
+                  data-i18n-attr="placeholder:company.profile_placeholder_responsible"
+                  placeholder="أدخل اسم الشخص المسؤول"
+                >
+              </div>
+              <div class="profile-field-error" id="profileResponsiblePersonError" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Field 2: Primary Phone (REQUIRED -> Register Star) -->
+            <div class="profile-field-group">
+              <label class="form-label" for="profilePhone">
+                <span data-i18n="company.profile_label_phone">رقم الهاتف الأساسي</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <div class="profile-input-wrapper">
+                <input 
+                  type="tel" 
+                  id="profilePhone" 
+                  name="phone" 
+                  class="profile-input is-editable-input" 
+                  dir="ltr"
+                  readonly 
+                  required
+                  data-i18n-attr="placeholder:company.profile_placeholder_phone"
+                  placeholder="01xxxxxxxxx"
+                >
+              </div>
+              <div class="profile-field-error" id="profilePhoneError" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Field 3: WhatsApp Number (OPTIONAL -> NO STAR) -->
+            <div class="profile-field-group">
+              <label class="form-label" for="profileWhatsapp">
+                <span data-i18n="company.profile_label_whatsapp">رقم الواتساب للتواصل</span>
+              </label>
+              <div class="profile-input-wrapper">
+                <input 
+                  type="tel" 
+                  id="profileWhatsapp" 
+                  name="whatsapp" 
+                  class="profile-input is-editable-input" 
+                  dir="ltr"
+                  readonly
+                  data-i18n-attr="placeholder:company.profile_placeholder_whatsapp"
+                  placeholder="01xxxxxxxxx"
+                >
+              </div>
+              <div class="profile-field-error" id="profileWhatsappError" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Field 4: Official Email Address (REQUIRED -> Register Star) -->
+            <div class="profile-field-group">
+              <label class="form-label" for="profileEmail">
+                <span data-i18n="company.profile_label_email">البريد الإلكتروني الرسمي</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <div class="profile-input-wrapper">
+                <input 
+                  type="email" 
+                  id="profileEmail" 
+                  name="email" 
+                  class="profile-input is-editable-input" 
+                  dir="ltr"
+                  readonly 
+                  required
+                  data-i18n-attr="placeholder:company.profile_placeholder_email"
+                  placeholder="example@domain.com"
+                >
+              </div>
+              <div class="profile-field-error" id="profileEmailError" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Field 5: Governorate (PROTECTED / READ-ONLY) -->
+            <div class="profile-field-group">
+              <span class="profile-field-label">
+                <span data-i18n="company.profile_label_governorate">المحافظة</span>
+                <span class="profile-lock-indicator" title="حقل محمي — غير قابل للتعديل" data-i18n-attr="title:company.profile_badge_protected">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+              </span>
+              <div class="profile-readonly-display" id="profileGovernorateDisplay">الجيزة</div>
+              <input type="hidden" id="profileGovernorate" name="governorate" value="الجيزة">
+              <div class="profile-field-hint" data-i18n="company.profile_badge_protected">حقل محمي — غير قابل للتعديل</div>
+            </div>
+
+            <!-- Field 6: Headquarters Address (REQUIRED -> Register Star) -->
+            <div class="profile-field-group profile-field-span-2">
+              <label class="form-label" for="profileAddress">
+                <span data-i18n="company.profile_label_address">العنوان والمقر الرئيسي</span>
+                <span class="required-indicator" tabindex="0" role="img" aria-label="هذا الحقل إجباري" data-i18n-attr="aria-label:auth.required_tooltip,data-tooltip:auth.required_tooltip" data-tooltip="هذا الحقل إجباري">
+                  <span class="required-dot" aria-hidden="true"></span>
+                  <span class="required-tooltip" role="tooltip" data-i18n="auth.required_tooltip">هذا الحقل إجباري</span>
+                </span>
+              </label>
+              <div class="profile-input-wrapper">
+                <input 
+                  type="text" 
+                  id="profileAddress" 
+                  name="address" 
+                  class="profile-input is-editable-input" 
+                  readonly 
+                  required
+                  data-i18n-attr="placeholder:company.profile_placeholder_address"
+                  placeholder="العنوان التفصيلي للمقر الرئيسي"
+                >
+              </div>
+              <div class="profile-field-error" id="profileAddressError" role="alert" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==================== SECTION 3: PARTNERSHIP & CONTRACT DETAILS ==================== -->
+        <section class="profile-card profile-card-contract" aria-labelledby="secContractTitle">
+          <div class="profile-card-header">
+            <div class="profile-card-header-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div class="profile-card-header-text">
+              <h2 class="profile-card-title" id="secContractTitle" data-i18n="company.profile_sec_contract_title">بيانات الشراكة والتعاقد</h2>
+              <p class="profile-card-desc" data-i18n="company.profile_sec_contract_desc">تفاصيل اتفاقية الشراكة السارية ونطاق الاعتماد التشغيلي مع منصة ميقات</p>
+            </div>
+          </div>
+
+          <div class="profile-contract-grid">
+            
+            <!-- Contract Ref -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_contract_ref">رقم المرجع التعاقدي</span>
+              <span class="tile-val profile-code-display" id="profileContractRef">MQ-CTR-2025-084</span>
+            </div>
+
+            <!-- Partnership Level -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_partnership_tier">مستوى الشراكة</span>
+              <span class="tile-val" id="profilePartnershipTier" data-i18n="company.profile_tier_platinum">شريك بلاتيني معتمد</span>
+            </div>
+
+            <!-- Contract Start Date -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_contract_start">تاريخ بدء التعاقد</span>
+              <span class="tile-val profile-code-display" id="profileContractStart">2025-01-01</span>
+            </div>
+
+            <!-- Contract End Date -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_contract_end">تاريخ انتهاء التعاقد</span>
+              <span class="tile-val profile-code-display" id="profileContractEnd">2026-12-31</span>
+            </div>
+
+            <!-- Signing Date -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_contract_signed">تاريخ توقيع الاتفاقية</span>
+              <span class="tile-val profile-code-display" id="profileContractSigned">2024-12-20</span>
+            </div>
+
+            <!-- Status Pill -->
+            <div class="profile-contract-tile">
+              <span class="tile-label" data-i18n="company.profile_label_contract_status">حالة العقد والاعتماد</span>
+              <div>
+                <span class="profile-status-pill is-active" id="profileContractStatus" data-i18n="company.profile_status_active">سارٍ ونشط</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Official Administrative Notice Callout -->
+          <div class="profile-contract-callout">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p data-i18n="company.profile_contract_notice">لتعديل بيانات الترخيص السياحي أو اسم الشركة أو شروط التعاقد الرسمية، يرجى التواصل مع إدارة العمليات والشركاء في منصة ميقات.</p>
+          </div>
+        </section>
+
+      </form>
+
+    </div>
+  </main>
+
+  <!-- ==================== FUTURE SCOPE ROADMAP MODAL ==================== -->
+  <div id="companyFutureModal" class="company-modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="company-modal-backdrop" id="companyModalBackdrop"></div>
+    <div class="company-modal-dialog">
+      <div class="modal-icon-wrap">
+        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="modal-dialog-title" id="futureModalTitle" data-i18n="company.future_title">قسم قيد التطوير</h3>
+      <p class="modal-dialog-message" id="futureModalMessage" data-i18n="company.future_msg">هذا القسم ضمن خطة التوسعة القادمة لبوابة الشركات الشريكة لمنصة ميقات.</p>
+      <div class="modal-dialog-actions">
+        <button type="button" class="btn btn-primary" id="futureModalCloseBtn" data-i18n="company.future_btn">فهمت ذلك</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="company-toast-container" id="companyToastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ==================== APPROVED CANONICAL FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-title" data-i18n="company.brand_name">مـيـقـات</span>
+        <span class="brand-tagline">MIQAT PLATFORM — PARTNER PORTAL</span>
+      </div>
+      <p class="footer-copy" data-i18n="company.footer_copy">© 2026 جميع الحقوق محفوظة لمنصة ميقات. بوابة الشركات السياحية المعتمدة والمرخصة.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./company-mock-data.js"></script>
+  <script src="./company-portal.js"></script>
+</body>
+</html>
+

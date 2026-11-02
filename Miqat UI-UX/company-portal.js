@@ -224,7 +224,9 @@
   }
 
   function updateCompanyIdentityUI(user) {
-    const compName = user.company_name || user.name || 'AL DORRA TRAVEL';
+    const compName = currentLang === 'ar'
+      ? (user.company_name || user.name || 'شركة الدرة للسياحة')
+      : (user.company_name_en || 'AL DORRA TRAVEL');
     const license = user.license_number || '47852';
 
     // Header identity
@@ -1219,12 +1221,19 @@
       const sec = el.getAttribute('data-company-section');
       const href = el.getAttribute('href');
       // If element is a real page link, let it navigate normally
-      if (sec === 'dashboard' || sec === 'bookings' || sec === 'financial' || sec === 'booking-details' || sec === 'programs') return;
+      if (sec === 'dashboard' || sec === 'bookings' || sec === 'financial' || sec === 'booking-details' || sec === 'programs' || sec === 'notifications' || sec === 'profile') return;
       if (href && !href.startsWith('#')) return;
 
       el.addEventListener('click', (e) => {
         e.preventDefault();
         openModal(sec);
+      });
+    });
+
+    document.querySelectorAll('[data-company-section="profile"]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'company-profile.html';
       });
     });
 
@@ -1420,31 +1429,12 @@
     // Advanced Multi-Criteria Filter Controls (Requirements 3 & 6)
     setupBookingsFilterControls();
 
-    // Company Identity Group Click (Fix 1B & Navigation)
+    // Company Identity Group Click (Profile Navigation)
     const headerIdentity = document.getElementById('companyHeaderIdentity');
     if (headerIdentity) {
       const handleProfileOpen = (e) => {
         e.preventDefault();
-        const profileTrigger = document.querySelector('[data-company-section="profile"]');
-        if (profileTrigger && profileTrigger !== headerIdentity) {
-          profileTrigger.click();
-        } else {
-          const modal = document.getElementById('companyFutureModal');
-          const titleEl = document.getElementById('futureModalTitle');
-          const msgEl = document.getElementById('futureModalMessage');
-          if (titleEl) {
-            titleEl.textContent = currentLang === 'ar' ? 'بيانات الشركة — قيد التطوير' : 'Company Profile — Under Development';
-          }
-          if (msgEl) {
-            msgEl.textContent = currentLang === 'ar'
-              ? 'قسم بيانات الشركة وملف التراخيص قيد التطوير للمرحلة القادمة. يمكنك متابعة جميع العمليات من خلال لوحة التحكم.'
-              : 'Company profile and licensing management is in development for the next phase. You can monitor all active operations via this operational dashboard.';
-          }
-          if (modal) {
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
-          }
-        }
+        window.location.href = 'company-profile.html';
       };
       headerIdentity.addEventListener('click', handleProfileOpen);
       headerIdentity.addEventListener('keydown', (e) => {
@@ -1486,6 +1476,11 @@
       renderFinancialOverviewPage();
     } else if (pageId === 'company-programs') {
       renderProgramsPage();
+    } else if (pageId === 'company-notifications') {
+      renderNotificationsPage();
+      updateNavbarNotificationsBadge();
+    } else if (pageId === 'company-profile') {
+      renderProfilePage();
     }
   }
 
@@ -5378,6 +5373,1177 @@
   window.MiqatCompanyPortal.programsFilterState = programsFilterState;
 
 
+  // =========================================================================
+  // SECTION 6: NOTIFICATIONS & ALERTS CENTER CONTROLLER
+  // =========================================================================
+
+  let notifFilterState = {
+    period: 'all',
+    type: 'all',
+    status: 'all',
+    dateFrom: '',
+    dateTo: '',
+    bookingRef: '',
+    search: ''
+  };
+
+  let activeAdminNoticeNotifId = null;
+
+  function formatRelativeTime(dateInput) {
+    if (!dateInput) return '';
+    const d = new Date(dateInput);
+    if (isNaN(d.getTime())) return dateInput;
+    // Base reference date for simulation late October 2026
+    const baseNow = new Date('2026-10-29T18:00:00.000Z');
+    const diffMs = baseNow - d;
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHrs = Math.floor(diffMin / 60);
+    const diffDays = Math.floor(diffHrs / 24);
+
+    const isAr = currentLang === 'ar';
+
+    if (diffMin < 2) return isAr ? 'الآن' : 'Just now';
+    if (diffMin < 60) return isAr ? `منذ ${formatNumber(diffMin)} دقيقة` : `${diffMin}m ago`;
+    if (diffHrs < 24) return isAr ? `منذ ${formatNumber(diffHrs)} ساعة` : `${diffHrs}h ago`;
+    if (diffDays === 1) return isAr ? 'أمس' : 'Yesterday';
+    if (diffDays === 2) return isAr ? 'منذ يومين' : '2 days ago';
+    if (diffDays < 7) return isAr ? `منذ ${formatNumber(diffDays)} أيام` : `${diffDays} days ago`;
+    return d.toISOString().slice(0, 10);
+  }
+
+  function getNotifTypeMeta(type) {
+    const isAr = currentLang === 'ar';
+    switch (type) {
+      case 'new_booking':
+        return {
+          label: isAr ? 'حجز جديد' : 'New Booking',
+          badgeClass: 'badge-type-new-booking',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`
+        };
+      case 'deposit_received':
+        return {
+          label: isAr ? 'سداد الدفعة المقدمة' : 'Deposit Received',
+          badgeClass: 'badge-type-deposit',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>`
+        };
+      case 'payment_update':
+        return {
+          label: isAr ? 'تحديث دفعة مالية' : 'Payment Update',
+          badgeClass: 'badge-type-payment',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+        };
+      case 'program_change':
+        return {
+          label: isAr ? 'طلب تعديل الرحلة' : 'Program Change Request',
+          badgeClass: 'badge-type-change',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>`
+        };
+      case 'booking_rejected':
+        return {
+          label: isAr ? 'إلغاء / رفض الحجز' : 'Booking Rejected',
+          badgeClass: 'badge-type-rejected',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`
+        };
+      case 'admin_update':
+        return {
+          label: isAr ? 'تعميم إداري رسمي' : 'Official Circular',
+          badgeClass: 'badge-type-admin',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>`
+        };
+      default:
+        return {
+          label: isAr ? 'إشعار عام' : 'Notification',
+          badgeClass: 'badge-type-default',
+          iconSvg: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`
+        };
+    }
+  }
+
+  async function fetchNotificationsList(filters = {}) {
+    try {
+      const queryParams = new URLSearchParams();
+      if (filters.period && filters.period !== 'all') queryParams.set('period', filters.period);
+      if (filters.type && filters.type !== 'all') queryParams.set('type', filters.type);
+      if (filters.status && filters.status !== 'all') queryParams.set('status', filters.status);
+      if (filters.dateFrom) queryParams.set('dateFrom', filters.dateFrom);
+      if (filters.dateTo) queryParams.set('dateTo', filters.dateTo);
+      if (filters.bookingRef) queryParams.set('bookingRef', filters.bookingRef);
+      if (filters.search) queryParams.set('search', filters.search);
+
+      const res = await apiFetch(`/api/company/notifications?${queryParams.toString()}`);
+      if (res.ok) {
+        const body = await res.json();
+        if (body.success && Array.isArray(body.data)) {
+          return body.data;
+        }
+      }
+    } catch (err) {
+      console.warn('API fetch notifications error, falling back to mock data:', err);
+    }
+
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    if (mockData && mockData.getCompanyNotifications) {
+      return mockData.getCompanyNotifications(filters);
+    }
+    return [];
+  }
+
+  async function fetchNotificationsSummary() {
+    try {
+      const res = await apiFetch('/api/company/notifications/summary');
+      if (res.ok) {
+        const body = await res.json();
+        if (body.success && body.data) return body.data;
+      }
+    } catch (err) {
+      console.warn('API fetch notifications summary error, falling back to mock:', err);
+    }
+
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    if (mockData && mockData.getCompanyNotificationsSummary) {
+      return mockData.getCompanyNotificationsSummary();
+    }
+    return { total: 0, unread: 0, read: 0, today: 0 };
+  }
+
+  async function updateNavbarNotificationsBadge() {
+    const summary = await fetchNotificationsSummary();
+    const unreadCount = summary.unread || 0;
+    const formatted = formatNumber(unreadCount);
+
+    const badgeEl = document.getElementById('navNotificationsCount');
+    const mobileBadgeEl = document.getElementById('mobileNavNotificationsCount');
+    const headerBadgeEl = document.getElementById('headerUnreadBadge');
+    const headerBadgeText = document.getElementById('headerUnreadText');
+
+    if (badgeEl) {
+      badgeEl.textContent = formatted;
+      badgeEl.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+    }
+    if (mobileBadgeEl) {
+      mobileBadgeEl.textContent = formatted;
+      mobileBadgeEl.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+    }
+    if (headerBadgeText) {
+      const isAr = currentLang === 'ar';
+      headerBadgeText.textContent = isAr 
+        ? `${formatted} إشعارات غير مقروءة`
+        : `${formatted} Unread Notifications`;
+    }
+    if (headerBadgeEl) {
+      headerBadgeEl.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  function renderNotificationsKpis(summary) {
+    const totalEl = document.getElementById('kpiTotalNotifications');
+    const unreadEl = document.getElementById('kpiUnreadNotifications');
+    const readEl = document.getElementById('kpiReadNotifications');
+    const todayEl = document.getElementById('kpiTodayNotifications');
+
+    if (totalEl) totalEl.textContent = formatNumber(summary.total || 0);
+    if (unreadEl) unreadEl.textContent = formatNumber(summary.unread || 0);
+    if (readEl) readEl.textContent = formatNumber(summary.read || 0);
+    if (todayEl) todayEl.textContent = formatNumber(summary.today || 0);
+
+    // Update active highlight on KPI cards
+    document.querySelectorAll('.notif-kpi-card').forEach(c => c.classList.remove('is-active-filter'));
+    if (notifFilterState.period === 'today') {
+      const card = document.getElementById('kpiTodayNotificationsCard');
+      if (card) card.classList.add('is-active-filter');
+    } else if (notifFilterState.status === 'unread') {
+      const card = document.getElementById('kpiUnreadNotificationsCard');
+      if (card) card.classList.add('is-active-filter');
+    } else if (notifFilterState.status === 'read') {
+      const card = document.getElementById('kpiReadNotificationsCard');
+      if (card) card.classList.add('is-active-filter');
+    } else if (notifFilterState.period === 'all' && notifFilterState.status === 'all' && notifFilterState.type === 'all' && !notifFilterState.dateFrom && !notifFilterState.dateTo && !notifFilterState.bookingRef && !notifFilterState.search) {
+      const card = document.getElementById('kpiTotalNotificationsCard');
+      if (card) card.classList.add('is-active-filter');
+    }
+  }
+
+  function renderNotificationsActiveChips(totalCount, filteredCount) {
+    const container = document.getElementById('notifActiveChips');
+    const countEl = document.getElementById('notifResultsCount');
+    const isAr = currentLang === 'ar';
+
+    if (countEl) {
+      countEl.textContent = isAr
+        ? `عرض ${formatNumber(filteredCount)} من أصل ${formatNumber(totalCount)} إشعار`
+        : `Showing ${filteredCount} of ${totalCount} notifications`;
+    }
+
+    if (!container) return;
+    container.innerHTML = '';
+
+    const chips = [];
+
+    if (notifFilterState.period && notifFilterState.period !== 'all') {
+      const periodNames = {
+        today: isAr ? 'إشعارات اليوم' : 'Today',
+        week: isAr ? 'آخر 7 أيام' : 'Last 7 Days',
+        month: isAr ? 'آخر 30 يوماً' : 'Last 30 Days'
+      };
+      chips.push({
+        label: `${isAr ? 'الفترة' : 'Period'}: ${periodNames[notifFilterState.period] || notifFilterState.period}`,
+        clear: () => {
+          notifFilterState.period = 'all';
+          updatePeriodTabsUI('all');
+        }
+      });
+    }
+
+    if (notifFilterState.type && notifFilterState.type !== 'all') {
+      const typeMeta = getNotifTypeMeta(notifFilterState.type);
+      chips.push({
+        label: `${isAr ? 'النوع' : 'Type'}: ${typeMeta.label}`,
+        clear: () => {
+          notifFilterState.type = 'all';
+          const sel = document.getElementById('filterNotifType');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (notifFilterState.status && notifFilterState.status !== 'all') {
+      const statusLabels = {
+        unread: isAr ? 'غير المقروءة' : 'Unread Only',
+        read: isAr ? 'المقروءة' : 'Read Only'
+      };
+      chips.push({
+        label: `${isAr ? 'الحالة' : 'Status'}: ${statusLabels[notifFilterState.status] || notifFilterState.status}`,
+        clear: () => {
+          notifFilterState.status = 'all';
+          const sel = document.getElementById('filterNotifStatus');
+          if (sel) sel.value = 'all';
+        }
+      });
+    }
+
+    if (notifFilterState.dateFrom) {
+      chips.push({
+        label: `${isAr ? 'من' : 'From'}: ${notifFilterState.dateFrom}`,
+        clear: () => {
+          notifFilterState.dateFrom = '';
+          const inp = document.getElementById('filterNotifDateFrom');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (notifFilterState.dateTo) {
+      chips.push({
+        label: `${isAr ? 'إلى' : 'To'}: ${notifFilterState.dateTo}`,
+        clear: () => {
+          notifFilterState.dateTo = '';
+          const inp = document.getElementById('filterNotifDateTo');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (notifFilterState.bookingRef) {
+      chips.push({
+        label: `${isAr ? 'الحجز' : 'Booking'}: ${notifFilterState.bookingRef}`,
+        clear: () => {
+          notifFilterState.bookingRef = '';
+          const inp = document.getElementById('filterNotifBookingRef');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    if (notifFilterState.search) {
+      chips.push({
+        label: `"${notifFilterState.search}"`,
+        clear: () => {
+          notifFilterState.search = '';
+          const inp = document.getElementById('filterNotifSearch');
+          if (inp) inp.value = '';
+        }
+      });
+    }
+
+    chips.forEach(c => {
+      const chip = document.createElement('div');
+      chip.className = 'notif-filter-chip';
+      chip.innerHTML = `
+        <span class="chip-text">${c.label}</span>
+        <button type="button" class="chip-remove-btn" aria-label="${isAr ? 'إزالة الفلتر' : 'Remove filter'}">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      `;
+      chip.querySelector('.chip-remove-btn').addEventListener('click', () => {
+        c.clear();
+        renderNotificationsPage();
+      });
+      container.appendChild(chip);
+    });
+  }
+
+  function updatePeriodTabsUI(activePeriod) {
+    document.querySelectorAll('.period-tab-btn').forEach(btn => {
+      if (btn.dataset.period === activePeriod) {
+        btn.classList.add('is-active');
+      } else {
+        btn.classList.remove('is-active');
+      }
+    });
+  }
+
+  async function toggleNotificationReadState(notifId, currentUnread) {
+    const newUnread = !currentUnread;
+
+    try {
+      await apiFetch(`/api/company/notifications/${encodeURIComponent(notifId)}/read`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ unread: newUnread })
+      });
+    } catch (err) {
+      console.warn('API error updating read state:', err);
+    }
+
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    if (mockData && mockData.markCompanyNotificationRead) {
+      mockData.markCompanyNotificationRead(notifId, newUnread);
+    }
+
+    await updateNavbarNotificationsBadge();
+    await renderNotificationsPage();
+  }
+
+  async function markAllNotificationsAsRead() {
+    try {
+      await apiFetch('/api/company/notifications/mark-all-read', {
+        method: 'PUT'
+      });
+    } catch (err) {
+      console.warn('API error mark all read:', err);
+    }
+
+    const mockData = window.MiqatCompanyMockData || window.CompanyMockData;
+    if (mockData && mockData.markAllCompanyNotificationsRead) {
+      mockData.markAllCompanyNotificationsRead();
+    }
+
+    const isAr = currentLang === 'ar';
+    showCompanyToast(isAr ? 'تم تحديد كافة الإشعارات كمقروءة بنجاح' : 'All notifications marked as read successfully');
+
+    await updateNavbarNotificationsBadge();
+    await renderNotificationsPage();
+  }
+
+  function openAdminNoticeModal(notice, notifId = null) {
+    if (!notice) return;
+    const modal = document.getElementById('adminNoticeModal');
+    if (!modal) return;
+
+    activeAdminNoticeNotifId = notifId;
+
+    const circularNoEl = document.getElementById('modalCircularNo');
+    const issuerEl = document.getElementById('modalIssuer');
+    const issueDateEl = document.getElementById('modalIssueDate');
+    const effectiveDateEl = document.getElementById('modalEffectiveDate');
+    const subjectEl = document.getElementById('modalSubject');
+    const bodyEl = document.getElementById('modalBody');
+
+    const isAr = currentLang === 'ar';
+
+    if (circularNoEl) circularNoEl.textContent = notice.circularNumber || 'CIRC-1447-084';
+    if (issuerEl) issuerEl.textContent = isAr ? (notice.issuer_ar || notice.issuer || 'وزارة الحج والعمرة') : (notice.issuer_en || notice.issuer || 'Ministry of Hajj & Umrah');
+    if (issueDateEl) issueDateEl.textContent = notice.issueDate || '2026-10-29';
+    if (effectiveDateEl) effectiveDateEl.textContent = notice.effectiveDate || '2026-11-01';
+    if (subjectEl) subjectEl.textContent = isAr ? (notice.subject_ar || notice.title_ar || '') : (notice.subject_en || notice.title_en || '');
+    if (bodyEl) bodyEl.textContent = isAr ? (notice.body_ar || notice.desc_ar || notice.message_ar || '') : (notice.body_en || notice.desc_en || notice.message_en || '');
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeAdminNoticeModal() {
+    const modal = document.getElementById('adminNoticeModal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    activeAdminNoticeNotifId = null;
+  }
+
+  async function renderNotificationsPage() {
+    const container = document.getElementById('notificationsCardsList');
+    const emptyState = document.getElementById('notificationsEmptyState');
+    if (!container) return;
+
+    const summary = await fetchNotificationsSummary();
+    renderNotificationsKpis(summary);
+
+    const notifications = await fetchNotificationsList(notifFilterState);
+    renderNotificationsActiveChips(summary.total || notifications.length, notifications.length);
+
+    if (!notifications || notifications.length === 0) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'flex';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    container.style.display = 'flex';
+    container.innerHTML = '';
+
+    const isAr = currentLang === 'ar';
+
+    notifications.forEach(notif => {
+      const typeMeta = getNotifTypeMeta(notif.type);
+      const isUnread = Boolean(notif.unread);
+      const relativeTime = formatRelativeTime(notif.createdAt || notif.date);
+      const fullDate = (notif.createdAt || notif.date || '').slice(0, 10);
+      const title = isAr ? (notif.title_ar || notif.title_en || '') : (notif.title_en || notif.title_ar || '');
+      const message = isAr ? (notif.message_ar || notif.message_en || '') : (notif.message_en || notif.message_ar || '');
+      const customerName = isAr ? (notif.customer_name_ar || notif.customerName_ar || '') : (notif.customer_name_en || notif.customerName_en || '');
+      const programTitle = isAr ? (notif.program_title_ar || notif.programTitle_ar || '') : (notif.program_title_en || notif.programTitle_en || '');
+      const bookingRef = notif.booking_reference || notif.bookingReference || '';
+      const amountVal = notif.amount;
+
+      const card = document.createElement('article');
+      card.className = `notif-card ${isUnread ? 'is-unread' : 'is-read'}`;
+      card.setAttribute('data-notif-id', notif.id);
+
+      // Meta Pills HTML
+      let metaPillsHtml = '';
+      if (bookingRef) {
+        metaPillsHtml += `
+          <span class="notif-meta-pill notif-pill-booking">
+            <span class="pill-label">${isAr ? 'رقم الحجز:' : 'Booking:'}</span>
+            <strong class="pill-val font-numeric">${bookingRef}</strong>
+          </span>
+        `;
+      }
+      if (customerName) {
+        metaPillsHtml += `
+          <span class="notif-meta-pill notif-pill-customer">
+            <span class="pill-label">${isAr ? 'العميل:' : 'Customer:'}</span>
+            <span class="pill-val">${customerName}</span>
+          </span>
+        `;
+      }
+      if (programTitle) {
+        metaPillsHtml += `
+          <span class="notif-meta-pill notif-pill-program">
+            <span class="pill-label">${isAr ? 'البرنامج:' : 'Program:'}</span>
+            <span class="pill-val">${programTitle}</span>
+          </span>
+        `;
+      }
+      if (amountVal && !isNaN(Number(amountVal))) {
+        metaPillsHtml += `
+          <span class="notif-meta-pill notif-pill-amount">
+            <span class="pill-label">${isAr ? 'المبلغ:' : 'Amount:'}</span>
+            <strong class="pill-val font-numeric">${formatNumber(Number(amountVal))} ${isAr ? 'ج.م' : 'EGP'}</strong>
+          </span>
+        `;
+      }
+
+      // Actions HTML
+      let actionsHtml = '';
+      if (notif.bookingId || notif.booking_id) {
+        const bId = notif.bookingId || notif.booking_id;
+        actionsHtml += `
+          <a href="company-booking-details.html?id=${encodeURIComponent(bId)}" class="btn btn-secondary notif-card-btn btn-view-details" title="${isAr ? 'عرض تفاصيل الحجز' : 'View Booking Details'}">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>${isAr ? 'عرض تفاصيل الحجز' : 'View Booking Details'}</span>
+          </a>
+        `;
+      }
+
+      if (notif.type === 'admin_update' && (notif.adminNotice || notif.admin_notice)) {
+        actionsHtml += `
+          <button type="button" class="btn btn-secondary notif-card-btn btn-view-circular" data-notif-id="${notif.id}" title="${isAr ? 'عرض نص التعميم الرسمي' : 'View Official Circular'}">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+            <span>${isAr ? 'عرض نص التعميم' : 'View Circular'}</span>
+          </button>
+        `;
+      }
+
+      actionsHtml += `
+        <button type="button" class="btn btn-secondary notif-card-btn btn-toggle-read" data-notif-id="${notif.id}" data-unread="${isUnread}" title="${isUnread ? (isAr ? 'تحديد كمقروء' : 'Mark as Read') : (isAr ? 'تحديد كغير مقروء' : 'Mark as Unread')}">
+          ${isUnread 
+            ? `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg><span>${isAr ? 'تحديد كمقروء' : 'Mark as Read'}</span>`
+            : `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg><span>${isAr ? 'تحديد كغير مقروء' : 'Mark as Unread'}</span>`
+          }
+        </button>
+      `;
+
+      card.innerHTML = `
+        <div class="notif-card-side-indicator" aria-hidden="true"></div>
+        <div class="notif-card-content">
+          
+          <div class="notif-card-header">
+            <div class="notif-header-left">
+              <span class="notif-status-indicator" tabindex="0" role="img" aria-label="${isUnread ? (isAr ? 'غير مقروءة' : 'Unread') : (isAr ? 'مقروءة' : 'Read')}">
+                <span class="notif-status-dot ${isUnread ? 'is-unread-dot' : 'is-read-dot'}" aria-hidden="true"></span>
+                <span class="notif-status-tooltip" role="tooltip">${isUnread ? (isAr ? 'غير مقروءة' : 'Unread') : (isAr ? 'مقروءة' : 'Read')}</span>
+              </span>
+              <span class="notif-type-badge ${typeMeta.badgeClass}">
+                <span class="type-icon">${typeMeta.iconSvg}</span>
+                <span class="type-text">${typeMeta.label}</span>
+              </span>
+            </div>
+            <div class="notif-header-right">
+              <time class="notif-timestamp font-numeric" datetime="${notif.createdAt || notif.date}" title="${fullDate}">
+                ${relativeTime} • ${fullDate}
+              </time>
+            </div>
+          </div>
+
+          <div class="notif-card-body">
+            <h3 class="notif-card-title">${title}</h3>
+            <p class="notif-card-message">${message}</p>
+            ${metaPillsHtml ? `<div class="notif-meta-pills-row">${metaPillsHtml}</div>` : ''}
+          </div>
+
+          <div class="notif-card-footer">
+            <div class="notif-card-actions">
+              ${actionsHtml}
+            </div>
+          </div>
+
+        </div>
+      `;
+
+      // Attach Toggle Read Event
+      const toggleBtn = card.querySelector('.btn-toggle-read');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleNotificationReadState(notif.id, isUnread);
+        });
+      }
+
+      // Attach View Circular Event
+      const circularBtn = card.querySelector('.btn-view-circular');
+      if (circularBtn) {
+        circularBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const notice = notif.adminNotice || notif.admin_notice;
+          openAdminNoticeModal(notice, notif.id);
+        });
+      }
+
+      container.appendChild(card);
+    });
+  }
+
+  function setupNotificationsPage() {
+    // Quick period tabs
+    document.querySelectorAll('.period-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const period = btn.dataset.period || 'all';
+        notifFilterState.period = period;
+        updatePeriodTabsUI(period);
+        renderNotificationsPage();
+      });
+    });
+
+    // 4 KPI cards
+    const cardTotal = document.getElementById('kpiTotalNotificationsCard');
+    const cardUnread = document.getElementById('kpiUnreadNotificationsCard');
+    const cardRead = document.getElementById('kpiReadNotificationsCard');
+    const cardToday = document.getElementById('kpiTodayNotificationsCard');
+
+    if (cardTotal) {
+      cardTotal.addEventListener('click', () => {
+        notifFilterState.period = 'all';
+        notifFilterState.status = 'all';
+        updatePeriodTabsUI('all');
+        const selStatus = document.getElementById('filterNotifStatus');
+        if (selStatus) selStatus.value = 'all';
+        renderNotificationsPage();
+      });
+    }
+
+    if (cardUnread) {
+      cardUnread.addEventListener('click', () => {
+        notifFilterState.status = 'unread';
+        const selStatus = document.getElementById('filterNotifStatus');
+        if (selStatus) selStatus.value = 'unread';
+        renderNotificationsPage();
+      });
+    }
+
+    if (cardRead) {
+      cardRead.addEventListener('click', () => {
+        notifFilterState.status = 'read';
+        const selStatus = document.getElementById('filterNotifStatus');
+        if (selStatus) selStatus.value = 'read';
+        renderNotificationsPage();
+      });
+    }
+
+    if (cardToday) {
+      cardToday.addEventListener('click', () => {
+        notifFilterState.period = 'today';
+        updatePeriodTabsUI('today');
+        renderNotificationsPage();
+      });
+    }
+
+    // Filter Inputs
+    const filterType = document.getElementById('filterNotifType');
+    if (filterType) {
+      filterType.addEventListener('change', () => {
+        notifFilterState.type = filterType.value;
+        renderNotificationsPage();
+      });
+    }
+
+    const filterStatus = document.getElementById('filterNotifStatus');
+    if (filterStatus) {
+      filterStatus.addEventListener('change', () => {
+        notifFilterState.status = filterStatus.value;
+        renderNotificationsPage();
+      });
+    }
+
+    const filterDateFrom = document.getElementById('filterNotifDateFrom');
+    if (filterDateFrom) {
+      filterDateFrom.addEventListener('change', () => {
+        notifFilterState.dateFrom = filterDateFrom.value;
+        renderNotificationsPage();
+      });
+    }
+
+    const filterDateTo = document.getElementById('filterNotifDateTo');
+    if (filterDateTo) {
+      filterDateTo.addEventListener('change', () => {
+        notifFilterState.dateTo = filterDateTo.value;
+        renderNotificationsPage();
+      });
+    }
+
+    let searchDebounceTimer = null;
+    const filterBookingRef = document.getElementById('filterNotifBookingRef');
+    if (filterBookingRef) {
+      const handleBookingRef = () => {
+        notifFilterState.bookingRef = filterBookingRef.value.trim();
+        renderNotificationsPage();
+      };
+      filterBookingRef.addEventListener('input', () => {
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(handleBookingRef, 250);
+      });
+      filterBookingRef.addEventListener('change', () => {
+        clearTimeout(searchDebounceTimer);
+        handleBookingRef();
+      });
+    }
+
+    const filterSearch = document.getElementById('filterNotifSearch');
+    if (filterSearch) {
+      const handleSearch = () => {
+        notifFilterState.search = filterSearch.value.trim();
+        renderNotificationsPage();
+      };
+      filterSearch.addEventListener('input', () => {
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(handleSearch, 250);
+      });
+      filterSearch.addEventListener('change', () => {
+        clearTimeout(searchDebounceTimer);
+        handleSearch();
+      });
+    }
+
+    // Reset Filters Button
+    const resetBtn = document.getElementById('btnResetNotifFilters');
+    const emptyResetBtn = document.getElementById('btnEmptyReset');
+    const resetHandler = () => {
+      notifFilterState.period = 'all';
+      notifFilterState.type = 'all';
+      notifFilterState.status = 'all';
+      notifFilterState.dateFrom = '';
+      notifFilterState.dateTo = '';
+      notifFilterState.bookingRef = '';
+      notifFilterState.search = '';
+
+      updatePeriodTabsUI('all');
+      if (filterType) filterType.value = 'all';
+      if (filterStatus) filterStatus.value = 'all';
+      if (filterDateFrom) filterDateFrom.value = '';
+      if (filterDateTo) filterDateTo.value = '';
+      if (filterBookingRef) filterBookingRef.value = '';
+      if (filterSearch) filterSearch.value = '';
+      renderNotificationsPage();
+    };
+
+    if (resetBtn) resetBtn.addEventListener('click', resetHandler);
+    if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetHandler);
+
+    // Mark All Read Button
+    const markAllReadBtn = document.getElementById('btnMarkAllRead');
+    if (markAllReadBtn) {
+      markAllReadBtn.addEventListener('click', markAllNotificationsAsRead);
+    }
+
+    // Admin Notice Modal Controls
+    const modalNoticeCloseX = document.getElementById('modalNoticeCloseX');
+    const adminNoticeBackdrop = document.getElementById('adminNoticeBackdrop');
+    const modalAckBtn = document.getElementById('modalAckBtn');
+
+    if (modalNoticeCloseX) modalNoticeCloseX.addEventListener('click', closeAdminNoticeModal);
+    if (adminNoticeBackdrop) adminNoticeBackdrop.addEventListener('click', closeAdminNoticeModal);
+    if (modalAckBtn) {
+      modalAckBtn.addEventListener('click', async () => {
+        const notifIdToMark = activeAdminNoticeNotifId;
+        closeAdminNoticeModal();
+        if (notifIdToMark) {
+          await toggleNotificationReadState(notifIdToMark, true);
+        }
+        const isAr = currentLang === 'ar';
+        showCompanyToast(isAr ? 'تم توثيق الاطلاع والالتزام بالتعميم الرسمي' : 'Official circular acknowledged and complied');
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('adminNoticeModal');
+        if (modal && modal.style.display === 'flex') {
+          closeAdminNoticeModal();
+        }
+      }
+    });
+  }
+
+  // Window exposure for notifications
+  window.MiqatCompanyPortal.renderNotifications = renderNotificationsPage;
+  window.MiqatCompanyPortal.notifFilterState = notifFilterState;
+  window.MiqatCompanyPortal.openAdminNotice = openAdminNoticeModal;
+  window.MiqatCompanyPortal.markAllRead = markAllNotificationsAsRead;
+  window.MiqatCompanyPortal.toggleRead = toggleNotificationReadState;
+
+  // =========================================================================
+  // PAGE 7: COMPANY PROFILE — بيانات الشركة
+  // =========================================================================
+
+  const EGYPTIAN_GOVERNORATES = [
+    { id: 'cairo', ar: 'القاهرة', en: 'Cairo' },
+    { id: 'giza', ar: 'الجيزة', en: 'Giza' },
+    { id: 'alexandria', ar: 'الإسكندرية', en: 'Alexandria' },
+    { id: 'dakahlia', ar: 'الدقهلية', en: 'Dakahlia' },
+    { id: 'red_sea', ar: 'البحر الأحمر', en: 'Red Sea' },
+    { id: 'beheira', ar: 'البحيرة', en: 'Beheira' },
+    { id: 'fayoum', ar: 'الفيوم', en: 'Faiyum' },
+    { id: 'gharbia', ar: 'الغربية', en: 'Gharbia' },
+    { id: 'ismailia', ar: 'الإسماعيلية', en: 'Ismailia' },
+    { id: 'menofia', ar: 'المنوفية', en: 'Menofia' },
+    { id: 'minya', ar: 'المنيا', en: 'Minya' },
+    { id: 'qalyubia', ar: 'القليوبية', en: 'Qalyubia' },
+    { id: 'new_valley', ar: 'الوادي الجديد', en: 'New Valley' },
+    { id: 'suez', ar: 'السويس', en: 'Suez' },
+    { id: 'aswan', ar: 'أسوان', en: 'Aswan' },
+    { id: 'asyut', ar: 'أسيوط', en: 'Asyut' },
+    { id: 'beni_suef', ar: 'بني سويف', en: 'Beni Suef' },
+    { id: 'port_said', ar: 'بورسعيد', en: 'Port Said' },
+    { id: 'damietta', ar: 'دمياط', en: 'Damietta' },
+    { id: 'sharkia', ar: 'الشرقية', en: 'Sharqia' },
+    { id: 'south_sinai', ar: 'جنوب سيناء', en: 'South Sinai' },
+    { id: 'kafr_el_sheikh', ar: 'كفر الشيخ', en: 'Kafr El-Sheikh' },
+    { id: 'matrouh', ar: 'مطروح', en: 'Matruh' },
+    { id: 'luxor', ar: 'الأقصر', en: 'Luxor' },
+    { id: 'qena', ar: 'قنا', en: 'Qena' },
+    { id: 'north_sinai', ar: 'شمال سيناء', en: 'North Sinai' },
+    { id: 'sohag', ar: 'سوهاج', en: 'Sohag' }
+  ];
+
+  let companyProfileData = null;
+  let isEditingProfile = false;
+
+  async function fetchCompanyProfile() {
+    try {
+      const res = await apiFetch('/api/company/profile');
+      if (res && res.ok) {
+        const json = await res.json();
+        if (json && json.success && json.company) {
+          companyProfileData = json.company;
+          currentUser = {
+            ...currentUser,
+            ...json.company
+          };
+          updateCompanyIdentityUI(currentUser);
+          return json.company;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to fetch company profile:', e);
+    }
+    if (currentUser) {
+      companyProfileData = currentUser;
+      return currentUser;
+    }
+    return null;
+  }
+
+  function setupProfilePage() {
+    const editBtn = document.getElementById('btnEditProfile');
+    const cancelBtn = document.getElementById('btnCancelEditProfile');
+    const form = document.getElementById('companyProfileForm');
+
+    if (editBtn) {
+      editBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        enterProfileEditMode();
+      });
+    }
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        exitProfileEditMode(true);
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await handleSaveProfile();
+      });
+    }
+
+    const saveBtn = document.getElementById('btnSaveProfile');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await handleSaveProfile();
+      });
+    }
+
+    // Populate governorate select
+    populateGovernorateSelect();
+  }
+
+  function populateGovernorateSelect() {
+    const govDisplay = document.getElementById('profileGovernorateDisplay');
+    const govInput = document.getElementById('profileGovernorate');
+    const currentVal = (govInput ? govInput.value : '') || (companyProfileData ? companyProfileData.governorate : 'الجيزة') || 'الجيزة';
+    const isAr = currentLang === 'ar';
+
+    if (govDisplay) {
+      const match = EGYPTIAN_GOVERNORATES.find(gov => gov.ar === currentVal || gov.en === currentVal || gov.id === currentVal);
+      govDisplay.textContent = isAr ? (match ? match.ar : currentVal) : (match ? match.en : currentVal);
+    }
+
+    if (govInput && !govInput.value) {
+      govInput.value = currentVal;
+    }
+
+    // Fallback if select exists
+    const select = document.getElementById('profileGovernorate');
+    if (select && select.tagName === 'SELECT') {
+      select.innerHTML = `<option value="" disabled ${!currentVal ? 'selected' : ''}>${isAr ? 'اختار المحافظة' : 'Select governorate'}</option>`;
+      EGYPTIAN_GOVERNORATES.forEach(gov => {
+        const opt = document.createElement('option');
+        opt.value = gov.ar;
+        opt.textContent = isAr ? gov.ar : gov.en;
+        if (currentVal && (currentVal === gov.ar || currentVal === gov.en || currentVal === gov.id)) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+  }
+
+  function enterProfileEditMode() {
+    isEditingProfile = true;
+    const form = document.getElementById('companyProfileForm');
+    if (!form) return;
+
+    form.classList.add('is-editing');
+
+    // Enable editable inputs
+    const editableInputs = form.querySelectorAll('.is-editable-input');
+    editableInputs.forEach(input => {
+      input.removeAttribute('readonly');
+      input.removeAttribute('disabled');
+    });
+
+    const editActions = document.getElementById('profileEditActions');
+    const viewActions = document.getElementById('profileViewActions');
+    if (editActions) editActions.style.display = 'flex';
+    if (viewActions) viewActions.style.display = 'none';
+
+    // Focus on first editable input
+    const firstInput = document.getElementById('profileResponsiblePerson');
+    if (firstInput) firstInput.focus();
+  }
+
+  function exitProfileEditMode(discardChanges = true) {
+    isEditingProfile = false;
+    const form = document.getElementById('companyProfileForm');
+    if (!form) return;
+
+    form.classList.remove('is-editing');
+
+    // Make editable inputs read-only again
+    const editableInputs = form.querySelectorAll('.is-editable-input');
+    editableInputs.forEach(input => {
+      input.setAttribute('readonly', 'true');
+      if (input.tagName === 'SELECT') {
+        input.setAttribute('disabled', 'true');
+      }
+    });
+
+    // Clear inline errors
+    clearAllProfileErrors();
+
+    const editActions = document.getElementById('profileEditActions');
+    const viewActions = document.getElementById('profileViewActions');
+    if (editActions) editActions.style.display = 'none';
+    if (viewActions) viewActions.style.display = 'flex';
+
+    if (discardChanges && companyProfileData) {
+      renderProfileFormValues(companyProfileData);
+    }
+  }
+
+  function clearAllProfileErrors() {
+    const errorContainers = document.querySelectorAll('.profile-field-error');
+    errorContainers.forEach(el => {
+      el.textContent = '';
+      el.style.display = 'none';
+    });
+    const inputs = document.querySelectorAll('.profile-input.has-error');
+    inputs.forEach(el => el.classList.remove('has-error'));
+    const banner = document.getElementById('profileFeedbackBanner');
+    if (banner) {
+      banner.style.display = 'none';
+      banner.className = 'profile-feedback-banner';
+    }
+  }
+
+  function showProfileFieldError(fieldId, errorKeyOrMsg) {
+    const input = document.getElementById(fieldId);
+    const errorEl = document.getElementById(fieldId + 'Error');
+    const msg = getTranslation(errorKeyOrMsg, currentDict) || errorKeyOrMsg;
+    if (input) input.classList.add('has-error');
+    if (errorEl) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    }
+  }
+
+  async function handleSaveProfile() {
+    clearAllProfileErrors();
+
+    const responsibleInput = document.getElementById('profileResponsiblePerson');
+    const phoneInput = document.getElementById('profilePhone');
+    const whatsappInput = document.getElementById('profileWhatsapp');
+    const emailInput = document.getElementById('profileEmail');
+    const govSelect = document.getElementById('profileGovernorate');
+    const addressInput = document.getElementById('profileAddress');
+
+    const responsiblePerson = responsibleInput ? responsibleInput.value.trim() : '';
+    const phone = phoneInput ? phoneInput.value.trim().replace(/\s+/g, '') : '';
+    const whatsapp = whatsappInput ? whatsappInput.value.trim().replace(/\s+/g, '') : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const governorate = govSelect ? govSelect.value.trim() : '';
+    const address = addressInput ? addressInput.value.trim() : '';
+
+    let hasError = false;
+
+    // Validate responsible person
+    if (!responsiblePerson || responsiblePerson.length < 2) {
+      showProfileFieldError('profileResponsiblePerson', 'company.profile_err_required');
+      hasError = true;
+    }
+
+    // Validate primary phone
+    if (!phone) {
+      showProfileFieldError('profilePhone', 'company.profile_err_required');
+      hasError = true;
+    } else if (!/^01[0125][0-9]{8}$/.test(phone)) {
+      showProfileFieldError('profilePhone', 'company.profile_err_invalid_phone');
+      hasError = true;
+    }
+
+    // Validate WhatsApp (optional, but if provided, validate format)
+    if (whatsapp && !/^01[0125][0-9]{8}$/.test(whatsapp) && !/^\+?[0-9]{10,15}$/.test(whatsapp)) {
+      showProfileFieldError('profileWhatsapp', 'company.profile_err_invalid_whatsapp');
+      hasError = true;
+    }
+
+    // Validate email (required)
+    if (!email) {
+      showProfileFieldError('profileEmail', 'company.profile_err_required');
+      hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showProfileFieldError('profileEmail', 'company.profile_err_invalid_email');
+      hasError = true;
+    }
+
+    // Validate governorate
+    if (!governorate) {
+      showProfileFieldError('profileGovernorate', 'company.profile_err_required');
+      hasError = true;
+    }
+
+    // Validate address
+    if (!address || address.length < 3) {
+      showProfileFieldError('profileAddress', 'company.profile_err_required');
+      hasError = true;
+    }
+
+    if (hasError) {
+      const firstError = document.querySelector('.profile-input.has-error');
+      if (firstError) firstError.focus();
+      return;
+    }
+
+    // Disable save button during request
+    const saveBtn = document.getElementById('btnSaveProfile');
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.classList.add('is-loading');
+    }
+
+    try {
+      const payload = {
+        responsible_person: responsiblePerson,
+        phone: phone,
+        whatsapp: whatsapp || null,
+        email: email,
+        governorate: governorate,
+        address: address
+      };
+
+      const res = await apiFetch('/api/company/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+
+      if (res.ok && json && json.success && json.company) {
+        companyProfileData = json.company;
+        currentUser = {
+          ...currentUser,
+          ...json.company
+        };
+        updateCompanyIdentityUI(currentUser);
+        exitProfileEditMode(false);
+        renderProfileFormValues(json.company);
+        showProfileFeedbackBanner('success', getTranslation('company.profile_msg_save_success', currentDict) || 'Company profile updated successfully.');
+      } else {
+        const errMsg = json && json.error ? json.error : (getTranslation('company.profile_msg_save_error', currentDict) || 'Failed to update profile.');
+        showProfileFeedbackBanner('error', errMsg);
+      }
+    } catch (err) {
+      console.error('Error updating company profile:', err);
+      showProfileFeedbackBanner('error', getTranslation('company.profile_msg_save_error', currentDict) || 'Failed to update profile.');
+    } finally {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.classList.remove('is-loading');
+      }
+    }
+  }
+
+  function showProfileFeedbackBanner(type, message) {
+    const banner = document.getElementById('profileFeedbackBanner');
+    if (!banner) return;
+    banner.textContent = message;
+    banner.className = `profile-feedback-banner is-${type}`;
+    banner.style.display = 'flex';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function renderProfileFormValues(data) {
+    if (!data) return;
+    const isAr = currentLang === 'ar';
+
+    // 1. Protected Section Display
+    const compNameEl = document.getElementById('profileCompanyName');
+    if (compNameEl) compNameEl.textContent = isAr ? (data.company_name || data.name) : (data.company_name_en || data.name);
+
+    const licenseEl = document.getElementById('profileLicenseNumber');
+    if (licenseEl) licenseEl.textContent = data.license_number || '47852';
+
+    const registryEl = document.getElementById('profileCommercialRegistry');
+    if (registryEl) registryEl.textContent = data.commercial_registry || 'CR-104928';
+
+    const compIdEl = document.getElementById('profileCompanyId');
+    if (compIdEl) compIdEl.textContent = data.id || 'comp_aldorra_01';
+
+    // 2. Editable Contact Inputs
+    const responsibleInput = document.getElementById('profileResponsiblePerson');
+    if (responsibleInput) responsibleInput.value = data.responsible_person || '';
+
+    const phoneInput = document.getElementById('profilePhone');
+    if (phoneInput) phoneInput.value = data.phone || '';
+
+    const whatsappInput = document.getElementById('profileWhatsapp');
+    if (whatsappInput) whatsappInput.value = data.whatsapp || data.phone || '';
+
+    const emailInput = document.getElementById('profileEmail');
+    if (emailInput) emailInput.value = data.email || '';
+
+    const addressInput = document.getElementById('profileAddress');
+    if (addressInput) addressInput.value = data.address || '';
+
+    const govDisplay = document.getElementById('profileGovernorateDisplay');
+    const govInput = document.getElementById('profileGovernorate');
+    const savedGov = data.governorate || 'الجيزة';
+    if (govInput) govInput.value = savedGov;
+    if (govDisplay) {
+      const match = EGYPTIAN_GOVERNORATES.find(gov => gov.ar === savedGov || gov.en === savedGov || gov.id === savedGov);
+      govDisplay.textContent = isAr ? (match ? match.ar : savedGov) : (match ? match.en : savedGov);
+    }
+
+    populateGovernorateSelect();
+
+    // 3. Contract Section Display
+    const contract = data.contract || {};
+    const contractRefEl = document.getElementById('profileContractRef');
+    if (contractRefEl) contractRefEl.textContent = contract.ref || 'MQ-CTR-2025-084';
+
+    const tierEl = document.getElementById('profilePartnershipTier');
+    if (tierEl) tierEl.textContent = isAr ? 'شريك بلاتيني معتمد' : 'Certified Platinum Partner';
+
+    const startEl = document.getElementById('profileContractStart');
+    if (startEl) startEl.textContent = contract.start_date || '2025-01-01';
+
+    const endEl = document.getElementById('profileContractEnd');
+    if (endEl) endEl.textContent = contract.end_date || '2026-12-31';
+
+    const signedEl = document.getElementById('profileContractSigned');
+    if (signedEl) signedEl.textContent = contract.signed_at || '2024-12-20';
+
+    const statusEl = document.getElementById('profileContractStatus');
+    if (statusEl) {
+      statusEl.textContent = isAr ? 'سارٍ ونشط' : 'Active & In Effect';
+      statusEl.className = 'profile-status-pill is-active';
+    }
+  }
+
+  async function renderProfilePage() {
+    let data = companyProfileData;
+    if (!data) {
+      data = await fetchCompanyProfile();
+    }
+    if (data) {
+      renderProfileFormValues(data);
+    }
+  }
+
+  // Window exposure for profile
+  window.MiqatCompanyPortal.renderProfile = renderProfilePage;
+  window.MiqatCompanyPortal.saveProfile = handleSaveProfile;
+  window.MiqatCompanyPortal.editProfile = enterProfileEditMode;
+  window.MiqatCompanyPortal.cancelProfile = exitProfileEditMode;
+  window.MiqatCompanyPortal.applyTranslations = applyTranslations;
+  window.MiqatCompanyPortal.applyTheme = applyTheme;
+
   // --- Page Initialization ---
   async function initCompanyPortal() {
     applyTheme(currentTheme);
@@ -5388,6 +6554,9 @@
     // Verify company authorization
     const user = await verifyCompanyAuth();
     if (!user) return;
+
+    // Update unread notification count badge in Navbar across all pages
+    await updateNavbarNotificationsBadge();
 
     const pageId = document.body ? document.body.dataset.pageId : '';
     if (pageId === 'company-dashboard') {
@@ -5404,6 +6573,12 @@
     } else if (pageId === 'company-programs') {
       setupProgramsPage();
       renderProgramsPage();
+    } else if (pageId === 'company-notifications') {
+      setupNotificationsPage();
+      renderNotificationsPage();
+    } else if (pageId === 'company-profile') {
+      setupProfilePage();
+      renderProfilePage();
     }
   }
 

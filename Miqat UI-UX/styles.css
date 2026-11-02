@@ -54,9 +54,9 @@
   --color-accent-text: #183653;
   --color-link: #28577D;
   --color-focus: #3B82F6;
-  --color-success: #1B7A55;
-  --color-warning: #B36B15;
-  --color-error: #BA251B;
+  --color-success: #28577D;
+  --color-warning: #875F20;
+  --color-error: #526579;
 
   /* Brand-Aligned Semantic Validation Tokens (Replaces Harsh Red) */
   --color-validation-border: #B87B2A; /* Warm Desert Gold / Ochre */
@@ -158,9 +158,9 @@
   --color-accent-text: #E5C98A; /* Radiant High-Contrast Gold Text */
   --color-link: #8AB7E0;
   --color-focus: #7CB6FF;
-  --color-success: #4FD19E;
-  --color-warning: #F5BE68;
-  --color-error: #FF7B7B;
+  --color-success: #8AB7E0;
+  --color-warning: #DFBF7A;
+  --color-error: #D0D9E2;
 
   /* Brand-Aligned Semantic Validation Tokens (Dark Mode) */
   --color-validation-border: #E5B864; /* Luminous Warm Gold */
@@ -3461,10 +3461,17 @@ img, svg {
 }
 
 .auth-status-alert.success {
-  background-color: rgba(27, 122, 85, 0.08);
-  border: 1px solid rgba(27, 122, 85, 0.28);
+  background-color: rgba(40, 87, 125, 0.08);
+  border: 1px solid rgba(40, 87, 125, 0.28);
   color: var(--color-success);
   border-inline-start: 4px solid var(--color-success);
+}
+
+[data-theme="dark"] .auth-status-alert.success {
+  background-color: rgba(138, 183, 224, 0.12);
+  border-color: rgba(138, 183, 224, 0.35);
+  border-inline-start-color: var(--color-success);
+  color: var(--color-success);
 }
 
 .auth-status-title {
@@ -6492,14 +6499,14 @@ img, svg {
 
 .form-input.has-error,
 .form-select.has-error {
-  border-color: #DC2626 !important;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.16) !important;
+  border-color: var(--color-validation-border) !important;
+  box-shadow: 0 0 0 3px var(--color-validation-glow) !important;
 }
 
 .field-error-feedback {
   display: none;
   font-size: 0.78rem;
-  color: #DC2626;
+  color: var(--color-validation-text);
   margin-top: 5px;
   gap: 5px;
   align-items: center;
@@ -6511,7 +6518,7 @@ img, svg {
 
 .field-error-feedback svg {
   flex-shrink: 0;
-  stroke: #DC2626;
+  stroke: var(--color-validation-text);
 }
 
 /* Notes Textarea */
@@ -6548,8 +6555,14 @@ img, svg {
 }
 
 .request-status-alert.error {
-  background: rgba(186, 37, 27, 0.08);
-  border: 1px solid rgba(186, 37, 27, 0.25);
+  background: rgba(82, 101, 121, 0.08);
+  border: 1px solid rgba(82, 101, 121, 0.25);
+  color: var(--color-error);
+}
+
+[data-theme="dark"] .request-status-alert.error {
+  background: rgba(208, 217, 226, 0.12);
+  border-color: rgba(208, 217, 226, 0.3);
   color: var(--color-error);
 }
 
@@ -7444,31 +7457,53 @@ img, svg {
 }
 
 .receipt-status-icon-ring.status-paid {
-  background: var(--color-badge-bg);
-  color: var(--color-badge-icon);
-  box-shadow: 0 4px 14px rgba(197, 161, 94, 0.22);
+  background: rgba(40, 87, 125, 0.1);
+  color: var(--color-success);
+  border: 1.5px solid var(--color-success);
+  box-shadow: 0 4px 14px rgba(40, 87, 125, 0.18);
+}
+
+[data-theme="dark"] .receipt-status-icon-ring.status-paid {
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
+  box-shadow: 0 4px 14px rgba(138, 183, 224, 0.22);
 }
 
 .receipt-status-icon-ring.status-failed {
-  background: var(--color-validation-bg);
-  color: var(--color-validation-text);
-  border: 1px solid var(--color-validation-border);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
+}
+
+[data-theme="dark"] .receipt-status-icon-ring.status-failed {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .receipt-status-icon-ring.status-cancelled {
-  background: var(--color-surface-secondary);
-  color: var(--color-text-muted);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
+}
+
+[data-theme="dark"] .receipt-status-icon-ring.status-cancelled {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .receipt-status-icon-ring.status-refunded {
-  background: var(--color-surface-secondary);
-  color: var(--color-secondary-blue);
-  border: 1.5px solid var(--color-secondary-blue);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border: 1.5px solid var(--color-error);
 }
 
 [data-theme="dark"] .receipt-status-icon-ring.status-refunded {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .receipt-status-heading {
@@ -7563,53 +7598,73 @@ img, svg {
   flex-shrink: 0;
 }
 
-/* Paid: Established Brand Gold */
+/* Paid: Success (#28577D / #8AB7E0) */
 .status-pill.status-paid {
-  background: var(--color-badge-bg);
-  border: 1px solid var(--color-badge-border);
-  color: var(--color-badge-text);
+  background: rgba(40, 87, 125, 0.1);
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+[data-theme="dark"] .status-pill.status-paid {
+  background: rgba(138, 183, 224, 0.16);
+  border-color: var(--color-success);
+  color: var(--color-success);
 }
 
 .status-pill.status-paid svg {
-  color: var(--color-badge-icon);
+  color: var(--color-success);
 }
 
-/* Pending: Soft Blue Slate */
+/* Pending: Warning (#875F20 / #DFBF7A) */
 .status-pill.status-pending {
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border);
-  color: var(--color-secondary-blue);
+  background: rgba(135, 95, 32, 0.1);
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
 }
 
 [data-theme="dark"] .status-pill.status-pending {
-  color: #8AB7E0;
+  background: rgba(223, 191, 122, 0.16);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
 }
 
-/* Failed: High-Contrast Warm Ochre / Amber (Never Red) */
+/* Failed: Error (#526579 / #D0D9E2) */
 .status-pill.status-failed {
-  background: var(--color-validation-bg);
-  border: 1px solid var(--color-validation-border);
-  color: var(--color-validation-text);
+  background: rgba(82, 101, 121, 0.1);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
 }
 
-/* Cancelled: Neutral Muted Slate */
+[data-theme="dark"] .status-pill.status-failed {
+  background: rgba(208, 217, 226, 0.12);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/* Cancelled: Error (#526579 / #D0D9E2) */
 .status-pill.status-cancelled {
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  background: rgba(82, 101, 121, 0.1);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
 }
 
-/* Refunded: Distinctive Outline Badge (Brand Blue / Gold) */
+[data-theme="dark"] .status-pill.status-cancelled {
+  background: rgba(208, 217, 226, 0.12);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/* Refunded: Error / Slate Neutral (#526579 / #D0D9E2) */
 .status-pill.status-refunded {
-  background: var(--color-surface-secondary);
-  border: 1.5px solid var(--color-secondary-blue);
-  color: var(--color-secondary-blue);
+  background: rgba(82, 101, 121, 0.1);
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
 }
 
 [data-theme="dark"] .status-pill.status-refunded {
-  background: rgba(209, 177, 108, 0.12);
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  background: rgba(208, 217, 226, 0.12);
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 /* --- 6. Transactions Tables (Customer & Admin) --- */
@@ -9427,8 +9482,8 @@ html[dir="ltr"] .account-page .account-back-btn .back-arrow-icon {
 }
 
 .account-page .account-form-input.has-error {
-  border-color: #C2410C;
-  box-shadow: 0 0 0 2px rgba(194, 65, 12, 0.18);
+  border-color: var(--color-validation-border);
+  box-shadow: 0 0 0 2px var(--color-validation-glow);
 }
 
 .account-page .account-field-hint {
@@ -9440,13 +9495,13 @@ html[dir="ltr"] .account-page .account-back-btn .back-arrow-icon {
 
 .account-page .account-field-error {
   font-size: 0.82rem;
-  color: #C2410C;
+  color: var(--color-validation-text);
   margin-top: 0.35rem;
   font-weight: 600;
 }
 
 [data-theme="dark"] .account-page .account-field-error {
-  color: #FB923C;
+  color: var(--color-validation-text);
 }
 
 /* 7. Action Buttons (Issue 7: Save Changes & Cancel / Restore Data) */
@@ -9581,18 +9636,23 @@ html[dir="ltr"] .account-page .account-btn {
 }
 
 .account-page .account-alert.is-success {
-  background: rgba(197, 161, 94, 0.12);
-  border-color: var(--color-accent);
+  background: rgba(40, 87, 125, 0.1);
+  border-color: var(--color-success);
+}
+
+[data-theme="dark"] .account-page .account-alert.is-success {
+  background: rgba(138, 183, 224, 0.16);
+  border-color: var(--color-success);
 }
 
 .account-page .account-alert.is-error {
-  background: rgba(194, 65, 12, 0.08);
-  border-color: #C2410C;
+  background: rgba(82, 101, 121, 0.1);
+  border-color: var(--color-error);
 }
 
 [data-theme="dark"] .account-page .account-alert.is-error {
-  background: rgba(234, 88, 12, 0.15);
-  border-color: #EA580C;
+  background: rgba(208, 217, 226, 0.12);
+  border-color: var(--color-error);
 }
 
 .account-page .account-alert-icon {
@@ -9602,8 +9662,12 @@ html[dir="ltr"] .account-page .account-btn {
   color: var(--color-accent);
 }
 
+.account-page .account-alert.is-success .account-alert-icon {
+  color: var(--color-success);
+}
+
 .account-page .account-alert.is-error .account-alert-icon {
-  color: #C2410C;
+  color: var(--color-error);
 }
 
 .account-page .account-alert-body {
@@ -10442,7 +10506,7 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 .date-filter-reset-btn:hover {
-  background: rgba(186, 37, 27, 0.12);
+  background: rgba(82, 101, 121, 0.12);
   color: var(--color-error);
 }
 
@@ -11131,8 +11195,8 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 .btn-clear-table-filter:hover {
-  background: rgba(186, 37, 27, 0.1);
-  border-color: rgba(186, 37, 27, 0.3);
+  background: rgba(82, 101, 121, 0.1);
+  border-color: rgba(82, 101, 121, 0.3);
   color: var(--color-error);
 }
 
@@ -11211,43 +11275,51 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 .status-pill.status-confirmed {
-  background: rgba(24, 54, 83, 0.1);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background: rgba(40, 87, 125, 0.1);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 
 [data-theme="dark"] .status-pill.status-confirmed {
-  background: rgba(209, 177, 108, 0.16);
-  color: var(--color-accent-rich);
-  border-color: var(--color-accent);
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 .status-pill.status-new {
-  background: var(--color-accent-soft);
-  color: var(--color-primary);
-  border: 1px solid var(--color-accent);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
 }
 
 [data-theme="dark"] .status-pill.status-new {
-  background: rgba(209, 177, 108, 0.18);
-  color: var(--color-accent-rich);
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 .status-pill.status-pending {
-  background: rgba(40, 87, 125, 0.1);
-  color: var(--color-secondary-blue);
-  border: 1px solid var(--color-secondary-blue);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
 }
 
 [data-theme="dark"] .status-pill.status-pending {
-  background: rgba(62, 115, 158, 0.2);
-  color: #8AB7E0;
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 .status-pill.status-rejected {
   background: rgba(82, 101, 121, 0.1);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+[data-theme="dark"] .status-pill.status-rejected {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 /* Mobile Bookings Cards (Shown <= 768px) */
@@ -11559,12 +11631,17 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(186, 37, 27, 0.1);
+  background: rgba(82, 101, 121, 0.1);
   color: var(--color-error);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .company-unauthorized-alert .unauth-icon-wrap {
+  background: rgba(208, 217, 226, 0.15);
+  color: var(--color-error);
 }
 
 .company-unauthorized-alert .unauth-title {
@@ -12923,96 +13000,116 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
   white-space: nowrap;
 }
 
-/* Official Miqat Design Tokens: Established Brand Gold (Zero Green) */
+/* Unified Semantic Payment Status Badges */
 .pay-status-pill.status-fully_paid,
 .pay-status-pill.status-paid {
-  background: var(--color-badge-bg);
-  color: var(--color-badge-text);
-  border: 1px solid var(--color-badge-border);
+  background: rgba(40, 87, 125, 0.1);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 
 [data-theme="dark"] .pay-status-pill.status-fully_paid,
 [data-theme="dark"] .pay-status-pill.status-paid {
-  background: var(--color-badge-bg);
-  color: var(--color-badge-text);
-  border-color: var(--color-badge-border);
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 .pay-status-pill.status-deposit_paid {
   background: rgba(40, 87, 125, 0.1);
-  color: var(--color-secondary-blue);
-  border: 1px solid var(--color-secondary-blue);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 
 [data-theme="dark"] .pay-status-pill.status-deposit_paid {
-  background: rgba(62, 115, 158, 0.2);
-  color: #8AB7E0;
-  border-color: #3E739E;
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 .pay-status-pill.status-partially_paid {
-  background: rgba(179, 107, 21, 0.1);
+  background: rgba(135, 95, 32, 0.1);
   color: var(--color-warning);
   border: 1px solid var(--color-warning);
 }
 
 [data-theme="dark"] .pay-status-pill.status-partially_paid {
-  background: rgba(217, 138, 38, 0.18);
-  color: #FDBA74;
-  border-color: #D98A26;
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 .pay-status-pill.status-unpaid {
   background: rgba(82, 101, 121, 0.1);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+[data-theme="dark"] .pay-status-pill.status-unpaid {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .pay-status-pill.status-refund_pending {
-  background: rgba(186, 37, 27, 0.08);
-  color: var(--color-error);
-  border: 1px solid rgba(186, 37, 27, 0.3);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border: 1px solid rgba(135, 95, 32, 0.3);
 }
 
 [data-theme="dark"] .pay-status-pill.status-refund_pending {
-  background: rgba(239, 68, 68, 0.15);
-  color: #FCA5A5;
-  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: rgba(223, 191, 122, 0.35);
 }
 
 .pay-status-pill.status-refunded {
-  background: rgba(82, 101, 121, 0.12);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+[data-theme="dark"] .pay-status-pill.status-refunded {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 /* Booking Status Extended (Cancelled, Changed, Under Review) */
 .status-pill.status-under_review {
-  background: rgba(40, 87, 125, 0.1);
-  color: var(--color-secondary-blue);
-  border: 1px solid var(--color-secondary-blue);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
 }
 
 [data-theme="dark"] .status-pill.status-under_review {
-  background: rgba(62, 115, 158, 0.2);
-  color: #8AB7E0;
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 .status-pill.status-cancelled {
   background: rgba(82, 101, 121, 0.1);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+[data-theme="dark"] .status-pill.status-cancelled {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 .status-pill.status-changed {
-  background: rgba(179, 107, 21, 0.1);
+  background: rgba(135, 95, 32, 0.1);
   color: var(--color-warning);
   border: 1px solid var(--color-warning);
 }
 
 [data-theme="dark"] .status-pill.status-changed {
-  background: rgba(217, 138, 38, 0.18);
-  color: #FDBA74;
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 /* Empty State */
@@ -13692,16 +13789,16 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 
 /* Proposed Program Change Banner */
 .proposed-change-banner {
-  background: rgba(179, 107, 21, 0.08);
-  border: 1.5px solid rgba(179, 107, 21, 0.3);
+  background: rgba(135, 95, 32, 0.08);
+  border: 1.5px solid rgba(135, 95, 32, 0.3);
   border-radius: var(--radius-md);
   padding: 14px 16px;
   margin-top: 14px;
 }
 
 [data-theme="dark"] .proposed-change-banner {
-  background: rgba(217, 138, 38, 0.14);
-  border-color: rgba(217, 138, 38, 0.35);
+  background: rgba(223, 191, 122, 0.14);
+  border-color: rgba(223, 191, 122, 0.35);
 }
 
 .proposed-change-header {
@@ -16870,61 +16967,84 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
   border: 1px solid transparent;
 }
 
-/* Published: Approved Miqat Navy / Warm Gold (Zero Green) */
+/* Published: Success (#28577D / #8AB7E0) */
 .prog-status-published {
-  background: rgba(40, 87, 125, 0.12);
-  color: var(--color-primary);
-  border-color: rgba(40, 87, 125, 0.35);
+  background: rgba(40, 87, 125, 0.1);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 [data-theme="dark"] .prog-status-published {
-  background: rgba(209, 177, 108, 0.14);
-  color: var(--color-accent-rich);
-  border-color: rgba(209, 177, 108, 0.38);
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
+/* Draft: Warning (#875F20 / #DFBF7A) */
 .prog-status-draft {
-  background: rgba(82, 101, 121, 0.12);
-  color: var(--color-text-muted);
-  border-color: rgba(82, 101, 121, 0.25);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
+[data-theme="dark"] .prog-status-draft {
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+/* Archived: Error (#526579 / #D0D9E2) */
 .prog-status-archived {
-  background: rgba(82, 101, 121, 0.18);
-  color: var(--color-text-muted);
-  border-color: var(--color-border);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
-/* Availability: Soft Gold / Slate / Ochre (Zero Green) */
+[data-theme="dark"] .prog-status-archived {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+/* Availability: Success (#28577D / #8AB7E0) */
 .prog-avail-available {
-  background: rgba(40, 87, 125, 0.12);
-  color: var(--color-secondary-blue);
-  border-color: rgba(40, 87, 125, 0.35);
+  background: rgba(40, 87, 125, 0.1);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
 [data-theme="dark"] .prog-avail-available {
-  background: rgba(138, 183, 224, 0.15);
-  color: #8AB7E0;
-  border-color: rgba(138, 183, 224, 0.35);
+  background: rgba(138, 183, 224, 0.16);
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
+/* Limited: Warning (#875F20 / #DFBF7A) */
 .prog-avail-limited {
-  background: rgba(184, 123, 42, 0.12);
-  color: var(--color-validation-text);
-  border-color: rgba(184, 123, 42, 0.35);
+  background: rgba(135, 95, 32, 0.1);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
 [data-theme="dark"] .prog-avail-limited {
-  background: rgba(229, 184, 100, 0.14);
-  color: var(--color-validation-text);
-  border-color: rgba(229, 184, 100, 0.35);
+  background: rgba(223, 191, 122, 0.16);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
+/* Full / Unavailable: Error (#526579 / #D0D9E2) */
 .prog-avail-full,
 .prog-avail-unavailable {
-  background: rgba(82, 101, 121, 0.12);
-  color: var(--color-text-muted);
-  border-color: var(--color-border);
+  background: rgba(82, 101, 121, 0.1);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+[data-theme="dark"] .prog-avail-full,
+[data-theme="dark"] .prog-avail-unavailable {
+  background: rgba(208, 217, 226, 0.12);
+  color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 /* Title & Reference Code */
@@ -19433,14 +19553,14 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 .company-profile-page .profile-feedback-banner.is-success {
-  background: rgba(197, 161, 94, 0.12);
-  border: 1px solid rgba(197, 161, 94, 0.35);
+  background: rgba(40, 87, 125, 0.1);
+  border: 1px solid rgba(40, 87, 125, 0.3);
   color: var(--color-text);
 }
 
 .company-profile-page .profile-feedback-banner.is-error {
-  background: rgba(230, 126, 34, 0.12);
-  border: 1px solid rgba(230, 126, 34, 0.35);
+  background: rgba(82, 101, 121, 0.1);
+  border: 1px solid rgba(82, 101, 121, 0.3);
   color: var(--color-text);
 }
 
@@ -19612,14 +19732,14 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 .company-profile-page .profile-input.has-error {
-  border-color: #E67E22 !important;
-  box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2) !important;
+  border-color: var(--color-validation-border) !important;
+  box-shadow: 0 0 0 2px var(--color-validation-glow) !important;
 }
 
 .company-profile-page .profile-field-error {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #E67E22;
+  color: var(--color-validation-text);
   margin-top: 0.25rem;
 }
 
@@ -19842,14 +19962,14 @@ html:not([data-theme="dark"]) .company-portal-header .client-logout-btn:hover {
 }
 
 [data-theme="dark"] .company-profile-page .profile-feedback-banner.is-success {
-  background: rgba(209, 177, 108, 0.15);
-  border: 1.5px solid rgba(209, 177, 108, 0.45);
+  background: rgba(138, 183, 224, 0.16);
+  border: 1.5px solid rgba(138, 183, 224, 0.4);
   color: #F5F2EB;
 }
 
 [data-theme="dark"] .company-profile-page .profile-feedback-banner.is-error {
-  background: rgba(230, 126, 34, 0.16);
-  border: 1.5px solid rgba(230, 126, 34, 0.45);
+  background: rgba(208, 217, 226, 0.12);
+  border: 1.5px solid rgba(208, 217, 226, 0.35);
   color: #F5F2EB;
 }
 

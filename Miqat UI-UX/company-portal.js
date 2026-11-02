@@ -514,10 +514,10 @@
     let segmentsSvg = '';
 
     const colorTokens = {
-      Confirmed: currentTheme === 'dark' ? '#2B4E70' : '#183653',
-      New: currentTheme === 'dark' ? '#D1B16C' : '#C5A15E',
-      Pending: currentTheme === 'dark' ? '#3E739E' : '#28577D',
-      Rejected: currentTheme === 'dark' ? '#4B6E8C' : '#8A9BAE'
+      Confirmed: currentTheme === 'dark' ? '#8AB7E0' : '#28577D',
+      New: currentTheme === 'dark' ? '#DFBF7A' : '#875F20',
+      Pending: currentTheme === 'dark' ? '#E5C98A' : '#B87B2A',
+      Rejected: currentTheme === 'dark' ? '#D0D9E2' : '#526579'
     };
 
     const countWord = currentLang === 'ar' ? 'حجز' : 'bookings';

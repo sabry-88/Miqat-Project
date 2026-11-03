@@ -1,0 +1,5 @@
+2026/11/03-17:03:48.884 5274 Creating DB D:\Miqat Platform\data\edge_dev_profile\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/11/03-17:03:48.983 5274 Reusing MANIFEST D:\Miqat Platform\data\edge_dev_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/11/03-17:03:49.600 5434 Level-0 table #5: started
+2026/11/03-17:03:49.607 5434 Level-0 table #5: 683284 bytes OK
+2026/11/03-17:03:49.610 5434 Delete type=0 #3

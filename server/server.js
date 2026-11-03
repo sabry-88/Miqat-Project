@@ -222,9 +222,15 @@ const server = http.createServer(async (req, res) => {
         governorate: user.governorate,
         role: user.role,
         company_name: user.company_name || (user.role === 'company' ? user.name : null),
+        company_name_en: user.company_name_en || null,
         responsible_person: user.responsible_person || null,
         license_number: user.license_number || null,
+        address: user.address || null,
+        whatsapp: user.whatsapp || null,
         status: user.status || 'active',
+        application_status: user.application_status || null,
+        application_submitted_at: user.application_submitted_at || null,
+        application_notes: user.application_notes || null,
         created_at: user.created_at
       };
 
@@ -955,6 +961,158 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, {
       success: true,
       message: 'All notifications marked as read'
+    });
+  }
+
+  // 7u. GET /api/partner-hub/overview (Miqat Partner Hub Overview Data)
+  if (pathname === '/api/partner-hub/overview' && req.method === 'GET') {
+    const sessionUser = getSessionUser(req);
+    if (!sessionUser) {
+      return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+
+    const applicationStatus = sessionUser.application_status || 'pending_review';
+    const submittedAt = sessionUser.application_submitted_at || '2026-11-01T10:00:00.000Z';
+
+    const data = {
+      user: {
+        id: sessionUser.id,
+        name: sessionUser.name,
+        company_name: sessionUser.company_name || sessionUser.name,
+        company_name_en: sessionUser.company_name_en || 'New Tourism Partner Agency',
+        responsible_person: sessionUser.responsible_person || 'مقدم الطلب (حساب تجريبي)',
+        phone: sessionUser.phone,
+        email: sessionUser.email,
+        governorate: sessionUser.governorate || 'cairo',
+        address: sessionUser.address || 'شارع التحرير، الدقي، الجيزة',
+        whatsapp: sessionUser.whatsapp || sessionUser.phone,
+        role: sessionUser.role,
+        status: sessionUser.status || 'pending_review',
+        application_status: applicationStatus,
+        application_submitted_at: submittedAt,
+        application_notes: sessionUser.application_notes || 'طلب شراكة جديد قيد المراجعة الإدارية والتحقق من المستندات'
+      },
+      application: {
+        status: applicationStatus,
+        status_ar: 'قيد المراجعة الإدارية والتحقق',
+        status_en: 'Administrative Review & Verification',
+        submitted_at: submittedAt,
+        estimated_review_hours: 48,
+        estimated_review_time_ar: '٤٨ ساعة عمل',
+        estimated_review_time_en: '48 business hours',
+        advisor: {
+          name_ar: 'أحمد ممدوح',
+          name_en: 'Ahmed Mamdouh',
+          title_ar: 'مستشار اعتماد الشركاء الجدد',
+          title_en: 'Partner Onboarding Advisor',
+          phone: '01156379991',
+          phone_ar: '٠١١٥٦٣٧٩٩٩١',
+          whatsapp: '01156379991',
+          whatsapp_ar: '٠١١٥٦٣٧٩٩٩١',
+          email: 'partners@miqat.me',
+          hotline: '19854',
+          hotline_ar: '١٩٨٥٤',
+          working_hours_ar: 'يومياً من ٩:٠٠ ص حتى ٦:٠٠ م (بتوقيت القاهرة)',
+          working_hours_en: 'Daily 9:00 AM - 6:00 PM (Cairo Time)'
+        },
+        stages: [
+          {
+            id: 1,
+            key: 'registration',
+            title_ar: 'إنشاء الحساب المبدئي',
+            title_en: 'Initial Account Creation',
+            desc_ar: 'تم تسجيل بيانات الشركة الأولية بنجاح وإنشاء الملف التعريفي.',
+            desc_en: 'Initial company details submitted and account profile established.',
+            status: 'completed',
+            date_ar: '١ نوفمبر ٢٠٢٦',
+            date_en: '1 Nov 2026'
+          },
+          {
+            id: 2,
+            key: 'review',
+            title_ar: 'فحص المستندات والترخيص السياحي',
+            title_en: 'Document & License Verification',
+            desc_ar: 'جاري فحص السجل التجاري وترخيص وزارة السياحة (فئة أ) ومطابقة الحساب البنكي.',
+            desc_en: 'Commercial register, Ministry of Tourism license (Cat A), and bank details under verification.',
+            status: 'current',
+            date_ar: 'جاري الآن (خلال ٤٨ ساعة عمل)',
+            date_en: 'In Progress (within 48 business hours)'
+          },
+          {
+            id: 3,
+            key: 'agreement',
+            title_ar: 'توقيع اتفاقية الشراكة والربط',
+            title_en: 'Partnership Agreement & Digital Signing',
+            desc_ar: 'إصدار مسودة العقد الإلكتروني واعتماد الشروط والحوافز والربط التشغيلي.',
+            desc_en: 'Digital contract issuance, terms confirmation, and operational dispatch setup.',
+            status: 'upcoming',
+            date_ar: 'المرحلة التالية',
+            date_en: 'Next Step'
+          },
+          {
+            id: 4,
+            key: 'activation',
+            title_ar: 'تفعيل البوابة ونشر برامج العمرة',
+            title_en: 'Portal Activation & Program Listing',
+            desc_ar: 'منح صلاحية الوصول للوحة التحكم وإضافة برامج الرحلات واستقبال طلبات الحجز المباشرة.',
+            desc_en: 'Granting full portal access, publishing Umrah packages, and receiving qualified leads.',
+            status: 'upcoming',
+            date_ar: 'المرحلة النهائية',
+            date_en: 'Final Stage'
+          }
+        ],
+        documents: [
+          {
+            id: 'commercial_registry',
+            name_ar: 'السجل التجاري الساري',
+            name_en: 'Valid Commercial Register',
+            file_name: 'CR_Registration_2026.pdf',
+            status: 'uploaded',
+            status_ar: 'تم الرفع',
+            status_en: 'Uploaded',
+            size_ar: '٢٫٤ ميجابايت',
+            size_en: '2.4 MB'
+          },
+          {
+            id: 'tourism_license',
+            name_ar: 'ترخيص وزارة السياحة المصرية (فئة أ)',
+            name_en: 'Egyptian Ministry of Tourism License (Cat A)',
+            file_name: 'Tourism_License_CatA.pdf',
+            status: 'under_review',
+            status_ar: 'قيد الفحص والتدقيق',
+            status_en: 'Under Verification',
+            size_ar: '٣٫١ ميجابايت',
+            size_en: '3.1 MB'
+          },
+          {
+            id: 'tax_card',
+            name_ar: 'البطاقة الضريبية الرسمية سارية',
+            name_en: 'Valid Corporate Tax Card',
+            file_name: 'Tax_Card_Scan.pdf',
+            status: 'uploaded',
+            status_ar: 'تم الرفع',
+            status_en: 'Uploaded',
+            size_ar: '١٫٨ ميجابايت',
+            size_en: '1.8 MB'
+          },
+          {
+            id: 'bank_certificate',
+            name_ar: 'شهادة حساب بنكي رسمي باسم الشركة',
+            name_en: 'Official Corporate Bank Account Certificate',
+            file_name: 'Corporate_Bank_IBAN.pdf',
+            status: 'under_review',
+            status_ar: 'قيد الفحص والتدقيق',
+            status_en: 'Under Verification',
+            size_ar: '١٫٢ ميجابايت',
+            size_en: '1.2 MB'
+          }
+        ]
+      }
+    };
+
+    return sendJson(res, 200, {
+      success: true,
+      data
     });
   }
 

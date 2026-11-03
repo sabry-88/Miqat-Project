@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="partner_hub.page_title">ميقات — بوابة الشركاء الجدد | نظرة عامة</title>
+  <meta name="description" content="منظومة متكاملة لربط شركات السياحة المعتمدة بضيوف الرحمن عبر منصة ميقات الذكية.">
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Font Preload -->
+  <link rel="preload" href="./assets/fonts/MiqatText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Global Unified Stylesheet (No separate stylesheet) -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="partner-hub-page">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">انتقل إلى المحتوى الرئيسي</a>
+
+  <!-- ==================== SHARED REUSABLE PARTNER HUB NAVBAR (HAMBURGER ON ALL SCREEN SIZES) ==================== -->
+  <header class="partner-hub-header" id="hubHeader">
+    <div class="hub-header-container">
+      
+      <!-- Brand Logo / Wordmark -->
+      <a href="new-company-overview.html" class="hub-brand-wrapper" aria-label="ميقات — بوابة الشركاء الجدد">
+        <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="hub-brand-img logo-light" width="44" height="44">
+        <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="hub-brand-img logo-dark" width="44" height="44">
+        <div class="hub-brand-text">
+          <span class="hub-brand-title" data-i18n="partner_hub.brand_name">مـيـقـات</span>
+          <span class="hub-brand-badge" data-i18n="partner_hub.portal_brand">بوابة الشركاء الجدد</span>
+        </div>
+      </a>
+
+      <!-- Header Action Controls -->
+      <div class="hub-header-actions">
+        
+        <!-- Top Bar Application Status Badge -->
+        <a href="#sec-application-status" class="hub-status-pill" id="hubTopStatusBadge" title="انقر لعرض تفاصيل حالة الطلب" aria-label="حالة الطلب: قيد المراجعة الإدارية">
+          <span class="hub-status-dot" aria-hidden="true"></span>
+          <span data-i18n="partner_hub.badge_pending_review">قيد المراجعة الإدارية</span>
+        </a>
+
+        <!-- Language Switcher -->
+        <button type="button" class="hub-ctrl-btn" id="hubLangToggle" aria-label="التبديل إلى اللغة الإنجليزية (EN)" title="التبديل إلى اللغة الإنجليزية (EN)" data-current-lang="ar" data-target-lang="en">
+          <span id="hubLangLabel">EN</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button type="button" class="hub-ctrl-btn" id="hubThemeToggle" aria-label="تبديل وضع العرض" title="تبديل وضع العرض">
+          <svg id="hubIconMoon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="hubIconSun" viewBox="0 0 24 24" style="display: none;" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- User Account Menu with Dropdown -->
+        <div class="hub-account-dropdown-wrap">
+          <button type="button" class="hub-account-btn" id="hubAccountBtn" aria-haspopup="true" aria-expanded="false" aria-label="قائمة حساب الشركة المتقدمة">
+            <div class="hub-avatar-initial" id="hubAvatarInitial">ش</div>
+            <div class="hub-account-info">
+              <span class="hub-account-name" id="hubAccountName">شركة سياحة جديدة</span>
+              <span class="hub-account-sub" data-i18n="partner_hub.badge_new_applicant">طلب اعتماد جديد</span>
+            </div>
+            <svg class="hub-account-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Account Dropdown Menu Card -->
+          <div class="hub-dropdown-menu" id="hubDropdownMenu" role="menu">
+            <div class="hub-menu-header">
+              <div class="hub-menu-company" id="hubMenuCompany">شركة سياحة جديدة</div>
+              <div class="hub-menu-phone font-numeric" id="hubMenuPhone">٠١١٥٦٣٧٩٩٩١</div>
+            </div>
+            <div class="hub-menu-status-row">
+              <span data-i18n="partner_hub.nav_company_status">حالة الحساب:</span>
+              <strong style="color: var(--color-warning);" id="hubMenuStatus" data-i18n="partner_hub.badge_pending_review">طلبكم قيد المراجعة الإدارية</strong>
+            </div>
+            <button type="button" class="hub-menu-logout-btn js-hub-logout" role="menuitem">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Task 1: Primary Hamburger Menu Toggle (Trigger on ALL screen sizes) -->
+        <button type="button" class="hub-menu-toggle" id="hubMenuToggle" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="hubMobileDrawer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== TASK 1: NAVIGATION DRAWER (FOR ALL VIEWPORTS) ==================== -->
+  <div class="hub-drawer-backdrop" id="hubDrawerBackdrop" aria-hidden="true"></div>
+  <aside class="hub-mobile-drawer" id="hubMobileDrawer" aria-label="القائمة الجانبية لبوابة الشركاء" aria-hidden="true">
+    <div class="hub-drawer-header">
+      <div class="hub-brand-text">
+        <span class="hub-brand-title" data-i18n="partner_hub.brand_name">مـيـقـات</span>
+        <span class="hub-brand-badge" data-i18n="partner_hub.portal_brand">بوابة الشركاء الجدد</span>
+      </div>
+      <button type="button" class="hub-drawer-close-btn" id="hubDrawerCloseBtn" aria-label="إغلاق القائمة">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="hub-drawer-status-box">
+      <span class="hub-status-dot" aria-hidden="true"></span>
+      <span data-i18n="partner_hub.badge_pending_review">طلبكم قيد المراجعة الإدارية</span>
+    </div>
+
+    <!-- Complete 11-Item Navigation List -->
+    <nav class="hub-drawer-nav" aria-label="أقسام بوابة الشركاء الجدد">
+      <a href="#sec-overview" class="hub-drawer-link is-active" data-i18n="partner_hub.nav_overview">نظرة عامة</a>
+      <a href="#sec-about" class="hub-drawer-link" data-i18n="partner_hub.nav_about">عن ميقات</a>
+      <a href="#sec-why-partner" class="hub-drawer-link" data-i18n="partner_hub.nav_why_partner">لوحة الشراكة الاستراتيجية</a>
+      <a href="#sec-activity" class="hub-drawer-link" data-i18n="partner_hub.nav_activity">نشاط الحجوزات</a>
+      <a href="#sec-discovery" class="hub-drawer-link" data-i18n="partner_hub.nav_discovery">قنوات المعتمرين</a>
+      <a href="#sec-network" class="hub-drawer-link" data-i18n="partner_hub.nav_network">شبكة الشركاء</a>
+      <a href="#sec-future-workspace" class="hub-drawer-link" data-i18n="partner_hub.nav_future_workspace">مساحة العمل المستقبلية</a>
+      <a href="#sec-contracts" class="hub-drawer-link" data-i18n="partner_hub.nav_contracts">العقود والالتزامات</a>
+      <a href="#sec-application-status" class="hub-drawer-link" data-i18n="partner_hub.nav_status">حالة الطلب</a>
+      <a href="#sec-documents" class="hub-drawer-link" data-i18n="partner_hub.nav_documents">المستندات والمتطلبات</a>
+      <a href="#sec-support" class="hub-drawer-link" data-i18n="partner_hub.nav_support">الدعم ومستشار الشراكة</a>
+    </nav>
+
+    <div class="hub-drawer-footer">
+      <button type="button" class="hub-drawer-logout-btn js-hub-logout">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span data-i18n="nav.sign_out">تسجيل الخروج</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN PAGE CONTENT ==================== -->
+  <main id="main-content">
+
+    <!-- ==================== SECTION 1: HERO / WELCOME ==================== -->
+    <section class="hub-hero-section" id="sec-overview" aria-label="نظرة عامة والترحيب بالشريك الجديد">
+      <div class="hub-container">
+        <div class="hub-hero-grid">
+          <div class="hub-hero-content">
+            <span class="hub-hero-badge" data-i18n="partner_hub.hero_badge">أهلاً بكم في منظومة ميقات الذكية</span>
+            <h1 class="hub-hero-title" data-i18n="partner_hub.hero_title">شراكة استراتيجية تجمعكم بضيوف الرحمن مباشرة</h1>
+            <p class="hub-hero-subtitle" data-i18n="partner_hub.hero_subtitle">تم استلام طلب تسجيل شركتكم الموقرة بنجاح، ومستنداتكم الآن قيد المراجعة والتدقيق الإداري. ندعوكم لاستكشاف منظومة العمل، الشراكة، والخدمات الرقمية التي نوفرها لشركاء النجاح.</p>
+            
+            <div class="hub-hero-actions">
+              <a href="#sec-application-status" class="hub-btn hub-btn-primary" data-i18n="partner_hub.hero_cta_status">متابعة حالة الطلب</a>
+              
+              <!-- Task 2: Refined Recognizable Documents & Requirements Button -->
+              <a href="#sec-documents" class="hub-btn-secondary" id="heroDocsBtn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+                <span data-i18n="partner_hub.hero_cta_docs">المستندات والمتطلبات</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hub-hero-stats-card">
+            <div class="hub-stat-item">
+              <span class="hub-stat-val font-numeric" data-i18n="partner_hub.hero_stat_1_val">٠</span>
+              <span class="hub-stat-lbl" data-i18n="partner_hub.hero_stat_1_lbl">رسوم اشتراك مسبقة</span>
+            </div>
+            <div class="hub-stat-item">
+              <span class="hub-stat-val font-numeric" data-i18n="partner_hub.hero_stat_2_val">٤٨</span>
+              <span class="hub-stat-lbl" data-i18n="partner_hub.hero_stat_2_lbl">ساعة عمل لمراجعة الطلب</span>
+            </div>
+            <div class="hub-stat-item">
+              <span class="hub-stat-val font-numeric" data-i18n="partner_hub.hero_stat_3_val">١٠٠٪</span>
+              <span class="hub-stat-lbl" data-i18n="partner_hub.hero_stat_3_lbl">شركات مرخصة حصرياً</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 2: ABOUT MIQAT ==================== -->
+    <section class="hub-section" id="sec-about" aria-label="عن منصة ميقات">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.about_eyebrow">من نحن ورؤيتنا</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.about_title">منظومة رقمية تعزز أعمال شركات السياحة المعتمدة</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.about_desc">ميقات منصة تقنية متخصصة تهدف إلى إعادة هيكلة سوق رحلات العمرة والحج في مصر عبر رقمنة الخدمات، تعزيز الشفافية، وتمكين الشركات السياحية المرخصة من الوصول لقاعدة معتمرين حقيقية وجادة.</p>
+        </div>
+
+        <div class="hub-about-grid">
+          <div class="hub-pillar-card">
+            <div class="hub-pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="hub-pillar-title" data-i18n="partner_hub.about_pillar_1_title">بيئة موثوقة ونظامية</h3>
+            <p class="hub-pillar-desc" data-i18n="partner_hub.about_pillar_1_desc">نعمل تحت مظلة وزارة السياحة والآثار، ونقبل فقط الشركات الحائزة على ترخيص سياحي رسمي فئة (أ) لحماية سمعة القطاع وضمان حقوق الجميع.</p>
+          </div>
+
+          <div class="hub-pillar-card">
+            <div class="hub-pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <h3 class="hub-pillar-title" data-i18n="partner_hub.about_pillar_2_title">تكامل تشغيلي مرن</h3>
+            <p class="hub-pillar-desc" data-i18n="partner_hub.about_pillar_2_desc">لا ننافس شركتكم بل نكون ذراعكم التسويقي والتقني؛ فأنتم المنظمون للرحلة ومقدمو الخدمات الأرضية، ونحن بوابتكم لجلب الحجوزات وإدارتها رقمياً.</p>
+          </div>
+
+          <div class="hub-pillar-card">
+            <div class="hub-pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3 class="hub-pillar-title" data-i18n="partner_hub.about_pillar_3_title">أمان مالي وجودة تعاقدية</h3>
+            <p class="hub-pillar-desc" data-i18n="partner_hub.about_pillar_3_desc">عقود إلكترونية واضحة تحدد المسؤوليات بدقة، وسياسات تسوية دورية تضمن تدفق مستحقات شركتكم دون أي تأخير أو غموض.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 3 (TASK 4): PROFESSIONAL PARTNERSHIP DASHBOARD ==================== -->
+    <section class="hub-section hub-dashboard-section" id="sec-why-partner" aria-label="لوحة الشراكة الاستراتيجية">
+      <div class="hub-container">
+        
+        <div class="hub-section-header">
+          <!-- Prominent Illustrative Demo Data Disclaimer Badge -->
+          <div class="hub-demo-disclaimer-pill">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span data-i18n="partner_hub.dash_demo_badge">بيانات توضيحية تجريبية</span>
+          </div>
+
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.dash_eyebrow">لوحة الشراكة الاستراتيجية</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.dash_title">مؤشرات نمو الشبكة وحجم النشاط والتعاقدات التشغيلية</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.dash_subtitle">استعراض رقمي يوضح حجم تفاعل المعتمرين وتدفق طلبات الحجز المحالة إلى شركات السياحة الشريكة عبر منصة ميقات.</p>
+        </div>
+
+        <!-- 1. 6 KPI Metric Cards Grid -->
+        <div class="hub-kpi-grid">
+          
+          <!-- Card 1: Contracted Tourism Companies (32) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M3 21h18"></path>
+                  <path d="M5 21V7l8-4v18"></path>
+                  <path d="M19 21V11l-6-3"></path>
+                  <line x1="9" y1="9" x2="9" y2="9.01"></line>
+                  <line x1="9" y1="13" x2="9" y2="13.01"></line>
+                  <line x1="9" y1="17" x2="9" y2="17.01"></line>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_companies_val">٣٢</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_companies_title">شركات السياحة المتعاقدة</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_companies_sub">شركات سياحة معتمدة فئة (أ) بمصر</p>
+          </div>
+
+          <!-- Card 2: Customers Reached (18,600) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_reached_val">١٨,٦٠٠</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_reached_title">المعتمرون الذين تم الوصول إليهم</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_reached_sub">عبر القنوات الرقمية ومحركات البحث</p>
+          </div>
+
+          <!-- Card 3: Booking Requests Received (8,760) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                  <line x1="12" y1="11" x2="12" y2="17"></line>
+                  <line x1="9" y1="14" x2="15" y2="14"></line>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_requests_val">٨,٧٦٠</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_requests_title">طلبات الحجز المستلمة</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_requests_sub">طلبات مؤكدة ومفحوصة مسبقاً</p>
+          </div>
+
+          <!-- Card 4: Requests Directed to Partners (7,420) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_directed_val">٧,٤٢٠</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_directed_title">طلبات محالة للشركات الشريكة</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_directed_sub">توجيه فوري لمسؤولي المبيعات</p>
+          </div>
+
+          <!-- Card 5: Completed Bookings (3,420) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_completed_val">٣,٤٢٠</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_completed_title">الحجوزات المكتملة بنجاح</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_completed_sub">أفواج تم إصدار باركود العمرة لها</p>
+          </div>
+
+          <!-- Card 6: Partnership Agreements (32) -->
+          <div class="hub-kpi-card">
+            <div class="hub-kpi-top-row">
+              <div class="hub-kpi-icon-box">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <path d="M16 13H8"></path>
+                  <path d="M16 17H8"></path>
+                  <path d="M10 9H8"></path>
+                </svg>
+              </div>
+              <span class="hub-demo-badge-micro font-numeric" style="font-size: 0.72rem; color: var(--color-text-muted);">MOCK</span>
+            </div>
+            <span class="hub-kpi-metric-num font-numeric" data-i18n="partner_hub.kpi_agreements_val">٣٢</span>
+            <h3 class="hub-kpi-title" data-i18n="partner_hub.kpi_agreements_title">اتفاقيات الشراكة الموقعة</h3>
+            <p class="hub-kpi-sub" data-i18n="partner_hub.kpi_agreements_sub">عقود إلكترونية سارية ومعتمدة</p>
+          </div>
+
+        </div>
+
+        <!-- 2. Analytics Row (Monthly Activity Chart + Conversion Funnel) -->
+        <div class="hub-analytics-row">
+          
+          <!-- Monthly Booking Requests Bar Chart -->
+          <div class="hub-chart-card">
+            <div class="hub-chart-card-header">
+              <h3 class="hub-chart-card-title" data-i18n="partner_hub.chart_card_title">تطور تدفق طلبات الحجز الشهرية (آخر ٦ أشهر)</h3>
+              <p class="hub-chart-card-sub" data-i18n="partner_hub.chart_card_sub">بيانات توضيحية تجريبية — معدل نمو تصاعدي مستمر بالشبكة</p>
+            </div>
+
+            <!-- Scalable SVG Bar Chart -->
+            <div class="hub-bar-chart-wrap" aria-label="رسم بياني يوضح تطور طلبات الحجز من يوليو إلى ديسمبر">
+              <svg viewBox="0 0 600 220" width="100%" height="100%" preserveAspectRatio="none">
+                <!-- Background Gridlines -->
+                <line x1="40" y1="30" x2="580" y2="30" stroke="var(--color-border)" stroke-dasharray="3,3" opacity="0.6"/>
+                <line x1="40" y1="80" x2="580" y2="80" stroke="var(--color-border)" stroke-dasharray="3,3" opacity="0.6"/>
+                <line x1="40" y1="130" x2="580" y2="130" stroke="var(--color-border)" stroke-dasharray="3,3" opacity="0.6"/>
+                <line x1="40" y1="180" x2="580" y2="180" stroke="var(--color-border)" stroke-width="1.5"/>
+
+                <defs>
+                  <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--color-accent)"/>
+                    <stop offset="100%" stop-color="var(--color-primary)"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Bar 1: July (950) -->
+                <rect x="65" y="106" width="50" height="74" rx="6" fill="url(#barGrad)"/>
+                <text x="90" y="96" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" class="font-numeric" data-i18n="partner_hub.chart_val_jul">٩٥٠</text>
+                <text x="90" y="202" text-anchor="middle" fill="var(--color-text-muted)" font-size="12" font-weight="600" data-i18n="partner_hub.chart_month_jul">يوليو</text>
+
+                <!-- Bar 2: August (1120) -->
+                <rect x="155" y="93" width="50" height="87" rx="6" fill="url(#barGrad)"/>
+                <text x="180" y="83" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" class="font-numeric" data-i18n="partner_hub.chart_val_aug">١,١٢٠</text>
+                <text x="180" y="202" text-anchor="middle" fill="var(--color-text-muted)" font-size="12" font-weight="600" data-i18n="partner_hub.chart_month_aug">أغسطس</text>
+
+                <!-- Bar 3: September (1260) -->
+                <rect x="245" y="82" width="50" height="98" rx="6" fill="url(#barGrad)"/>
+                <text x="270" y="72" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" class="font-numeric" data-i18n="partner_hub.chart_val_sep">١,٢٦٠</text>
+                <text x="270" y="202" text-anchor="middle" fill="var(--color-text-muted)" font-size="12" font-weight="600" data-i18n="partner_hub.chart_month_sep">سبتمبر</text>
+
+                <!-- Bar 4: October (1390) -->
+                <rect x="335" y="72" width="50" height="108" rx="6" fill="url(#barGrad)"/>
+                <text x="360" y="62" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" class="font-numeric" data-i18n="partner_hub.chart_val_oct">١,٣٩٠</text>
+                <text x="360" y="202" text-anchor="middle" fill="var(--color-text-muted)" font-size="12" font-weight="600" data-i18n="partner_hub.chart_month_oct">أكتوبر</text>
+
+                <!-- Bar 5: November (1510) -->
+                <rect x="425" y="63" width="50" height="117" rx="6" fill="url(#barGrad)"/>
+                <text x="450" y="53" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" class="font-numeric" data-i18n="partner_hub.chart_val_nov">١,٥١٠</text>
+                <text x="450" y="202" text-anchor="middle" fill="var(--color-text-muted)" font-size="12" font-weight="600" data-i18n="partner_hub.chart_month_nov">نوفمبر</text>
+
+                <!-- Bar 6: December (1730) -->
+                <rect x="515" y="45" width="50" height="135" rx="6" fill="url(#barGrad)"/>
+                <text x="540" y="35" text-anchor="middle" fill="var(--color-accent-rich)" font-size="13" font-weight="800" class="font-numeric" data-i18n="partner_hub.chart_val_dec">١,٧٣٠</text>
+                <text x="540" y="202" text-anchor="middle" fill="var(--color-text)" font-size="12" font-weight="700" data-i18n="partner_hub.chart_month_dec">ديسمبر</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Conversion Funnel Card -->
+          <div class="hub-funnel-card">
+            <h3 class="hub-funnel-title" data-i18n="partner_hub.funnel_title">مسار تحويل وتوزيع طلبات الحجز بالمنصة</h3>
+            
+            <div class="hub-funnel-stages">
+              <div class="hub-funnel-stage is-received">
+                <div class="hub-funnel-stage-info">
+                  <span class="hub-funnel-stage-num font-numeric" data-i18n="partner_hub.funnel_step_1_num">٨,٧٦٠</span>
+                  <span class="hub-funnel-stage-lbl" data-i18n="partner_hub.funnel_step_1_title">طلبات حجز مستلمة بالمنصة</span>
+                </div>
+                <span class="hub-funnel-badge font-numeric" data-i18n="partner_hub.funnel_step_1_pct">١٠٠٪</span>
+              </div>
+
+              <div class="hub-funnel-stage is-directed">
+                <div class="hub-funnel-stage-info">
+                  <span class="hub-funnel-stage-num font-numeric" data-i18n="partner_hub.funnel_step_2_num">٧,٤٢٠</span>
+                  <span class="hub-funnel-stage-lbl" data-i18n="partner_hub.funnel_step_2_title">طلبات محالة للشركات الشريكة</span>
+                </div>
+                <span class="hub-funnel-badge font-numeric" data-i18n="partner_hub.funnel_step_2_pct">٨٤.٧٪</span>
+              </div>
+
+              <div class="hub-funnel-stage is-completed">
+                <div class="hub-funnel-stage-info">
+                  <span class="hub-funnel-stage-num font-numeric" data-i18n="partner_hub.funnel_step_3_num">٣,٤٢٠</span>
+                  <span class="hub-funnel-stage-lbl" data-i18n="partner_hub.funnel_step_3_title">حجوزات مؤكدة ومكتملة الفوج</span>
+                </div>
+                <span class="hub-funnel-badge font-numeric" data-i18n="partner_hub.funnel_step_3_pct">٣٩.٠٪</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. Network Structure & Customer Pipeline Grid -->
+        <div class="hub-network-reach-grid">
+          
+          <!-- Network Structure Card (32 Companies) -->
+          <div class="hub-network-struct-card">
+            <h3 class="hub-network-struct-title" data-i18n="partner_hub.network_map_title">هيكل وتوزيع شبكة شركات السياحة المعتمدة</h3>
+            <p class="hub-network-struct-desc" data-i18n="partner_hub.network_map_sub">تضم الشبكة ٣٢ شركة سياحية مرخصة فئة (أ) موزعة جغرافياً لتغطية كافة محافظات الجمهورية:</p>
+            
+            <div class="hub-regions-list">
+              <div class="hub-region-item">
+                <span class="hub-region-dot"></span>
+                <span data-i18n="partner_hub.network_region_cairo">القاهرة الكبرى والجيزة (١٦ شركة مرخصة)</span>
+              </div>
+              <div class="hub-region-item">
+                <span class="hub-region-dot"></span>
+                <span data-i18n="partner_hub.network_region_alex">الإسكندرية والدلتا (٨ شركات مرخصة)</span>
+              </div>
+              <div class="hub-region-item">
+                <span class="hub-region-dot"></span>
+                <span data-i18n="partner_hub.network_region_canal">مدن القناة والبحر الأحمر (٥ شركات مرخصة)</span>
+              </div>
+              <div class="hub-region-item">
+                <span class="hub-region-dot"></span>
+                <span data-i18n="partner_hub.network_region_upper">صعيد مصر (٣ شركات مرخصة)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer Reach 7-Step Pipeline Card -->
+          <div class="hub-reach-card">
+            <h3 class="hub-reach-title" data-i18n="partner_hub.reach_pipeline_title">قنوات استقطاب وتدفق المعتمرين إلى شركتكم</h3>
+            <p class="hub-reach-desc" data-i18n="partner_hub.reach_pipeline_sub">مسار رقمي مؤتمت ينقل المعتمر من الاستكشاف الأولي إلى شاشات موظفي مبيعاتكم:</p>
+            
+            <div class="hub-pipeline-steps">
+              <div class="hub-pipeline-step-item">
+                <div>
+                  <div class="hub-pipeline-step-title" data-i18n="partner_hub.reach_step_1_title">١. استكشاف المنصة</div>
+                  <div class="hub-pipeline-step-desc" data-i18n="partner_hub.reach_step_1_desc">محركات البحث والتوصيات الرقمية الموثوقة</div>
+                </div>
+              </div>
+              <div class="hub-pipeline-step-item">
+                <div>
+                  <div class="hub-pipeline-step-title" data-i18n="partner_hub.reach_step_3_title">٣. تسجيل الطلب</div>
+                  <div class="hub-pipeline-step-desc" data-i18n="partner_hub.reach_step_3_desc">تحديد عدد الأفراد والتواريخ المفضلة</div>
+                </div>
+              </div>
+              <div class="hub-pipeline-step-item">
+                <div>
+                  <div class="hub-pipeline-step-title" data-i18n="partner_hub.reach_step_5_title">٥. الإحالة الفورية</div>
+                  <div class="hub-pipeline-step-desc" data-i18n="partner_hub.reach_step_5_desc">إشعار فوري لشركة السياحة المعنية بالبرنامج</div>
+                </div>
+              </div>
+              <div class="hub-pipeline-step-item">
+                <div>
+                  <div class="hub-pipeline-step-title" data-i18n="partner_hub.reach_step_7_title">٧. إصدار الباركود</div>
+                  <div class="hub-pipeline-step-desc" data-i18n="partner_hub.reach_step_7_desc">تثبيت الحجز عبر بوابة العمرة الرسمية</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 4: BOOKING ACTIVITY METRICS ==================== -->
+    <section class="hub-section" id="sec-activity" aria-label="النشاط التشغيلي للحجوزات">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.booking_overview_eyebrow">النشاط التشغيلي للحجوزات</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.booking_overview_title">آلية تدفق طلبات المعتمرين وحجم النشاط التشغيلي</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.booking_overview_desc">تعتمد منصة ميقات على تنظيم طلبات الحجز المسبقة وتحويلها فوراً إلى الشركات الشريكة المعنية بكل برنامج، مما يوفر على شركتكم تكاليف التسويق الفردي غير المضمون.</p>
+        </div>
+
+        <div class="hub-activity-metrics-grid">
+          <div class="hub-activity-metric-card">
+            <span class="hub-activity-metric-num font-numeric" data-i18n="partner_hub.stat_total_requests_val">٤٨</span>
+            <span class="hub-activity-metric-label" data-i18n="partner_hub.stat_total_requests_lbl">طلب حجز واستفسار مُنظم بالمنصة</span>
+          </div>
+
+          <div class="hub-activity-metric-card">
+            <span class="hub-activity-metric-num font-numeric" data-i18n="partner_hub.stat_active_programs_val">٧</span>
+            <span class="hub-activity-metric-label" data-i18n="partner_hub.stat_active_programs_lbl">برامج رحلات نشطة ومعتمدة بالشبكة</span>
+          </div>
+
+          <div class="hub-activity-metric-card">
+            <span class="hub-activity-metric-num font-numeric" data-i18n="partner_hub.stat_response_sla_val">٤</span>
+            <span class="hub-activity-metric-label" data-i18n="partner_hub.stat_response_sla_lbl">ساعات كحد أقصى لسرعة الاستجابة</span>
+          </div>
+
+          <div class="hub-activity-metric-card">
+            <span class="hub-activity-metric-num font-numeric" data-i18n="partner_hub.stat_licensed_tier_val">١٠٠٪</span>
+            <span class="hub-activity-metric-label" data-i18n="partner_hub.stat_licensed_tier_lbl">شركات سياحة مرخصة فئة (أ)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 5: CUSTOMER ACCESSIBILITY & DISCOVERY ==================== -->
+    <section class="hub-section" id="sec-discovery" aria-label="قنوات وصول المعتمرين">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.discovery_eyebrow">قنوات وصول واستقطاب المعتمرين</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.discovery_title">كيف يصل المعتمر إلى باقات شركتكم عبر ميقات؟</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.discovery_desc">نوفر مساراً رقمياً سلساً ينقل استفسار المعتمر من مرحلة الاستكشاف الأولى وحتى تأكيد الحجز النهائي مع شركتكم المرخصة.</p>
+        </div>
+
+        <div class="hub-discovery-grid">
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_1_num">١</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_1_title">الاستكشاف عبر القنوات الرقمية</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_1_desc">يصل المعتمر إلى منصة ميقات عبر محركات البحث، الحملات الرقمية الموجهة، وتوصيات المعتمرين السابقين بحثاً عن برامج عمرة موثوقة.</p>
+          </div>
+
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_2_num">٢</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_2_title">استعراض البرامج والمقارنة الشفافة</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_2_desc">يستعرض المعتمر تفاصيل الفنادق، خط سير الرحلة، وتواريخ الانطلاق لبرامج شركتكم المدرجة بكل شفافية ووضوح.</p>
+          </div>
+
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_3_num">٣</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_3_title">تسجيل طلب الحجز أو الاستفسار</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_3_desc">يقوم المعتمر بتعبئة نموذج الطلب متضمناً عدد الأفراد، المدينة، والتواريخ المفضلة عبر واجهة حجز ميسرة بدون تعقيد.</p>
+          </div>
+
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_4_num">٤</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_4_title">التدقيق والتأهيل التلقائي</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_4_desc">تقوم خوارزميات ميقات بفحص جدية الطلب، التحقق من صحة أرقام الهواتف، واستبعاد الرسائل المكررة وغير المكتملة.</p>
+          </div>
+
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_5_num">٥</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_5_title">توجيه الطلب الفوري لشركتكم</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_5_desc">يتحول الطلب المؤهل مباشرة إلى لوحة تحكم شركتكم مع إشعار فوري لمسؤول الحجوزات لتأكيد توفر المقاعد.</p>
+          </div>
+
+          <div class="hub-discovery-card">
+            <div class="hub-discovery-step-num font-numeric" data-i18n="partner_hub.disc_step_6_num">٦</div>
+            <h3 class="hub-discovery-title" data-i18n="partner_hub.disc_step_6_title">التواصل والمتابعة وإتمام الحجز</h3>
+            <p class="hub-discovery-desc" data-i18n="partner_hub.disc_step_6_desc">يتواصل فريق المبيعات لديكم مع المعتمر لإتمام التعاقد، استلام جوازات السفر، وإصدار باركود بوابة العمرة الرسمية.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 6: CONTRACTED TOURISM PARTNERS ==================== -->
+    <section class="hub-section" id="sec-network" aria-label="شبكة الشركاء المعتمدين">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.network_eyebrow">شبكة الشركاء المعتمدين</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.network_title">شركات السياحة المتعاقدة حالياً في شبكة ميقات</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.network_desc">نعمل بشراكة استراتيجية وثيقة مع كبرى شركات السياحة المصرية المرخصة لتقديم تجربة سفر روحانية آمنة ومنظمة لضيوف الرحمن.</p>
+        </div>
+
+        <div class="hub-network-grid">
+          <!-- Featured Partner Card (Al Dorra Travel) -->
+          <div class="hub-featured-partner-card">
+            <div class="hub-partner-badge-row">
+              <span class="hub-partner-active-tag">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span data-i18n="partner_hub.partner_featured_badge">شريك معتمد — نشط</span>
+              </span>
+              <span class="font-numeric" style="font-size: 0.80rem; color: var(--color-text-muted);" data-i18n="partner_hub.partner_aldorra_name">شركة الدرة للسياحة</span>
+            </div>
+
+            <h3 class="hub-partner-name" data-i18n="partner_hub.partner_aldorra_name">شركة الدرة للسياحة</h3>
+            <p class="hub-partner-type" data-i18n="partner_hub.partner_aldorra_type">شركة سياحة مرخصة فئة (أ) • محافظة الجيزة والقاهرة</p>
+            <p class="hub-partner-desc" data-i18n="partner_hub.partner_aldorra_desc">تنظيم باقات العمرة الاقتصادية والفاخرة، وحج القرعة والسياحي السنوي، مع إدارة متكاملة للأفواج عبر منصة ميقات.</p>
+            
+            <ul class="hub-partner-features-list">
+              <li class="hub-partner-feature-item">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--color-accent)" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span data-i18n="partner_hub.partner_aldorra_feature_1">إدراج برامج العمرة المعتمدة</span>
+              </li>
+              <li class="hub-partner-feature-item">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--color-accent)" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span data-i18n="partner_hub.partner_aldorra_feature_2">استقبال طلبات الحجز الفورية</span>
+              </li>
+              <li class="hub-partner-feature-item">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--color-accent)" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span data-i18n="partner_hub.partner_aldorra_feature_3">تسوية المعاملات المالية بدقة</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Network Summary Card -->
+          <div class="hub-network-summary-card">
+            <div>
+              <h3 class="hub-network-summary-title" data-i18n="partner_hub.partner_network_summary_title">نطاق الشراكة المعتمد بالجمهورية</h3>
+              <p class="hub-network-summary-desc" data-i18n="partner_hub.partner_network_summary_desc">تضم شبكة ميقات شركات سياحية معتمدة من وزارة السياحة والآثار في القاهرة الكبرى والجيزة والإسكندرية، مع تطبيق معايير الامتثال القانوني وحماية حقوق المعتمر.</p>
+            </div>
+
+            <div class="hub-network-tags-row">
+              <span class="hub-network-tag" data-i18n="partner_hub.partner_network_tag_licensed">ترخيص سياحي فئة (أ)</span>
+              <span class="hub-network-tag" data-i18n="partner_hub.partner_network_tag_guarantee">ضمان جودة الخدمات الفندقية</span>
+              <span class="hub-network-tag" data-i18n="partner_hub.partner_network_tag_privacy">سرية تامة للبيانات التجارية</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 7: FUTURE PARTNER WORKSPACE ==================== -->
+    <section class="hub-section" id="sec-future-workspace" aria-label="مساحة عملك المستقبلية كشريك مع ميقات">
+      <div class="hub-container">
+        
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.workspace_eyebrow">الرؤية المستقبلية للشراكة</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.workspace_title">مساحة عملك المستقبلية كشريك مع ميقات</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.workspace_subtitle">تعرف على الأدوات والصفحات التشغيلية الاحترافية التي ستتم إتاحتها لحساب شركتكم فور اكتمال المراجعة وتوقيع اتفاقية الشراكة.</p>
+        </div>
+
+        <div class="hub-workspace-showcase">
+          
+          <!-- 7 Core Operational Pages Preview Grid (Clean Titles without English parentheticals) -->
+          <div class="hub-workspace-pages-grid">
+            
+            <!-- Page 1: Dashboard -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_1_title">لوحة التحكم الشاملة</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_1_desc">شاشة المراقبة المركزية لنشاط شركتكم اليومي: ملخص فوري للحجوزات الجديدة، تنبيهات المهام العاجلة، ومؤشرات الأداء التشغيلي.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_1_feature_1">مؤشرات إجمالية لطلبات الحجز الواردة</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_1_feature_2">جدول الرحلات القادمة ومواعيد الإقلاع</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_1_feature_3">شريط الإجراءات والمهام المطلوبة من الموظفين</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 2: Bookings -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_2_title">إدارة وتوزيع الحجوزات</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_2_desc">منظومة فلترة وبحث متقدمة لجميع طلبات المعتمرين المحالة لشركتكم، مع إمكانية تصنيف الحالات وتصدير البيانات.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_2_feature_1">تصنيف الحجوزات (مؤكدة، قيد الانتظار، ملغاة)</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_2_feature_2">البحث برقم الحجز أو اسم المعتمر أو البرنامج</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_2_feature_3">تصدير كشوف المسافرين لقوائم الطيران</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 3: Booking Details -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_3_title">تفاصيل الحجز والمعتمر</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_3_desc">سجل تفصيلي متكامل لكل معتمر ومرافقيه: بيانات الاتصال، وثائق السفر، وحالة التسكين وإصدار التأشيرة.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_3_feature_1">استعراض صور جوازات السفر والمستندات</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_3_feature_2">تحديث رقم باركود بوابة العمرة المصرية</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_3_feature_3">سجل التواصل الداخلي وملاحظات موظفي المبيعات</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 4: Financial Overview -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_4_title">الملخص المالي والتقارير</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_4_desc">مركز الشفافية المالية لشركتكم: كشوف حساب دورية، متابعة التحويلات البنكية المباشرة، وسندات القبض الموثقة.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_4_feature_1">استعراض كشوف الحساب الدورية والتحويلات</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_4_feature_2">متابعة دفعات المعتمرين وحالة الإيداع</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_4_feature_3">تحميل الفواتير وسندات القبض المعتمدة</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 5: Programs & Trips -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_5_title">إدارة البرامج والرحلات</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_5_desc">منصة نشر وتعديل باقات العمرة والحج: تحديد الفنادق بمكة والمدينة، مواعيد الرحلات، وعدد المقاعد الشاغرة.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_5_feature_1">إضافة باقات جديدة وتحديد الفنادق والطيران</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_5_feature_2">تعديل الأسعار وإتاحة المقاعد في الوقت الفعلي</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_5_feature_3">إدارة أفواج الرحلات وتعيين المشرفين</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 6: Notifications -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_6_title">مركز الإشعارات والتنبيهات</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_6_desc">غرفة الاتصال التشغيلي الفوري: تنبيهات لحظية فور ورود أي طلب جديد، أو تسوية مالية، أو تعميم صادر من وزارة السياحة.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_6_feature_1">تنبيهات فورية لطلبات الحجز الجديدة</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_6_feature_2">تصنيف الإشعارات (مالي، تشغيلي، إداري)</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_6_feature_3">تحديد الإشعارات كمقروءة وإجراءات سريعة</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Page 7: Company Profile -->
+            <div class="hub-workspace-page-card">
+              <span class="hub-page-preview-badge" data-i18n="partner_hub.workspace_preview_badge">معاينة النظام التشغيلي المستقبلي</span>
+              <h3 class="hub-page-card-title" data-i18n="partner_hub.page_7_title">بيانات الشركة وملف الشراكة</h3>
+              <p class="hub-page-card-desc" data-i18n="partner_hub.page_7_desc">ملف بيانات الشركة المعتمد بالمنصة: السجل التجاري، رقم ترخيص وزارة السياحة، بيانات ممثلي المبيعات، وشروط اتفاقية الشراكة.</p>
+              <ul class="hub-page-features-list">
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_7_feature_1">تحديث أرقام هواتف ومسؤولي الحجوزات</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_7_feature_2">استعراض رقم العقد ومستوى الشراكة وتاريخ السريان</span>
+                </li>
+                <li class="hub-page-feature-item">
+                  <span class="hub-page-feature-bullet"></span>
+                  <span data-i18n="partner_hub.page_7_feature_3">حماية الحقول السيادية (الاسم والترخيص)</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- 7-Stage Activation Journey Track -->
+          <div style="margin-top: 16px;">
+            <div class="hub-section-header" style="margin-bottom: 28px;">
+              <h3 class="hub-section-title" style="font-size: 1.55rem;" data-i18n="partner_hub.act_journey_title">مسار الاعتماد والانتقال إلى بوابة الشركاء النشطة</h3>
+              <p class="hub-section-subtitle" data-i18n="partner_hub.act_journey_subtitle">٧ مراحل واضحة تفصل شركتكم عن التفعيل الكامل والوصول لجميع الصفحات التشغيلية.</p>
+            </div>
+
+            <div class="hub-activation-track">
+              
+              <!-- Stage 1: Account Created -->
+              <div class="hub-activation-stage-card is-completed">
+                <span class="hub-stage-tag completed" data-i18n="partner_hub.act_stage_1_badge">مكتمل</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_1_title">١. إنشاء الحساب المبدئي</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_1_desc">تسجيل بيانات الدخول الأولية وإنشاء ملف الشركة بالمنصة.</p>
+              </div>
+
+              <!-- Stage 2: Application Submitted -->
+              <div class="hub-activation-stage-card is-completed">
+                <span class="hub-stage-tag completed" data-i18n="partner_hub.act_stage_2_badge">مكتمل</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_2_title">٢. تقديم الطلب والمستندات</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_2_desc">رفع السجل التجاري والبطاقة الضريبية وترخيص السياحة والآيبان.</p>
+              </div>
+
+              <!-- Stage 3: Administrative Review -->
+              <div class="hub-activation-stage-card is-current">
+                <span class="hub-stage-tag current" data-i18n="partner_hub.act_stage_3_badge">جاري الآن</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_3_title">٣. المراجعة الإدارية والتدقيق</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_3_desc">فحص المستندات ومطابقة ترخيص فئة (أ) في سجلات وزارة السياحة.</p>
+              </div>
+
+              <!-- Stage 4: Additional Info -->
+              <div class="hub-activation-stage-card">
+                <span class="hub-stage-tag conditional" data-i18n="partner_hub.act_stage_4_badge">مشروط</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_4_title">٤. طلب مستندات إضافية (عند الحاجة)</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_4_desc">إخطار الشركة في حال الحاجة لتحديث أي وثيقة أو شهادة بنكية.</p>
+              </div>
+
+              <!-- Stage 5: Preliminary Approval -->
+              <div class="hub-activation-stage-card">
+                <span class="hub-stage-tag upcoming" data-i18n="partner_hub.act_stage_5_badge">المرحلة القادمة</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_5_title">٥. الموافقة المبدئية على الاعتماد</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_5_desc">إشعار الشركة بقبول ملف الاعتماد واستيفاء كافة الشروط القانونية.</p>
+              </div>
+
+              <!-- Stage 6: Digital Agreement -->
+              <div class="hub-activation-stage-card">
+                <span class="hub-stage-tag upcoming" data-i18n="partner_hub.act_stage_6_badge">المرحلة القادمة</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_6_title">٦. توقيع اتفاقية الشراكة والربط</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_6_desc">التوقيع الإلكتروني على عقد الشراكة وضبط قنوات واتساب المبيعات.</p>
+              </div>
+
+              <!-- Stage 7: Active Workspace Available -->
+              <div class="hub-activation-stage-card">
+                <span class="hub-stage-tag goal" data-i18n="partner_hub.act_stage_7_badge">الهدف النهائي</span>
+                <h4 class="hub-act-title" data-i18n="partner_hub.act_stage_7_title">٧. إتاحة مساحة العمل التشغيلية بالكامل</h4>
+                <p class="hub-act-desc" data-i18n="partner_hub.act_stage_7_desc">ترقية الحساب تلقائياً وفتح الصفحات السبع التشغيلية لاستقبال الحجوزات.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Seamless Transition Callout -->
+          <div class="hub-transition-callout">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--color-success); flex-shrink: 0;" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+            <div>
+              <strong data-i18n="partner_hub.transition_callout_bold">انتقال سلس وفوري بنفس الحساب:</strong>
+              <span data-i18n="partner_hub.transition_callout_text">لن تحتاج شركتكم لإنشاء أي حساب جديد بعد الاعتماد؛ سيتم ترقية هذا الحساب المسجل حالياً لفتح بوابة التشغيل بكافة صلاحياتها مباشرة وبنفس بيانات الدخول الحالية.</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 8: CONTRACTS & PARTNERSHIP ==================== -->
+    <section class="hub-section" id="sec-contracts" aria-label="العقود والشراكة">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.contracts_eyebrow">الإطار القانوني والتعاقدي</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.contracts_title">شراكة متوازنة، حماية للحقوق، والتزام تشغيلي متبادل</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.contracts_desc">صُمم نموذج التعاقد في ميقات ليحمي مصالح شركة السياحة والمعتمر معاً، وفقاً للضوابط الرسمية المنظمة لرحلات العمرة.</p>
+        </div>
+
+        <div class="hub-contracts-grid">
+          <div class="hub-obligations-card">
+            <h3 class="hub-obligations-title">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <polyline points="16 11 18 13 22 9"></polyline>
+              </svg>
+              <span data-i18n="partner_hub.comp_obligations_title">التزامات شركة السياحة الشريكة</span>
+            </h3>
+            <ul class="hub-obligations-list">
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.comp_ob_1">حيازة ترخيص سياحي سارٍ فئة (أ) صادر من وزارة السياحة والآثار المصرية.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.comp_ob_2">تقديم برامج عمرة حقيقية ومطابقة للفنادق والخدمات المعلنة دون أي تلاعب.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.comp_ob_3">الاستجابة لطلبات الحجز الواردة خلال مدة لا تتجاوز ٤ ساعات في أوقات العمل الرسمية.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.comp_ob_4">إصدار الباركود التنظيمي عبر بوابة العمرة المصرية للمعتمرين قبل موعد الرحلة بوقت كافٍ.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.comp_ob_5">توفير مشرف فوج مؤهل ومتاح للتواصل مع المعتمرين طوال فترة الإقامة بالمملكة.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="hub-obligations-card">
+            <h3 class="hub-obligations-title">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span data-i18n="partner_hub.miqat_obligations_title">التزامات منصة ميقات تجاه شركتكم</span>
+            </h3>
+            <ul class="hub-obligations-list">
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.miqat_ob_1">توفير بنية تحتية برمجية متطورة ومحمية بنسبة جاهزية ٩٩.٩٪ على مدار الساعة.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.miqat_ob_2">تنظيم وتوجيه طلبات الحجز الموثقة إلى حساب شركتكم دون أي تحيز أو تفضيل غير عادل.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.miqat_ob_3">التحويل الدوري والموثق لمستحقات الشركة المالية عبر القنوات المصرفية الرسمية.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.miqat_ob_4">تقديم دعم فني وتقني مستمر وتدريب كوادر الشركة على استخدام لوحة التحكم.</span>
+              </li>
+              <li class="hub-obligations-item">
+                <span class="hub-ob-check font-numeric">✓</span>
+                <span data-i18n="partner_hub.miqat_ob_5">الحفاظ التام على سرية البيانات التشغيلية والتجارية للشركة وعدم مشاركتها مع أطراف ثالثة.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 9 (TASK 5): REDESIGNED APPLICATION STATUS CARD ==================== -->
+    <section class="hub-section" id="sec-application-status" aria-label="حالة الطلب الحالية">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.status_eyebrow">المتابعة اللحظية</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.status_title">حالة طلب الشراكة والاعتماد الحالي</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.status_subtitle">متابعة لحظية لمسار التدقيق والمراجعة الإدارية لملف شركتكم الموقرة.</p>
+        </div>
+
+        <div class="hub-status-card">
+          <!-- Status Card Header -->
+          <div class="hub-status-card-header">
+            <div class="hub-status-comp-box">
+              <h3 class="hub-status-comp-name" id="statusCompName">شركة سياحة جديدة</h3>
+              <span class="hub-status-badge in-review">
+                <span class="hub-status-dot" aria-hidden="true"></span>
+                <span data-i18n="partner_hub.status_badge_in_review">قيد المراجعة والتدقيق الإداري</span>
+              </span>
+            </div>
+            <div class="hub-status-id-box font-numeric">
+              <span data-i18n="partner_hub.lbl_app_id">رقم الطلب:</span>
+              <strong id="statusAppId">REQ-2026-0891</strong>
+            </div>
+          </div>
+
+          <!-- 4-Cell Information Grid -->
+          <div class="hub-status-details-grid">
+            <div class="hub-status-detail-cell">
+              <span class="hub-detail-lbl" data-i18n="partner_hub.lbl_applicant_name">اسم مقدم الطلب</span>
+              <strong class="hub-detail-val" id="statusResponsible">مقدم الطلب (حساب تجريبي)</strong>
+            </div>
+            <div class="hub-status-detail-cell">
+              <span class="hub-detail-lbl" data-i18n="partner_hub.lbl_phone">رقم الهاتف المسجل</span>
+              <strong class="hub-detail-val font-numeric" id="statusPhone">٠١١٥٦٣٧٩٩٩١</strong>
+            </div>
+            <div class="hub-status-detail-cell">
+              <span class="hub-detail-lbl" data-i18n="partner_hub.lbl_submission_date">تاريخ تقديم الطلب</span>
+              <strong class="hub-detail-val font-numeric" id="statusDate">١ نوفمبر ٢٠٢٦</strong>
+            </div>
+            <div class="hub-status-detail-cell">
+              <span class="hub-detail-lbl" data-i18n="partner_hub.lbl_sla">المهلة المتوقعة للمراجعة</span>
+              <strong class="hub-detail-val font-numeric" id="statusSla">٤٨ ساعة عمل</strong>
+            </div>
+          </div>
+
+          <!-- Administrative Notice & Guidance Callout Box -->
+          <div class="hub-status-notice-box">
+            <div class="hub-notice-title-row">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span data-i18n="partner_hub.status_notice_title">إشعار الامتثال والمراجعة الإدارية</span>
+            </div>
+            <p class="hub-notice-text" data-i18n="partner_hub.status_notice_text">يقوم فريق الامتثال القانوني والشراكات في ميقات بمراجعة المستندات المرفوعة ومطابقة رقم الترخيص في سجلات وزارة السياحة والآثار. لا يُطلب منكم أي إجراء حالياً، وستتلقون إشعار القبول فور اكتمال الفحص.</p>
+            <div class="hub-notice-actions-row">
+              <a href="#sec-documents" class="hub-notice-btn btn-view-docs" data-i18n="partner_hub.status_btn_view_docs">استعراض المستندات المرفوعة</a>
+              <a href="#sec-support" class="hub-notice-btn btn-contact" data-i18n="partner_hub.status_btn_contact_advisor">تواصل مع مستشار الاعتماد</a>
+            </div>
+          </div>
+
+          <!-- 4-Step Application Review Timeline -->
+          <div class="hub-status-timeline">
+            <h4 class="hub-timeline-title" data-i18n="partner_hub.timeline_title">مسار مراجعة واعتماد الملف:</h4>
+            <div class="hub-timeline-steps">
+              <div class="hub-timeline-step is-done">
+                <span class="hub-timeline-bullet font-numeric" data-i18n="partner_hub.timeline_num_1">١</span>
+                <div class="hub-timeline-text">
+                  <strong data-i18n="partner_hub.step_1_title">إنشاء الحساب الأولي</strong>
+                  <span data-i18n="partner_hub.step_1_desc">تم تسجيل البيانات الأساسية للشركة بنجاح</span>
+                </div>
+              </div>
+              <div class="hub-timeline-step is-active">
+                <span class="hub-timeline-bullet font-numeric" data-i18n="partner_hub.timeline_num_2">٢</span>
+                <div class="hub-timeline-text">
+                  <strong data-i18n="partner_hub.step_2_title">التدقيق الإداري والمستندي (المرحلة الحالية)</strong>
+                  <span data-i18n="partner_hub.step_2_desc">يقوم فريق ميقات بمراجعة صحة التراخيص والسجل التجاري</span>
+                </div>
+              </div>
+              <div class="hub-timeline-step">
+                <span class="hub-timeline-bullet font-numeric" data-i18n="partner_hub.timeline_num_3">٣</span>
+                <div class="hub-timeline-text">
+                  <strong data-i18n="partner_hub.step_3_title">إشعار القبول وتوقيع العقد</strong>
+                  <span data-i18n="partner_hub.step_3_desc">إرسال مسودة العقد الإلكتروني للاعتماد النهائي</span>
+                </div>
+              </div>
+              <div class="hub-timeline-step">
+                <span class="hub-timeline-bullet font-numeric" data-i18n="partner_hub.timeline_num_4">٤</span>
+                <div class="hub-timeline-text">
+                  <strong data-i18n="partner_hub.step_4_title">إتاحة بوابة الشركات كاملة</strong>
+                  <span data-i18n="partner_hub.step_4_desc">البدء في إدراج باقات العمرة واستقبال الحجوزات اليومية</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 10: SUBMITTED DOCUMENTS ==================== -->
+    <section class="hub-section" id="sec-documents" aria-label="المستندات والمتطلبات">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.docs_eyebrow">الملف القانوني للشركة</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.docs_title">المستندات الرسمية المرفوعة للتدقيق</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.docs_desc">نحرص على اكتمال الوثائق النظامية اللازمة لاعتماد الشركة ومطابقتها لاشتراطات وزارة السياحة والآثار المصرية.</p>
+        </div>
+
+        <div class="hub-docs-grid">
+          <div class="hub-doc-item">
+            <div class="hub-doc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+            <div class="hub-doc-content">
+              <div class="hub-doc-header-row">
+                <h3 class="hub-doc-title" data-i18n="partner_hub.doc_cr_title">السجل التجاري الساري</h3>
+                <span class="hub-doc-tag uploaded" data-i18n="partner_hub.tag_uploaded">مرفوع</span>
+              </div>
+              <p class="hub-doc-desc" data-i18n="partner_hub.doc_cr_desc">إثبات قيد الشركة وفعالية نشاط السياحة والرحلات الدينية.</p>
+              <span class="hub-doc-file-info font-numeric" data-i18n="partner_hub.doc_cr_file">مستند_السجل_التجاري.pdf (١.٨ ميجابايت)</span>
+            </div>
+          </div>
+
+          <div class="hub-doc-item">
+            <div class="hub-doc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                <line x1="7" y1="8" x2="17" y2="8"></line>
+                <line x1="7" y1="12" x2="17" y2="12"></line>
+                <line x1="7" y1="16" x2="13" y2="16"></line>
+              </svg>
+            </div>
+            <div class="hub-doc-content">
+              <div class="hub-doc-header-row">
+                <h3 class="hub-doc-title" data-i18n="partner_hub.doc_license_title">ترخيص وزارة السياحة فئة (أ)</h3>
+                <span class="hub-doc-tag uploaded" data-i18n="partner_hub.tag_uploaded">مرفوع</span>
+              </div>
+              <p class="hub-doc-desc" data-i18n="partner_hub.doc_license_desc">الترخيص الوزاري الرسمي لمزاولة تنظيم رحلات الحج والعمرة.</p>
+              <span class="hub-doc-file-info font-numeric" data-i18n="partner_hub.doc_license_file">ترخيص_السياحة_فئة_أ.pdf (٢.١ ميجابايت)</span>
+            </div>
+          </div>
+
+          <div class="hub-doc-item">
+            <div class="hub-doc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div class="hub-doc-content">
+              <div class="hub-doc-header-row">
+                <h3 class="hub-doc-title" data-i18n="partner_hub.doc_iata_title">شهادة الاتحاد الدولي للنقل الجوي (أياتا)</h3>
+                <span class="hub-doc-tag uploaded" data-i18n="partner_hub.tag_uploaded">مرفوع</span>
+              </div>
+              <p class="hub-doc-desc" data-i18n="partner_hub.doc_iata_desc">إثبات أهلية إصدار تذاكر الطيران للرحلات الدولية والداخلية.</p>
+              <span class="hub-doc-file-info font-numeric" data-i18n="partner_hub.doc_iata_file">شهادة_عضوية_أياتا.pdf (٩٤٠ كيلوبايت)</span>
+            </div>
+          </div>
+
+          <div class="hub-doc-item">
+            <div class="hub-doc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+            </div>
+            <div class="hub-doc-content">
+              <div class="hub-doc-header-row">
+                <h3 class="hub-doc-title" data-i18n="partner_hub.doc_tax_title">البطاقة الضريبية وشهادة التسجيل</h3>
+                <span class="hub-doc-tag uploaded" data-i18n="partner_hub.tag_uploaded">مرفوع</span>
+              </div>
+              <p class="hub-doc-desc" data-i18n="partner_hub.doc_tax_desc">رقم التسجيل الضريبي الساري المعتمد لدى مصلحة الضرائب المصرية.</p>
+              <span class="hub-doc-file-info font-numeric" data-i18n="partner_hub.doc_tax_file">البطاقة_الضريبية_المعتمدة.pdf (١.٢ ميجابايت)</span>
+            </div>
+          </div>
+
+          <div class="hub-doc-item">
+            <div class="hub-doc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <div class="hub-doc-content">
+              <div class="hub-doc-header-row">
+                <h3 class="hub-doc-title" data-i18n="partner_hub.doc_bank_title">خطاب الآيبان البنكي المعتمد</h3>
+                <span class="hub-doc-tag review" data-i18n="partner_hub.tag_in_review">قيد التدقيق</span>
+              </div>
+              <p class="hub-doc-desc" data-i18n="partner_hub.doc_bank_desc">خطاب بنكي رسمي مختوم برقم الحساب والآيبان لإجراء التسويات الدورية.</p>
+              <span class="hub-doc-file-info font-numeric" data-i18n="partner_hub.doc_bank_file">خطاب_الحساب_البنكي_الرسمي.pdf (٧٨٠ كيلوبايت)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 11: SUPPORT & CONTACT ==================== -->
+    <section class="hub-section" id="sec-support" aria-label="الدعم والمساعدة">
+      <div class="hub-container">
+        <div class="hub-section-header">
+          <span class="hub-section-eyebrow" data-i18n="partner_hub.support_eyebrow">فريق شركاء ميقات</span>
+          <h2 class="hub-section-title" data-i18n="partner_hub.support_title">نحن هنا لدعمكم والإجابة عن استفساراتكم</h2>
+          <p class="hub-section-subtitle" data-i18n="partner_hub.support_desc">تم تعيين مستشار شراكة مخصص لمتابعة ملف شركتكم وتسهيل كافة خطوات الانضمام والتشغيل.</p>
+        </div>
+
+        <div class="hub-support-card">
+          <div class="hub-advisor-profile">
+            <div class="hub-advisor-avatar" data-i18n="partner_hub.adv_avatar">أ</div>
+            <div>
+              <h3 class="hub-advisor-name" id="advName" data-i18n="partner_hub.adv_name">أ/ أحمد محمود الشريف</h3>
+              <p class="hub-advisor-title" id="advTitle" data-i18n="partner_hub.adv_title">مستشار علاقات الشركاء وشركات السياحة</p>
+            </div>
+          </div>
+
+          <div class="hub-support-info-col">
+            <div class="hub-support-details-grid">
+              <div class="hub-support-channel">
+                <span class="hub-channel-lbl" data-i18n="partner_hub.lbl_direct_phone">الهاتف المباشر:</span>
+                <span class="hub-channel-val font-numeric" id="advPhone" data-i18n="partner_hub.adv_phone">٠١٠٢٢٣٣٤٤٥٥</span>
+              </div>
+              <div class="hub-support-channel">
+                <span class="hub-channel-lbl" data-i18n="partner_hub.lbl_whatsapp">واتساب الشركاء:</span>
+                <span class="hub-channel-val font-numeric" id="advWhatsapp" data-i18n="partner_hub.adv_whatsapp">٠١٠٢٢٣٣٤٤٥٥</span>
+              </div>
+              <div class="hub-support-channel">
+                <span class="hub-channel-lbl" data-i18n="partner_hub.lbl_email">البريد الإلكتروني:</span>
+                <span class="hub-channel-val font-numeric" id="advEmail">partners@miqat.me</span>
+              </div>
+              <div class="hub-support-channel">
+                <span class="hub-channel-lbl" data-i18n="partner_hub.lbl_hotline">الخط الساخن:</span>
+                <span class="hub-channel-val font-numeric" id="advHotline" data-i18n="partner_hub.adv_hotline">١٩٨٠٠</span>
+              </div>
+              <div class="hub-support-channel" style="grid-column: 1 / -1;">
+                <span class="hub-channel-lbl" data-i18n="partner_hub.lbl_hours">أوقات العمل الرسمية:</span>
+                <span class="hub-channel-val" id="advHours" data-i18n="partner_hub.adv_hours_val">الأحد - الخميس: ٩:٠٠ ص حتى ٥:٠٠ م بتوقيت القاهرة</span>
+              </div>
+            </div>
+
+            <div class="hub-support-ctas">
+              <a href="https://wa.me/201022334455" target="_blank" rel="noopener noreferrer" class="hub-btn hub-btn-primary" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <span data-i18n="partner_hub.btn_chat_advisor">محادثة المستشار عبر واتساب</span>
+              </a>
+              <a href="mailto:partners@miqat.me" class="hub-btn hub-btn-outline" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span data-i18n="partner_hub.btn_email_advisor">إرسال استفسار عبر البريد</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== PARTNER HUB FOOTER ==================== -->
+  <footer class="hub-footer" role="contentinfo">
+    <div class="hub-container">
+      <div class="hub-footer-grid">
+        <div class="hub-footer-brand-col">
+          <div class="hub-brand-wrapper">
+            <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="hub-brand-img logo-light" width="36" height="36">
+            <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="hub-brand-img logo-dark" width="36" height="36">
+            <div class="hub-brand-text">
+              <span class="hub-brand-title" data-i18n="partner_hub.brand_name">مـيـقـات</span>
+              <span class="hub-brand-badge" data-i18n="partner_hub.portal_brand">بوابة الشركاء الجدد</span>
+            </div>
+          </div>
+          <p class="hub-footer-desc" data-i18n="partner_hub.footer_desc">المنظومة الرقمية الرائدة لتنظيم وربط رحلات العمرة والحج في جمهورية مصر العربية بالتعاون مع كبرى شركات السياحة المرخصة.</p>
+        </div>
+
+        <div class="hub-footer-links-col">
+          <h4 class="hub-footer-col-title" data-i18n="partner_hub.footer_quick_links">روابط سريعة</h4>
+          <a href="#sec-overview" class="hub-footer-link" data-i18n="partner_hub.nav_overview">نظرة عامة</a>
+          <a href="#sec-why-partner" class="hub-footer-link" data-i18n="partner_hub.nav_why_partner">لوحة الشراكة الاستراتيجية</a>
+          <a href="#sec-activity" class="hub-footer-link" data-i18n="partner_hub.nav_activity">نشاط الحجوزات</a>
+          <a href="#sec-network" class="hub-footer-link" data-i18n="partner_hub.nav_network">شبكة الشركاء</a>
+          <a href="#sec-future-workspace" class="hub-footer-link" data-i18n="partner_hub.nav_future_workspace">مساحة العمل المستقبلية</a>
+        </div>
+
+        <div class="hub-footer-links-col">
+          <h4 class="hub-footer-col-title" data-i18n="partner_hub.footer_legal_links">الإطار القانوني</h4>
+          <a href="#sec-contracts" class="hub-footer-link" data-i18n="partner_hub.nav_contracts">العقود والالتزامات</a>
+          <a href="#sec-documents" class="hub-footer-link" data-i18n="partner_hub.nav_documents">المستندات والمتطلبات</a>
+          <a href="#sec-support" class="hub-footer-link" data-i18n="partner_hub.nav_support">الدعم ومستشار الشراكة</a>
+        </div>
+      </div>
+
+      <div class="hub-footer-bottom">
+        <span data-i18n="partner_hub.footer_copyright">جميع الحقوق محفوظة لمنصة ميقات © ٢٠٢٦.</span>
+        <span style="font-size: 0.82rem; color: var(--color-text-muted);" data-i18n="partner_hub.footer_accreditation">مرخص ومسجل وفقاً لاشتراطات وزارة السياحة والآثار المصرية.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="./partner-hub.js"></script>
+</body>
+</html>

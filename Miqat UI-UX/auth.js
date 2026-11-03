@@ -1223,7 +1223,9 @@
 
         // Determine role-based target route
         let defaultTarget = 'programs.html';
-        if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
+        if (result.user && (result.user.role === 'new_company' || result.user.application_status === 'pending_review')) {
+          defaultTarget = 'new-company-overview.html';
+        } else if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
           defaultTarget = 'company-dashboard.html';
         } else if (result.user && result.user.role === 'admin') {
           defaultTarget = 'admin-transactions.html';
@@ -1235,7 +1237,9 @@
           const redirectParam = params.get('redirect');
           if (redirectParam) {
             const decoded = decodeURIComponent(redirectParam).trim();
-            if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
+            if (result.user && (result.user.role === 'new_company' || result.user.application_status === 'pending_review')) {
+              target = 'new-company-overview.html';
+            } else if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
               if (decoded.includes('company')) {
                 target = decoded.endsWith('.html') ? decoded : `${decoded}.html`;
               } else {

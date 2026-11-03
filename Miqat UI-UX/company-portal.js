@@ -208,6 +208,16 @@
       return null;
     }
 
+    // Strict Role Guard: If user is a new applicant, redirect to Partner Hub Overview
+    if (user.role === 'new_company' || user.application_status === 'pending_review') {
+      if (window.location.replace) {
+        window.location.replace('new-company-overview.html');
+      } else {
+        window.location.href = 'new-company-overview.html';
+      }
+      return null;
+    }
+
     // Strict Role Guard: Company partner role required
     if (user.role !== 'company' && user.role !== 'partner_company') {
       if (unauthBanner) unauthBanner.style.display = 'block';

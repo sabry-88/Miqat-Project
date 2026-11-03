@@ -198,6 +198,9 @@ function initSchema() {
   try { db.exec("ALTER TABLE users ADD COLUMN partnership_level TEXT DEFAULT 'platinum'"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN contract_status TEXT DEFAULT 'active'"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active'"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN application_status TEXT DEFAULT 'pending_review'"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN application_submitted_at TEXT"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN application_notes TEXT"); } catch (e) {}
 }
 
 /**
@@ -603,11 +606,101 @@ function seedTestCompany() {
   );
 }
 
+/**
+ * Seed Test New Company Partner Account (Pending Review)
+ * Target: New Tourism Partner Applicant (Development Test Account)
+ * Phone: 01156379991
+ * Password: Asabry753### (Secured with scrypt + salt. Never stored plaintext)
+ * Role: new_company
+ * Status: pending_review
+ * Application Status: pending_review
+ */
+function seedNewCompanyTestAccount() {
+  const phone = '01156379991';
+  const initialPassword = process.env.TEST_NEW_COMPANY_PASSWORD || 'Asabry753###';
+  const { salt, hash } = hashPassword(initialPassword);
+  const now = new Date().toISOString();
+  const submissionDate = '2026-11-01T10:00:00.000Z';
+
+  const existing = db.prepare('SELECT id, role, phone FROM users WHERE phone = ?').get(phone);
+  if (existing) {
+    if (existing.id === 'usr_newcomp_01156379991' || existing.role === 'new_company') {
+      db.prepare(`
+        UPDATE users
+        SET name = 'شركة تجريبية جديدة (قيد المراجعة)',
+            company_name = 'شركة تجريبية جديدة',
+            company_name_en = 'New Test Travel Agency',
+            responsible_person = 'مقدم الطلب (حساب تجريبي)',
+            license_number = NULL,
+            email = 'newpartner.test@miqat.test',
+            governorate = 'cairo',
+            address = 'شارع التحرير، الدقي، الجيزة',
+            whatsapp = '01156379991',
+            commercial_registry = NULL,
+            contract_ref = NULL,
+            contract_start = NULL,
+            contract_end = NULL,
+            contract_signed_at = NULL,
+            partnership_level = 'applicant',
+            contract_status = 'pending',
+            role = 'new_company',
+            status = 'pending_review',
+            application_status = 'pending_review',
+            application_submitted_at = COALESCE(application_submitted_at, ?),
+            application_notes = 'طلب شراكة جديد قيد المراجعة الإدارية والتحقق من المستندات',
+            password_salt = ?,
+            password_hash = ?,
+            updated_at = ?
+        WHERE phone = ?
+      `).run(submissionDate, salt, hash, now, phone);
+      return;
+    } else {
+      console.warn(`[WARNING] Phone ${phone} is already assigned to unexpected user ID ${existing.id}. Skipping overwrite to preserve integrity.`);
+      return;
+    }
+  }
+
+  db.prepare(`
+    INSERT INTO users (
+      id, name, phone, email, governorate, role, company_name, company_name_en, responsible_person, license_number, address, whatsapp, commercial_registry, contract_ref, contract_start, contract_end, contract_signed_at, partnership_level, contract_status, status, application_status, application_submitted_at, application_notes, password_salt, password_hash, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'usr_newcomp_01156379991',
+    'شركة تجريبية جديدة (قيد المراجعة)',
+    phone,
+    'newpartner.test@miqat.test',
+    'cairo',
+    'new_company',
+    'شركة تجريبية جديدة',
+    'New Test Travel Agency',
+    'مقدم الطلب (حساب تجريبي)',
+    null,
+    'شارع التحرير، الدقي، الجيزة',
+    '01156379991',
+    null,
+    null,
+    null,
+    null,
+    null,
+    'applicant',
+    'pending',
+    'pending_review',
+    'pending_review',
+    submissionDate,
+    'طلب شراكة جديد قيد المراجعة الإدارية والتحقق من المستندات',
+    salt,
+    hash,
+    submissionDate,
+    now
+  );
+}
+
 // Initialize tables and initial data
 initSchema();
 seedPrograms();
 seedTestCustomer();
 seedTestCompany();
+seedNewCompanyTestAccount();
 
 /**
  * Repository Methods
@@ -632,7 +725,8 @@ function getUserById(id) {
     SELECT id, name, phone, email, governorate, role, company_name, company_name_en, 
            responsible_person, license_number, address, whatsapp, commercial_registry, 
            contract_ref, contract_start, contract_end, contract_signed_at, 
-           partnership_level, contract_status, status, created_at, updated_at 
+           partnership_level, contract_status, status, application_status, 
+           application_submitted_at, application_notes, created_at, updated_at 
     FROM users 
     WHERE id = ? OR (id = 'usr_comp_01156379990' AND ? = 'comp_aldorra_01')
   `).get(id, id);
@@ -1745,5 +1839,6 @@ module.exports = {
   getCompanyNotificationsSummaryFromDb,
   markCompanyNotificationReadInDb,
   markAllCompanyNotificationsReadInDb,
-  createCompanyNotificationInDb
+  createCompanyNotificationInDb,
+  seedNewCompanyTestAccount
 };

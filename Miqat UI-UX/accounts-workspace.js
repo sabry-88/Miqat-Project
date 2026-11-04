@@ -109,7 +109,10 @@
     html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 
     const isCustPage = document.body && document.body.classList.contains('accounts-customers-page');
-    if (isCustPage) {
+    const isProfilePage = document.body && document.body.classList.contains('accounts-customer-details-page');
+    if (isProfilePage) {
+      document.title = (currentLang === 'ar' ? 'ملف العميل | ميقات' : 'Customer Profile | Miqat');
+    } else if (isCustPage) {
       document.title = (currentLang === 'ar' ? 'دليل العملاء والمعتمرين | ميقات' : 'Customers Directory | Miqat');
     } else {
       document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
@@ -328,6 +331,30 @@
             closeDrawer();
           }
         });
+      });
+    }
+
+    // Smart Customer Profile sidebar navigation with customer context resolution
+    const profileNavBtn = document.getElementById('acc-nav-customer-profile');
+    if (profileNavBtn) {
+      profileNavBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        // 1. Resolve selected customer ID from current URL
+        const params = new URLSearchParams(window.location.search);
+        let selectedId = params.get('id');
+        // 2. If not in URL, resolve from session storage
+        if (!selectedId) {
+          try {
+            selectedId = sessionStorage.getItem('miqat_selected_customer_id');
+          } catch (err) {}
+        }
+
+        if (selectedId) {
+          window.location.href = 'accounts-customer-details.html?id=' + encodeURIComponent(selectedId);
+        } else {
+          // No customer context selected -> safely navigate to Customers Directory to choose a customer
+          window.location.href = 'accounts-customers.html';
+        }
       });
     }
 

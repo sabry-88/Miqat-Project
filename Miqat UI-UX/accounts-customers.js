@@ -469,19 +469,14 @@
 
   // --- 4. Customer Profile Navigation Controller (Section 10) ---
   function handleProfileClick(customerId) {
-    const lang = getLang();
-    const cust = window.AccountsMockData ? window.AccountsMockData.getCustomerById(customerId) : null;
-    const name = cust ? (lang === 'ar' ? cust.name_ar : cust.name_en) : customerId;
+    if (!customerId) return;
+    try {
+      sessionStorage.setItem('miqat_selected_customer_id', customerId);
+    } catch (e) {}
 
-    const noticeMsg = lang === 'ar'
-      ? ('الانتقال إلى الملف الشامل للعميل: ' + name + ' (' + customerId + ') — (الصفحة قيد الإنشاء في المرحلة القادمة)')
-      : ('Navigating to Customer 360 Profile: ' + name + ' (' + customerId + ') — (Phase 3 Page 3 coming next)');
-
-    showNotification(noticeMsg);
-
-    // Prepare actual route destination with stable customer ID parameter
-    const targetUrl = 'accounts-customer-profile.html?id=' + encodeURIComponent(customerId);
-    console.log('[Miqat Accounts Routing] Prepared destination:', targetUrl);
+    // Navigate to the official Customer Profile page with stable customer ID parameter
+    const targetUrl = 'accounts-customer-details.html?id=' + encodeURIComponent(customerId);
+    window.location.href = targetUrl;
   }
 
   // --- 5. Export Filtered Results to CSV (Section 11) ---

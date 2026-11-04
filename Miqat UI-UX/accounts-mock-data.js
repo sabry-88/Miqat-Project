@@ -991,6 +991,488 @@
   }
 
   // --- 7. Service Methods Exported ---
+  // =========================================================================
+  // PHASE 3 — PAGE 3: CUSTOMER PROFILE EXTENDED MOCK DATASETS
+  // =========================================================================
+
+  const CUSTOMER_BOOKINGS = {
+    'CUST-1001': [
+      {
+        id: 'BK-2026-1045',
+        customerId: 'CUST-1001',
+        program_ar: 'عمرة اقتصادية موفرة (طيران)',
+        program_en: 'Umrah Economy Saver (Flight)',
+        company_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+        company_en: 'Al-Huda Religious Travel & Tourism',
+        booking_date: '2026-10-25',
+        travel_season_ar: 'رجب ١٤٤٨ هـ (يناير ٢٠٢٧)',
+        travel_season_en: 'Rajab 1448 AH (Jan 2027)',
+        travelers_count: 2,
+        total_price: 76000,
+        paid_amount: 76000,
+        remaining: 0,
+        booking_status: 'confirmed',
+        payment_status: 'paid_full',
+        notes_ar: 'حجز طيران مؤكد مع الإقامة في فنادق محبس الجن مع خدمة النقل الترددي',
+        notes_en: 'Confirmed flight booking with Mahbas Al-Jinn accommodation and shuttle service'
+      },
+      {
+        id: 'BK-2025-0812',
+        customerId: 'CUST-1001',
+        program_ar: 'عمرة رجب الاقتصادية المعيارية',
+        program_en: 'Rajab Standard Umrah',
+        company_ar: 'شركة البركة لخدمات المعتمرين',
+        company_en: 'Al-Baraka Umrah Services',
+        booking_date: '2025-11-14',
+        travel_season_ar: 'شعبان ١٤٤٧ هـ (فبراير ٢٠٢٦)',
+        travel_season_en: 'Shaban 1447 AH (Feb 2026)',
+        travelers_count: 1,
+        total_price: 34000,
+        paid_amount: 34000,
+        remaining: 0,
+        booking_status: 'completed',
+        payment_status: 'paid_full',
+        notes_ar: 'رحلة سابقة منجزة ومسواة بالكامل دون أي متأخرات',
+        notes_en: 'Past completed trip, fully reconciled with zero balance'
+      }
+    ],
+    'CUST-1002': [
+      {
+        id: 'BK-2026-1046',
+        customerId: 'CUST-1002',
+        program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+        program_en: '5-Star Premium Umrah (Fairmont)',
+        company_ar: 'مؤسسة الفيروز لرحلات الحج والعمرة',
+        company_en: 'Al-Fairouz Hajj & Umrah Agency',
+        booking_date: '2026-10-28',
+        travel_season_ar: 'رمضان ١٤٤٨ هـ (مارس ٢٠٢٧)',
+        travel_season_en: 'Ramadan 1448 AH (Mar 2027)',
+        travelers_count: 2,
+        total_price: 124000,
+        paid_amount: 124000,
+        remaining: 0,
+        booking_status: 'confirmed',
+        payment_status: 'paid_full',
+        contract_ref: 'MQ-CTR-2026-012',
+        notes_ar: 'حجز مميز مطل على الحرم المكي الشريف، سداد إلكتروني معتمد بالكامل',
+        notes_en: 'Premium Haram view booking, fully verified electronic payment'
+      }
+    ],
+    'CUST-1003': [
+      {
+        id: 'BK-2026-1047',
+        customerId: 'CUST-1003',
+        program_ar: 'عمرة شوال الاقتصادية',
+        program_en: 'Shawwal Economy Umrah',
+        company_ar: 'شركة مناسك العالمية للسياحة',
+        company_en: 'Manasek Global Travel',
+        booking_date: '2026-10-29',
+        travel_season_ar: 'شوال ١٤٤٨ هـ (أبريل ٢٠٢٧)',
+        travel_season_en: 'Shawwal 1448 AH (Apr 2027)',
+        travelers_count: 2,
+        total_price: 66000,
+        paid_amount: 22000,
+        remaining: 44000,
+        booking_status: 'deposit_paid',
+        payment_status: 'partial',
+        notes_ar: 'تم سداد الدفعة الأولى (عربون)، المتبقي مستحق قبل موعد إصدار التأشيرات',
+        notes_en: 'Initial deposit paid, remaining balance due prior to visa issuance'
+      }
+    ],
+    'CUST-1005': [
+      {
+        id: 'BK-2026-1049',
+        customerId: 'CUST-1005',
+        program_ar: 'عمرة برية فاخرة — فنادق الحرم',
+        program_en: 'Deluxe Land Umrah — Haram Hotels',
+        company_ar: 'شركة مناسك العالمية للسياحة',
+        company_en: 'Manasek Global Travel',
+        booking_date: '2026-10-31',
+        travel_season_ar: 'رجب ١٤٤٨ هـ (يناير ٢٠٢٧)',
+        travel_season_en: 'Rajab 1448 AH (Jan 2027)',
+        travelers_count: 1,
+        total_price: 25000,
+        paid_amount: 25000,
+        remaining: 0,
+        booking_status: 'cancelled',
+        payment_status: 'refunded',
+        notes_ar: 'حجز ملغي بناءً على طلب العميل مع وجود طلب استرداد مالي قيد المراجعة',
+        notes_en: 'Cancelled booking per customer request with refund under financial review'
+      }
+    ],
+    'CUST-1007': [
+      {
+        id: 'BK-2026-1051',
+        customerId: 'CUST-1007',
+        program_ar: 'عمرة برية فاخرة — فنادق الحرم',
+        program_en: 'Deluxe Land Umrah — Haram Hotels',
+        company_ar: 'شركة الصفا للنقل والخدمات السياحية',
+        company_en: 'Al-Safa Travel & Tourism',
+        booking_date: '2026-11-01',
+        travel_season_ar: 'شعبان ١٤٤٨ هـ (فبراير ٢٠٢٧)',
+        travel_season_en: 'Shaban 1448 AH (Feb 2027)',
+        travelers_count: 2,
+        total_price: 56000,
+        paid_amount: 28000,
+        remaining: 28000,
+        booking_status: 'deposit_paid',
+        payment_status: 'partial',
+        notes_ar: 'يوجد طلب تعديل برنامج مقترح، الحجز الأصلي سارٍ حتى توثيق موافقة العميل',
+        notes_en: 'Trip change proposal pending customer agreement; original booking remains active'
+      }
+    ]
+  };
+
+  const CUSTOMER_PAYMENTS = {
+    'CUST-1001': [
+      {
+        id: 'TX-2026-9041',
+        customerId: 'CUST-1001',
+        booking_id: 'BK-2026-1045',
+        date: '2026-10-25 14:30',
+        amount: 38000,
+        method: 'bank_transfer',
+        method_ar: 'تحويل بنكي - الأهلي المصري',
+        method_en: 'Bank Transfer (NBE)',
+        receipt_ref: 'RCP-2026-4401',
+        status: 'completed',
+        balance_after: 38000
+      },
+      {
+        id: 'TX-2026-9052',
+        customerId: 'CUST-1001',
+        booking_id: 'BK-2026-1045',
+        date: '2026-10-27 11:15',
+        amount: 38000,
+        method: 'instapay',
+        method_ar: 'إنستاباي فوري',
+        method_en: 'InstaPay Instant',
+        receipt_ref: 'RCP-2026-4415',
+        status: 'completed',
+        balance_after: 0
+      }
+    ],
+    'CUST-1002': [
+      {
+        id: 'TX-2026-9060',
+        customerId: 'CUST-1002',
+        booking_id: 'BK-2026-1046',
+        date: '2026-10-28 10:20',
+        amount: 124000,
+        method: 'bank_transfer',
+        method_ar: 'تحويل بنكي مركزي - بنك مصر',
+        method_en: 'Central Bank Transfer (Banque Misr)',
+        receipt_ref: 'RCP-2026-4428',
+        status: 'completed',
+        balance_after: 0
+      }
+    ],
+    'CUST-1003': [
+      {
+        id: 'TX-2026-9071',
+        customerId: 'CUST-1003',
+        booking_id: 'BK-2026-1047',
+        date: '2026-10-29 16:45',
+        amount: 22000,
+        method: 'cash_deposit',
+        method_ar: 'إيداع نقدي بالخزينة',
+        method_en: 'Cash Treasury Deposit',
+        receipt_ref: 'RCP-2026-4439',
+        status: 'completed',
+        balance_after: 44000
+      }
+    ],
+    'CUST-1005': [
+      {
+        id: 'TX-2026-9080',
+        customerId: 'CUST-1005',
+        booking_id: 'BK-2026-1049',
+        date: '2026-10-31 09:30',
+        amount: 25000,
+        method: 'wallet',
+        method_ar: 'محفظة إلكترونية (فودافون كاش)',
+        method_en: 'E-Wallet (Vodafone Cash)',
+        receipt_ref: 'RCP-2026-4450',
+        status: 'completed',
+        balance_after: 0
+      }
+    ],
+    'CUST-1007': [
+      {
+        id: 'TX-2026-9092',
+        customerId: 'CUST-1007',
+        booking_id: 'BK-2026-1051',
+        date: '2026-11-01 12:00',
+        amount: 28000,
+        method: 'instapay',
+        method_ar: 'إنستاباي فوري',
+        method_en: 'InstaPay Instant',
+        receipt_ref: 'RCP-2026-4462',
+        status: 'completed',
+        balance_after: 28000
+      }
+    ]
+  };
+
+  const CUSTOMER_RECEIPTS = {
+    'CUST-1001': [
+      {
+        receipt_num: 'RCP-2026-4401',
+        customerId: 'CUST-1001',
+        booking_id: 'BK-2026-1045',
+        payment_id: 'TX-2026-9041',
+        date: '2026-10-25',
+        amount: 38000,
+        method_ar: 'تحويل بنكي رسمي',
+        method_en: 'Official Bank Transfer',
+        collector_ar: 'أحمد صبري (موظف حسابات)',
+        collector_en: 'Ahmed Sabry (Accounts Officer)',
+        verification_state: 'verified',
+        notes_ar: 'تمت مطابقة الإشعار البنكي مع كشف الحساب المركزي بنجاح',
+        notes_en: 'Bank advice slip reconciled with central ledger successfully'
+      },
+      {
+        receipt_num: 'RCP-2026-4415',
+        customerId: 'CUST-1001',
+        booking_id: 'BK-2026-1045',
+        payment_id: 'TX-2026-9052',
+        date: '2026-10-27',
+        amount: 38000,
+        method_ar: 'إنستاباي فوري',
+        method_en: 'InstaPay Instant',
+        collector_ar: 'أحمد صبري (موظف حسابات)',
+        collector_en: 'Ahmed Sabry (Accounts Officer)',
+        verification_state: 'verified',
+        notes_ar: 'تم التحقق من الرقم المرجعي للشبكة القومية للمدفوعات',
+        notes_en: 'National Payment Network reference code verified'
+      }
+    ],
+    'CUST-1002': [
+      {
+        receipt_num: 'RCP-2026-4428',
+        customerId: 'CUST-1002',
+        booking_id: 'BK-2026-1046',
+        payment_id: 'TX-2026-9060',
+        date: '2026-10-28',
+        amount: 124000,
+        method_ar: 'تحويل بنكي - بنك مصر',
+        method_en: 'Banque Misr Transfer',
+        collector_ar: 'سارة منصور (حسابات الشركات)',
+        collector_en: 'Sarah Mansour (Corporate Accounts)',
+        verification_state: 'verified',
+        notes_ar: 'إيصال سداد معتمد ومطابق مع عقد الشراكة الموثق',
+        notes_en: 'Verified receipt matched with documented partnership contract'
+      }
+    ],
+    'CUST-1003': [
+      {
+        receipt_num: 'RCP-2026-4439',
+        customerId: 'CUST-1003',
+        booking_id: 'BK-2026-1047',
+        payment_id: 'TX-2026-9071',
+        date: '2026-10-29',
+        amount: 22000,
+        method_ar: 'إيداع نقدي بالخزينة',
+        method_en: 'Cash Treasury Deposit',
+        collector_ar: 'أحمد صبري (موظف حسابات)',
+        collector_en: 'Ahmed Sabry (Accounts Officer)',
+        verification_state: 'pending_approval',
+        notes_ar: 'إيصال مسجل في الخزينة وبانتظار الإيداع والمطابقة البنكية الدورية',
+        notes_en: 'Treasury receipt recorded, awaiting periodic bank deposit reconciliation'
+      }
+    ],
+    'CUST-1005': [
+      {
+        receipt_num: 'RCP-2026-4450',
+        customerId: 'CUST-1005',
+        booking_id: 'BK-2026-1049',
+        payment_id: 'TX-2026-9080',
+        date: '2026-10-31',
+        amount: 25000,
+        method_ar: 'محفظة إلكترونية',
+        method_en: 'E-Wallet',
+        collector_ar: 'طارق الجندي (تدقيق عمليات)',
+        collector_en: 'Tarek El-Gendy (Audit)',
+        verification_state: 'verified',
+        notes_ar: 'إيصال أصلي معتمد مرتبط بالحجز الملغي وطلب الاسترداد اللاحق',
+        notes_en: 'Original verified receipt tied to cancelled booking and subsequent refund'
+      }
+    ],
+    'CUST-1007': [
+      {
+        receipt_num: 'RCP-2026-4462',
+        customerId: 'CUST-1007',
+        booking_id: 'BK-2026-1051',
+        payment_id: 'TX-2026-9092',
+        date: '2026-11-01',
+        amount: 28000,
+        method_ar: 'إنستاباي فوري',
+        method_en: 'InstaPay Instant',
+        collector_ar: 'أحمد صبري (موظف حسابات)',
+        collector_en: 'Ahmed Sabry (Accounts Officer)',
+        verification_state: 'verified',
+        notes_ar: 'سداد عربون معتمد ومطابق مع إشعار البنك المركزي',
+        notes_en: 'Verified deposit receipt reconciled with central bank advice'
+      }
+    ]
+  };
+
+  const CUSTOMER_REFUNDS = {
+    'CUST-1005': [
+      {
+        id: 'RF-2026-081',
+        customerId: 'CUST-1005',
+        booking_id: 'BK-2026-1049',
+        payment_ref: 'TX-2026-9080',
+        amount: 25000,
+        request_date: '2026-11-01',
+        reason_ar: 'إلغاء حجز لظروف صحية طارئة مع تقديم التقرير الطبي المعتمد',
+        reason_en: 'Booking cancellation due to emergency medical conditions with doctor report',
+        status: 'under_review',
+        completion_date: null,
+        notes_ar: 'الطلب قيد مراجعة الإدارة المالية والشركة المنظمة لتسوية سياسة الاسترداد (طلب الاسترداد لا يعد استرداداً منجزاً)',
+        notes_en: 'Under review by finance and tour operator for policy settlement (request is not a completed refund)'
+      }
+    ]
+  };
+
+  const CUSTOMER_TRIP_CHANGES = {
+    'CUST-1007': [
+      {
+        id: 'CHG-2026-032',
+        customerId: 'CUST-1007',
+        booking_id: 'BK-2026-1051',
+        original_program_ar: 'عمرة برية فاخرة — فنادق الحرم (٥٦,٠٠٠ ج.م)',
+        original_program_en: 'Deluxe Land Umrah — Haram Hotels (56,000 EGP)',
+        proposed_program_ar: 'عمرة شوال الاقتصادية طيران مباشر (٥٠,٠٠٠ ج.م)',
+        proposed_program_en: 'Shawwal Economy Umrah Direct Flight (50,000 EGP)',
+        price_diff: -6000,
+        request_date: '2026-11-02',
+        customer_agreement: 'pending_agreement',
+        change_status: 'under_review',
+        notes_ar: 'البرنامج الأصلي وسعره يظلان رسميين حتى يتم تسجيل موافقة العميل كتابياً أو إلكترونياً',
+        notes_en: 'Original program and price remain official until customer agreement is recorded'
+      }
+    ]
+  };
+
+  const CUSTOMER_TIMELINES = {
+    'CUST-1001': [
+      {
+        date: '2026-10-25 10:15',
+        title_ar: 'إنشاء الحساب وتوثيق بيانات المعتمر',
+        title_en: 'Account Created & Traveler Details Verified',
+        desc_ar: 'تم تسجيل العميل مركزياً في مساحة الحسابات بواسطة أحمد صبري',
+        desc_en: 'Customer registered centrally in accounts system by Ahmed Sabry',
+        category: 'registration'
+      },
+      {
+        date: '2026-10-25 11:30',
+        title_ar: 'تأكيد الحجز رقم BK-2026-1045',
+        title_en: 'Booking BK-2026-1045 Confirmed',
+        desc_ar: 'تم اختيار برنامج عمرة اقتصادية موفرة (طيران) لعدد ٢ معتمرين',
+        desc_en: 'Economy Saver program selected for 2 travelers',
+        category: 'booking'
+      },
+      {
+        date: '2026-10-25 14:30',
+        title_ar: 'تحصيل الدفعة الأولى (٣٨,٠٠٠ ج.م)',
+        title_en: 'First Payment Collected (38,000 EGP)',
+        desc_ar: 'تم سداد الدفعة الأولى عبر تحويل بنكي الأهلي المصري وإصدار إيصال RCP-2026-4401',
+        desc_en: 'First installment paid via NBE bank transfer; receipt RCP-2026-4401 issued',
+        category: 'payment'
+      },
+      {
+        date: '2026-10-26 09:45',
+        title_ar: 'اعتماد ومطابقة الإيصال البنكي',
+        title_en: 'Bank Receipt Verified & Reconciled',
+        desc_ar: 'تمت مطابقة الإشعار البنكي مع الحساب الجاري واعتماد الإيصال رسمياً',
+        desc_en: 'Bank advice slip reconciled with current account and officially approved',
+        category: 'receipt'
+      },
+      {
+        date: '2026-10-27 11:15',
+        title_ar: 'سداد المتبقي بالكامل (٣٨,٠٠٠ ج.م)',
+        title_en: 'Full Final Settlement (38,000 EGP)',
+        desc_ar: 'تم سداد المتبقي عبر إنستاباي فوري، وأصبح الحساب مسدداً بالكامل برصيد ٠ ج.م',
+        desc_en: 'Remaining balance cleared via InstaPay; account fully paid with 0 balance',
+        category: 'payment'
+      }
+    ],
+    'CUST-1002': [
+      {
+        date: '2026-10-28 09:00',
+        title_ar: 'تسجيل العميل وتوثيق عقد الشراكة MQ-CTR-2026-012',
+        title_en: 'Account Created & Contract MQ-CTR-2026-012 Documented',
+        desc_ar: 'تم تسجيل العميل وتوثيق عقد عمرة ٥ نجوم مع مؤسسة الفيروز',
+        desc_en: 'Customer registered with 5-star contract with Al-Fairouz Agency',
+        category: 'registration'
+      },
+      {
+        date: '2026-10-28 10:20',
+        title_ar: 'سداد كامل قيمة العقد والحجز (١٢٤,٠٠٠ ج.م)',
+        title_en: 'Full Contract & Booking Payment (124,000 EGP)',
+        desc_ar: 'تم استلام تحويل بنكي مركزي وإصدار إيصال معتمد RCP-2026-4428',
+        desc_en: 'Central bank transfer received and verified receipt RCP-2026-4428 issued',
+        category: 'payment'
+      }
+    ],
+    'CUST-1003': [
+      {
+        date: '2026-10-29 14:00',
+        title_ar: 'تسجيل حجز عمرة شوال BK-2026-1047',
+        title_en: 'Booking BK-2026-1047 Registered',
+        desc_ar: 'حجز عمرة شوال الاقتصادية بقيمة إجمالية ٦٦,٠٠٠ ج.م',
+        desc_en: 'Shawwal Economy Umrah booked at 66,000 EGP total',
+        category: 'booking'
+      },
+      {
+        date: '2026-10-29 16:45',
+        title_ar: 'سداد عربون الحجز (٢٢,٠٠٠ ج.م)',
+        title_en: 'Deposit Payment Recorded (22,000 EGP)',
+        desc_ar: 'تم إيداع الدفعة النقدية وإصدار إيصال مسجل RCP-2026-4439 قيد التدقيق',
+        desc_en: 'Cash deposit recorded, receipt RCP-2026-4439 pending periodic reconciliation',
+        category: 'payment'
+      }
+    ],
+    'CUST-1005': [
+      {
+        date: '2026-10-31 09:30',
+        title_ar: 'تسجيل الحجز وسداد القيمة (٢٥,٠٠٠ ج.م)',
+        title_en: 'Booking Registered & Paid (25,000 EGP)',
+        desc_ar: 'تم الحجز والسداد عبر المحفظة الإلكترونية',
+        desc_en: 'Booking and payment completed via electronic wallet',
+        category: 'booking'
+      },
+      {
+        date: '2026-11-01 10:00',
+        title_ar: 'إلغاء الحجز وتقديم طلب استرداد RF-2026-081',
+        title_en: 'Booking Cancelled & Refund Request RF-2026-081 Filed',
+        desc_ar: 'تم إلغاء الحجز لظروف صحية ورفع طلب الاسترداد للدراسة المالية',
+        desc_en: 'Booking cancelled due to health reasons; refund submitted for review',
+        category: 'refund'
+      }
+    ],
+    'CUST-1007': [
+      {
+        date: '2026-11-01 11:00',
+        title_ar: 'تسجيل الحجز وسداد الدفعة الأولى (٢٨,٠٠٠ ج.م)',
+        title_en: 'Booking Registered & Deposit Paid (28,000 EGP)',
+        desc_ar: 'تم حجز برنامج عمرة برية وسداد نصف القيمة عبر إنستاباي',
+        desc_en: 'Land Umrah booked, 50% deposit paid via InstaPay',
+        category: 'booking'
+      },
+      {
+        date: '2026-11-02 14:20',
+        title_ar: 'اقتراح تعديل البرنامج إلى طيران مباشر (CHG-2026-032)',
+        title_en: 'Proposed Program Change to Direct Flight (CHG-2026-032)',
+        desc_ar: 'تم رفع مقترح تعديل البرنامج وبانتظار موافقة العميل الرسمية قبل التطبيق',
+        desc_en: 'Change proposal submitted, awaiting formal customer agreement',
+        category: 'trip_change'
+      }
+    ]
+  };
+
   return {
     BASE_KPIS,
     CUSTOMERS,
@@ -1269,6 +1751,178 @@
       }
 
       return days;
-    }
+    },
+
+    // --- Phase 3: Customer Profile Access Methods ---
+    getCustomerDetails: function (id) {
+      if (!id) return null;
+      const base = CUSTOMERS.find(c => c.id === id);
+      if (!base) return null;
+
+      const bookings = this.getCustomerBookings(id);
+      const payments = this.getCustomerPayments(id);
+      const receipts = this.getCustomerReceipts(id);
+      const refunds = this.getCustomerRefunds(id);
+      const tripChanges = this.getCustomerTripChanges(id);
+      const timeline = this.getCustomerTimeline(id);
+      const summary = this.getCustomerFinancialSummary(id);
+
+      return {
+        ...base,
+        bookings,
+        payments,
+        receipts,
+        refunds,
+        tripChanges,
+        timeline,
+        summary
+      };
+    },
+
+    getCustomerBookings: function (customerId) {
+      if (!customerId) return [];
+      if (CUSTOMER_BOOKINGS[customerId]) {
+        return CUSTOMER_BOOKINGS[customerId];
+      }
+      const c = CUSTOMERS.find(cust => cust.id === customerId);
+      if (!c) return [];
+      return [
+        {
+          id: c.booking_ref || ('BK-2026-' + customerId.replace('CUST-', '')),
+          customerId: c.id,
+          program_ar: c.program_ar,
+          program_en: c.program_en,
+          company_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+          company_en: 'Al-Huda Religious Travel & Tourism',
+          booking_date: c.registered_date,
+          travel_season_ar: 'موسم رجب - شعبان ١٤٤٨ هـ',
+          travel_season_en: 'Rajab - Shaban 1448 AH',
+          travelers_count: c.bookings_count || 1,
+          total_price: c.total_spent || 50000,
+          paid_amount: c.paid_amount || 0,
+          remaining: c.remaining || 0,
+          booking_status: c.booking_status || 'confirmed',
+          payment_status: c.payment_status || 'paid_full',
+          notes_ar: 'حجز مركزي مسجل',
+          notes_en: 'Centrally recorded booking'
+        }
+      ];
+    },
+
+    getCustomerPayments: function (customerId) {
+      if (!customerId) return [];
+      if (CUSTOMER_PAYMENTS[customerId]) {
+        return CUSTOMER_PAYMENTS[customerId];
+      }
+      const c = CUSTOMERS.find(cust => cust.id === customerId);
+      if (!c || !c.paid_amount) return [];
+      return [
+        {
+          id: 'TX-2026-' + customerId.replace('CUST-', '91'),
+          customerId: c.id,
+          booking_id: c.booking_ref || ('BK-2026-' + customerId.replace('CUST-', '')),
+          date: c.registered_date + ' 12:00',
+          amount: c.paid_amount,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Transfer',
+          receipt_ref: 'RCP-2026-' + customerId.replace('CUST-', '45'),
+          status: 'completed',
+          balance_after: c.remaining || 0
+        }
+      ];
+    },
+
+    getCustomerReceipts: function (customerId) {
+      if (!customerId) return [];
+      if (CUSTOMER_RECEIPTS[customerId]) {
+        return CUSTOMER_RECEIPTS[customerId];
+      }
+      const payments = this.getCustomerPayments(customerId);
+      return payments.map(p => ({
+        receipt_num: p.receipt_ref,
+        customerId: p.customerId,
+        booking_id: p.booking_id,
+        payment_id: p.id,
+        date: p.date.split(' ')[0],
+        amount: p.amount,
+        method_ar: p.method_ar,
+        method_en: p.method_en,
+        collector_ar: 'أحمد صبري (موظف حسابات)',
+        collector_en: 'Ahmed Sabry (Accounts Officer)',
+        verification_state: 'verified',
+        notes_ar: 'إيصال سداد معتمد ومطابق مع كشف الحساب المركزي',
+        notes_en: 'Verified receipt matched with central ledger'
+      }));
+    },
+
+    getCustomerRefunds: function (customerId) {
+      if (!customerId) return [];
+      return CUSTOMER_REFUNDS[customerId] || [];
+    },
+
+    getCustomerTripChanges: function (customerId) {
+      if (!customerId) return [];
+      return CUSTOMER_TRIP_CHANGES[customerId] || [];
+    },
+
+    getCustomerTimeline: function (customerId) {
+      if (!customerId) return [];
+      if (CUSTOMER_TIMELINES[customerId]) {
+        return CUSTOMER_TIMELINES[customerId];
+      }
+      const c = CUSTOMERS.find(cust => cust.id === customerId);
+      if (!c) return [];
+      return [
+        {
+          date: c.registered_date + ' 10:00',
+          title_ar: 'تسجيل الحساب وتوثيق البيانات',
+          title_en: 'Account Registered & Verified',
+          desc_ar: 'تم إنشاء سجل العميل في مساحة الحسابات بواسطة أحمد صبري',
+          desc_en: 'Customer profile created in accounts workspace by Ahmed Sabry',
+          category: 'registration'
+        },
+        {
+          date: c.registered_date + ' 11:30',
+          title_ar: 'إنشاء الحجز رقم ' + (c.booking_ref || 'BK-2026-1045'),
+          title_en: 'Booking ' + (c.booking_ref || 'BK-2026-1045') + ' Created',
+          desc_ar: 'تم اختيار ' + c.program_ar,
+          desc_en: 'Selected ' + c.program_en,
+          category: 'booking'
+        }
+      ];
+    },
+
+    getCustomerFinancialSummary: function (customerId) {
+      const bookings = this.getCustomerBookings(customerId);
+      const payments = this.getCustomerPayments(customerId);
+      const receipts = this.getCustomerReceipts(customerId);
+      const refunds = this.getCustomerRefunds(customerId);
+      const tripChanges = this.getCustomerTripChanges(customerId);
+
+      let totalBookings = bookings.length;
+      let activeBookings = bookings.filter(b => b.booking_status === 'confirmed' || b.booking_status === 'deposit_paid').length;
+      let totalAmount = bookings.reduce((sum, b) => sum + (Number(b.total_price) || 0), 0);
+      let totalPaid = bookings.reduce((sum, b) => sum + (Number(b.paid_amount) || 0), 0);
+      let outstandingBalance = bookings.reduce((sum, b) => sum + (Number(b.remaining) || 0), 0);
+
+      let pendingReceipts = receipts.filter(r => r.verification_state === 'pending_approval').length;
+      let pendingRefunds = refunds.filter(rf => rf.status === 'pending_approval' || rf.status === 'under_review').length;
+      let pendingChanges = tripChanges.filter(tc => tc.customer_agreement === 'pending_agreement').length;
+      let pendingItemsCount = pendingReceipts + pendingRefunds + pendingChanges;
+
+      return {
+        totalBookings,
+        activeBookings,
+        totalAmount,
+        totalPaid,
+        outstandingBalance,
+        pendingItemsCount,
+        pendingReceipts,
+        pendingRefunds,
+        pendingChanges
+      };
+    },
+
   };
 });

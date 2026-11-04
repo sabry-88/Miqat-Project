@@ -27628,3 +27628,1239 @@ body.acc-modal-locked {
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   MIQAT ACCOUNTS WORKSPACE — CUSTOMER PROFILE (ملف العميل)
+   Strict Token-Compliant Styles (Zero-Red, Zero-Green, Enterprise UI)
+   ========================================================================== */
+
+/* Page Background in Dark Mode (Customer Profile ONLY) */
+[data-theme="dark"].accounts-customer-details-page,
+[data-theme="dark"] body.accounts-customer-details-page {
+  background-color: var(--color-bg);
+}
+
+/* Breadcrumb Bar & Back Action */
+.accounts-customer-details-page .acc-profile-breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.accounts-customer-details-page .acc-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customer-details-page .acc-btn-back:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-secondary);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-back {
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-back:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background-color: var(--color-surface-secondary);
+}
+
+[dir="rtl"] .accounts-customer-details-page .acc-back-icon {
+  transform: rotate(0deg);
+}
+
+[dir="ltr"] .accounts-customer-details-page .acc-back-icon {
+  transform: rotate(180deg);
+}
+
+/* 5. Customer Information Card (Spacious, balanced layout with NO avatar circle) */
+.accounts-customer-details-page .acc-profile-info-card {
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-info-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-profile-identity-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: 20px;
+}
+
+.accounts-customer-details-page .acc-profile-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accounts-customer-details-page .acc-profile-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.accounts-customer-details-page .acc-profile-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.accounts-customer-details-page .acc-profile-id-pill {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-id-pill {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-profile-meta-sub {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accounts-customer-details-page .acc-sep-dot {
+  color: var(--color-border);
+}
+
+/* Contact Channels Grid (Balanced 4-Column Layout) */
+.accounts-customer-details-page .acc-profile-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.accounts-customer-details-page .acc-contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.accounts-customer-details-page .acc-contact-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-customer-details-page .acc-contact-val-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.accounts-customer-details-page .acc-contact-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.accounts-customer-details-page .acc-btn-tel,
+.accounts-customer-details-page .acc-btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+
+.accounts-customer-details-page .acc-btn-tel {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-link);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-customer-details-page .acc-btn-tel:hover {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-tel {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-tel:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-btn-wa {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-customer-details-page .acc-btn-wa:hover {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-wa {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-wa:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+/* KPI Summary Cards */
+.accounts-customer-details-page .acc-cust-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.accounts-customer-details-page .acc-cust-kpi-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customer-details-page .acc-cust-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-cust-kpi-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-cust-kpi-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.accounts-customer-details-page .acc-cust-kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accounts-customer-details-page .acc-cust-kpi-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-customer-details-page .acc-cust-kpi-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-cust-kpi-icon {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-cust-kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accounts-customer-details-page .acc-cust-kpi-val {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.accounts-customer-details-page .acc-cust-kpi-sub {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customer-details-page .acc-kpi-val-currency-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.accounts-customer-details-page .acc-kpi-currency {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* 6. Filter Toolbar (Replacing old horizontal tab row) */
+.accounts-customer-details-page .acc-profile-filter-toolbar {
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-filter-toolbar {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-filter-toolbar-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr auto;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.accounts-customer-details-page .acc-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.accounts-customer-details-page .acc-filter-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.accounts-customer-details-page .acc-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.accounts-customer-details-page .acc-filter-select,
+.accounts-customer-details-page .acc-filter-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-filter-select,
+[data-theme="dark"] .accounts-customer-details-page .acc-filter-input {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-input-border);
+  color: var(--color-input-text);
+}
+
+.accounts-customer-details-page .acc-filter-select:focus,
+.accounts-customer-details-page .acc-filter-input:focus {
+  outline: none;
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--color-focus);
+}
+
+.accounts-customer-details-page .acc-input-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.accounts-customer-details-page .acc-input-search-wrap .acc-search-icon {
+  position: absolute;
+  inset-inline-start: 12px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.accounts-customer-details-page .acc-input-search-wrap .acc-filter-input {
+  padding-inline-start: 36px;
+}
+
+.accounts-customer-details-page .acc-filter-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+.accounts-customer-details-page .acc-filter-actions .acc-btn {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+/* Sections Wrapper */
+.accounts-customer-details-page .acc-profile-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.accounts-customer-details-page .acc-profile-content-card {
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-content-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.accounts-customer-details-page .acc-card-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accounts-customer-details-page .acc-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.accounts-customer-details-page .acc-card-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.accounts-customer-details-page .acc-section-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid var(--color-border);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-section-count-badge {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-border);
+}
+
+/* Tables within Customer Profile */
+.accounts-customer-details-page .acc-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.accounts-customer-details-page .acc-profile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.accounts-customer-details-page .acc-profile-table th {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  font-weight: 700;
+  text-align: start;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-table th {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-profile-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.accounts-customer-details-page .acc-profile-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+/* Cell typography & badges */
+.accounts-customer-details-page .acc-program-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.accounts-customer-details-page .acc-company-name {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customer-details-page .acc-season-name {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customer-details-page .acc-count-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-count-badge {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-amount {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-customer-details-page .acc-amount-remaining {
+  color: var(--color-warning);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-amount-remaining {
+  color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-method-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-method-pill {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-collector-name {
+  font-size: 0.82rem;
+  color: var(--color-text);
+}
+
+.accounts-customer-details-page .acc-receipt-ref-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-link);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.accounts-customer-details-page .acc-receipt-ref-btn:hover {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-receipt-ref-btn:hover {
+  color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-btn-view-rcpt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.accounts-customer-details-page .acc-btn-view-rcpt:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-view-rcpt {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-btn-view-rcpt:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+  transform: translateY(-1px);
+}
+
+.accounts-customer-details-page .acc-refund-reason {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customer-details-page .acc-proposed-program {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+/* Status Pills (Strict Zero-Red, Zero-Green) */
+.accounts-customer-details-page .acc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-indigo);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-indigo);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-teal {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-teal);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-teal {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-teal);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Code Pills */
+.accounts-customer-details-page .acc-code-pill {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  background-color: var(--color-surface-secondary);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-code-pill {
+  color: var(--color-accent);
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-sub-pill {
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-secondary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-sub-pill {
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+}
+
+/* Empty State Wrap */
+.accounts-customer-details-page .acc-table-empty-row {
+  background: transparent !important;
+}
+
+.accounts-customer-details-page .acc-table-empty-cell {
+  padding: 40px 20px !important;
+  text-align: center;
+}
+
+.accounts-customer-details-page .acc-empty-state-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.accounts-customer-details-page .acc-empty-icon {
+  font-size: 2rem;
+  opacity: 0.7;
+}
+
+.accounts-customer-details-page .acc-empty-text {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Timeline Layout */
+.accounts-customer-details-page .acc-profile-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 8px 0;
+}
+
+.accounts-customer-details-page .acc-timeline-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.accounts-customer-details-page .acc-timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.accounts-customer-details-page .acc-timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+  box-shadow: 0 0 0 2px var(--color-border);
+  margin-top: 4px;
+}
+
+.accounts-customer-details-page .acc-timeline-dot.cat-navy { background-color: var(--color-primary); }
+.accounts-customer-details-page .acc-timeline-dot.cat-blue { background-color: var(--color-secondary-blue); }
+.accounts-customer-details-page .acc-timeline-dot.cat-indigo { background-color: var(--color-indigo); }
+.accounts-customer-details-page .acc-timeline-dot.cat-teal { background-color: var(--color-teal); }
+.accounts-customer-details-page .acc-timeline-dot.cat-amber { background-color: var(--color-warning); }
+.accounts-customer-details-page .acc-timeline-dot.cat-slate { background-color: var(--color-text-muted); }
+
+.accounts-customer-details-page .acc-timeline-line {
+  width: 2px;
+  flex: 1;
+  background-color: var(--color-border);
+  margin: 4px 0;
+}
+
+.accounts-customer-details-page .acc-timeline-content {
+  flex: 1;
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.accounts-customer-details-page .acc-timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.accounts-customer-details-page .acc-timeline-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-customer-details-page .acc-timeline-date {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customer-details-page .acc-timeline-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.accounts-customer-details-page .acc-timeline-footer {
+  margin-top: 4px;
+}
+
+.accounts-customer-details-page .acc-timeline-cat-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-timeline-cat-pill {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Not Found Card */
+.accounts-customer-details-page .acc-profile-not-found {
+  text-align: center;
+  padding: 60px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  margin-top: 24px;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-profile-not-found {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.accounts-customer-details-page .acc-not-found-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+[data-theme="dark"] .accounts-customer-details-page .acc-not-found-icon-wrap {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+}
+
+.accounts-customer-details-page .acc-not-found-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 8px 0;
+}
+
+.accounts-customer-details-page .acc-not-found-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin: 0 0 24px 0;
+  max-width: 500px;
+  margin-inline: auto;
+}
+
+/* Receipt Modal Styles */
+.acc-receipt-dialog {
+  max-width: 620px;
+  width: 90%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .acc-receipt-dialog {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.acc-receipt-dialog .acc-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.acc-receipt-dialog .acc-modal-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.acc-receipt-dialog .acc-modal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.acc-receipt-dialog .acc-modal-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.acc-receipt-dialog .acc-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.acc-receipt-dialog .acc-modal-close:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+}
+
+.acc-receipt-modal-inner {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.acc-receipt-modal-header-card {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+[data-theme="dark"] .acc-receipt-modal-header-card {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+}
+
+.acc-receipt-ref-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.acc-receipt-num-title {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.acc-receipt-num-val {
+  font-size: 1rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.acc-receipt-amount-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed var(--color-border);
+}
+
+.acc-receipt-amount-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.acc-receipt-amount-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.acc-receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.acc-receipt-grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.acc-receipt-grid-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.acc-receipt-grid-val {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.acc-receipt-notes-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+[data-theme="dark"] .acc-receipt-notes-card {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+}
+
+.acc-receipt-notes-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.acc-receipt-notes-body {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.acc-receipt-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Responsive Breakpoints for Customer Profile */
+@media (max-width: 1200px) {
+  .accounts-customer-details-page .acc-filter-toolbar-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .accounts-customer-details-page .acc-filter-search-field {
+    grid-column: span 2;
+  }
+
+  .accounts-customer-details-page .acc-filter-actions {
+    grid-column: span 2;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 1120px) {
+  .accounts-customer-details-page .acc-cust-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .accounts-customer-details-page .acc-profile-contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-customer-details-page .acc-profile-info-card {
+    padding: 20px;
+  }
+
+  .accounts-customer-details-page .acc-cust-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-customer-details-page .acc-profile-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-customer-details-page .acc-filter-toolbar-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-customer-details-page .acc-filter-search-field,
+  .accounts-customer-details-page .acc-filter-actions {
+    grid-column: span 1;
+  }
+
+  .accounts-customer-details-page .acc-filter-actions .acc-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .acc-receipt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-customer-details-page .acc-profile-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .accounts-customer-details-page .acc-profile-info-card {
+    padding: 16px;
+  }
+
+  .accounts-customer-details-page .acc-profile-content-card {
+    padding: 16px;
+  }
+}

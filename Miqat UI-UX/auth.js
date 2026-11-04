@@ -738,8 +738,9 @@
 
     if (normalized.includes('@') || /[a-zA-Z]/.test(normalized)) {
       const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
-      if (emailRegex.test(normalized)) {
-        return { isValid: true, type: 'email', value: normalized };
+      const handleRegex = /^[a-zA-Z0-9_.\-]+$/;
+      if (emailRegex.test(normalized) || handleRegex.test(normalized)) {
+        return { isValid: true, type: normalized.includes('@') ? 'email' : 'handle', value: normalized };
       }
       return { isValid: false, errorKey: 'auth.val_identifier_invalid', type: 'email' };
     }
@@ -818,6 +819,79 @@
   }
 
   /**
+   * Client-Side Authoritative Role-Based Destination Resolver
+   */
+  function resolveClientDestination(user, redirectParam) {
+    if (!user || !user.role) {
+      return { valid: false, target: null, errorKey: 'auth.val_unauthorized_role' };
+    }
+
+    const role = user.role;
+    const appStatus = user.application_status;
+    const contractStatus = user.contract_status;
+    let decoded = null;
+    if (redirectParam) {
+      try {
+        decoded = decodeURIComponent(redirectParam).trim();
+      } catch (e) {
+        decoded = null;
+      }
+    }
+
+    // 1. Customer
+    if (role === 'customer') {
+      let target = 'programs.html';
+      if (decoded) {
+        if (decoded === 'program' || decoded === 'programs') {
+          target = 'programs.html';
+        } else if (
+          decoded.startsWith('programs.html') ||
+          decoded.startsWith('program-details.html') ||
+          decoded.startsWith('my-account.html') ||
+          decoded.startsWith('checkout.html')
+        ) {
+          target = decoded;
+        }
+      }
+      return { valid: true, target };
+    }
+
+    // 2. Company - Active / Contracted vs Pending Review
+    if (role === 'company' || role === 'partner_company') {
+      if (appStatus === 'pending_review' && contractStatus !== 'active') {
+        return { valid: true, target: 'new-company-overview.html' };
+      }
+      let target = 'company-dashboard.html';
+      if (decoded && decoded.startsWith('company-') && decoded.endsWith('.html')) {
+        target = decoded;
+      }
+      return { valid: true, target };
+    }
+
+    // 3. New Company Applicant
+    if (role === 'new_company') {
+      return { valid: true, target: 'new-company-overview.html' };
+    }
+
+    // 4. Accounts Employee
+    if (role === 'accounts_employee' || role === 'accountant') {
+      return { valid: true, target: 'accounts-dashboard.html' };
+    }
+
+    // 5. Admin
+    if (role === 'admin') {
+      let target = 'admin-transactions.html';
+      if (decoded && decoded.startsWith('admin-') && decoded.endsWith('.html')) {
+        target = decoded;
+      }
+      return { valid: true, target };
+    }
+
+    // Unknown or unauthorized role
+    return { valid: false, target: null, errorKey: 'auth.val_unauthorized_role' };
+  }
+
+  /**
    * Extensible Backend Integration Hooks
    */
   async function performAuthentication(credentials) {
@@ -833,7 +907,14 @@
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        return { success: true, user: data.user, token: data.token };
+        return { success: true, user: data.user, token: data.token, redirect_url: data.redirect_url };
+      } else if (res.status === 403 || data.error === 'UNAUTHORIZED_ROLE') {
+        return {
+          success: false,
+          isUnauthorizedRole: true,
+          errorKey: 'auth.val_unauthorized_role',
+          noticeTitleKey: 'auth.val_unauthorized_role_title'
+        };
       } else {
         return { success: false, errorKey: 'auth.val_invalid_credentials' };
       }
@@ -1209,7 +1290,20 @@
       });
 
       if (result.success) {
-        // Establish authenticated customer session
+        const params = new URLSearchParams(window.location.search);
+        const redirectParam = params.get('redirect');
+        const destination = resolveClientDestination(result.user, redirectParam);
+
+        if (!destination.valid) {
+          try {
+            localStorage.removeItem('miqat_user');
+            localStorage.removeItem('miqat_token');
+          } catch (e) {}
+          showStatusAlert('error', 'auth.val_unauthorized_role_title', destination.errorKey || 'auth.val_unauthorized_role');
+          return;
+        }
+
+        // Establish authenticated session
         if (result.user) {
           try {
             localStorage.setItem('miqat_user', JSON.stringify(result.user));
@@ -1221,47 +1315,7 @@
           } catch (e) {}
         }
 
-        // Determine role-based target route
-        let defaultTarget = 'programs.html';
-        if (result.user && (result.user.role === 'new_company' || result.user.application_status === 'pending_review')) {
-          defaultTarget = 'new-company-overview.html';
-        } else if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
-          defaultTarget = 'company-dashboard.html';
-        } else if (result.user && result.user.role === 'admin') {
-          defaultTarget = 'admin-transactions.html';
-        }
-
-        let target = defaultTarget;
-        try {
-          const params = new URLSearchParams(window.location.search);
-          const redirectParam = params.get('redirect');
-          if (redirectParam) {
-            const decoded = decodeURIComponent(redirectParam).trim();
-            if (result.user && (result.user.role === 'new_company' || result.user.application_status === 'pending_review')) {
-              target = 'new-company-overview.html';
-            } else if (result.user && (result.user.role === 'company' || result.user.role === 'partner_company')) {
-              if (decoded.includes('company')) {
-                target = decoded.endsWith('.html') ? decoded : `${decoded}.html`;
-              } else {
-                target = 'company-dashboard.html';
-              }
-            } else if (decoded === 'program' || decoded === 'programs') {
-              params.delete('redirect');
-              const remaining = params.toString();
-              target = remaining ? `programs.html?${remaining}` : 'programs.html';
-            } else if (decoded.startsWith('programs.html')) {
-              target = decoded;
-            } else if (decoded.includes('.html')) {
-              target = decoded;
-            } else if (decoded) {
-              target = `${decoded}.html`;
-            }
-          }
-        } catch (e) {
-          target = defaultTarget;
-        }
-
-        // Immediate redirect to existing Customer Dashboard
+        const target = destination.target;
         isRedirecting = true;
         if (window.location.replace) {
           window.location.replace(target);
@@ -1269,6 +1323,8 @@
           window.location.href = target;
         }
         return;
+      } else if (result.isUnauthorizedRole) {
+        showStatusAlert('error', result.noticeTitleKey || 'auth.val_unauthorized_role_title', result.errorKey || 'auth.val_unauthorized_role');
       } else if (result.isBackendAwaiting) {
         showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
       } else {

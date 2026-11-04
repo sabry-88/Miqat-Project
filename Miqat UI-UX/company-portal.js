@@ -208,8 +208,8 @@
       return null;
     }
 
-    // Strict Role Guard: If user is a new applicant, redirect to Partner Hub Overview
-    if (user.role === 'new_company' || user.application_status === 'pending_review') {
+    // Strict Role Guard: If user is an unapproved new applicant, redirect to Partner Hub Overview
+    if (user.role === 'new_company' || (user.role === 'company' && user.application_status === 'pending_review' && user.contract_status !== 'active')) {
       if (window.location.replace) {
         window.location.replace('new-company-overview.html');
       } else {

@@ -198,9 +198,20 @@ function initSchema() {
   try { db.exec("ALTER TABLE users ADD COLUMN partnership_level TEXT DEFAULT 'platinum'"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN contract_status TEXT DEFAULT 'active'"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active'"); } catch (e) {}
-  try { db.exec("ALTER TABLE users ADD COLUMN application_status TEXT DEFAULT 'pending_review'"); } catch (e) {}
+  try { db.exec("ALTER TABLE users ADD COLUMN application_status TEXT"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN application_submitted_at TEXT"); } catch (e) {}
   try { db.exec("ALTER TABLE users ADD COLUMN application_notes TEXT"); } catch (e) {}
+
+  // Data normalization: ensure application_status is only assigned to company applicants
+  try {
+    db.exec(`
+      UPDATE users SET application_status = NULL WHERE role NOT IN ('company', 'new_company');
+      UPDATE users SET application_status = 'approved' WHERE (id = 'usr_comp_01156379990' OR (role = 'company' AND contract_status = 'active'));
+      UPDATE users SET application_status = 'pending_review' WHERE (id = 'usr_newcomp_01156379991' OR role = 'new_company');
+    `);
+  } catch (e) {
+    console.warn('application_status normalization notice:', e.message);
+  }
 }
 
 /**
@@ -564,6 +575,7 @@ function seedTestCompany() {
           contract_signed_at = '2024-12-20',
           partnership_level = 'platinum',
           contract_status = 'active',
+          application_status = 'approved',
           role = 'company',
           status = 'active',
           password_salt = ?,
@@ -576,8 +588,8 @@ function seedTestCompany() {
 
   db.prepare(`
     INSERT INTO users (
-      id, name, phone, email, governorate, role, company_name, company_name_en, responsible_person, license_number, address, whatsapp, commercial_registry, contract_ref, contract_start, contract_end, contract_signed_at, partnership_level, contract_status, status, password_salt, password_hash, created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      id, name, phone, email, governorate, role, company_name, company_name_en, responsible_person, license_number, address, whatsapp, commercial_registry, contract_ref, contract_start, contract_end, contract_signed_at, partnership_level, contract_status, status, application_status, password_salt, password_hash, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     'usr_comp_01156379990',
     'شركة الدرة للسياحة',
@@ -599,6 +611,7 @@ function seedTestCompany() {
     'platinum',
     'active',
     'active',
+    'approved',
     salt,
     hash,
     now,
@@ -695,12 +708,66 @@ function seedNewCompanyTestAccount() {
   );
 }
 
+/**
+ * Seed Test Accounts Employee Account
+ * Target: Ahmed Sabry - Financial Accounts Employee
+ * Phone: 01156379993
+ * Email / Identifier: ahmed-employee-Financial-accounts
+ * Password: Asabry753#1 (Secured with scrypt + salt. Never stored plaintext)
+ * Role: accounts_employee
+ */
+function seedAccountsEmployeeTestAccount() {
+  const phone = '01156379993';
+  const email = 'ahmed-employee-Financial-accounts';
+  const initialPassword = process.env.TEST_ACCOUNTS_EMPLOYEE_PASSWORD || 'Asabry753#1';
+  const { salt, hash } = hashPassword(initialPassword);
+  const now = new Date().toISOString();
+
+  const existing = db.prepare('SELECT id, phone, email, role FROM users WHERE phone = ? OR LOWER(email) = LOWER(?)').get(phone, email);
+  if (existing) {
+    db.prepare(`
+      UPDATE users
+      SET name = 'أحمد صبري — إدارة الحسابات المالية',
+          phone = ?,
+          email = ?,
+          role = 'accounts_employee',
+          status = 'active',
+          application_status = NULL,
+          password_salt = ?,
+          password_hash = ?,
+          updated_at = ?
+      WHERE id = ?
+    `).run(phone, email, salt, hash, now, existing.id);
+    return;
+  }
+
+  db.prepare(`
+    INSERT INTO users (
+      id, name, phone, email, governorate, role, status, application_status, password_salt, password_hash, created_at, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'usr_acc_01156379993',
+    'أحمد صبري — إدارة الحسابات المالية',
+    phone,
+    email,
+    'cairo',
+    'accounts_employee',
+    'active',
+    null,
+    salt,
+    hash,
+    now,
+    now
+  );
+}
+
 // Initialize tables and initial data
 initSchema();
 seedPrograms();
 seedTestCustomer();
 seedTestCompany();
 seedNewCompanyTestAccount();
+seedAccountsEmployeeTestAccount();
 
 /**
  * Repository Methods
@@ -1840,5 +1907,6 @@ module.exports = {
   markCompanyNotificationReadInDb,
   markAllCompanyNotificationsReadInDb,
   createCompanyNotificationInDb,
-  seedNewCompanyTestAccount
+  seedNewCompanyTestAccount,
+  seedAccountsEmployeeTestAccount
 };

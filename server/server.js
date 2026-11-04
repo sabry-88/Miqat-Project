@@ -133,6 +133,50 @@ function getSessionUser(req) {
 }
 
 /**
+ * Authoritative Post-Login Destination Resolution
+ * Determines authorized target page based on role and application/contract status.
+ */
+function resolveUserDestination(user) {
+  if (!user || !user.role) {
+    return { valid: false, target: null, error: 'INVALID_ROLE' };
+  }
+
+  // 1. Customer
+  if (user.role === 'customer') {
+    return { valid: true, target: 'programs.html' };
+  }
+
+  // 2. Company - Active vs Pending
+  if (user.role === 'company' || user.role === 'partner_company') {
+    if (user.contract_status === 'active' || user.application_status === 'approved') {
+      return { valid: true, target: 'company-dashboard.html' };
+    }
+    if (user.application_status === 'pending_review' || user.contract_status === 'pending') {
+      return { valid: true, target: 'new-company-overview.html' };
+    }
+    return { valid: true, target: 'company-dashboard.html' };
+  }
+
+  // 3. New Company Applicant
+  if (user.role === 'new_company') {
+    return { valid: true, target: 'new-company-overview.html' };
+  }
+
+  // 4. Accounts Employee
+  if (user.role === 'accounts_employee' || user.role === 'accountant') {
+    return { valid: true, target: 'accounts-dashboard.html' };
+  }
+
+  // 5. Admin
+  if (user.role === 'admin') {
+    return { valid: true, target: 'admin-transactions.html' };
+  }
+
+  // Unknown role
+  return { valid: false, target: null, error: 'UNAUTHORIZED_ROLE' };
+}
+
+/**
  * Main HTTP Handler
  */
 const server = http.createServer(async (req, res) => {
@@ -213,6 +257,15 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 401, { success: false, error: 'Invalid credentials' });
       }
 
+      const destination = resolveUserDestination(user);
+      if (!destination.valid) {
+        return sendJson(res, 403, {
+          success: false,
+          error: destination.error || 'UNAUTHORIZED_ROLE',
+          message: 'Account role is not authorized to access platform workspaces'
+        });
+      }
+
       const { token, expiresAt } = db.createSession(user.id);
       const safeUser = {
         id: user.id,
@@ -227,6 +280,9 @@ const server = http.createServer(async (req, res) => {
         license_number: user.license_number || null,
         address: user.address || null,
         whatsapp: user.whatsapp || null,
+        partnership_level: user.partnership_level || null,
+        contract_status: user.contract_status || null,
+        contract_ref: user.contract_ref || null,
         status: user.status || 'active',
         application_status: user.application_status || null,
         application_submitted_at: user.application_submitted_at || null,
@@ -238,7 +294,8 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, {
         success: true,
         user: safeUser,
-        token
+        token,
+        redirect_url: destination.target
       }, { 'Set-Cookie': cookieHeader });
     } catch (err) {
       return sendJson(res, 500, { success: false, error: err.message });
@@ -248,10 +305,12 @@ const server = http.createServer(async (req, res) => {
   // 6. GET /api/auth/me
   if (pathname === '/api/auth/me' && req.method === 'GET') {
     const user = getSessionUser(req);
+    const destination = user ? resolveUserDestination(user) : null;
     return sendJson(res, 200, {
       success: true,
       authenticated: Boolean(user),
-      user: user || null
+      user: user || null,
+      redirect_url: destination && destination.valid ? destination.target : null
     });
   }
 
@@ -969,6 +1028,19 @@ const server = http.createServer(async (req, res) => {
     const sessionUser = getSessionUser(req);
     if (!sessionUser) {
       return sendJson(res, 401, { success: false, error: 'Authentication required' });
+    }
+
+    const isEligible = sessionUser.role === 'new_company' ||
+      (sessionUser.role === 'company' && sessionUser.contract_status !== 'active' && sessionUser.application_status === 'pending_review');
+
+    if (!isEligible) {
+      const dest = resolveUserDestination(sessionUser);
+      return sendJson(res, 403, {
+        success: false,
+        error: 'FORBIDDEN',
+        message: 'Miqat Partner Hub is restricted to company partner applicants under review',
+        redirect_url: dest.valid ? dest.target : 'login.html'
+      });
     }
 
     const applicationStatus = sessionUser.application_status || 'pending_review';

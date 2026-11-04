@@ -210,10 +210,37 @@
       return;
     }
 
+    // Role Guard: Partner Hub is strictly for applicant companies under review
+    if (currentUser.role === 'customer') {
+      window.location.replace('programs.html');
+      return;
+    }
+    if (currentUser.role === 'accounts_employee' || currentUser.role === 'accountant') {
+      window.location.replace('accounts-dashboard.html');
+      return;
+    }
+    if (currentUser.role === 'admin') {
+      window.location.replace('admin-transactions.html');
+      return;
+    }
+    if ((currentUser.role === 'company' || currentUser.role === 'partner_company') && (currentUser.contract_status === 'active' || currentUser.application_status === 'approved')) {
+      window.location.replace('company-dashboard.html');
+      return;
+    }
+    if (currentUser.role !== 'new_company' && currentUser.role !== 'company') {
+      window.location.replace('login.html');
+      return;
+    }
+
     try {
       const res = await apiFetch('/api/partner-hub/overview');
       if (res.status === 403) {
-        window.location.replace('company-dashboard.html');
+        let redirectTarget = 'login.html';
+        try {
+          const errData = await res.json();
+          if (errData && errData.redirect_url) redirectTarget = errData.redirect_url;
+        } catch (e) {}
+        window.location.replace(redirectTarget);
         return;
       }
       if (!res.ok) {

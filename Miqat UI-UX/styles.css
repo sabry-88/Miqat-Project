@@ -25561,32 +25561,36 @@ body.acc-modal-locked {
   border: 1px solid rgba(208, 217, 226, 0.28);
 }
 
-/* --- 10. Modals & Dialogs (Change 3 - Polished View Receipt Modal) --- */
-.acc-modal {
-  display: none;
+/* --- 10. Modals & Dialogs (Shared View Receipt & Safe Centered Logout) --- */
+.acc-modal,
+.acc-modal-overlay {
+  display: none !important;
   position: fixed;
   inset: 0;
-  z-index: 2000;
+  z-index: 10000;
   align-items: center;
   justify-content: center;
   padding: 16px;
   box-sizing: border-box;
 }
 
-.acc-modal.is-visible {
-  display: flex;
+.acc-modal.is-visible,
+.acc-modal-overlay.is-visible {
+  display: flex !important;
 }
 
 .acc-modal-backdrop-inner {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: rgba(11, 19, 29, 0.65);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10000;
 }
 
 .acc-modal-dialog {
   position: relative;
-  z-index: 10;
+  z-index: 10001;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -25598,6 +25602,171 @@ body.acc-modal-locked {
   flex-direction: column;
   gap: 16px;
   box-sizing: border-box;
+}
+
+/* Centered Safe Logout Confirmation Dialog (Shared Across Dashboard & Customers) */
+.acc-logout-dialog {
+  max-width: 440px;
+  padding: 28px 24px;
+  border-radius: 14px;
+  text-align: center;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28);
+  animation: accLogoutModalPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes accLogoutModalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.acc-logout-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.acc-logout-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: rgba(24, 54, 83, 0.08);
+  color: var(--acc-navy, #183653);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(24, 54, 83, 0.16);
+  flex-shrink: 0;
+}
+
+[dir="rtl"] .acc-logout-icon-wrap svg {
+  transform: scaleX(-1);
+}
+
+[data-theme="dark"] .acc-logout-icon-wrap {
+  background-color: rgba(138, 183, 224, 0.14);
+  color: #8AB7E0;
+  border-color: rgba(138, 183, 224, 0.28);
+}
+
+.acc-logout-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.acc-logout-body {
+  width: 100%;
+}
+
+.acc-logout-desc {
+  font-size: 0.94rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.acc-logout-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.acc-btn-logout-cancel {
+  flex: 1;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background-color: var(--color-surface-secondary, #f8fafc);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acc-btn-logout-cancel:hover {
+  background-color: var(--color-surface);
+  border-color: rgba(24, 54, 83, 0.3);
+  color: var(--acc-navy, #183653);
+}
+
+.acc-btn-logout-cancel:focus-visible {
+  outline: 2px solid var(--acc-navy, #183653);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .acc-btn-logout-cancel {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #E2E8F0;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .acc-btn-logout-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+}
+
+.acc-btn-logout-confirm {
+  flex: 1;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background-color: var(--acc-navy, #183653);
+  color: #ffffff;
+  border: 1px solid var(--acc-navy, #183653);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(24, 54, 83, 0.25);
+}
+
+.acc-btn-logout-confirm:hover {
+  background-color: #244b70;
+  border-color: #244b70;
+  box-shadow: 0 4px 10px rgba(24, 54, 83, 0.35);
+}
+
+.acc-btn-logout-confirm:focus-visible {
+  outline: 2px solid #DFBF7A;
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .acc-btn-logout-confirm {
+  background-color: #28577D;
+  color: #ffffff;
+  border-color: #3e739e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .acc-btn-logout-confirm:hover {
+  background-color: #346c9a;
+  border-color: #8AB7E0;
 }
 
 /* Specific Polished Receipt Dialog Styling */
@@ -26170,5 +26339,1292 @@ body.acc-modal-locked {
 
   .acc-logout-btn {
     padding: 0 8px;
+  }
+}
+
+/* ==========================================================================
+   PHASE 3 — PAGE 2: CUSTOMERS DIRECTORY (دليل العملاء والمعتمرين)
+   Strict Scope: Scoped strictly under .accounts-customers-page
+   Token Compliance: STRICTLY USES APPROVED ROOT & DARK MODE TOKENS ONLY
+   ZERO RED & ZERO GREEN RULE STRICTLY ENFORCED
+   ========================================================================== */
+
+/* --- 0. Zero Blur / Full Sharp Rendering (Customers Directory ONLY) --- */
+.accounts-customers-page .acc-main-content,
+.accounts-customers-page .acc-page-header,
+.accounts-customers-page .acc-notice-card,
+.accounts-customers-page .acc-cust-summary-grid,
+.accounts-customers-page .acc-cust-filter-card,
+.accounts-customers-page .acc-cust-table-card {
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* --- FIX 3 (Navbar & Sidebar Scoped to Customers Directory ONLY) --- */
+[data-theme="dark"] body.accounts-customers-page .acc-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-sidebar {
+  background-color: var(--color-surface);
+  border-inline-end: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-sidebar-header {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-sidebar-title {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-nav-item {
+  color: var(--color-text-muted);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-nav-item:hover:not(.is-active) {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-nav-item.is-active {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent);
+  border-inline-start: 3px solid var(--color-accent);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-nav-item.is-active .acc-nav-icon {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] body.accounts-customers-page .acc-sidebar-footer,
+[data-theme="dark"] body.accounts-customers-page .acc-sidebar-status {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* Page Background in Dark Mode */
+[data-theme="dark"].accounts-customers-page,
+[data-theme="dark"] body.accounts-customers-page {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* --- Page Header & Notice Banner (Fix 2 & Fix 3) --- */
+.accounts-customers-page .acc-page-header {
+  margin-bottom: 20px;
+}
+
+.accounts-customers-page .acc-page-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.accounts-customers-page .acc-page-subtitle {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 900px;
+}
+
+.accounts-customers-page .acc-notice-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.86rem;
+  margin-bottom: 24px;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-notice-card {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.accounts-customers-page .acc-notice-icon {
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-notice-icon {
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-notice-title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: var(--color-text);
+}
+
+.accounts-customers-page .acc-notice-desc {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+/* --- 1. Summary Cards Grid --- */
+.accounts-customers-page .acc-cust-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.accounts-customers-page .acc-cust-kpi-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page .acc-cust-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-kpi-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-kpi-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.accounts-customers-page .acc-cust-kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accounts-customers-page .acc-cust-kpi-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-customers-page .acc-cust-kpi-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-kpi-icon {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-customers-page .acc-cust-kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accounts-customers-page .acc-cust-kpi-val {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.accounts-customers-page .acc-cust-kpi-sub {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* --- FIX 1: REORGANIZED AND POLISHED FILTRATION SECTION --- */
+.accounts-customers-page .acc-cust-filter-card {
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-filter-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Section Header */
+.accounts-customers-page .acc-cust-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.accounts-customers-page .acc-cust-filter-header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accounts-customers-page .acc-cust-filter-header-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-filter-header-icon {
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-cust-filter-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Search Row */
+.accounts-customers-page .acc-cust-search-row {
+  margin-bottom: 16px;
+}
+
+.accounts-customers-page .acc-cust-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.accounts-customers-page .acc-cust-search-icon {
+  position: absolute;
+  inset-inline-start: 14px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.accounts-customers-page .acc-cust-search-input {
+  width: 100%;
+  height: 42px;
+  padding-inline-start: 42px;
+  padding-inline-end: 42px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-size: 0.88rem;
+  font-weight: 400;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.accounts-customers-page .acc-cust-search-input::placeholder {
+  color: var(--color-input-placeholder);
+  font-weight: 400;
+}
+
+.accounts-customers-page .acc-cust-search-input:hover {
+  border-color: var(--color-input-border-hover);
+}
+
+.accounts-customers-page .acc-cust-search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-search-input {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-input-border);
+  color: var(--color-input-text);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-border);
+}
+
+.accounts-customers-page .acc-cust-search-clear {
+  position: absolute;
+  inset-inline-end: 12px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-search-clear:hover {
+  color: var(--color-text);
+}
+
+/* Logical Filter Dropdown Grid: 3 columns x 2 rows */
+.accounts-customers-page .acc-cust-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 18px;
+  margin-bottom: 18px;
+}
+
+.accounts-customers-page .acc-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.accounts-customers-page .acc-field-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-customers-page .acc-filter-select {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-size: 0.86rem;
+  font-weight: 500;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.accounts-customers-page .acc-filter-select:hover {
+  border-color: var(--color-input-border-hover);
+}
+
+.accounts-customers-page .acc-filter-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-filter-select {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-input-border);
+  color: var(--color-input-text);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-filter-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-border);
+}
+
+/* Filter Actions Bar (Active Tags, Results Count, 2 Action Buttons) */
+.accounts-customers-page .acc-cust-filter-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.accounts-customers-page .acc-cust-active-tags-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 240px;
+}
+
+.accounts-customers-page .acc-cust-active-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-customers-page .acc-cust-tags-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.accounts-customers-page .acc-cust-no-tags {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.accounts-customers-page .acc-cust-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 500;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-filter-tag:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-filter-tag {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-filter-tag:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-cust-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.accounts-customers-page .acc-cust-results-counter {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-end: 4px;
+}
+
+.accounts-customers-page .acc-cust-results-counter strong {
+  color: var(--color-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Two Filtration Action Buttons (Moderate Dimensions, Clear Hierarchy) */
+.accounts-customers-page .acc-cust-actions-right .acc-btn {
+  height: 38px;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* Primary Action Button: Export */
+.accounts-customers-page #cust-btn-export,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page #cust-btn-export:hover,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.accounts-customers-page #cust-btn-export:active,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page #cust-btn-export:focus-visible,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-primary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .accounts-customers-page #cust-btn-export,
+[data-theme="dark"] .accounts-customers-page .acc-cust-actions-right .acc-btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page #cust-btn-export:hover,
+[data-theme="dark"] .accounts-customers-page .acc-cust-actions-right .acc-btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Secondary Action Button: Reset Filters */
+.accounts-customers-page #cust-btn-reset,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page #cust-btn-reset:hover,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-secondary:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.accounts-customers-page #cust-btn-reset:active,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-secondary:active {
+  transform: translateY(0);
+  background-color: var(--color-surface);
+}
+
+.accounts-customers-page #cust-btn-reset:focus-visible,
+.accounts-customers-page .acc-cust-actions-right .acc-btn-secondary:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .accounts-customers-page #cust-btn-reset,
+[data-theme="dark"] .accounts-customers-page .acc-cust-actions-right .acc-btn-secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page #cust-btn-reset:hover,
+[data-theme="dark"] .accounts-customers-page .acc-cust-actions-right .acc-btn-secondary:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* --- 3. Directory Table Card & Content (Fix 2 & Fix 3) --- */
+.accounts-customers-page .acc-cust-table-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-table-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page .acc-cust-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.accounts-customers-page .acc-cust-table th {
+  padding: 14px 16px;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--color-border);
+  text-align: start;
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-table th {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accounts-customers-page .acc-cust-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+  text-align: start;
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-table td {
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text);
+}
+
+.accounts-customers-page .acc-cust-row {
+  transition: background-color 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-row:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-row:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+/* Customer Identity Cell */
+.accounts-customers-page .acc-cust-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 190px;
+}
+
+.accounts-customers-page .acc-cust-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-avatar {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-customers-page .acc-cust-id-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.accounts-customers-page .acc-cust-name-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-name-btn:hover {
+  text-decoration: underline;
+  color: var(--color-primary-hover);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-name-btn {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-name-btn:hover {
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-cust-sub {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Contact & WhatsApp Cell */
+.accounts-customers-page .acc-cust-contact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.accounts-customers-page .acc-cust-phone {
+  font-size: 0.84rem;
+  color: var(--color-text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.accounts-customers-page .acc-cust-contact-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.accounts-customers-page .acc-cust-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.74rem;
+  font-weight: 600;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  transition: all 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-wa-btn:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-wa-btn {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-wa-btn:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-cust-tel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  transition: all 0.15s ease;
+}
+
+.accounts-customers-page .acc-cust-tel-btn:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-tel-btn {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-tel-btn:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Governorate Badge */
+.accounts-customers-page .acc-gov-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-gov-badge {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Program Cell */
+.accounts-customers-page .acc-prog-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 170px;
+}
+
+.accounts-customers-page .acc-prog-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.accounts-customers-page .acc-ref-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Counts Cell */
+.accounts-customers-page .acc-counts-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.accounts-customers-page .acc-count-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.accounts-customers-page .acc-count-chip.chip-bkg {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-count-chip.chip-bkg {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+.accounts-customers-page .acc-count-chip.chip-ctr {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-count-chip.chip-ctr {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-border);
+}
+
+/* Financial Cell */
+.accounts-customers-page .acc-fin-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accounts-customers-page .acc-amount-sub {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Date Cell */
+.accounts-customers-page .acc-date-cell {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Action: Profile Button */
+.accounts-customers-page .acc-th-actions,
+.accounts-customers-page .acc-td-actions {
+  text-align: end;
+}
+
+.accounts-customers-page .acc-btn-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.accounts-customers-page .acc-btn-profile:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.accounts-customers-page .acc-btn-profile:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-btn-profile {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-btn-profile:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-btn-profile:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[dir="rtl"] .accounts-customers-page .acc-profile-icon {
+  transform: rotate(180deg);
+}
+
+/* --- 4. STRICT ZERO-RED & ZERO-GREEN STATUS PILLS (Using Only Approved Theme Tokens) --- */
+.accounts-customers-page .acc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Deep Navy (Confirmed Booking, Active Contract, Full Payment) */
+.accounts-customers-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Warm Amber Gold (Deposit Paid, Partial, Pending Verification / Agreement) */
+.accounts-customers-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Slate Blue (New Booking, Reserved) */
+.accounts-customers-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+/* Royal Indigo (Trip Completed, Under Admin Review, Pending Clearance) */
+.accounts-customers-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+/* Neutral Slate (Cancelled Booking, Refund Executed, Settled) — ZERO RED */
+.accounts-customers-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Steel Charcoal (Unpaid, No Balance) */
+.accounts-customers-page .acc-status-pill.status-pill-charcoal {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-charcoal {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Neutral Individual / No Contract */
+.accounts-customers-page .acc-status-pill.status-pill-neutral {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-status-pill.status-pill-neutral {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Muted placeholder */
+.accounts-customers-page .acc-status-pill.status-pill-muted {
+  background: none;
+  color: var(--color-text-muted);
+  border: none;
+  padding: 0;
+}
+
+/* --- 5. Empty State --- */
+.accounts-customers-page .acc-cust-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.accounts-customers-page .acc-cust-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-empty-icon {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+}
+
+.accounts-customers-page .acc-cust-empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.accounts-customers-page .acc-cust-empty-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  max-width: 460px;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+/* --- 6. Pagination Bar --- */
+.accounts-customers-page .acc-cust-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-cust-table-footer {
+  background-color: var(--color-surface-tertiary);
+  border-top: 1px solid var(--color-border);
+}
+
+.accounts-customers-page .acc-cust-pg-info {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-customers-page .acc-cust-pg-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accounts-customers-page .acc-pg-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.accounts-customers-page .acc-pg-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-pg-btn {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .accounts-customers-page .acc-pg-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.accounts-customers-page .acc-pg-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.accounts-customers-page .acc-pg-current-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+[dir="rtl"] .accounts-customers-page .acc-pg-btn svg {
+  transform: rotate(180deg);
+}
+
+/* --- 7. Responsive Breakpoint Rules --- */
+@media (max-width: 1440px) {
+  .accounts-customers-page .acc-cust-summary-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1120px) {
+  .accounts-customers-page .acc-cust-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .accounts-customers-page .acc-cust-filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-customers-page .acc-cust-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-customers-page .acc-cust-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-customers-page .acc-cust-filter-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-customers-page .acc-cust-actions-right {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-customers-page .acc-cust-actions-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-customers-page .acc-cust-actions-right .acc-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

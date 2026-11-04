@@ -25,13 +25,21 @@
       name_ar: 'أحمد محمود الشريف',
       name_en: 'Ahmed Mahmoud El-Sherif',
       phone: '01012345671',
+      whatsapp: '01012345671',
       email: 'ahmed.elsherif@gmail.com',
       governorate_ar: 'الجيزة',
       governorate_en: 'Giza',
       program_ar: 'عمرة اقتصادية موفرة (طيران)',
       program_en: 'Umrah Economy Saver (Flight)',
+      program_key: 'economy_saver',
       booking_ref: 'BK-2026-1045',
       booking_status: 'confirmed',
+      bookings_count: 2,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'paid_full',
+      refund_status: 'none',
       total_spent: 76000,
       paid_amount: 76000,
       remaining: 0,
@@ -44,13 +52,21 @@
       name_ar: 'عمر عبد العزيز الشريف',
       name_en: 'Omar Abdelaziz El-Sherif',
       phone: '01285536230',
+      whatsapp: '01285536230',
       email: 'omar.aziz@gmail.com',
       governorate_ar: 'القاهرة',
       governorate_en: 'Cairo',
       program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
       program_en: '5-Star Premium Umrah (Fairmont)',
+      program_key: 'five_star_premium',
       booking_ref: 'BK-2026-1046',
       booking_status: 'confirmed',
+      bookings_count: 1,
+      contracts_count: 1,
+      contract_ref: 'MQ-CTR-2026-012',
+      contract_status: 'active',
+      payment_status: 'paid_full',
+      refund_status: 'none',
       total_spent: 124000,
       paid_amount: 124000,
       remaining: 0,
@@ -63,13 +79,21 @@
       name_ar: 'سارة خالد المنصوري',
       name_en: 'Sarah Khaled El-Mansoury',
       phone: '01225077617',
+      whatsapp: '01225077617',
       email: 'sarah.mansour@yahoo.com',
       governorate_ar: 'الإسكندرية',
       governorate_en: 'Alexandria',
       program_ar: 'عمرة شوال الاقتصادية',
       program_en: 'Shawwal Economy Umrah',
+      program_key: 'shawwal_economy',
       booking_ref: 'BK-2026-1047',
       booking_status: 'deposit_paid',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'partial',
+      refund_status: 'none',
       total_spent: 66000,
       paid_amount: 22000,
       remaining: 44000,
@@ -82,13 +106,21 @@
       name_ar: 'محمود فوزي رضوان',
       name_en: 'Mahmoud Fawzy Radwan',
       phone: '01149201948',
+      whatsapp: '01149201948',
       email: 'm.fawzy@hotmail.com',
       governorate_ar: 'المنوفية',
       governorate_en: 'Monufia',
       program_ar: 'عمرة رجب الاقتصادية المعيارية',
       program_en: 'Standard Rajab Economy Umrah',
+      program_key: 'rajab_standard',
       booking_ref: 'BK-2026-1048',
       booking_status: 'cancelled',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'refunded',
+      refund_status: 'pending_approval',
       total_spent: 52000,
       paid_amount: 52000,
       remaining: 0,
@@ -101,13 +133,21 @@
       name_ar: 'فاطمة الزهراء علي',
       name_en: 'Fatima Al-Zahraa Ali',
       phone: '01232574706',
+      whatsapp: '01232574706',
       email: 'fatima.ali@outlook.com',
       governorate_ar: 'الدقهلية',
       governorate_en: 'Dakahlia',
       program_ar: 'عمرة شعبان VIP برج الساعة',
       program_en: 'Shaban VIP Clock Tower Umrah',
+      program_key: 'shaban_vip',
       booking_ref: 'BK-2026-1049',
       booking_status: 'confirmed',
+      bookings_count: 2,
+      contracts_count: 1,
+      contract_ref: 'MQ-CTR-2026-008',
+      contract_status: 'active',
+      payment_status: 'paid_full',
+      refund_status: 'none',
       total_spent: 148000,
       paid_amount: 148000,
       remaining: 0,
@@ -120,18 +160,296 @@
       name_ar: 'عبد الرحمن طارق الجمل',
       name_en: 'Abdulrahman Tarek El-Gammal',
       phone: '01289736991',
+      whatsapp: '01289736991',
       email: 'tarek.gammal@gmail.com',
       governorate_ar: 'الغربية',
       governorate_en: 'Gharbia',
       program_ar: 'عمرة برية فاخرة — فنادق الحرم',
       program_en: 'Deluxe Land Umrah — Haram Hotels',
+      program_key: 'deluxe_land',
       booking_ref: 'BK-2026-1050',
       booking_status: 'new',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'partial',
+      refund_status: 'none',
       total_spent: 42000,
       paid_amount: 12600,
       remaining: 29400,
       registered_date: '2026-11-02',
       last_activity: '2026-11-03 08:50',
+      assigned_employee: 'ahmed_sabry'
+    },
+    {
+      id: 'CUST-1007',
+      name_ar: 'خالد مصطفى النجار',
+      name_en: 'Khaled Mostafa El-Naggar',
+      phone: '01098452134',
+      whatsapp: '01098452134',
+      email: 'khaled.naggar@gmail.com',
+      governorate_ar: 'الشرقية',
+      governorate_en: 'Sharqia',
+      program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+      program_en: '5-Star Premium Umrah (Fairmont)',
+      program_key: 'five_star_premium',
+      booking_ref: 'BK-2026-1051',
+      booking_status: 'confirmed',
+      bookings_count: 3,
+      contracts_count: 1,
+      contract_ref: 'MQ-CTR-2026-015',
+      contract_status: 'active',
+      payment_status: 'paid_full',
+      refund_status: 'none',
+      total_spent: 135000,
+      paid_amount: 135000,
+      remaining: 0,
+      registered_date: '2026-10-18',
+      last_activity: '2026-11-03 16:10',
+      assigned_employee: 'ahmed_sabry'
+    },
+    {
+      id: 'CUST-1008',
+      name_ar: 'منى حسن البنا',
+      name_en: 'Mona Hassan El-Banna',
+      phone: '01123498765',
+      whatsapp: '01123498765',
+      email: 'mona.banna@yahoo.com',
+      governorate_ar: 'القاهرة',
+      governorate_en: 'Cairo',
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      program_key: 'economy_saver',
+      booking_ref: 'BK-2026-1052',
+      booking_status: 'deposit_paid',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'partial',
+      refund_status: 'none',
+      total_spent: 75000,
+      paid_amount: 30000,
+      remaining: 45000,
+      registered_date: '2026-10-30',
+      last_activity: '2026-11-02 14:00',
+      assigned_employee: 'sarah_mansour'
+    },
+    {
+      id: 'CUST-1009',
+      name_ar: 'إبراهيم يوسف سالم',
+      name_en: 'Ibrahim Youssef Salem',
+      phone: '01276543210',
+      whatsapp: '01276543210',
+      email: 'i.salem@outlook.com',
+      governorate_ar: 'الإسكندرية',
+      governorate_en: 'Alexandria',
+      program_ar: 'عمرة رجب الاقتصادية المعيارية',
+      program_en: 'Standard Rajab Economy Umrah',
+      program_key: 'rajab_standard',
+      booking_ref: 'BK-2026-1053',
+      booking_status: 'confirmed',
+      bookings_count: 1,
+      contracts_count: 1,
+      contract_ref: 'MQ-CTR-2026-019',
+      contract_status: 'pending_agreement',
+      payment_status: 'pending_clearance',
+      refund_status: 'none',
+      total_spent: 58000,
+      paid_amount: 33000,
+      remaining: 25000,
+      registered_date: '2026-10-22',
+      last_activity: '2026-11-03 12:45',
+      assigned_employee: 'omar_sharif'
+    },
+    {
+      id: 'CUST-1010',
+      name_ar: 'هدى سيد عبد الرحمن',
+      name_en: 'Hoda Sayed Abdelrahman',
+      phone: '01067891234',
+      whatsapp: '01067891234',
+      email: 'hoda.sayed@gmail.com',
+      governorate_ar: 'القليوبية',
+      governorate_en: 'Qalyubia',
+      program_ar: 'عمرة شعبان VIP برج الساعة',
+      program_en: 'Shaban VIP Clock Tower Umrah',
+      program_key: 'shaban_vip',
+      booking_ref: 'BK-2026-1054',
+      booking_status: 'confirmed',
+      bookings_count: 2,
+      contracts_count: 1,
+      contract_ref: 'MQ-CTR-2026-022',
+      contract_status: 'active',
+      payment_status: 'paid_full',
+      refund_status: 'none',
+      total_spent: 155000,
+      paid_amount: 155000,
+      remaining: 0,
+      registered_date: '2026-10-15',
+      last_activity: '2026-11-03 15:30',
+      assigned_employee: 'ahmed_sabry'
+    },
+    {
+      id: 'CUST-1011',
+      name_ar: 'طارق محمد الشاذلي',
+      name_en: 'Tarek Mohamed El-Shazly',
+      phone: '01154321876',
+      whatsapp: '01154321876',
+      email: 'tarek.shazly@hotmail.com',
+      governorate_ar: 'الجيزة',
+      governorate_en: 'Giza',
+      program_ar: 'عمرة شوال الاقتصادية',
+      program_en: 'Shawwal Economy Umrah',
+      program_key: 'shawwal_economy',
+      booking_ref: 'BK-2026-1055',
+      booking_status: 'new',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'unpaid',
+      refund_status: 'none',
+      total_spent: 64000,
+      paid_amount: 0,
+      remaining: 64000,
+      registered_date: '2026-11-03',
+      last_activity: '2026-11-03 17:00',
+      assigned_employee: 'sarah_mansour'
+    },
+    {
+      id: 'CUST-1012',
+      name_ar: 'نورهان عادل الخطيب',
+      name_en: 'Nourhan Adel El-Khatib',
+      phone: '01298765432',
+      whatsapp: '01298765432',
+      email: 'nourhan.khatib@gmail.com',
+      governorate_ar: 'القاهرة',
+      governorate_en: 'Cairo',
+      program_ar: 'عمرة برية فاخرة — فنادق الحرم',
+      program_en: 'Deluxe Land Umrah — Haram Hotels',
+      program_key: 'deluxe_land',
+      booking_ref: 'BK-2026-1056',
+      booking_status: 'cancelled',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'refunded',
+      refund_status: 'executed',
+      total_spent: 38000,
+      paid_amount: 38000,
+      remaining: 0,
+      registered_date: '2026-10-12',
+      last_activity: '2026-11-01 15:30',
+      assigned_employee: 'ahmed_sabry'
+    },
+    {
+      id: 'CUST-1013',
+      name_ar: 'مصطفى كامل الدسوقي',
+      name_en: 'Mostafa Kamel El-Desouky',
+      phone: '01033221100',
+      whatsapp: '01033221100',
+      email: 'm.desouky@yahoo.com',
+      governorate_ar: 'الدقهلية',
+      governorate_en: 'Dakahlia',
+      program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+      program_en: '5-Star Premium Umrah (Fairmont)',
+      program_key: 'five_star_premium',
+      booking_ref: 'BK-2026-1057',
+      booking_status: 'confirmed',
+      bookings_count: 2,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'paid_full',
+      refund_status: 'none',
+      total_spent: 118000,
+      paid_amount: 118000,
+      remaining: 0,
+      registered_date: '2026-10-24',
+      last_activity: '2026-11-02 11:15',
+      assigned_employee: 'omar_sharif'
+    },
+    {
+      id: 'CUST-1014',
+      name_ar: 'ياسمين أحمد رضوان',
+      name_en: 'Yasmine Ahmed Radwan',
+      phone: '01188776655',
+      whatsapp: '01188776655',
+      email: 'yasmine.radwan@outlook.com',
+      governorate_ar: 'الغربية',
+      governorate_en: 'Gharbia',
+      program_ar: 'عمرة رجب الاقتصادية المعيارية',
+      program_en: 'Standard Rajab Economy Umrah',
+      program_key: 'rajab_standard',
+      booking_ref: 'BK-2026-1058',
+      booking_status: 'new',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'partial',
+      refund_status: 'under_review',
+      total_spent: 49000,
+      paid_amount: 18000,
+      remaining: 31000,
+      registered_date: '2026-11-01',
+      last_activity: '2026-11-03 08:30',
+      assigned_employee: 'sarah_mansour'
+    },
+    {
+      id: 'CUST-1015',
+      name_ar: 'عمرو سعيد بركات',
+      name_en: 'Amr Saeed Barakat',
+      phone: '01211223344',
+      whatsapp: '01211223344',
+      email: 'amr.barakat@gmail.com',
+      governorate_ar: 'المنوفية',
+      governorate_en: 'Monufia',
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      program_key: 'economy_saver',
+      booking_ref: 'BK-2026-1059',
+      booking_status: 'completed',
+      bookings_count: 4,
+      contracts_count: 2,
+      contract_ref: 'MQ-CTR-2026-005',
+      contract_status: 'active',
+      payment_status: 'paid_full',
+      refund_status: 'none',
+      total_spent: 72000,
+      paid_amount: 72000,
+      remaining: 0,
+      registered_date: '2026-09-15',
+      last_activity: '2026-10-28 17:00',
+      assigned_employee: 'ahmed_sabry'
+    },
+    {
+      id: 'CUST-1016',
+      name_ar: 'سلمى محمود نور',
+      name_en: 'Salma Mahmoud Nour',
+      phone: '01055443322',
+      whatsapp: '01055443322',
+      email: 'salma.nour@gmail.com',
+      governorate_ar: 'الشرقية',
+      governorate_en: 'Sharqia',
+      program_ar: 'عمرة شوال الاقتصادية',
+      program_en: 'Shawwal Economy Umrah',
+      program_key: 'shawwal_economy',
+      booking_ref: 'BK-2026-1060',
+      booking_status: 'confirmed',
+      bookings_count: 1,
+      contracts_count: 0,
+      contract_ref: null,
+      contract_status: 'none',
+      payment_status: 'paid_full',
+      refund_status: 'none',
+      total_spent: 68000,
+      paid_amount: 68000,
+      remaining: 0,
+      registered_date: '2026-10-27',
+      last_activity: '2026-11-02 18:20',
       assigned_employee: 'ahmed_sabry'
     }
   ];
@@ -586,7 +904,19 @@
     currency: 'EGP'
   };
 
-  // --- 6. Helper: Filter Matches Logic ---
+  // --- 6. Helper: Search Normalization & Filter Matches Logic ---
+  function normalizeSearchTerm(term) {
+    if (!term) return '';
+    return String(term)
+      .toLowerCase()
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/[ة]/g, 'ه')
+      .replace(/[ى]/g, 'ي')
+      .replace(/[\u064B-\u065F]/g, '')
+      .replace(/[-_]/g, '')
+      .trim();
+  }
+
   function matchFilter(item, filters) {
     if (!filters) return true;
 
@@ -718,7 +1048,99 @@
     },
 
     getFilteredCustomers: function (filters) {
-      return CUSTOMERS.filter(c => matchFilter(c, filters));
+      return CUSTOMERS.slice(0, 6).filter(c => matchFilter(c, filters));
+    },
+
+    getCustomerDirectorySummary: function () {
+      let activeBookings = 0;
+      let activeContracts = 0;
+      let pendingItems = 0;
+
+      CUSTOMERS.forEach(c => {
+        if (c.booking_status === 'confirmed' || c.booking_status === 'deposit_paid' || c.booking_status === 'new') {
+          activeBookings++;
+        }
+        if (c.contract_status === 'active') {
+          activeContracts++;
+        }
+        if (c.payment_status === 'pending_clearance' || c.refund_status === 'pending_approval' || c.refund_status === 'under_review' || c.booking_status === 'new') {
+          pendingItems++;
+        }
+      });
+
+      return {
+        totalCustomers: BASE_KPIS.totalCustomers, // 148
+        directoryCount: CUSTOMERS.length, // 16
+        activeBookings: activeBookings,
+        activeContracts: activeContracts,
+        pendingItems: pendingItems
+      };
+    },
+
+    filterCustomerDirectory: function (opts) {
+      opts = opts || {};
+      const query = (opts.search || '').trim();
+      const normQuery = normalizeSearchTerm(query);
+
+      return CUSTOMERS.filter(c => {
+        // Search Matching
+        if (normQuery) {
+          const matchNameAr = normalizeSearchTerm(c.name_ar).includes(normQuery);
+          const matchNameEn = (c.name_en || '').toLowerCase().includes(query.toLowerCase()) || normalizeSearchTerm(c.name_en).includes(normQuery);
+          const matchId = (c.id || '').toLowerCase().includes(query.toLowerCase()) || normalizeSearchTerm(c.id).includes(normQuery);
+          const rawDigits = query.replace(/[^0-9]/g, '');
+          const matchPhone = rawDigits.length > 0 && (c.phone || '').replace(/[^0-9]/g, '').includes(rawDigits);
+          const matchWhatsApp = rawDigits.length > 0 && (c.whatsapp || '').replace(/[^0-9]/g, '').includes(rawDigits);
+          const matchBooking = (c.booking_ref || '').toLowerCase().includes(query.toLowerCase()) || normalizeSearchTerm(c.booking_ref).includes(normQuery);
+          const matchContract = (c.contract_ref || '').toLowerCase().includes(query.toLowerCase()) || normalizeSearchTerm(c.contract_ref).includes(normQuery);
+
+          if (!matchNameAr && !matchNameEn && !matchId && !matchPhone && !matchWhatsApp && !matchBooking && !matchContract) {
+            return false;
+          }
+        }
+
+        // Governorate filter
+        if (opts.governorate && opts.governorate !== 'all') {
+          const govAr = (c.governorate_ar || '').trim();
+          const govEn = (c.governorate_en || '').toLowerCase().trim();
+          const opt = opts.governorate.toLowerCase().trim();
+          if (govAr !== opts.governorate && govEn !== opt) return false;
+        }
+
+        // Program filter
+        if (opts.program && opts.program !== 'all') {
+          if (c.program_key !== opts.program && c.program_ar !== opts.program && c.program_en !== opts.program) {
+            return false;
+          }
+        }
+
+        // Booking status filter
+        if (opts.bookingStatus && opts.bookingStatus !== 'all') {
+          if (c.booking_status !== opts.bookingStatus) return false;
+        }
+
+        // Contract status filter
+        if (opts.contractStatus && opts.contractStatus !== 'all') {
+          if (c.contract_status !== opts.contractStatus) return false;
+        }
+
+        // Payment status filter
+        if (opts.paymentStatus && opts.paymentStatus !== 'all') {
+          if (c.payment_status !== opts.paymentStatus) return false;
+        }
+
+        // Refund status filter
+        if (opts.refundStatus && opts.refundStatus !== 'all') {
+          if (c.refund_status !== opts.refundStatus) return false;
+        }
+
+        return true;
+      });
+    },
+
+    getCustomerById: function (id) {
+      if (!id) return null;
+      return CUSTOMERS.find(c => c.id === id) || null;
     },
 
     getPendingActions: function (filters) {

@@ -44,6 +44,8 @@
     isOpen: false
   };
 
+  const refreshListeners = [];
+
   const html = document.documentElement;
 
   // --- 1. Arabic-Indic & Western Numerals Helpers ---
@@ -106,7 +108,12 @@
     html.setAttribute('lang', currentLang);
     html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
 
-    document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
+    const isCustPage = document.body && document.body.classList.contains('accounts-customers-page');
+    if (isCustPage) {
+      document.title = (currentLang === 'ar' ? 'دليل العملاء والمعتمرين | ميقات' : 'Customers Directory | Miqat');
+    } else {
+      document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
+    }
 
     // Translate all [data-i18n]
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -146,6 +153,11 @@
 
     // Re-render dynamic components with localized numbers
     renderAllDashboardComponents();
+
+    // Notify registered page controllers (e.g. Customers Directory)
+    refreshListeners.forEach(cb => {
+      try { cb({ lang: currentLang, theme: currentTheme }); } catch (err) { console.error(err); }
+    });
   }
 
   async function setLanguage(newLang) {
@@ -193,6 +205,10 @@
       renderDonutChart(breakdown);
       renderAnalyticalGraph(trends);
     }
+
+    refreshListeners.forEach(cb => {
+      try { cb({ lang: currentLang, theme: currentTheme }); } catch (err) { console.error(err); }
+    });
   }
 
   // --- 4. Authentication & Session Verification ---
@@ -324,7 +340,7 @@
     });
   }
 
-  // --- 6. Safe Logout Modal ---
+  // --- 6. Safe Centered Logout Modal (Shared Across Workspace) ---
   function openSafeLogoutModal() {
     const modal = document.getElementById('acc-logout-modal');
     if (!modal) return;
@@ -332,8 +348,14 @@
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('acc-modal-locked');
 
-    const stayBtn = document.getElementById('modal-btn-stay');
-    if (stayBtn) stayBtn.focus();
+    const cancelBtn = document.getElementById('modal-btn-stay') || modal.querySelector('.acc-btn-logout-cancel');
+    if (cancelBtn) {
+      try {
+        cancelBtn.focus({ preventScroll: true });
+      } catch (e) {
+        cancelBtn.focus();
+      }
+    }
   }
 
   function closeSafeLogoutModal() {
@@ -346,8 +368,8 @@
 
   function handleLogout(saveFirst) {
     if (saveFirst) {
-      showToast(currentLang === 'ar' ? 'تم حفظ كافة الإعدادات والمسودات بنجاح، جاري الخروج...' : 'All drafts and settings saved, signing out...');
-      setTimeout(executeSignOut, 800);
+      showToast(currentLang === 'ar' ? 'جاري تسجيل الخروج الآمن...' : 'Signing out safely...');
+      setTimeout(executeSignOut, 400);
     } else {
       executeSignOut();
     }
@@ -381,6 +403,11 @@
       stayBtn.addEventListener('click', closeSafeLogoutModal);
     }
 
+    const cancelBtns = document.querySelectorAll('.acc-btn-logout-cancel');
+    cancelBtns.forEach(btn => {
+      btn.addEventListener('click', closeSafeLogoutModal);
+    });
+
     const discardBtn = document.getElementById('modal-btn-discard');
     if (discardBtn) {
       discardBtn.addEventListener('click', function () {
@@ -391,14 +418,30 @@
     const saveBtn = document.getElementById('modal-btn-save');
     if (saveBtn) {
       saveBtn.addEventListener('click', function () {
-        handleLogout(true);
+        handleLogout(false);
       });
     }
 
-    const modalBackdrop = document.querySelector('#acc-logout-modal .acc-modal-backdrop-inner');
+    const confirmBtns = document.querySelectorAll('.acc-btn-logout-confirm');
+    confirmBtns.forEach(btn => {
+      btn.addEventListener('click', function () {
+        handleLogout(false);
+      });
+    });
+
+    const modalBackdrop = document.querySelector('#acc-logout-modal .acc-modal-backdrop-inner') || document.getElementById('modal-logout-backdrop');
     if (modalBackdrop) {
       modalBackdrop.addEventListener('click', closeSafeLogoutModal);
     }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('acc-logout-modal');
+        if (modal && modal.classList.contains('is-visible')) {
+          closeSafeLogoutModal();
+        }
+      }
+    });
   }
 
   // --- 7. Simple Toast Notification ---
@@ -1448,6 +1491,15 @@
   window.AccountsWorkspace = {
     setLanguage,
     setTheme,
+    t,
+    formatNumber,
+    formatCurrency,
+    showToast,
+    getCurrentLang: () => currentLang,
+    getCurrentTheme: () => currentTheme,
+    onPageRefresh: function (cb) {
+      if (typeof cb === 'function') refreshListeners.push(cb);
+    },
     handleAuditAction: function (actionId) {
       showToast(currentLang === 'ar' ? ('مباشرة التدقيق والمطابقة للمهمة: ' + actionId) : ('Initiating audit review for: ' + actionId));
     },

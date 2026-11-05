@@ -1472,6 +1472,2456 @@
       }
     ]
   };
+  // =========================================================================
+  // UNIFIED BOOKINGS REGISTER — MASTER DATASET (12 Believable Bookings)
+  // =========================================================================
+  const BOOKINGS_MASTER = [
+  {
+    "id": "BK-2026-1045",
+    "customerId": "CUST-1001",
+    "customer_name_ar": "أحمد محمود الشريف",
+    "customer_name_en": "Ahmed Mahmoud El-Sherif",
+    "customer_phone": "01012345671",
+    "customer_whatsapp": "01012345671",
+    "customer_email": "ahmed.elsherif@gmail.com",
+    "customer_governorate_ar": "الجيزة",
+    "customer_governorate_en": "Giza",
+    "company_id": "COMP-101",
+    "company_ar": "شركة الهدى للسياحة والخدمات الدينية",
+    "company_en": "Al-Huda Religious Travel & Tourism",
+    "company_phone": "0233458900",
+    "company_email": "operations@alhuda-travel.com",
+    "company_license": "ترخيص سياحي رقم ٤١٨ فئة (أ)",
+    "company_license_en": "Tourism License #418 Category (A)",
+    "company_booking_ref": "HD-2026-9912",
+    "program_id": "PRG-101",
+    "program_ar": "عمرة اقتصادية موفرة (طيران)",
+    "program_en": "Umrah Economy Saver (Flight)",
+    "program_type": "economy",
+    "program_type_ar": "عمرة اقتصادية",
+    "program_type_en": "Economy Umrah",
+    "season_ar": "رجب ١٤٤٨ هـ (يناير ٢٠٢٧)",
+    "season_en": "Rajab 1448 AH (Jan 2027)",
+    "season_key": "rajab_1448",
+    "created_date": "2026-10-25",
+    "travel_date": "2027-01-18",
+    "travelers_count": 2,
+    "total_price": 76000,
+    "paid_amount": 76000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "confirmed",
+    "booking_status_ar": "مؤكد",
+    "booking_status_en": "Confirmed",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1045-1",
+        "name_ar": "أحمد محمود الشريف",
+        "name_en": "Ahmed Mahmoud El-Sherif",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      },
+      {
+        "id": "TRV-1045-2",
+        "name_ar": "زينب عبد الرحمن الشريف",
+        "name_en": "Zeinab Abdelrahman El-Sherif",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الزوجة / مرافق",
+        "relationship_en": "Spouse / Companion",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1045-1",
+        "author": "إدارة العمليات — شركة الهدى",
+        "date": "2026-10-25 15:00",
+        "text_ar": "تم تأكيد مقاعد الطيران ذهاب وعودة من مطار القاهرة إلى مطار الملك عبد العزيز بجدة على الخطوط السعودية.",
+        "text_en": "Round-trip flight seats confirmed from Cairo to Jeddah on Saudia Airlines."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1045-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-10-27 12:00",
+        "text": "تمت مطابقة إشعار التحويل البنكي وإشعار إنستاباي مع كشف حساب البنك الأهلي، تم تصفية الحساب بالكامل وبانتظار إصدار شهادة التسوية."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "deposit_paid",
+        "to_status_ar": "سداد دفعة أولى",
+        "date": "2026-10-25 14:35",
+        "actor": "سامح فؤاد (محاسب الهدى)"
+      },
+      {
+        "from_status": "deposit_paid",
+        "from_status_ar": "سداد دفعة أولى",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد",
+        "date": "2026-10-27 11:30",
+        "actor": "أحمد صبري (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9041",
+        "date": "2026-10-25 14:30",
+        "amount": 38000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي (الأهلي المصري)",
+        "payment_method_en": "Bank Transfer (NBE)",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "سداد دفعة أولى (عربون)",
+        "transaction_type_en": "Initial Deposit",
+        "transaction_source": "company_portal",
+        "transaction_source_ar": "بوابة شركة السياحة الشريكة",
+        "transaction_source_en": "Partner Company Portal",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 38000,
+        "received_by": "سامح فؤاد — محاسب الهدى",
+        "receipt_ref": "RCP-2026-4401",
+        "notes": "إيداع رسمي معتمد في حساب بنك مصر للشركة",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "NBE_Transfer_Receipt_4401.pdf",
+          "size": "1.2 MB",
+          "date": "2026-10-25 14:28",
+          "bank_ref": "TRF-NBE-9921448",
+          "account": "0100458921001"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9041-1",
+            "author_name": "سامح فؤاد",
+            "author_role": "محاسب شركة السياحة",
+            "date": "2026-10-25 14:32",
+            "message": "تم إرفاق إشعار تحويل البنك الأهلي الصادر من العميل أحمد الشريف بمبلغ ٣٨,٠٠٠ ج.م."
+          },
+          {
+            "id": "DISC-9041-2",
+            "author_name": "أحمد صبري",
+            "author_role": "موظف حسابات ميقات",
+            "date": "2026-10-25 15:10",
+            "message": "تم التحقق من ورود المبلغ في الحساب الوسيط، وتم اعتماد التحصيل دفترياً."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "تسجيل معاملة تحصيل دفعة أولى",
+            "actor": "سامح فؤاد",
+            "date": "2026-10-25 14:30",
+            "details": "تسجيل دفعة بقيمة ٣٨,٠٠٠ ج.م عبر تحويل بنكي"
+          },
+          {
+            "action": "اعتماد ومطابقة التحصيل",
+            "actor": "أحمد صبري",
+            "date": "2026-10-25 15:15",
+            "details": "تغيير الحالة إلى معتمد ومطابق دفترياً، وخفض الرصيد المتبقي إلى ٣٨,٠٠٠ ج.م"
+          }
+        ]
+      },
+      {
+        "id": "TX-2026-9052",
+        "date": "2026-10-27 11:15",
+        "amount": 38000,
+        "payment_method": "instapay",
+        "payment_method_ar": "إنستاباي فوري",
+        "payment_method_en": "InstaPay Instant",
+        "transaction_type": "final_balance",
+        "transaction_type_ar": "سداد كامل الرصيد المتبقي",
+        "transaction_type_en": "Final Balance Payment",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "أحمد صبري — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4415",
+        "notes": "سداد فوري عبر شبكة المدفوعات اللحظية IPN",
+        "evidence": {
+          "type": "instapay_slip",
+          "filename": "InstaPay_Slip_4415.png",
+          "size": "640 KB",
+          "date": "2026-10-27 11:14",
+          "bank_ref": "IPN-20261027-88412",
+          "account": "ahmed.elsherif@instapay"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9052-1",
+            "author_name": "أحمد صبري",
+            "author_role": "موظف حسابات ميقات",
+            "date": "2026-10-27 11:20",
+            "message": "سداد إلكتروني مباشر عبر إنستاباي، تمت التسوية الفورية في الحساب."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "تسجيل سداد إلكتروني عبر إنستاباي",
+            "actor": "بوابة ميقات الإلكترونية",
+            "date": "2026-10-27 11:15",
+            "details": "معاملة سداد نهائي بقيمة ٣٨,٠٠٠ ج.م"
+          },
+          {
+            "action": "اعتماد وتصفية الرصيد بالكامل",
+            "actor": "أحمد صبري",
+            "date": "2026-10-27 11:25",
+            "details": "الحساب أصبح مسدداً بالكامل والرصيد المتبقي صفر ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1045-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز جديد BK-2026-1045",
+        "title_en": "Booking Registered BK-2026-1045",
+        "desc_ar": "حجز عمرة اقتصادية موفرة (طيران) لشخصين عبر شركة الهدى بقيمة ٧٦,٠٠٠ ج.م",
+        "desc_en": "Booked Economy Saver (Flight) for 2 travelers via Al-Huda for 76,000 EGP",
+        "actor_ar": "أحمد الشريف (العميل)",
+        "actor_en": "Ahmed El-Sherif (Customer)",
+        "date": "2026-10-25 14:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1045-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "تسجيل دفعة أولى TX-2026-9041",
+        "title_en": "Deposit Payment Recorded TX-2026-9041",
+        "desc_ar": "سداد مبلغ ٣٨,٠٠٠ ج.م عبر تحويل بنكي (الأهلي المصري)",
+        "desc_en": "Paid 38,000 EGP via Bank Transfer (NBE)",
+        "actor_ar": "سامح فؤاد (محاسب الهدى)",
+        "actor_en": "Sameh Fouad (Al-Huda)",
+        "date": "2026-10-25 14:30",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1045-3",
+        "type": "payment_approved",
+        "type_label_ar": "اعتماد تحصيل",
+        "type_label_en": "Payment Approved",
+        "title_ar": "اعتماد دفعة البنك الأهلي",
+        "title_en": "Bank Transfer Payment Approved",
+        "desc_ar": "تم اعتماد التحصيل دفترياً ومطابقة إشعار التحويل",
+        "desc_en": "Payment verified and ledger matched",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-10-25 15:15",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1045-4",
+        "type": "internal_note",
+        "type_label_ar": "ملاحظة داخلية",
+        "type_label_en": "Internal Note",
+        "title_ar": "إضافة ملاحظة حسابات خاصة",
+        "title_en": "Accounting Note Added",
+        "desc_ar": "تم التنسيق مع العميل لسداد الدفعة المتبقية قبل موعد إصدار التذاكر",
+        "desc_en": "Customer contacted regarding remaining balance payment schedule",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-10-26 10:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1045-5",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد إلكتروني عبر إنستاباي TX-2026-9052",
+        "title_en": "Electronic Payment Recorded TX-2026-9052",
+        "desc_ar": "سداد كامل المبلغ المتبقي بقيمة ٣٨,٠٠٠ ج.م",
+        "desc_en": "Full remaining balance paid 38,000 EGP",
+        "actor_ar": "بوابة ميقات الإلكترونية",
+        "actor_en": "Miqat Electronic Gateway",
+        "date": "2026-10-27 11:15",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1045-6",
+        "type": "payment_approved",
+        "type_label_ar": "اعتماد تحصيل",
+        "type_label_en": "Payment Approved",
+        "title_ar": "اعتماد تسوية الحساب بالكامل",
+        "title_en": "Full Account Settlement Approved",
+        "desc_ar": "تم تأكيد الإيداع في الحساب وتصفية الرصيد المتبقي إلى صفر",
+        "desc_en": "Deposit confirmed and balance cleared to zero",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-10-27 11:25",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1045-7",
+        "type": "status_changed",
+        "type_label_ar": "تحديث حالة",
+        "type_label_en": "Status Changed",
+        "title_ar": "تحديث حالة الحجز إلى مؤكد",
+        "title_en": "Booking Status Updated to Confirmed",
+        "desc_ar": "تأكيد الحجز النهائي بعد استيفاء سداد كامل القيمة",
+        "desc_en": "Final booking confirmed following full payment completion",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-10-27 11:30",
+        "link_tab": "overview"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1046",
+    "customerId": "CUST-1002",
+    "customer_name_ar": "عمر عبد العزيز الشريف",
+    "customer_name_en": "Omar Abdelaziz El-Sherif",
+    "customer_phone": "01285536230",
+    "customer_whatsapp": "01285536230",
+    "customer_email": "omar.aziz@gmail.com",
+    "customer_governorate_ar": "القاهرة",
+    "customer_governorate_en": "Cairo",
+    "company_id": "COMP-102",
+    "company_ar": "مؤسسة الفيروز لرحلات الحج والعمرة",
+    "company_en": "Al-Fairouz Hajj & Umrah Agency",
+    "company_phone": "0227941200",
+    "company_email": "vip@alfairouz-travel.com",
+    "company_license": "ترخيص سياحي رقم ٣١٥ فئة (أ)",
+    "company_license_en": "Tourism License #315 Category (A)",
+    "company_booking_ref": "FZ-2026-8804",
+    "program_id": "PRG-102",
+    "program_ar": "عمرة ٥ نجوم متميزة (فيرمونت)",
+    "program_en": "5-Star Premium Umrah (Fairmont)",
+    "program_type": "five_star",
+    "program_type_ar": "عمرة ٥ نجوم",
+    "program_type_en": "5-Star Premium",
+    "season_ar": "رمضان ١٤٤٨ هـ (مارس ٢٠٢٧)",
+    "season_en": "Ramadan 1448 AH (Mar 2027)",
+    "season_key": "ramadan_1448",
+    "created_date": "2026-10-28",
+    "travel_date": "2027-03-12",
+    "travelers_count": 1,
+    "total_price": 124000,
+    "paid_amount": 124000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "confirmed",
+    "booking_status_ar": "مؤكد",
+    "booking_status_en": "Confirmed",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1046-1",
+        "name_ar": "عمر عبد العزيز الشريف",
+        "name_en": "Omar Abdelaziz El-Sherif",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1046-1",
+        "author": "مؤسسة الفيروز",
+        "date": "2026-10-28 11:00",
+        "text_ar": "تم حجز جناح مطل على الحرم في برج ساعة مكة فيرمونت وتأكيد خدمة الاستقبال VIP.",
+        "text_en": "Haram-view suite confirmed at Makkah Clock Royal Tower Fairmont with VIP airport meet & assist."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1046-1",
+        "author_name": "سارة منصور",
+        "author_role": "مشرف حسابات كبار العملاء",
+        "date": "2026-10-28 12:30",
+        "text": "تم استلام المبلغ بالكامل عبر تحويل بنكي رسمي من البنك التجاري الدولي CIB، وتم فحص سلامة القيد المحاسبي."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد",
+        "date": "2026-10-28 10:45",
+        "actor": "سارة منصور (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9060",
+        "date": "2026-10-28 10:20",
+        "amount": 124000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي (CIB مصر)",
+        "payment_method_en": "Bank Transfer (CIB Egypt)",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل المبلغ دفعة واحدة",
+        "transaction_type_en": "Full Payment Upfront",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "سارة منصور — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4420",
+        "notes": "سداد كامل شامل تذاكر الطيران والإقامة في برج الساعة",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "CIB_VIP_Transfer_124K.pdf",
+          "size": "1.8 MB",
+          "date": "2026-10-28 10:15",
+          "bank_ref": "CIB-EGY-771923",
+          "account": "10002847119"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9060-1",
+            "author_name": "سارة منصور",
+            "author_role": "مشرف حسابات كبار العملاء",
+            "date": "2026-10-28 10:30",
+            "message": "تم التأكد من صحة التحويل الصادر بمبلغ ١٢٤,٠٠٠ ج.م بالكامل."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل مباشر",
+            "actor": "سارة منصور",
+            "date": "2026-10-28 10:40",
+            "details": "اعتماد تحويل كامل بقيمة ١٢٤,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1046-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة رمضان VIP",
+        "title_en": "VIP Ramadan Booking Created",
+        "desc_ar": "عمرة ٥ نجوم متميزة (فيرمونت) بقيمة ١٢٤,٠٠٠ ج.م",
+        "desc_en": "5-Star Premium Umrah (Fairmont) booked for 124,000 EGP",
+        "actor_ar": "عمر الشريف (العميل)",
+        "actor_en": "Omar El-Sherif (Customer)",
+        "date": "2026-10-28 10:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1046-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "تسجيل تحويل بنكي كامل TX-2026-9060",
+        "title_en": "Full Bank Transfer Payment Recorded",
+        "desc_ar": "تحويل بقيمة ١٢٤,٠٠٠ ج.م عبر البنك التجاري الدولي CIB",
+        "desc_en": "124,000 EGP transfer via CIB Bank",
+        "actor_ar": "سارة منصور (حسابات ميقات)",
+        "actor_en": "Sarah Mansour (Miqat Accounts)",
+        "date": "2026-10-28 10:20",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1046-3",
+        "type": "status_changed",
+        "type_label_ar": "تحديث حالة",
+        "type_label_en": "Status Changed",
+        "title_ar": "تأكيد الحجز النهائي",
+        "title_en": "Booking Confirmed",
+        "desc_ar": "الحجز مؤكد وجاهز لإصدار التأشيرة الإلكترونية",
+        "desc_en": "Booking confirmed and ready for eVisa issuance",
+        "actor_ar": "سارة منصور (حسابات ميقات)",
+        "actor_en": "Sarah Mansour (Miqat Accounts)",
+        "date": "2026-10-28 10:45",
+        "link_tab": "overview"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1047",
+    "customerId": "CUST-1003",
+    "customer_name_ar": "سارة خالد المنصوري",
+    "customer_name_en": "Sarah Khaled El-Mansouri",
+    "customer_phone": "01149928341",
+    "customer_whatsapp": "01149928341",
+    "customer_email": "sarah.mansouri@yahoo.com",
+    "customer_governorate_ar": "الإسكندرية",
+    "customer_governorate_en": "Alexandria",
+    "company_id": "COMP-103",
+    "company_ar": "شركة مناسك العالمية للسياحة",
+    "company_en": "Manasek Global Travel",
+    "company_phone": "0225197800",
+    "company_email": "accounts@manasek-travel.com",
+    "company_license": "ترخيص سياحي رقم ٥١٢ فئة (أ)",
+    "company_license_en": "Tourism License #512 Category (A)",
+    "company_booking_ref": "MN-2026-4419",
+    "program_id": "PRG-103",
+    "program_ar": "عمرة شوال الاقتصادية",
+    "program_en": "Shawwal Economy Umrah",
+    "program_type": "economy",
+    "program_type_ar": "عمرة اقتصادية",
+    "program_type_en": "Economy Umrah",
+    "season_ar": "شوال ١٤٤٨ هـ (أبريل ٢٠٢٧)",
+    "season_en": "Shawwal 1448 AH (Apr 2027)",
+    "season_key": "shawwal_1448",
+    "created_date": "2026-10-29",
+    "travel_date": "2027-04-10",
+    "travelers_count": 2,
+    "total_price": 66000,
+    "paid_amount": 22000,
+    "pending_amount": 0,
+    "remaining_balance": 44000,
+    "booking_status": "deposit_paid",
+    "booking_status_ar": "دفعة أولى مسددة",
+    "booking_status_en": "Deposit Paid",
+    "payment_status": "partial",
+    "payment_status_ar": "سداد جزئي (متبقي رصيد)",
+    "payment_status_en": "Partial (Balance Due)",
+    "travelers": [
+      {
+        "id": "TRV-1047-1",
+        "name_ar": "سارة خالد المنصوري",
+        "name_en": "Sarah Khaled El-Mansouri",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      },
+      {
+        "id": "TRV-1047-2",
+        "name_ar": "ياسمين خالد المنصوري",
+        "name_en": "Yasmine Khaled El-Mansouri",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الأخت / مرافق",
+        "relationship_en": "Sister / Companion",
+        "completion_status": "missing_docs",
+        "completion_label_ar": "مستندات ناقصة (جواز السفر بانتظار التجديد)",
+        "completion_label_en": "Missing Documents"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1047-1",
+        "author": "شركة مناسك العالمية",
+        "date": "2026-10-29 17:00",
+        "text_ar": "تم التنبيه على العميلة بضرورة تزويدنا بصورة جواز السفر المجدد للمرافقة قبل موعد إصدار التأشيرات بشهر على الأقل.",
+        "text_en": "Customer informed to submit renewed passport for the second passenger at least 1 month before visa deadline."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1047-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-10-30 09:15",
+        "text": "تم تحصيل العربون ٢٢,٠٠٠ ج.م واعتماده دفترياً. الرصيد المتبقي ٤٤,٠٠٠ ج.م مستحق السداد في موعد أقصاه ١٥ مارس ٢٠٢٧."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "deposit_paid",
+        "to_status_ar": "سداد دفعة أولى",
+        "date": "2026-10-29 16:50",
+        "actor": "طارق عبد العال (محاسب مناسك)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9071",
+        "date": "2026-10-29 16:45",
+        "amount": 22000,
+        "payment_method": "vodafone_cash",
+        "payment_method_ar": "فودافون كاش (محفظة إلكترونية)",
+        "payment_method_en": "Vodafone Cash (Mobile Wallet)",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "دفعة أولى (عربون تأكيد)",
+        "transaction_type_en": "Initial Deposit",
+        "transaction_source": "company_portal",
+        "transaction_source_ar": "بوابة شركة السياحة الشريكة",
+        "transaction_source_en": "Partner Company Portal",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 44000,
+        "received_by": "طارق عبد العال — محاسب مناسك",
+        "receipt_ref": "RCP-2026-4431",
+        "notes": "سداد عربون الحجز عبر محفظة فودافون كاش المعتمدة للشركة",
+        "evidence": {
+          "type": "wallet_receipt",
+          "filename": "VF_Cash_Slip_22000.png",
+          "size": "420 KB",
+          "date": "2026-10-29 16:42",
+          "bank_ref": "VF-WAL-889104",
+          "account": "01099283419"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9071-1",
+            "author_name": "طارق عبد العال",
+            "author_role": "محاسب شركة السياحة",
+            "date": "2026-10-29 16:48",
+            "message": "تم إيداع العربون في محفظة الشركة والتأكيد مع العميلة."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد دفعة أولى",
+            "actor": "أحمد صبري",
+            "date": "2026-10-30 09:20",
+            "details": "اعتماد ٢٢,٠٠٠ ج.م وخفض الرصيد المتبقي إلى ٤٤,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1047-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة شوال BK-2026-1047",
+        "title_en": "Booking Registered BK-2026-1047",
+        "desc_ar": "حجز عمرة شوال الاقتصادية بقيمة إجمالية ٦٦,٠٠٠ ج.م",
+        "desc_en": "Shawwal Economy Umrah booked at 66,000 EGP total",
+        "actor_ar": "سارة المنصوري (العميل)",
+        "actor_en": "Sarah El-Mansouri (Customer)",
+        "date": "2026-10-29 16:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1047-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد دفعة أولى TX-2026-9071",
+        "title_en": "Initial Deposit Recorded",
+        "desc_ar": "سداد مبلغ ٢٢,٠٠٠ ج.م عبر فودافون كاش",
+        "desc_en": "Paid 22,000 EGP via Vodafone Cash",
+        "actor_ar": "طارق عبد العال (محاسب مناسك)",
+        "actor_en": "Tarek Abdel Aal (Manasek)",
+        "date": "2026-10-29 16:45",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1047-3",
+        "type": "status_changed",
+        "type_label_ar": "تحديث حالة",
+        "type_label_en": "Status Changed",
+        "title_ar": "تحديث الحالة إلى سداد دفعة أولى",
+        "title_en": "Status Changed to Deposit Paid",
+        "desc_ar": "الحجز قيد السداد بانتظار استكمال باقي المبلغ",
+        "desc_en": "Booking pending final balance payment",
+        "actor_ar": "طارق عبد العال (محاسب مناسك)",
+        "actor_en": "Tarek Abdel Aal (Manasek)",
+        "date": "2026-10-29 16:50",
+        "link_tab": "overview"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1048",
+    "customerId": "CUST-1004",
+    "customer_name_ar": "محمود فوزي رضوان",
+    "customer_name_en": "Mahmoud Fawzy Radwan",
+    "customer_phone": "01066782345",
+    "customer_whatsapp": "01066782345",
+    "customer_email": "mahmoud.radwan@gmail.com",
+    "customer_governorate_ar": "الشرقية",
+    "customer_governorate_en": "Sharqia",
+    "company_id": "COMP-104",
+    "company_ar": "شركة الصفا للنقل والخدمات السياحية",
+    "company_en": "Al-Safa Travel & Tourism",
+    "company_phone": "0237612300",
+    "company_email": "support@alsafa-travel.com",
+    "company_license": "ترخيص سياحي رقم ٦٤٢ فئة (أ)",
+    "company_license_en": "Tourism License #642 Category (A)",
+    "company_booking_ref": "SF-2026-3391",
+    "program_id": "PRG-104",
+    "program_ar": "عمرة رجب المعيارية (حافلة حديثة)",
+    "program_en": "Rajab Standard Umrah (Bus)",
+    "program_type": "standard",
+    "program_type_ar": "عمرة معيارية",
+    "program_type_en": "Standard Umrah",
+    "season_ar": "رجب ١٤٤٨ هـ (يناير ٢٠٢٧)",
+    "season_en": "Rajab 1448 AH (Jan 2027)",
+    "season_key": "rajab_1448",
+    "created_date": "2026-10-20",
+    "travel_date": "2027-01-22",
+    "travelers_count": 1,
+    "total_price": 52000,
+    "paid_amount": 52000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "cancelled",
+    "booking_status_ar": "ملغي (بانتظار تسوية الاسترداد)",
+    "booking_status_en": "Cancelled (Pending Refund Settlement)",
+    "payment_status": "refunded",
+    "payment_status_ar": "مسترد / قيد رد الأموال",
+    "payment_status_en": "Refund Under Review",
+    "travelers": [
+      {
+        "id": "TRV-1048-1",
+        "name_ar": "محمود فوزي رضوان",
+        "name_en": "Mahmoud Fawzy Radwan",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1048-1",
+        "author": "شركة الصفا للنقل",
+        "date": "2026-11-02 11:30",
+        "text_ar": "تقدم العميل بطلب رسمي لإلغاء الحجز لظروف عمل طارئة خارج البلاد وطلب استرداد المبلغ المسدد وفق شروط الإلغاء المبكر.",
+        "text_en": "Customer submitted official cancellation request due to emergency overseas work, requesting refund per policy."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1048-1",
+        "author_name": "عمر شريف",
+        "author_role": "مسؤول الاستردادات المالية",
+        "date": "2026-11-02 14:00",
+        "text": "طلب الاسترداد رقم RF-2026-078 قيد المراجعة مع شركة الصفا لحساب الرسوم الإدارية وخصم تكلفة حجز الفندق إن وجدت."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد",
+        "date": "2026-10-20 12:15",
+        "actor": "محمود عبد العزيز (الصفا)"
+      },
+      {
+        "from_status": "confirmed",
+        "from_status_ar": "حجز مؤكد ومسدد",
+        "to_status": "cancelled",
+        "to_status_ar": "حجز ملغي بناءً على طلب العميل",
+        "date": "2026-11-02 11:45",
+        "actor": "عمر شريف (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9035",
+        "date": "2026-10-20 12:00",
+        "amount": 52000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي (بنك مصر)",
+        "payment_method_en": "Bank Transfer (Banque Misr)",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل المبلغ",
+        "transaction_type_en": "Full Payment",
+        "transaction_source": "company_portal",
+        "transaction_source_ar": "بوابة شركة السياحة الشريكة",
+        "transaction_source_en": "Partner Company Portal",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "محمود عبد العزيز — محاسب الصفا",
+        "receipt_ref": "RCP-2026-4390",
+        "notes": "سداد كامل الحجز في حساب الشركة المعتمد",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "Misr_Bank_Slip_52K.pdf",
+          "size": "1.1 MB",
+          "date": "2026-10-20 11:55",
+          "bank_ref": "BM-EGY-662190",
+          "account": "19003819200"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل",
+            "actor": "عمر شريف",
+            "date": "2026-10-20 12:30",
+            "details": "سداد كامل ٥٢,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [
+      {
+        "id": "RF-2026-078",
+        "booking_id": "BK-2026-1048",
+        "request_date": "2026-11-02",
+        "request_source": "customer",
+        "request_source_ar": "طلب مباشر من العميل",
+        "request_source_en": "Customer-Initiated Request",
+        "refund_type": "full_cancellation",
+        "refund_type_ar": "استرداد كامل مع إلغاء الحجز",
+        "refund_type_en": "Full Cancellation Refund",
+        "requested_amount": 52000,
+        "approved_amount": 49500,
+        "actually_refunded_amount": 0,
+        "status": "under_review",
+        "status_ar": "قيد دراسة الإدارة المالية",
+        "status_en": "Under Financial Review",
+        "last_updated": "2026-11-03 11:00",
+        "reason_ar": "إلغاء الحجز لظروف عمل طارئة خارج البلاد قبل موعد السفر بشهرين",
+        "reason_en": "Emergency overseas work travel 2 months prior to departure date",
+        "notes": "تطبيق رسوم إدارية بقيمة ٢,٥٠٠ ج.م وفقاً للبند الرابع من لائحة الإلغاء المبكر"
+      }
+    ],
+    "activities": [
+      {
+        "id": "ACT-1048-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "إنشاء حجز عمرة رجب BK-2026-1048",
+        "title_en": "Booking Created BK-2026-1048",
+        "desc_ar": "تم حجز رحلة رجب المعيارية بقيمة ٥٢,٠٠٠ ج.م",
+        "desc_en": "Rajab Standard Umrah booked at 52,000 EGP",
+        "actor_ar": "محمود رضوان (العميل)",
+        "actor_en": "Mahmoud Radwan (Customer)",
+        "date": "2026-10-20 11:30",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1048-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد كامل المبلغ عبر تحويل بنكي",
+        "title_en": "Full Payment Recorded",
+        "desc_ar": "سداد ٥٢,٠٠٠ ج.م عبر بنك مصر",
+        "desc_en": "52,000 EGP paid via Banque Misr",
+        "actor_ar": "محمود عبد العزيز (الصفا)",
+        "actor_en": "Mahmoud Abdel Aziz (Al-Safa)",
+        "date": "2026-10-20 12:00",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1048-3",
+        "type": "refund_requested",
+        "type_label_ar": "طلب استرداد",
+        "type_label_en": "Refund Requested",
+        "title_ar": "تسجيل طلب استرداد مالي RF-2026-078",
+        "title_en": "Refund Request Registered RF-2026-078",
+        "desc_ar": "طلب استرداد كامل مع إلغاء الحجز بقيمة ٥٢,٠٠٠ ج.م",
+        "desc_en": "Full cancellation refund request for 52,000 EGP",
+        "actor_ar": "محمود رضوان (العميل)",
+        "actor_en": "Mahmoud Radwan (Customer)",
+        "date": "2026-11-02 11:30",
+        "link_tab": "refunds"
+      },
+      {
+        "id": "ACT-1048-4",
+        "type": "status_changed",
+        "type_label_ar": "تحديث حالة",
+        "type_label_en": "Status Changed",
+        "title_ar": "تحديث حالة الحجز إلى ملغي",
+        "title_en": "Booking Status Cancelled",
+        "desc_ar": "تم إلغاء الحجز ونقله إلى مسار التسوية المالية",
+        "desc_en": "Booking cancelled and routed to financial settlement",
+        "actor_ar": "عمر شريف (حسابات ميقات)",
+        "actor_en": "Omar Sharif (Miqat Accounts)",
+        "date": "2026-11-02 11:45",
+        "link_tab": "overview"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1049",
+    "customerId": "CUST-1005",
+    "customer_name_ar": "فاطمة الزهراء علي",
+    "customer_name_en": "Fatima Al-Zahraa Ali",
+    "customer_phone": "01232574706",
+    "customer_whatsapp": "01232574706",
+    "customer_email": "fatima.ali@outlook.com",
+    "customer_governorate_ar": "الدقهلية",
+    "customer_governorate_en": "Dakahlia",
+    "company_id": "COMP-103",
+    "company_ar": "شركة مناسك العالمية للسياحة",
+    "company_en": "Manasek Global Travel",
+    "company_phone": "0225197800",
+    "company_email": "accounts@manasek-travel.com",
+    "company_license": "ترخيص سياحي رقم ٥١٢ فئة (أ)",
+    "company_license_en": "Tourism License #512 Category (A)",
+    "company_booking_ref": "MN-2026-5512",
+    "program_id": "PRG-105",
+    "program_ar": "عمرة شعبان VIP برج الساعة",
+    "program_en": "Shaban VIP Clock Tower Umrah",
+    "program_type": "vip",
+    "program_type_ar": "عمرة VIP",
+    "program_type_en": "VIP Umrah",
+    "season_ar": "شعبان ١٤٤٨ هـ (فبراير ٢٠٢٧)",
+    "season_en": "Shaban 1448 AH (Feb 2027)",
+    "season_key": "shaban_1448",
+    "created_date": "2026-11-01",
+    "travel_date": "2027-02-15",
+    "travelers_count": 2,
+    "total_price": 148000,
+    "paid_amount": 148000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "confirmed",
+    "booking_status_ar": "مؤكد (مع وجود طلب استرداد جزئي)",
+    "booking_status_en": "Confirmed (Partial Refund Under Review)",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1049-1",
+        "name_ar": "فاطمة الزهراء علي",
+        "name_en": "Fatima Al-Zahraa Ali",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      },
+      {
+        "id": "TRV-1049-2",
+        "name_ar": "هدى عبد العزيز علي",
+        "name_en": "Huda Abdelaziz Ali",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الوالدة / مرافق",
+        "relationship_en": "Mother / Companion",
+        "completion_status": "incomplete_data",
+        "completion_label_ar": "بيانات صحية معلقة (طلب إلغاء لمرافق واحد)",
+        "completion_label_en": "Incomplete Data (Pending 1 Passenger Cancel)"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1049-1",
+        "author": "شركة مناسك العالمية",
+        "date": "2026-11-01 16:30",
+        "text_ar": "قامت الشركة برفع طلب استرداد جزئي نيابة عن العميلة لإلغاء سفر الوالدة لظروف صحية طارئة مع استمرار سفر العميلة في موعدها.",
+        "text_en": "Partner company submitted partial refund on behalf of customer for mother due to health conditions, while primary booker continues."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1049-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-02 10:15",
+        "text": "ملاحظة رقابية: الاسترداد الجزئي لا يلغي الحجز الأصلي. الحد الأقصى القابل للاسترداد يساوي المبالغ المعتمدة المسددة مخصوماً منها أي استردادات سابقة. الرصيد القابل للاسترداد حالياً: ١٤٨,٠٠٠ ج.م والمطلوب استرداده: ٢٥,٠٠٠ ج.م فقط."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد بالكامل",
+        "date": "2026-11-01 10:30",
+        "actor": "سارة منصور (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9080",
+        "date": "2026-11-01 09:30",
+        "amount": 148000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي رسمي (QNB الأهلي)",
+        "payment_method_en": "Bank Transfer (QNB Alahli)",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل القيمة",
+        "transaction_type_en": "Full Payment",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "سارة منصور — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4440",
+        "notes": "سداد إلكتروني معتمد بالكامل لحجز VIP",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "QNB_VIP_Transfer_148K.pdf",
+          "size": "1.4 MB",
+          "date": "2026-11-01 09:20",
+          "bank_ref": "QNB-EGY-991823",
+          "account": "00192847192"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9080-1",
+            "author_name": "سارة منصور",
+            "author_role": "مشرف حسابات كبار العملاء",
+            "date": "2026-11-01 09:40",
+            "message": "تم التأكد من استلام كامل المبلغ في حساب ميقات الرئيسي وتأكيد الحجز."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل",
+            "actor": "سارة منصور",
+            "date": "2026-11-01 09:45",
+            "details": "اعتماد ١٤٨,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [
+      {
+        "id": "RF-2026-081",
+        "booking_id": "BK-2026-1049",
+        "request_date": "2026-11-01",
+        "request_source": "partner_company",
+        "request_source_ar": "طلب عبر شركة السياحة الشريكة",
+        "request_source_en": "Partner Tourism Company-Initiated",
+        "refund_type": "partial_refund",
+        "refund_type_ar": "استرداد جزئي (الحجز مستمر للعميل)",
+        "refund_type_en": "Partial Refund (Booking Continues)",
+        "requested_amount": 25000,
+        "approved_amount": 25000,
+        "actually_refunded_amount": 0,
+        "status": "under_review",
+        "status_ar": "قيد دراسة الإدارة المالية",
+        "status_en": "Under Financial Review",
+        "last_updated": "2026-11-03 14:15",
+        "reason_ar": "إلغاء حجز لمرافق واحد (الوالدة) لظروف صحية طارئة مع تقرير طبي رسمي معتمد",
+        "reason_en": "Cancellation for 1 companion (mother) due to emergency medical conditions with official report",
+        "notes": "قيد دراسة الإدارة المالية والتسوية مع منظم الرحلة، الطلب لا يلغي حجز الحاجة الرئيسية"
+      }
+    ],
+    "activities": [
+      {
+        "id": "ACT-1049-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة شعبان VIP",
+        "title_en": "VIP Shaban Booking Registered",
+        "desc_ar": "حجز عمرة شعبان VIP برج الساعة بقيمة ١٤٨,٠٠٠ ج.م",
+        "desc_en": "Shaban VIP Clock Tower Umrah booked at 148,000 EGP",
+        "actor_ar": "فاطمة الزهراء (العميل)",
+        "actor_en": "Fatima Al-Zahraa (Customer)",
+        "date": "2026-11-01 09:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1049-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد كامل المبلغ عبر تحويل بنكي TX-2026-9080",
+        "title_en": "Full Bank Transfer Payment Recorded",
+        "desc_ar": "سداد ١٤٨,٠٠٠ ج.م عبر QNB الأهلي",
+        "desc_en": "148,000 EGP paid via QNB Alahli",
+        "actor_ar": "سارة منصور (حسابات ميقات)",
+        "actor_en": "Sarah Mansour (Miqat Accounts)",
+        "date": "2026-11-01 09:30",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1049-3",
+        "type": "refund_requested",
+        "type_label_ar": "طلب استرداد",
+        "type_label_en": "Refund Requested",
+        "title_ar": "تقديم طلب استرداد جزئي RF-2026-081",
+        "title_en": "Partial Refund Requested RF-2026-081",
+        "desc_ar": "طلب استرداد ٢٥,٠٠٠ ج.م لمرافق واحد لظروف صحية",
+        "desc_en": "Partial refund requested for 25,000 EGP due to medical condition",
+        "actor_ar": "شركة مناسك العالمية للسياحة",
+        "actor_en": "Manasek Global Travel",
+        "date": "2026-11-01 16:30",
+        "link_tab": "refunds"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1050",
+    "customerId": "CUST-1006",
+    "customer_name_ar": "عبد الرحمن طارق الجمل",
+    "customer_name_en": "Abdelrahman Tarek El-Gamal",
+    "customer_phone": "01551239874",
+    "customer_whatsapp": "01551239874",
+    "customer_email": "abdelrahman.gamal@gmail.com",
+    "customer_governorate_ar": "الغربية",
+    "customer_governorate_en": "Gharbia",
+    "company_id": "COMP-105",
+    "company_ar": "شركة البركة لخدمات المعتمرين",
+    "company_en": "Al-Baraka Umrah Services",
+    "company_phone": "0403319800",
+    "company_email": "info@albaraka-umrah.com",
+    "company_license": "ترخيص سياحي رقم ٧٢١ فئة (أ)",
+    "company_license_en": "Tourism License #721 Category (A)",
+    "company_booking_ref": "BR-2026-1102",
+    "program_id": "PRG-106",
+    "program_ar": "عمرة رجب البرية الاقتصادية",
+    "program_en": "Rajab Land Economy Umrah",
+    "program_type": "economy",
+    "program_type_ar": "عمرة اقتصادية برية",
+    "program_type_en": "Economy Land Umrah",
+    "season_ar": "رجب ١٤٤٨ هـ (يناير ٢٠٢٧)",
+    "season_en": "Rajab 1448 AH (Jan 2027)",
+    "season_key": "rajab_1448",
+    "created_date": "2026-11-02",
+    "travel_date": "2027-01-28",
+    "travelers_count": 1,
+    "total_price": 39000,
+    "paid_amount": 15000,
+    "pending_amount": 10000,
+    "remaining_balance": 24000,
+    "booking_status": "under_review",
+    "booking_status_ar": "قيد المراجعة والتدقيق",
+    "booking_status_en": "Under Review",
+    "payment_status": "partial",
+    "payment_status_ar": "سداد جزئي (يوجد تحصيل قيد الاعتماد)",
+    "payment_status_en": "Partial (Pending Review Included)",
+    "has_pending_review": true,
+    "travelers": [
+      {
+        "id": "TRV-1050-1",
+        "name_ar": "عبد الرحمن طارق الجمل",
+        "name_en": "Abdelrahman Tarek El-Gamal",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1050-1",
+        "author": "شركة البركة",
+        "date": "2026-11-02 14:00",
+        "text_ar": "قام العميل بسداد الدفعة الثانية وقدرها ١٠,٠٠٠ ج.م عبر المحفظة الإلكترونية وبانتظار اعتماد الإدارة المالية بميقات.",
+        "text_en": "Customer paid second installment 10,000 EGP via mobile wallet, awaiting Miqat finance verification."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1050-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-02 16:30",
+        "text": "تنبيه تدقيق: المعاملة TX-2026-9088 بقيمة ١٠,٠٠٠ ج.م معلقة وقيد التدقيق. لم يتم احتسابها ضمن المحصل المعتمد ولا تخفض الرصيد المتبقي حتى استلام إشعار التحويل البنكي الرسمي وتطابق رقم العملية."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "deposit_paid",
+        "to_status_ar": "سداد دفعة أولى",
+        "date": "2026-11-02 11:00",
+        "actor": "خالد سالم (محاسب البركة)"
+      },
+      {
+        "from_status": "deposit_paid",
+        "from_status_ar": "سداد دفعة أولى",
+        "to_status": "under_review",
+        "to_status_ar": "قيد تدقيق تحصيل إضافي",
+        "date": "2026-11-02 15:45",
+        "actor": "أحمد صبري (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9085",
+        "date": "2026-11-02 10:30",
+        "amount": 15000,
+        "payment_method": "cash",
+        "payment_method_ar": "إيداع نقدي رسمي (خزينة الشركة)",
+        "payment_method_en": "Cash Deposit (Company Safe)",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "دفعة أولى (عربون)",
+        "transaction_type_en": "Deposit",
+        "transaction_source": "company_portal",
+        "transaction_source_ar": "بوابة شركة السياحة الشريكة",
+        "transaction_source_en": "Partner Company Portal",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 24000,
+        "received_by": "خالد سالم — أمين خزينة البركة",
+        "receipt_ref": "RCP-2026-4445",
+        "notes": "إيصال استلام نقدية رقم ٥١٩ معتمد بختم الشركة",
+        "evidence": {
+          "type": "cash_voucher",
+          "filename": "Cash_Voucher_15K_Baraka.pdf",
+          "size": "890 KB",
+          "date": "2026-11-02 10:25",
+          "bank_ref": "CSH-VCH-5190",
+          "account": "Safe-Tanta-Branch"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد إيصال نقدي معتمد",
+            "actor": "أحمد صبري",
+            "date": "2026-11-02 11:15",
+            "details": "اعتماد ١٥,٠٠٠ ج.م وخفض الرصيد المتبقي إلى ٢٤,٠٠٠ ج.م"
+          }
+        ]
+      },
+      {
+        "id": "TX-2026-9088",
+        "date": "2026-11-02 15:30",
+        "amount": 10000,
+        "payment_method": "vodafone_cash",
+        "payment_method_ar": "فودافون كاش",
+        "payment_method_en": "Vodafone Cash",
+        "transaction_type": "partial",
+        "transaction_type_ar": "دفعة ثانية (قيد المراجعة والتدقيق)",
+        "transaction_type_en": "Second Partial Payment",
+        "transaction_source": "external_registration",
+        "transaction_source_ar": "تسجيل تحصيل خارجي",
+        "transaction_source_en": "External Payment Registration",
+        "verification_status": "pending_review",
+        "verification_status_ar": "قيد التدقيق والاعتماد المالي",
+        "verification_status_en": "Pending Review & Approval",
+        "balance_after": 24000,
+        "received_by": "خالد سالم — محاسب البركة",
+        "receipt_ref": "RCP-2026-4450",
+        "notes": "بانتظار مطابقة رقم العملية مع تقرير المحفظة اليومي",
+        "evidence": {
+          "type": "wallet_receipt",
+          "filename": "VF_Pending_Slip_10K.png",
+          "size": "510 KB",
+          "date": "2026-11-02 15:28",
+          "bank_ref": "VF-TX-991204",
+          "account": "01019283411"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9088-1",
+            "author_name": "خالد سالم",
+            "author_role": "محاسب شركة السياحة",
+            "date": "2026-11-02 15:35",
+            "message": "تم إرفاق لقطة شاشة التحويل بمبلغ ١٠,٠٠٠ ج.م من العميل، نرجو تدقيقها واعتمادها."
+          },
+          {
+            "id": "DISC-9088-2",
+            "author_name": "أحمد صبري",
+            "author_role": "موظف حسابات ميقات",
+            "date": "2026-11-02 16:15",
+            "message": "رقم المرجع في الإيصال غير مكتمل في الصورة المرفقة، طلبت من الشركة إعادة إرفاق كشف المحفظة أو إشعار الرسالة النصية الكامل."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "تسجيل معاملة تحصيل معلقة",
+            "actor": "خالد سالم",
+            "date": "2026-11-02 15:30",
+            "details": "تسجيل دفعة معلقة بقيمة ١٠,٠٠٠ ج.م (لا تخفض الرصيد)"
+          },
+          {
+            "action": "إضافة تعليق تدقيق مالي",
+            "actor": "أحمد صبري",
+            "date": "2026-11-02 16:15",
+            "details": "طلب مستند أوضح لمطابقة رقم المعاملة مع تقرير فودافون"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1050-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة رجب البرية",
+        "title_en": "Rajab Land Umrah Registered",
+        "desc_ar": "حجز عمرة اقتصادية برية بقيمة ٣٩,٠٠٠ ج.م",
+        "desc_en": "Economy Land Umrah booked at 39,000 EGP",
+        "actor_ar": "عبد الرحمن الجمل (العميل)",
+        "actor_en": "Abdelrahman El-Gamal (Customer)",
+        "date": "2026-11-02 10:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1050-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد عربون نقدي معتمد TX-2026-9085",
+        "title_en": "Approved Cash Deposit Recorded",
+        "desc_ar": "إيداع نقدي رسمي بقيمة ١٥,٠٠٠ ج.م في الخزينة",
+        "desc_en": "Official cash deposit of 15,000 EGP in safe",
+        "actor_ar": "خالد سالم (محاسب البركة)",
+        "actor_en": "Khaled Salem (Al-Baraka)",
+        "date": "2026-11-02 10:30",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1050-3",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "تسجيل دفعة ثانية معلقة TX-2026-9088",
+        "title_en": "Pending Payment Recorded TX-2026-9088",
+        "desc_ar": "سداد ١٠,٠٠٠ ج.م عبر فودافون كاش قيد التدقيق المالي",
+        "desc_en": "10,000 EGP paid via Vodafone Cash pending financial review",
+        "actor_ar": "خالد سالم (محاسب البركة)",
+        "actor_en": "Khaled Salem (Al-Baraka)",
+        "date": "2026-11-02 15:30",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1050-4",
+        "type": "admin_reply",
+        "type_label_ar": "مراجعة مالية",
+        "type_label_en": "Financial Review",
+        "title_ar": "إضافة تعليق مراجعة على الدفعة المعلقة",
+        "title_en": "Audit Comment Added to Pending Payment",
+        "desc_ar": "تم طلب مستند رسمي أوضح لمطابقة رقم المعاملة مع تقرير الشركة",
+        "desc_en": "Clearer documentation requested to verify transaction ID against statement",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-11-02 16:15",
+        "link_tab": "payments"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1051",
+    "customerId": "CUST-1007",
+    "customer_name_ar": "مريم حسام الدين النجار",
+    "customer_name_en": "Maryam Hossam El-Din El-Naggar",
+    "customer_phone": "01099887766",
+    "customer_whatsapp": "01099887766",
+    "customer_email": "maryam.naggar@hotmail.com",
+    "customer_governorate_ar": "بورسعيد",
+    "customer_governorate_en": "Port Said",
+    "company_id": "COMP-104",
+    "company_ar": "شركة الصفا للنقل والخدمات السياحية",
+    "company_en": "Al-Safa Travel & Tourism",
+    "company_phone": "0237612300",
+    "company_email": "support@alsafa-travel.com",
+    "company_license": "ترخيص سياحي رقم ٦٤٢ فئة (أ)",
+    "company_license_en": "Tourism License #642 Category (A)",
+    "company_booking_ref": "SF-2026-3405",
+    "program_id": "PRG-107",
+    "program_ar": "عمرة برية فاخرة — فنادق الحرم",
+    "program_en": "Deluxe Land Umrah — Haram Hotels",
+    "program_type": "deluxe",
+    "program_type_ar": "عمرة فاخرة",
+    "program_type_en": "Deluxe Umrah",
+    "season_ar": "شعبان ١٤٤٨ هـ (فبراير ٢٠٢٧)",
+    "season_en": "Shaban 1448 AH (Feb 2027)",
+    "season_key": "shaban_1448",
+    "created_date": "2026-11-01",
+    "travel_date": "2027-02-18",
+    "travelers_count": 2,
+    "total_price": 56000,
+    "paid_amount": 28000,
+    "pending_amount": 0,
+    "remaining_balance": 28000,
+    "booking_status": "deposit_paid",
+    "booking_status_ar": "دفعة أولى (مقترح تعديل معلق)",
+    "booking_status_en": "Deposit Paid (Proposed Change Pending)",
+    "payment_status": "partial",
+    "payment_status_ar": "سداد جزئي",
+    "payment_status_en": "Partial",
+    "travelers": [
+      {
+        "id": "TRV-1051-1",
+        "name_ar": "مريم حسام الدين النجار",
+        "name_en": "Maryam Hossam El-Din El-Naggar",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      },
+      {
+        "id": "TRV-1051-2",
+        "name_ar": "نورهان حسام الدين النجار",
+        "name_en": "Nourhan Hossam El-Din El-Naggar",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الأخت / مرافق",
+        "relationship_en": "Sister / Companion",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1051-1",
+        "author": "شركة الصفا للنقل",
+        "date": "2026-11-01 13:00",
+        "text_ar": "تقدمت الشركة بطلب اقتراح تعديل مسار الرحلة إلى عمرة طيران بدلاً من البرية بناءً على رغبة مبدئية من العميلة، الطلب بانتظار موافقة العميلة الرسمية.",
+        "text_en": "Company proposed itinerary upgrade to flight umrah per initial client interest, awaiting formal customer agreement."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1051-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-01 14:30",
+        "text": "قاعدة العمل المعتمدة: البرنامج الأصلي وسعره (٥٦,٠٠٠ ج.م) يظلان هما المعتمدين رسمياً ولا يتم تعديل السعر أو الرصيد المتبقي إلا بعد توثيق موافقة العميل وتوقيع الملحق."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "deposit_paid",
+        "to_status_ar": "سداد دفعة أولى",
+        "date": "2026-11-01 12:15",
+        "actor": "محمود عبد العزيز (الصفا)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9092",
+        "date": "2026-11-01 12:00",
+        "amount": 28000,
+        "payment_method": "instapay",
+        "payment_method_ar": "إنستاباي فوري",
+        "payment_method_en": "InstaPay Instant",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "سداد دفعة أولى ٥٠٪",
+        "transaction_type_en": "50% Initial Deposit",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 28000,
+        "received_by": "أحمد صبري — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4455",
+        "notes": "دفعة أولى معتمدة لحجز عمرة شعبان البرية",
+        "evidence": {
+          "type": "instapay_slip",
+          "filename": "InstaPay_Slip_28K.png",
+          "size": "610 KB",
+          "date": "2026-11-01 11:58",
+          "bank_ref": "IPN-20261101-99412",
+          "account": "maryam.naggar@instapay"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد دفعة أولى",
+            "actor": "أحمد صبري",
+            "date": "2026-11-01 12:20",
+            "details": "اعتماد ٢٨,٠٠٠ ج.م وخفض الرصيد المتبقي إلى ٢٨,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1051-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة شعبان الفاخرة",
+        "title_en": "Deluxe Shaban Umrah Registered",
+        "desc_ar": "حجز عمرة برية فاخرة بقيمة ٥٦,٠٠٠ ج.م",
+        "desc_en": "Deluxe Land Umrah booked at 56,000 EGP",
+        "actor_ar": "مريم النجار (العميل)",
+        "actor_en": "Maryam El-Naggar (Customer)",
+        "date": "2026-11-01 11:30",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1051-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد دفعة أولى عبر إنستاباي TX-2026-9092",
+        "title_en": "Deposit Paid via InstaPay TX-2026-9092",
+        "desc_ar": "سداد ٢٨,٠٠٠ ج.م تم اعتماده دفترياً",
+        "desc_en": "28,000 EGP verified and ledger updated",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-11-01 12:00",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1051-3",
+        "type": "program_change_proposed",
+        "type_label_ar": "اقتراح تعديل",
+        "type_label_en": "Change Proposed",
+        "title_ar": "اقتراح ترقية البرنامج إلى عمرة طيران",
+        "title_en": "Flight Umrah Upgrade Proposed",
+        "desc_ar": "تم تقديم مقترح الترقية بقيمة إجمالية ٧٢,٠٠٠ ج.م بانتظار موافقة العميل",
+        "desc_en": "Upgrade proposal submitted for 72,000 EGP pending customer agreement",
+        "actor_ar": "شركة الصفا للنقل والسياحة",
+        "actor_en": "Al-Safa Travel & Tourism",
+        "date": "2026-11-01 13:00",
+        "link_tab": "overview"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1052",
+    "customerId": "CUST-1008",
+    "customer_name_ar": "ياسر كمال المنياوي",
+    "customer_name_en": "Yasser Kamal El-Menyawi",
+    "customer_phone": "01122334455",
+    "customer_whatsapp": "01122334455",
+    "customer_email": "yasser.menyawi@gmail.com",
+    "customer_governorate_ar": "المنيا",
+    "customer_governorate_en": "Minya",
+    "company_id": "COMP-106",
+    "company_ar": "شركة دار السلام للسياحة والحج والعمرة",
+    "company_en": "Dar Al-Salam Hajj & Umrah",
+    "company_phone": "0233081100",
+    "company_email": "finance@daralsalam-hajj.com",
+    "company_license": "ترخيص سياحي رقم ٨٣٠ فئة (أ)",
+    "company_license_en": "Tourism License #830 Category (A)",
+    "company_booking_ref": "DS-2026-7714",
+    "program_id": "PRG-108",
+    "program_ar": "عمرة رمضان العشر الأواخر (طيران)",
+    "program_en": "Ramadan Last 10 Days (Flight)",
+    "program_type": "five_star",
+    "program_type_ar": "عمرة ٥ نجوم متميزة",
+    "program_type_en": "5-Star Premium",
+    "season_ar": "رمضان ١٤٤٨ هـ (مارس ٢٠٢٧)",
+    "season_en": "Ramadan 1448 AH (Mar 2027)",
+    "season_key": "ramadan_1448",
+    "created_date": "2026-11-02",
+    "travel_date": "2027-03-22",
+    "travelers_count": 1,
+    "total_price": 185000,
+    "paid_amount": 50000,
+    "pending_amount": 35000,
+    "remaining_balance": 135000,
+    "booking_status": "under_review",
+    "booking_status_ar": "قيد تدقيق دفعة ثانية",
+    "booking_status_en": "Under Review (Pending Payment)",
+    "payment_status": "partial",
+    "payment_status_ar": "سداد جزئي (دفعة معلقة قيد المراجعة)",
+    "payment_status_en": "Partial (Pending Verification)",
+    "has_pending_review": true,
+    "travelers": [
+      {
+        "id": "TRV-1052-1",
+        "name_ar": "ياسر كمال المنياوي",
+        "name_en": "Yasser Kamal El-Menyawi",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1052-1",
+        "author": "شركة دار السلام",
+        "date": "2026-11-02 16:00",
+        "text_ar": "قام العميل بسداد دفعة ثانية قدرها ٣٥,٠٠٠ ج.م عبر إنستاباي لحساب الشركة وننتظر اعتماد المحاسب بميقات.",
+        "text_en": "Customer submitted second payment of 35,000 EGP via InstaPay to company account, awaiting Miqat verification."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1052-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-03 09:30",
+        "text": "معاملة التحصيل TX-2026-9104 بقيمة ٣٥,٠٠٠ ج.م تتطلب تدقيق كشف البنك ومطابقة وقت التحويل قبل التأكيد النهائي."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "deposit_paid",
+        "to_status_ar": "سداد دفعة أولى ٥٠,٠٠٠ ج.م",
+        "date": "2026-11-02 12:00",
+        "actor": "أيمن عبد السلام (دار السلام)"
+      },
+      {
+        "from_status": "deposit_paid",
+        "from_status_ar": "سداد دفعة أولى",
+        "to_status": "under_review",
+        "to_status_ar": "قيد مراجعة دفعة إضافية",
+        "date": "2026-11-02 16:30",
+        "actor": "أحمد صبري (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9100",
+        "date": "2026-11-02 11:45",
+        "amount": 50000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي (بنك القاهرة)",
+        "payment_method_en": "Bank Transfer (BDC)",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "عربون حجز أولي",
+        "transaction_type_en": "Initial Deposit",
+        "transaction_source": "company_portal",
+        "transaction_source_ar": "بوابة شركة السياحة الشريكة",
+        "transaction_source_en": "Partner Company Portal",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 135000,
+        "received_by": "أيمن عبد السلام — محاسب دار السلام",
+        "receipt_ref": "RCP-2026-4460",
+        "notes": "عربون حجز فندقي العشر الأواخر",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "BDC_Transfer_50K.pdf",
+          "size": "1.3 MB",
+          "date": "2026-11-02 11:40",
+          "bank_ref": "BDC-TRF-11094",
+          "account": "0091823719"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد دفعة أولى",
+            "actor": "أحمد صبري",
+            "date": "2026-11-02 12:15",
+            "details": "اعتماد ٥٠,٠٠٠ ج.م وخفض الرصيد المتبقي إلى ١٣٥,٠٠٠ ج.م"
+          }
+        ]
+      },
+      {
+        "id": "TX-2026-9104",
+        "date": "2026-11-02 15:50",
+        "amount": 35000,
+        "payment_method": "instapay",
+        "payment_method_ar": "إنستاباي فوري",
+        "payment_method_en": "InstaPay Instant",
+        "transaction_type": "partial",
+        "transaction_type_ar": "دفعة ثانية (قيد المراجعة)",
+        "transaction_type_en": "Second Partial Payment",
+        "transaction_source": "external_registration",
+        "transaction_source_ar": "تسجيل تحصيل خارجي",
+        "transaction_source_en": "External Payment Registration",
+        "verification_status": "pending_review",
+        "verification_status_ar": "قيد التدقيق والاعتماد المالي",
+        "verification_status_en": "Pending Review & Approval",
+        "balance_after": 135000,
+        "received_by": "أيمن عبد السلام — محاسب دار السلام",
+        "receipt_ref": "RCP-2026-4468",
+        "notes": "إشعار تحويل إنستاباي بانتظار التأكيد البنكي (لا يخفض الرصيد حالياً)",
+        "evidence": {
+          "type": "instapay_slip",
+          "filename": "InstaPay_35K_Pending.png",
+          "size": "590 KB",
+          "date": "2026-11-02 15:48",
+          "bank_ref": "IPN-20261102-33190",
+          "account": "yasser.menyawi@instapay"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9104-1",
+            "author_name": "أيمن عبد السلام",
+            "author_role": "محاسب شركة السياحة",
+            "date": "2026-11-02 16:05",
+            "message": "تم إرفاق إشعار إنستاباي، نرجو المراجعة والاعتماد المالي لتأكيد تذكرة الطيران."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "تسجيل معاملة تحصيل معلقة",
+            "actor": "أيمن عبد السلام",
+            "date": "2026-11-02 15:50",
+            "details": "تسجيل تحصيل معلق بقيمة ٣٥,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1052-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "حجز عمرة رمضان العشر الأواخر",
+        "title_en": "Ramadan Last 10 Days Booking Created",
+        "desc_ar": "حجز عمرة رمضان ٥ نجوم طيران بقيمة ١٨٥,٠٠٠ ج.م",
+        "desc_en": "5-Star Ramadan Flight Umrah booked at 185,000 EGP",
+        "actor_ar": "ياسر المنياوي (العميل)",
+        "actor_en": "Yasser El-Menyawi (Customer)",
+        "date": "2026-11-02 11:00",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1052-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد دفعة أولى ٥٠,٠٠٠ ج.م TX-2026-9100",
+        "title_en": "Deposit Payment Recorded",
+        "desc_ar": "تحويل بنكي معتمد عبر بنك القاهرة",
+        "desc_en": "Verified bank transfer via BDC",
+        "actor_ar": "أيمن عبد السلام (دار السلام)",
+        "actor_en": "Ayman Abdel Salam (Dar Al-Salam)",
+        "date": "2026-11-02 11:45",
+        "link_tab": "payments"
+      },
+      {
+        "id": "ACT-1052-3",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "تسجيل دفعة ثانية معلقة ٣٥,٠٠٠ ج.م TX-2026-9104",
+        "title_en": "Pending Payment Recorded TX-2026-9104",
+        "desc_ar": "سداد عبر إنستاباي قيد تدقيق الإدارة المالية بميقات",
+        "desc_en": "InstaPay payment pending Miqat financial review",
+        "actor_ar": "أيمن عبد السلام (دار السلام)",
+        "actor_en": "Ayman Abdel Salam (Dar Al-Salam)",
+        "date": "2026-11-02 15:50",
+        "link_tab": "payments"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1053",
+    "customerId": "CUST-1009",
+    "customer_name_ar": "خديجة مصطفى العوضي",
+    "customer_name_en": "Khadija Mostafa El-Awadi",
+    "customer_phone": "01277665544",
+    "customer_whatsapp": "01277665544",
+    "customer_email": "khadija.awadi@yahoo.com",
+    "customer_governorate_ar": "أسيوط",
+    "customer_governorate_en": "Asyut",
+    "company_id": "COMP-107",
+    "company_ar": "شركة التقوى للسياحة والرحلات الدينية",
+    "company_en": "Al-Taqwa Travel & Tourism",
+    "company_phone": "0882319000",
+    "company_email": "info@altaqwa-travel.com",
+    "company_license": "ترخيص سياحي رقم ٩٠٤ فئة (أ)",
+    "company_license_en": "Tourism License #904 Category (A)",
+    "company_booking_ref": "TQ-2026-2180",
+    "program_id": "PRG-109",
+    "program_ar": "عمرة شعبان الاقتصادية المعيارية",
+    "program_en": "Shaban Standard Economy Umrah",
+    "program_type": "standard",
+    "program_type_ar": "عمرة معيارية",
+    "program_type_en": "Standard Umrah",
+    "season_ar": "شعبان ١٤٤٨ هـ (فبراير ٢٠٢٧)",
+    "season_en": "Shaban 1448 AH (Feb 2027)",
+    "season_key": "shaban_1448",
+    "created_date": "2026-11-03",
+    "travel_date": "2027-02-10",
+    "travelers_count": 1,
+    "total_price": 48000,
+    "paid_amount": 48000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "confirmed",
+    "booking_status_ar": "مؤكد",
+    "booking_status_en": "Confirmed",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1053-1",
+        "name_ar": "خديجة مصطفى العوضي",
+        "name_en": "Khadija Mostafa El-Awadi",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1053-1",
+        "author": "شركة التقوى للسياحة",
+        "date": "2026-11-03 14:00",
+        "text_ar": "تم تأكيد التسكين في فندق أجياد وتوفير كرسي متحرك للتنقل في المشاعر المقدسة وفق رغبة العميلة.",
+        "text_en": "Ajyad hotel accommodation confirmed with wheelchair assistance arranged per customer request."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1053-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-03 15:30",
+        "text": "تم السداد بالكامل عبر إنستاباي فوري، الحساب مقفل ومسوى دفترياً دون أي مستحقات."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد بالكامل",
+        "date": "2026-11-03 14:30",
+        "actor": "أحمد صبري (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9110",
+        "date": "2026-11-03 14:15",
+        "amount": 48000,
+        "payment_method": "instapay",
+        "payment_method_ar": "إنستاباي فوري",
+        "payment_method_en": "InstaPay Instant",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل القيمة",
+        "transaction_type_en": "Full Payment",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "أحمد صبري — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4475",
+        "notes": "سداد فوري معتمد عبر إنستاباي",
+        "evidence": {
+          "type": "instapay_slip",
+          "filename": "InstaPay_Slip_48K.png",
+          "size": "540 KB",
+          "date": "2026-11-03 14:12",
+          "bank_ref": "IPN-20261103-77218",
+          "account": "khadija.awadi@instapay"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل",
+            "actor": "أحمد صبري",
+            "date": "2026-11-03 14:30",
+            "details": "اعتماد ٤٨,٠٠٠ ج.م وتصفية الحساب"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1053-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "حجز عمرة شعبان المعيارية",
+        "title_en": "Shaban Standard Booking Created",
+        "desc_ar": "حجز عمرة بقيمة ٤٨,٠٠٠ ج.م",
+        "desc_en": "Umrah booked at 48,000 EGP",
+        "actor_ar": "خديجة العوضي (العميل)",
+        "actor_en": "Khadija El-Awadi (Customer)",
+        "date": "2026-11-03 13:45",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1053-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد كامل المبلغ عبر إنستاباي TX-2026-9110",
+        "title_en": "Full InstaPay Payment Recorded",
+        "desc_ar": "سداد ٤٨,٠٠٠ ج.م معتمد دفترياً",
+        "desc_en": "48,000 EGP verified in ledger",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-11-03 14:15",
+        "link_tab": "payments"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1054",
+    "customerId": "CUST-1010",
+    "customer_name_ar": "حازم عادل الشافعي",
+    "customer_name_en": "Hazem Adel El-Shafei",
+    "customer_phone": "01001122334",
+    "customer_whatsapp": "01001122334",
+    "customer_email": "hazem.shafei@gmail.com",
+    "customer_governorate_ar": "القليوبية",
+    "customer_governorate_en": "Qalyubia",
+    "company_id": "COMP-108",
+    "company_ar": "شركة نور الإيمان لخدمات الحرمين",
+    "company_en": "Noor Al-Eman Haramain Services",
+    "company_phone": "0244192000",
+    "company_email": "vip@nooraleman-hajj.com",
+    "company_license": "ترخيص سياحي رقم ٩٦٠ فئة (أ)",
+    "company_license_en": "Tourism License #960 Category (A)",
+    "company_booking_ref": "NE-2026-1940",
+    "program_id": "PRG-110",
+    "program_ar": "عمرة رجب VIP فنادق وقف الملك عبد العزيز",
+    "program_en": "Rajab VIP King Abdulaziz Endowment",
+    "program_type": "vip",
+    "program_type_ar": "عمرة VIP متميزة",
+    "program_type_en": "VIP Premium Umrah",
+    "season_ar": "رجب ١٤٤٨ هـ (يناير ٢٠٢٧)",
+    "season_en": "Rajab 1448 AH (Jan 2027)",
+    "season_key": "rajab_1448",
+    "created_date": "2026-11-03",
+    "travel_date": "2027-01-20",
+    "travelers_count": 2,
+    "total_price": 160000,
+    "paid_amount": 160000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "confirmed",
+    "booking_status_ar": "مؤكد",
+    "booking_status_en": "Confirmed",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1054-1",
+        "name_ar": "حازم عادل الشافعي",
+        "name_en": "Hazem Adel El-Shafei",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي (صاحب الحجز)",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      },
+      {
+        "id": "TRV-1054-2",
+        "name_ar": "ريهام محمد الشافعي",
+        "name_en": "Reham Mohamed El-Shafei",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الزوجة / مرافق",
+        "relationship_en": "Spouse / Companion",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات والبيانات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1054-1",
+        "author": "شركة نور الإيمان",
+        "date": "2026-11-03 16:00",
+        "text_ar": "تم حجز الإقامة في فندق دار التوحيد إنتركونتيننتال مكة وتوفير سيارة خاصة للتنقلات في مكة المكرمة والمدينة المنورة.",
+        "text_en": "Dar Al-Tawhid InterContinental booked with private chauffeured vehicle in Makkah & Madinah."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1054-1",
+        "author_name": "سارة منصور",
+        "author_role": "مشرف حسابات كبار العملاء",
+        "date": "2026-11-03 17:00",
+        "text": "تم استلام المبلغ بالكامل عبر تحويل بنكي معتمد، والتأكد من استيفاء وثائق السفر والتأشيرات."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "confirmed",
+        "to_status_ar": "حجز مؤكد ومسدد بالكامل",
+        "date": "2026-11-03 16:30",
+        "actor": "سارة منصور (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9120",
+        "date": "2026-11-03 16:15",
+        "amount": 160000,
+        "payment_method": "bank_transfer",
+        "payment_method_ar": "تحويل بنكي (بنك HSBC مصر)",
+        "payment_method_en": "Bank Transfer (HSBC Egypt)",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل المبلغ دفعة واحدة",
+        "transaction_type_en": "Full Payment Upfront",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "سارة منصور — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4485",
+        "notes": "سداد VIP كامل لحجز دار التوحيد",
+        "evidence": {
+          "type": "bank_slip",
+          "filename": "HSBC_VIP_Transfer_160K.pdf",
+          "size": "1.6 MB",
+          "date": "2026-11-03 16:10",
+          "bank_ref": "HSBC-EGY-004918",
+          "account": "040991823001"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل",
+            "actor": "سارة منصور",
+            "date": "2026-11-03 16:30",
+            "details": "اعتماد ١٦٠,٠٠٠ ج.م وتصفية الحساب"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1054-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "حجز عمرة رجب VIP فنادق الوقف",
+        "title_en": "VIP Rajab Booking Created",
+        "desc_ar": "عمرة VIP بقيمة ١٦٠,٠٠٠ ج.م لشخصين",
+        "desc_en": "VIP Umrah booked at 160,000 EGP for 2 travelers",
+        "actor_ar": "حازم الشافعي (العميل)",
+        "actor_en": "Hazem El-Shafei (Customer)",
+        "date": "2026-11-03 15:45",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1054-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "سداد كامل المبلغ عبر HSBC",
+        "title_en": "Full Payment via HSBC",
+        "desc_ar": "تحويل معتمد بمبلغ ١٦٠,٠٠٠ ج.م",
+        "desc_en": "160,000 EGP transfer verified",
+        "actor_ar": "سارة منصور (حسابات ميقات)",
+        "actor_en": "Sarah Mansour (Miqat Accounts)",
+        "date": "2026-11-03 16:15",
+        "link_tab": "payments"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1055",
+    "customerId": "CUST-1011",
+    "customer_name_ar": "منى إبراهيم الدسوقي",
+    "customer_name_en": "Mona Ibrahim El-Desouky",
+    "customer_phone": "01155443322",
+    "customer_whatsapp": "01155443322",
+    "customer_email": "mona.desouky@gmail.com",
+    "customer_governorate_ar": "كفر الشيخ",
+    "customer_governorate_en": "Kafr El-Sheikh",
+    "company_id": "COMP-103",
+    "company_ar": "شركة مناسك العالمية للسياحة",
+    "company_en": "Manasek Global Travel",
+    "company_phone": "0225197800",
+    "company_email": "accounts@manasek-travel.com",
+    "company_license": "ترخيص سياحي رقم ٥١٢ فئة (أ)",
+    "company_license_en": "Tourism License #512 Category (A)",
+    "company_booking_ref": "MN-2026-5590",
+    "program_id": "PRG-103",
+    "program_ar": "عمرة شوال الاقتصادية",
+    "program_en": "Shawwal Economy Umrah",
+    "program_type": "economy",
+    "program_type_ar": "عمرة اقتصادية",
+    "program_type_en": "Economy Umrah",
+    "season_ar": "شوال ١٤٤٨ هـ (أبريل ٢٠٢٧)",
+    "season_en": "Shawwal 1448 AH (Apr 2027)",
+    "season_key": "shawwal_1448",
+    "created_date": "2026-11-04",
+    "travel_date": "2027-04-15",
+    "travelers_count": 1,
+    "total_price": 33000,
+    "paid_amount": 0,
+    "pending_amount": 10000,
+    "remaining_balance": 33000,
+    "booking_status": "new",
+    "booking_status_ar": "طلب حجز جديد (بانتظار التحصيل)",
+    "booking_status_en": "New Booking (Pending Collection)",
+    "payment_status": "pending_clearance",
+    "payment_status_ar": "بانتظار اعتماد العربون",
+    "payment_status_en": "Pending Clearance",
+    "has_pending_review": true,
+    "travelers": [
+      {
+        "id": "TRV-1055-1",
+        "name_ar": "منى إبراهيم الدسوقي",
+        "name_en": "Mona Ibrahim El-Desouky",
+        "gender": "female",
+        "gender_ar": "أنثى",
+        "gender_en": "Female",
+        "nationality_ar": "مصرية",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "incomplete_data",
+        "completion_label_ar": "بيانات جواز السفر غير مكتملة",
+        "completion_label_en": "Incomplete Passport Data"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1055-1",
+        "author": "شركة مناسك العالمية",
+        "date": "2026-11-04 11:00",
+        "text_ar": "قامت العميلة بإجراء طلب الحجز عبر التطبيق وأرفقت إشعار سداد عربون بقيمة ١٠,٠٠٠ ج.م عبر فودافون كاش، بانتظار تأكيد الاستلام من الحسابات.",
+        "text_en": "Customer submitted booking via app and attached 10,000 EGP Vodafone Cash deposit slip, pending finance confirmation."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1055-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-11-04 11:45",
+        "text": "قيد المراجعة: لم يظهر إشعار فودافون كاش بعد في كشف محفظة الشركة الوسيطة، الحجز يعتبر معلقاً ولا يخفض الرصيد المتبقي (٣٣,٠٠٠ ج.م بالكامل) حتى الاعتماد الرسمي."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "none",
+        "from_status_ar": "لا يوجد",
+        "to_status": "new",
+        "to_status_ar": "طلب حجز جديد",
+        "date": "2026-11-04 10:30",
+        "actor": "بوابة ميقات الإلكترونية"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9130",
+        "date": "2026-11-04 10:45",
+        "amount": 10000,
+        "payment_method": "vodafone_cash",
+        "payment_method_ar": "فودافون كاش",
+        "payment_method_en": "Vodafone Cash",
+        "transaction_type": "deposit",
+        "transaction_type_ar": "عربون حجز أولي (قيد التدقيق)",
+        "transaction_type_en": "Initial Deposit (Pending)",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "pending_review",
+        "verification_status_ar": "قيد التدقيق والاعتماد المالي",
+        "verification_status_en": "Pending Review & Approval",
+        "balance_after": 33000,
+        "received_by": "أحمد صبري — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4492",
+        "notes": "بانتظار التحقق من وصول رسالة التأكيد عبر فودافون كاش",
+        "evidence": {
+          "type": "wallet_receipt",
+          "filename": "VF_Pending_Deposit_10K.png",
+          "size": "480 KB",
+          "date": "2026-11-04 10:42",
+          "bank_ref": "VF-WAL-009182",
+          "account": "01019283419"
+        },
+        "discussion": [
+          {
+            "id": "DISC-9130-1",
+            "author_name": "أحمد صبري",
+            "author_role": "موظف حسابات ميقات",
+            "date": "2026-11-04 11:30",
+            "message": "الإشعار قيد المراجعة مع المشرف المالي للتحقق من رسالة فودافون كاش."
+          }
+        ],
+        "audit_trail": [
+          {
+            "action": "تسجيل دفعة عربون معلقة",
+            "actor": "بوابة ميقات",
+            "date": "2026-11-04 10:45",
+            "details": "تسجيل دفعة معلقة بقيمة ١٠,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1055-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل طلب حجز عمرة شوال جديد",
+        "title_en": "New Shawwal Booking Registered",
+        "desc_ar": "طلب حجز عمرة شوال بقيمة ٣٣,٠٠٠ ج.م",
+        "desc_en": "Shawwal booking request submitted at 33,000 EGP",
+        "actor_ar": "منى الدسوقي (العميل)",
+        "actor_en": "Mona El-Desouky (Customer)",
+        "date": "2026-11-04 10:30",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1055-2",
+        "type": "payment_recorded",
+        "type_label_ar": "تسجيل دفعة",
+        "type_label_en": "Payment Recorded",
+        "title_ar": "تسجيل دفعة عربون معلقة TX-2026-9130",
+        "title_en": "Pending Deposit Recorded TX-2026-9130",
+        "desc_ar": "سداد ١٠,٠٠٠ ج.م عبر فودافون كاش قيد التدقيق",
+        "desc_en": "10,000 EGP paid via Vodafone Cash pending review",
+        "actor_ar": "بوابة ميقات الإلكترونية",
+        "actor_en": "Miqat Electronic Gateway",
+        "date": "2026-11-04 10:45",
+        "link_tab": "payments"
+      }
+    ]
+  },
+  {
+    "id": "BK-2026-1056",
+    "customerId": "CUST-1012",
+    "customer_name_ar": "طارق نبيل الصاوي",
+    "customer_name_en": "Tarek Nabil El-Sawy",
+    "customer_phone": "01200998877",
+    "customer_whatsapp": "01200998877",
+    "customer_email": "tarek.sawy@outlook.com",
+    "customer_governorate_ar": "السويس",
+    "customer_governorate_en": "Suez",
+    "company_id": "COMP-101",
+    "company_ar": "شركة الهدى للسياحة والخدمات الدينية",
+    "company_en": "Al-Huda Religious Travel & Tourism",
+    "company_phone": "0233458900",
+    "company_email": "operations@alhuda-travel.com",
+    "company_license": "ترخيص سياحي رقم ٤١٨ فئة (أ)",
+    "company_license_en": "Tourism License #418 Category (A)",
+    "company_booking_ref": "HD-2026-9988",
+    "program_id": "PRG-101",
+    "program_ar": "عمرة اقتصادية موفرة (طيران)",
+    "program_en": "Umrah Economy Saver (Flight)",
+    "program_type": "economy",
+    "program_type_ar": "عمرة اقتصادية",
+    "program_type_en": "Economy Umrah",
+    "season_ar": "رجب ١٤٤٨ هـ (يناير ٢٠٢٧)",
+    "season_en": "Rajab 1448 AH (Jan 2027)",
+    "season_key": "rajab_1448",
+    "created_date": "2026-10-15",
+    "travel_date": "2027-01-15",
+    "travelers_count": 1,
+    "total_price": 38000,
+    "paid_amount": 38000,
+    "pending_amount": 0,
+    "remaining_balance": 0,
+    "booking_status": "completed",
+    "booking_status_ar": "رحلة منجزة ومسواة",
+    "booking_status_en": "Completed & Reconciled",
+    "payment_status": "paid_full",
+    "payment_status_ar": "مسدد بالكامل",
+    "payment_status_en": "Paid in Full",
+    "travelers": [
+      {
+        "id": "TRV-1056-1",
+        "name_ar": "طارق نبيل الصاوي",
+        "name_en": "Tarek Nabil El-Sawy",
+        "gender": "male",
+        "gender_ar": "ذكر",
+        "gender_en": "Male",
+        "nationality_ar": "مصري",
+        "nationality_en": "Egyptian",
+        "relationship_ar": "الحاج الرئيسي",
+        "relationship_en": "Primary Booker",
+        "completion_status": "complete",
+        "completion_label_ar": "مكتمل المستندات",
+        "completion_label_en": "Complete"
+      }
+    ],
+    "company_notes": [
+      {
+        "id": "CN-1056-1",
+        "author": "شركة الهدى للسياحة",
+        "date": "2026-10-15 15:30",
+        "text_ar": "تم إنهاء كافة الإجراءات وسداد القيمة بالكامل وإصدار التأشيرة بنجاح.",
+        "text_en": "All procedures completed, full payment received, and visa successfully issued."
+      }
+    ],
+    "internal_notes": [
+      {
+        "id": "IN-1056-1",
+        "author_name": "أحمد صبري",
+        "author_role": "موظف حسابات مالية",
+        "date": "2026-10-16 11:00",
+        "text": "تمت التسوية المالية الدفترية للحساب وإقفال ملف الحجز كرحلة منجزة بالكامل."
+      }
+    ],
+    "status_history": [
+      {
+        "from_status": "new",
+        "from_status_ar": "طلب حجز جديد",
+        "to_status": "completed",
+        "to_status_ar": "رحلة منجزة ومسواة بالكامل",
+        "date": "2026-10-15 16:00",
+        "actor": "أحمد صبري (حسابات ميقات)"
+      }
+    ],
+    "payments": [
+      {
+        "id": "TX-2026-9012",
+        "date": "2026-10-15 15:00",
+        "amount": 38000,
+        "payment_method": "instapay",
+        "payment_method_ar": "إنستاباي فوري",
+        "payment_method_en": "InstaPay Instant",
+        "transaction_type": "full_payment",
+        "transaction_type_ar": "سداد كامل القيمة",
+        "transaction_type_en": "Full Payment",
+        "transaction_source": "miqat_platform",
+        "transaction_source_ar": "منصة ميقات الإلكترونية",
+        "transaction_source_en": "Miqat Platform Direct",
+        "verification_status": "approved",
+        "verification_status_ar": "معتمد ومطابق دفترياً",
+        "verification_status_en": "Approved & Verified",
+        "balance_after": 0,
+        "received_by": "أحمد صبري — حسابات ميقات",
+        "receipt_ref": "RCP-2026-4350",
+        "notes": "سداد فوري معتمد بالكامل",
+        "evidence": {
+          "type": "instapay_slip",
+          "filename": "InstaPay_38K_Sawy.png",
+          "size": "520 KB",
+          "date": "2026-10-15 14:55",
+          "bank_ref": "IPN-20261015-11029",
+          "account": "tarek.sawy@instapay"
+        },
+        "discussion": [],
+        "audit_trail": [
+          {
+            "action": "اعتماد سداد كامل وإقفال",
+            "actor": "أحمد صبري",
+            "date": "2026-10-15 15:15",
+            "details": "اعتماد ٣٨,٠٠٠ ج.م"
+          }
+        ]
+      }
+    ],
+    "refunds": [],
+    "activities": [
+      {
+        "id": "ACT-1056-1",
+        "type": "booking_created",
+        "type_label_ar": "إنشاء الحجز",
+        "type_label_en": "Booking Created",
+        "title_ar": "تسجيل حجز عمرة اقتصادية",
+        "title_en": "Economy Umrah Registered",
+        "desc_ar": "حجز عمرة اقتصادية بقيمة ٣٨,٠٠٠ ج.م",
+        "desc_en": "Economy Umrah booked at 38,000 EGP",
+        "actor_ar": "طارق الصاوي (العميل)",
+        "actor_en": "Tarek El-Sawy (Customer)",
+        "date": "2026-10-15 14:30",
+        "link_tab": "overview"
+      },
+      {
+        "id": "ACT-1056-2",
+        "type": "payment_approved",
+        "type_label_ar": "اعتماد تحصيل",
+        "type_label_en": "Payment Approved",
+        "title_ar": "اعتماد سداد كامل TX-2026-9012",
+        "title_en": "Full Payment Approved",
+        "desc_ar": "سداد ٣٨,٠٠٠ ج.م عبر إنستاباي",
+        "desc_en": "38,000 EGP paid via InstaPay",
+        "actor_ar": "أحمد صبري (حسابات ميقات)",
+        "actor_en": "Ahmed Sabry (Miqat Accounts)",
+        "date": "2026-10-15 15:15",
+        "link_tab": "payments"
+      }
+    ]
+  }
+];
+
 
   return {
     BASE_KPIS,
@@ -1923,6 +4373,319 @@
         pendingChanges
       };
     },
+
+    // =========================================================================
+    // UNIFIED BOOKINGS REGISTER & DETAILS DATA PROVIDER METHODS
+    // =========================================================================
+
+    getAllBookings: function (options) {
+      const opts = options || {};
+      let list = BOOKINGS_MASTER.slice();
+
+      // 1. Text Search (Customer Name, Booking ID, Phone)
+      if (opts.search) {
+        const q = opts.search.toLowerCase().trim();
+        list = list.filter(b => {
+          return (b.id && b.id.toLowerCase().includes(q)) ||
+                 (b.customer_name_ar && b.customer_name_ar.toLowerCase().includes(q)) ||
+                 (b.customer_name_en && b.customer_name_en.toLowerCase().includes(q)) ||
+                 (b.customer_phone && b.customer_phone.includes(q)) ||
+                 (b.company_ar && b.company_ar.toLowerCase().includes(q)) ||
+                 (b.program_ar && b.program_ar.toLowerCase().includes(q));
+        });
+      }
+
+      // 2. Tourism Company filter
+      if (opts.company && opts.company !== 'all') {
+        list = list.filter(b => b.company_id === opts.company || b.company_ar === opts.company || b.company_en === opts.company);
+      }
+
+      // 3. Program Type filter
+      if (opts.programType && opts.programType !== 'all') {
+        list = list.filter(b => b.program_type === opts.programType);
+      }
+
+      // 4. Booking Status filter
+      if (opts.bookingStatus && opts.bookingStatus !== 'all') {
+        list = list.filter(b => b.booking_status === opts.bookingStatus);
+      }
+
+      // 5. Payment Status filter
+      if (opts.paymentStatus && opts.paymentStatus !== 'all') {
+        list = list.filter(b => b.payment_status === opts.paymentStatus);
+      }
+
+      // 6. Season / Travel date filter
+      if (opts.season && opts.season !== 'all') {
+        list = list.filter(b => b.season_key === opts.season || b.season_ar.includes(opts.season));
+      }
+
+      // 7. Date Range (creation date)
+      if (opts.dateFrom) {
+        list = list.filter(b => b.created_date >= opts.dateFrom);
+      }
+      if (opts.dateTo) {
+        list = list.filter(b => b.created_date <= opts.dateTo);
+      }
+
+      // 8. Quick filter: reviewOnly
+      if (opts.reviewOnly === 'collections') {
+        list = list.filter(b => b.has_pending_review || b.pending_amount > 0);
+      } else if (opts.reviewOnly === 'refunds') {
+        list = list.filter(b => b.refunds && b.refunds.some(r => r.status === 'under_review' || r.status === 'requested'));
+      }
+
+      return list;
+    },
+
+    getBookingsSummary: function () {
+      const list = BOOKINGS_MASTER;
+      const totalBookings = list.length;
+      const confirmedBookings = list.filter(b => b.booking_status === 'confirmed' || b.booking_status === 'completed').length;
+      const totalApprovedCollected = list.reduce((sum, b) => sum + (Number(b.paid_amount) || 0), 0);
+      const totalRemainingBalances = list.reduce((sum, b) => sum + (Number(b.remaining_balance) || 0), 0);
+      const pendingReviewCount = list.filter(b => b.has_pending_review || b.pending_amount > 0).length;
+      const pendingRefundsCount = list.filter(b => b.refunds && b.refunds.some(r => r.status === 'under_review' || r.status === 'requested')).length;
+
+      return {
+        totalBookings,
+        confirmedBookings,
+        totalApprovedCollected,
+        totalRemainingBalances,
+        pendingReviewCount,
+        pendingRefundsCount
+      };
+    },
+
+    getOperationsRequiringReview: function () {
+      const pendingCollections = [];
+      const pendingRefunds = [];
+
+      BOOKINGS_MASTER.forEach(b => {
+        if (b.payments) {
+          b.payments.forEach(p => {
+            if (p.verification_status === 'pending_review') {
+              pendingCollections.push({
+                booking_id: b.id,
+                customer_name_ar: b.customer_name_ar,
+                customer_name_en: b.customer_name_en,
+                company_ar: b.company_ar,
+                company_en: b.company_en,
+                transaction_id: p.id,
+                amount: p.amount,
+                date: p.date,
+                method_ar: p.payment_method_ar,
+                method_en: p.payment_method_en
+              });
+            }
+          });
+        }
+
+        if (b.refunds) {
+          b.refunds.forEach(r => {
+            if (r.status === 'under_review' || r.status === 'requested') {
+              pendingRefunds.push({
+                booking_id: b.id,
+                customer_name_ar: b.customer_name_ar,
+                customer_name_en: b.customer_name_en,
+                company_ar: b.company_ar,
+                company_en: b.company_en,
+                refund_id: r.id,
+                amount: r.requested_amount,
+                date: r.request_date,
+                reason_ar: r.reason_ar,
+                reason_en: r.reason_en,
+                source_ar: r.request_source_ar,
+                source_en: r.request_source_en
+              });
+            }
+          });
+        }
+      });
+
+      return {
+        pendingCollections,
+        pendingRefunds,
+        totalCount: pendingCollections.length + pendingRefunds.length
+      };
+    },
+
+    getBookingDetails: function (bookingId) {
+      if (!bookingId) return null;
+      const b = BOOKINGS_MASTER.find(item => item.id === bookingId);
+      if (!b) return null;
+
+      // Deep clone to prevent unintended mutations outside authorized methods
+      return JSON.parse(JSON.stringify(b));
+    },
+
+    addBookingInternalNote: function (bookingId, noteText) {
+      if (!bookingId || !noteText || !noteText.trim()) return false;
+      const b = BOOKINGS_MASTER.find(item => item.id === bookingId);
+      if (!b) return false;
+
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0] + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+      const newNote = {
+        id: 'IN-' + bookingId.replace('BK-2026-', '') + '-' + (b.internal_notes.length + 1),
+        author_name: 'أحمد صبري',
+        author_role: 'موظف حسابات مالية',
+        date: dateStr,
+        text: noteText.trim()
+      };
+
+      b.internal_notes.push(newNote);
+
+      // Also add to activities
+      b.activities.unshift({
+        id: 'ACT-NOTE-' + Date.now(),
+        type: 'internal_note',
+        type_label_ar: 'ملاحظة داخلية',
+        type_label_en: 'Internal Note',
+        title_ar: 'إضافة ملاحظة حسابات داخلية',
+        title_en: 'Internal Accounting Note Added',
+        desc_ar: noteText.trim(),
+        desc_en: noteText.trim(),
+        actor_ar: 'أحمد صبري (حسابات ميقات)',
+        actor_en: 'Ahmed Sabry (Miqat Accounts)',
+        date: dateStr,
+        link_tab: 'overview'
+      });
+
+      return true;
+    },
+
+    approveBookingPayment: function (bookingId, paymentId) {
+      if (!bookingId || !paymentId) return false;
+      const b = BOOKINGS_MASTER.find(item => item.id === bookingId);
+      if (!b || !b.payments) return false;
+
+      const p = b.payments.find(pay => pay.id === paymentId);
+      if (!p || p.verification_status === 'approved') return false;
+
+      // Approve collection
+      p.verification_status = 'approved';
+      p.verification_status_ar = 'معتمد ومطابق دفترياً';
+      p.verification_status_en = 'Approved & Verified';
+
+      // Update financial balances
+      b.paid_amount += Number(p.amount) || 0;
+      b.pending_amount = Math.max(0, b.pending_amount - (Number(p.amount) || 0));
+      b.remaining_balance = Math.max(0, b.total_price - b.paid_amount);
+      p.balance_after = b.remaining_balance;
+
+      if (b.remaining_balance === 0) {
+        b.payment_status = 'paid_full';
+        b.payment_status_ar = 'مسدد بالكامل';
+        b.payment_status_en = 'Paid in Full';
+        b.booking_status = 'confirmed';
+        b.booking_status_ar = 'مؤكد';
+        b.booking_status_en = 'Confirmed';
+      }
+
+      b.has_pending_review = b.payments.some(pay => pay.verification_status === 'pending_review');
+
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0] + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+      // Add to payment audit trail
+      if (!p.audit_trail) p.audit_trail = [];
+      p.audit_trail.push({
+        action: 'اعتماد ومطابقة التحصيل',
+        actor: 'أحمد صبري (حسابات ميقات)',
+        date: dateStr,
+        details: 'تم تدقيق المعاملة واعتماد مبلغ ' + p.amount.toLocaleString() + ' ج.م وتحديث الرصيد المتبقي إلى ' + b.remaining_balance.toLocaleString() + ' ج.م'
+      });
+
+      // Add to activities
+      b.activities.unshift({
+        id: 'ACT-APP-' + Date.now(),
+        type: 'payment_approved',
+        type_label_ar: 'اعتماد تحصيل',
+        type_label_en: 'Payment Approved',
+        title_ar: 'اعتماد تحصيل الدفعة ' + p.id,
+        title_en: 'Payment Approved ' + p.id,
+        desc_ar: 'تم اعتماد مبلغ ' + p.amount.toLocaleString() + ' ج.م دفترياً وتحديث الرصيد المتبقي إلى ' + b.remaining_balance.toLocaleString() + ' ج.م',
+        desc_en: 'Payment of ' + p.amount.toLocaleString() + ' EGP verified; remaining balance is ' + b.remaining_balance.toLocaleString() + ' EGP',
+        actor_ar: 'أحمد صبري (حسابات ميقات)',
+        actor_en: 'Ahmed Sabry (Miqat Accounts)',
+        date: dateStr,
+        link_tab: 'payments'
+      });
+
+      return true;
+    },
+
+    addPaymentInternalComment: function (bookingId, paymentId, messageText) {
+      if (!bookingId || !paymentId || !messageText || !messageText.trim()) return false;
+      const b = BOOKINGS_MASTER.find(item => item.id === bookingId);
+      if (!b || !b.payments) return false;
+
+      const p = b.payments.find(pay => pay.id === paymentId);
+      if (!p) return false;
+
+      if (!p.discussion) p.discussion = [];
+
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0] + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+      p.discussion.push({
+        id: 'DISC-' + p.id.replace('TX-2026-', '') + '-' + (p.discussion.length + 1),
+        author_name: 'أحمد صبري',
+        author_role: 'موظف حسابات ميقات',
+        date: dateStr,
+        message: messageText.trim()
+      });
+
+      // Also log in payment audit trail
+      if (!p.audit_trail) p.audit_trail = [];
+      p.audit_trail.push({
+        action: 'إضافة تعليق مناقشة داخلية',
+        actor: 'أحمد صبري',
+        date: dateStr,
+        details: messageText.trim().substring(0, 80)
+      });
+
+      return true;
+    },
+
+    getBookingFullActivityLog: function (bookingId, filterOptions) {
+      const b = this.getBookingDetails(bookingId);
+      if (!b || !b.activities) return [];
+
+      const opts = filterOptions || {};
+      let list = b.activities.slice();
+
+      // 1. Text search
+      if (opts.search) {
+        const q = opts.search.toLowerCase().trim();
+        list = list.filter(act => {
+          return (act.title_ar && act.title_ar.toLowerCase().includes(q)) ||
+                 (act.title_en && act.title_en.toLowerCase().includes(q)) ||
+                 (act.desc_ar && act.desc_ar.toLowerCase().includes(q)) ||
+                 (act.desc_en && act.desc_en.toLowerCase().includes(q)) ||
+                 (act.actor_ar && act.actor_ar.toLowerCase().includes(q)) ||
+                 (act.actor_en && act.actor_en.toLowerCase().includes(q));
+        });
+      }
+
+      // 2. Category filter
+      if (opts.category && opts.category !== 'all') {
+        list = list.filter(act => act.type === opts.category);
+      }
+
+      // 3. Date range
+      if (opts.dateFrom) {
+        list = list.filter(act => act.date >= opts.dateFrom);
+      }
+      if (opts.dateTo) {
+        list = list.filter(act => act.date <= opts.dateTo);
+      }
+
+      return list;
+    }
+
 
   };
 });

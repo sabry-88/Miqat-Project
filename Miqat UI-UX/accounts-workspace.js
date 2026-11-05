@@ -26,6 +26,13 @@
   let currentTheme = localStorage.getItem(STORAGE_THEME) || 'light';
   let currentDict = null;
   let currentUser = null;
+
+  // Immediately apply language direction & theme attributes to <html>
+  try {
+    document.documentElement.setAttribute('lang', currentLang);
+    document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  } catch (e) {}
   
   let activeFilters = {
     dateRange: 'all',
@@ -58,9 +65,11 @@
 
   function toWesternDigits(str) {
     if (str === null || str === undefined) return '';
-    return String(str).replace(/[٠-٩]/g, function (d) {
-      return String(d.charCodeAt(0) - 1632);
-    });
+    return String(str)
+      .replace(/[٠-٩]/g, function (d) {
+        return String(d.charCodeAt(0) - 1632);
+      })
+      .replace(/،/g, ',');
   }
 
   function formatNumber(val, lang) {
@@ -110,10 +119,20 @@
 
     const isCustPage = document.body && document.body.classList.contains('accounts-customers-page');
     const isProfilePage = document.body && document.body.classList.contains('accounts-customer-details-page');
+    const isBookingsPage = document.body && document.body.classList.contains('accounts-bookings-page');
+    const isBookingDetailsPage = document.body && document.body.classList.contains('accounts-booking-details-page');
+    const isBookingActivityPage = document.body && document.body.classList.contains('accounts-booking-activity-page');
+
     if (isProfilePage) {
       document.title = (currentLang === 'ar' ? 'ملف العميل | ميقات' : 'Customer Profile | Miqat');
     } else if (isCustPage) {
       document.title = (currentLang === 'ar' ? 'دليل العملاء والمعتمرين | ميقات' : 'Customers Directory | Miqat');
+    } else if (isBookingsPage) {
+      document.title = (currentLang === 'ar' ? 'سجل الحجوزات الموحد | ميقات' : 'Unified Bookings Register | Miqat');
+    } else if (isBookingDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل الحجز والعمليات المالية | ميقات' : 'Booking Details & Financial Operations | Miqat');
+    } else if (isBookingActivityPage) {
+      document.title = (currentLang === 'ar' ? 'السجل الكامل لنشاط الحجز | ميقات' : 'Full Booking Activity Log | Miqat');
     } else {
       document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
     }
@@ -131,6 +150,13 @@
       }
     });
 
+    // Translate all [data-i18n-placeholder]
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      const val = t(key);
+      if (val) el.setAttribute('placeholder', val);
+    });
+
     // Translate all [data-i18n-aria]
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria');
@@ -138,14 +164,181 @@
       if (val) el.setAttribute('aria-label', val);
     });
 
+    // Translate all [data-i18n-title]
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      const val = t(key);
+      if (val) el.setAttribute('title', val);
+    });
+
+    // Translate shared workspace shell elements explicitly
+    const isAr = currentLang === 'ar';
+
+    // 1. Employee identity card
+    const empCard = document.getElementById('acc-employee-card');
+    if (empCard) {
+      empCard.setAttribute('aria-label', isAr ? 'بيانات الموظف ومسؤول الحسابات' : 'Accounts Officer Profile');
+      empCard.setAttribute('title', isAr ? 'ملف موظف الحسابات | Accounts Officer Profile' : 'Accounts Officer Profile');
+    }
+    const empRole = document.getElementById('acc-employee-role');
+    if (empRole) empRole.textContent = isAr ? 'موظف حسابات مالية' : 'Financial Accounts Officer';
+    const empName = document.getElementById('acc-employee-name');
+    if (empName) empName.textContent = isAr ? 'أحمد صبري' : 'Ahmed Sabry';
+
+    // 2. Brand Link
+    const brandLinks = document.querySelectorAll('.acc-brand-link, #btn-portal-brand');
+    brandLinks.forEach(b => {
+      b.setAttribute('aria-label', isAr ? 'منصة ميقات للحسابات المالية' : 'Miqat Financial Accounts Platform');
+    });
+
+    // 3. Demo badge
+    const demoPills = document.querySelectorAll('.acc-demo-pill, #acc-demo-badge, #acc-demo-pill');
+    demoPills.forEach(d => {
+      d.setAttribute('aria-label', isAr ? 'بيئة تجريبية توضيحية' : 'Demo Demonstration Environment');
+    });
+
+    // 4. Sidebar nav & status
+    const sidebar = document.getElementById('acc-sidebar');
+    if (sidebar) {
+      sidebar.setAttribute('aria-label', isAr ? 'قائمة التنقل المحاسبية' : 'Accounts Navigation Menu');
+    }
+    const statusTexts = document.querySelectorAll('.acc-status-text');
+    statusTexts.forEach(st => {
+      st.textContent = isAr ? 'النظام متصل وآمن' : 'System Secure & Connected';
+    });
+
+    // 5. Drawer buttons
+    const hamburgerBtn = document.getElementById('acc-hamburger-btn');
+    if (hamburgerBtn) hamburgerBtn.setAttribute('aria-label', isAr ? 'فتح قائمة التنقل الجانبية' : 'Open Navigation Menu');
+    const drawerCloseBtns = document.querySelectorAll('.acc-drawer-close-btn, .acc-sidebar-close-btn');
+    drawerCloseBtns.forEach(btn => btn.setAttribute('aria-label', isAr ? 'إغلاق القائمة' : 'Close Menu'));
+
+    // 6. Breadcrumbs & Back buttons
+    const breadcrumbNavs = document.querySelectorAll('.acc-profile-breadcrumb-bar, nav[aria-label="مسار التنقل"], nav[aria-label="Breadcrumb Navigation"]');
+    breadcrumbNavs.forEach(nav => nav.setAttribute('aria-label', isAr ? 'مسار التنقل' : 'Breadcrumb Navigation'));
+
+    const btnBackReg = document.getElementById('btn-back-to-register');
+    if (btnBackReg) {
+      btnBackReg.setAttribute('aria-label', isAr ? 'العودة إلى سجل الحجوزات' : 'Back to Bookings Register');
+      const lbl = btnBackReg.querySelector('span');
+      if (lbl) lbl.textContent = isAr ? 'العودة إلى سجل الحجوزات' : 'Back to Bookings Register';
+    }
+    const btnBackDir = document.getElementById('cust-btn-back-dir');
+    if (btnBackDir) {
+      btnBackDir.setAttribute('aria-label', isAr ? 'العودة إلى دليل العملاء' : 'Back to Customers Directory');
+      const lbl = btnBackDir.querySelector('span');
+      if (lbl) lbl.textContent = isAr ? 'العودة إلى دليل العملاء' : 'Back to Customers Directory';
+    }
+    const btnBackBook = document.getElementById('btn-back-to-booking');
+    if (btnBackBook) {
+      btnBackBook.setAttribute('aria-label', isAr ? 'العودة إلى تفاصيل الحجز' : 'Back to Booking Details');
+    }
+
+    // 7. Safe Logout Modal Labels
+    const logoutModal = document.getElementById('acc-logout-modal');
+    if (logoutModal) {
+      const title = logoutModal.querySelector('#modal-logout-title, .acc-logout-title');
+      if (title) title.textContent = isAr ? 'تسجيل الخروج الآمن' : 'Safe Sign Out';
+      const desc = logoutModal.querySelector('.acc-logout-desc');
+      if (desc) desc.textContent = isAr 
+        ? 'هل أنت متأكد من رغبتك في تسجيل الخروج من مساحة الحسابات؟ سيتم حفظ كافة التغييرات والبيانات المدخلة بشكل تلقائي قبل المغادرة.'
+        : 'Are you sure you want to sign out from the Accounts Workspace? All changes and unsaved drafts are safely preserved.';
+      const stayBtn = logoutModal.querySelector('#modal-btn-stay');
+      if (stayBtn) stayBtn.textContent = isAr ? 'البقاء في مساحة الحسابات' : 'Stay in Workspace';
+      const saveBtn = logoutModal.querySelector('#modal-btn-save');
+      if (saveBtn) saveBtn.textContent = isAr ? 'حفظ وتأكيد تسجيل الخروج' : 'Save & Confirm Sign Out';
+    }
+
+    // 8. Dynamic Page & Section Aria Labels (Complete English-Only Assurance)
+    // Quick filters
+    document.querySelectorAll('.acc-chips-row[role="group"], .acc-quick-filters-wrap[role="group"]').forEach(el => {
+      el.setAttribute('aria-label', isAr ? 'الفترات الزمنية السريعة' : 'Quick Time Periods');
+    });
+
+    // Datepicker trigger
+    const dpTrigger = document.getElementById('acc-datepicker-trigger');
+    if (dpTrigger) dpTrigger.setAttribute('aria-label', isAr ? 'اختر التاريخ من التقويم' : 'Select Date from Calendar');
+
+    // KPI & Analytics grids
+    document.querySelectorAll('.acc-kpi-grid, .acc-bkg-kpi-grid, .acc-cust-kpi-row, .acc-cust-summary-grid, .acc-summary-section').forEach(el => {
+      el.setAttribute('aria-label', isAr ? 'مؤشرات الأداء المالي والتشغيلي' : 'Financial & Operational KPI Indicators');
+    });
+    const summaryGrid = document.getElementById('cust-summary-grid');
+    if (summaryGrid) summaryGrid.setAttribute('aria-label', isAr ? 'ملخص المؤشرات المالية للعميل' : 'Customer Financial Indicators Summary');
+    const analyticsGrid = document.querySelector('.acc-analytics-grid');
+    if (analyticsGrid) analyticsGrid.setAttribute('aria-label', isAr ? 'تحليلات العمليات والتحصيلات المالية' : 'Operations & Collections Analytics');
+
+    // SVG charts
+    const donutSvg = document.getElementById('acc-donut-svg');
+    if (donutSvg) donutSvg.setAttribute('aria-label', isAr ? 'مخطط دائري مجوف لتوزيع التحصيلات' : 'Collections distribution donut chart');
+    const graphSvg = document.getElementById('acc-graph-svg');
+    if (graphSvg) graphSvg.setAttribute('aria-label', isAr ? 'رسم بياني لتحليلات التحصيلات اليومية والمطابقة' : 'Daily collections and reconciliation graph chart');
+
+    // Buttons: export, reset filters, pagination
+    const btnCustExport = document.getElementById('cust-btn-export');
+    if (btnCustExport) btnCustExport.setAttribute('aria-label', isAr ? 'تصدير السجلات المحددة' : 'Export Selected Records');
+    const btnCustReset = document.getElementById('cust-btn-reset');
+    if (btnCustReset) btnCustReset.setAttribute('aria-label', isAr ? 'إعادة ضبط الفلاتر' : 'Reset Filters');
+    const btnProfileReset = document.getElementById('btn-reset-profile-filters');
+    if (btnProfileReset) btnProfileReset.setAttribute('aria-label', isAr ? 'إعادة ضبط عوامل التصفية' : 'Reset Filters');
+
+    const pgPrev = document.getElementById('cust-pg-prev');
+    if (pgPrev) pgPrev.setAttribute('aria-label', isAr ? 'الصفحة السابقة' : 'Previous Page');
+    const pgNext = document.getElementById('cust-pg-next');
+    if (pgNext) pgNext.setAttribute('aria-label', isAr ? 'الصفحة التالية' : 'Next Page');
+
+    // Table containers
+    const custTableSec = document.querySelector('.acc-cust-table-card');
+    if (custTableSec) custTableSec.setAttribute('aria-label', isAr ? 'جدول دليل العملاء والمعتمرين' : 'Customers Directory Table');
+    const bkgTableSec = document.querySelector('.acc-bookings-table-card, .acc-table-section');
+    if (bkgTableSec) bkgTableSec.setAttribute('aria-label', isAr ? 'جدول سجل الحجوزات الموحد' : 'Unified Bookings Register Table');
+
+    // Search inputs
+    const bkgSearch = document.getElementById('acc-bookings-search');
+    if (bkgSearch) bkgSearch.setAttribute('aria-label', isAr ? 'بحث في الحجوزات' : 'Search in Bookings');
+    const actSearch = document.getElementById('act-search-input');
+    if (actSearch) actSearch.setAttribute('aria-label', isAr ? 'بحث في سجل النشاط' : 'Search in Activity Log');
+
+    // Hero cards
+    const custHero = document.getElementById('cust-hero-section');
+    if (custHero) custHero.setAttribute('aria-label', isAr ? 'بيانات هوية وتواصل العميل' : 'Customer Identity & Contact Information');
+    const filterCard = document.querySelector('.acc-filter-card, .acc-profile-filter-toolbar');
+    if (filterCard) filterCard.setAttribute('aria-label', isAr ? 'أدوات التصفية والبحث في سجلات العميل' : 'Customer Records Filtering & Search');
+    const bkgFilterCard = document.querySelector('.acc-bkg-filter-card, .acc-toolbar-section');
+    if (bkgFilterCard) bkgFilterCard.setAttribute('aria-label', isAr ? 'أدوات البحث والتصفية' : 'Search & Filter Tools');
+    const bkgHero = document.getElementById('sec-booking-header');
+    if (bkgHero) bkgHero.setAttribute('aria-label', isAr ? 'الملخص الثابت للحجز' : 'Persistent Booking Summary');
+    const actHero = document.getElementById('sec-activity-context-card');
+    if (actHero) actHero.setAttribute('aria-label', isAr ? 'بيانات الحجز الحالية' : 'Current Booking Information');
+
+    // WhatsApp badges and buttons
+    document.querySelectorAll('.acc-btn-wa span, .acc-cust-wa-btn span, #bhero-customer-wa span').forEach(sp => {
+      sp.textContent = isAr ? 'واتساب' : 'WhatsApp';
+    });
+    document.querySelectorAll('#bhero-customer-wa, .acc-btn-wa, .acc-cust-wa-btn').forEach(btn => {
+      btn.setAttribute('aria-label', isAr ? 'مراسلة عبر واتساب' : 'Chat via WhatsApp');
+    });
+
+    // KPI Subtitles in dashboard
+    document.querySelectorAll('.acc-kpi-sub').forEach(el => {
+      if (el.textContent.includes('بانتظار كشف الحساب') || el.textContent.includes('Pending bank')) {
+        el.textContent = isAr ? 'بانتظار كشف الحساب والتحويل' : 'Pending bank statement & transfer';
+      }
+    });
+
+    // Tabs nav
+    const tabsNav = document.querySelector('.acc-tabs-nav-bar');
+    if (tabsNav) tabsNav.setAttribute('aria-label', isAr ? 'أقسام تفاصيل الحجز' : 'Booking Details Sections');
+
     // Update Language switcher label
-    const langBtn = document.getElementById('acc-lang-switcher');
+    const langBtn = document.getElementById('acc-lang-switcher') || document.getElementById('acc-lang-btn');
     if (langBtn) {
-      const labelEl = langBtn.querySelector('.lang-btn-text');
+      const labelEl = langBtn.querySelector('.lang-btn-text, .acc-lang-label');
       if (labelEl) {
         labelEl.textContent = currentLang === 'ar' ? 'EN' : 'AR';
       }
-      langBtn.setAttribute('aria-label', currentLang === 'ar' ? 'Switch to English' : 'التحويل إلى اللغة العربية');
+      langBtn.setAttribute('aria-label', currentLang === 'ar' ? 'التحويل إلى اللغة الإنجليزية' : 'Switch to Arabic');
+      langBtn.setAttribute('title', currentLang === 'ar' ? 'التحويل إلى اللغة الإنجليزية' : 'Switch to Arabic');
     }
 
     // Update Theme toggle button aria
@@ -161,6 +354,11 @@
     refreshListeners.forEach(cb => {
       try { cb({ lang: currentLang, theme: currentTheme }); } catch (err) { console.error(err); }
     });
+
+    // Dispatch global event for all listeners
+    window.dispatchEvent(new CustomEvent('accounts-lang-changed', {
+      detail: { lang: currentLang, theme: currentTheme }
+    }));
   }
 
   async function setLanguage(newLang) {
@@ -174,7 +372,7 @@
 
   // --- 3. Theme Management ---
   function updateThemeToggleUI() {
-    const btn = document.getElementById('acc-theme-toggle');
+    const btn = document.getElementById('acc-theme-toggle') || document.getElementById('acc-theme-btn');
     if (!btn) return;
     const isDark = currentTheme === 'dark';
     const isAr = currentLang === 'ar';
@@ -185,8 +383,8 @@
     btn.setAttribute('aria-label', ariaText);
     btn.setAttribute('title', ariaText);
 
-    const sun = btn.querySelector('.icon-sun');
-    const moon = btn.querySelector('.icon-moon');
+    const sun = btn.querySelector('.icon-sun, .theme-icon-sun');
+    const moon = btn.querySelector('.icon-moon, .theme-icon-moon');
     if (sun && moon) {
       sun.style.display = isDark ? 'block' : 'none';
       moon.style.display = isDark ? 'none' : 'block';
@@ -202,11 +400,15 @@
     updateThemeToggleUI();
 
     // Re-render SVG charts so their stroke colors match the active theme
-    if (window.AccountsMockData) {
-      const breakdown = window.AccountsMockData.getCollectionsBreakdown(activeFilters);
-      const trends = window.AccountsMockData.getDailyActivityTrends(activeFilters);
-      renderDonutChart(breakdown);
-      renderAnalyticalGraph(trends);
+    if (window.AccountsMockData && document.getElementById('acc-donut-chart')) {
+      try {
+        const breakdown = window.AccountsMockData.getCollectionsBreakdown(activeFilters);
+        const trends = window.AccountsMockData.getDailyActivityTrends(activeFilters);
+        if (typeof renderDonutChart === 'function') renderDonutChart(breakdown);
+        if (typeof renderAnalyticalGraph === 'function') renderAnalyticalGraph(trends);
+      } catch (e) {
+        console.warn('Chart render skipped on non-dashboard page', e);
+      }
     }
 
     refreshListeners.forEach(cb => {
@@ -270,9 +472,9 @@
   // --- 5. Direction-Aware Sidebar & Mobile Drawer Handling ---
   function initDrawer() {
     const sidebar = document.getElementById('acc-sidebar');
-    const backdrop = document.getElementById('acc-drawer-backdrop');
+    const backdrop = document.getElementById('acc-drawer-backdrop') || document.getElementById('acc-sidebar-backdrop');
     const menuToggle = document.getElementById('acc-hamburger-btn');
-    const closeBtn = document.getElementById('acc-drawer-close-btn');
+    const closeBtn = document.getElementById('acc-drawer-close-btn') || document.getElementById('acc-sidebar-close-btn');
 
     function openDrawer() {
       if (!sidebar) return;
@@ -1410,6 +1612,7 @@
   }
 
   function renderAllDashboardComponents() {
+    if (!document.getElementById('kpi-val-recorded-collections')) return;
     if (!window.AccountsMockData) return;
 
     const kpis = window.AccountsMockData.getDashboardKPIs(activeFilters);
@@ -1522,8 +1725,11 @@
     formatNumber,
     formatCurrency,
     showToast,
+    getLang: () => currentLang,
     getCurrentLang: () => currentLang,
-    getCurrentTheme: () => currentTheme,
+    registerRefreshListener: function (cb) {
+      if (typeof cb === 'function') refreshListeners.push(cb);
+    },
     onPageRefresh: function (cb) {
       if (typeof cb === 'function') refreshListeners.push(cb);
     },
@@ -1551,7 +1757,7 @@
     initCalendarDatePicker();
     initFilterPanel();
 
-    const langBtn = document.getElementById('acc-lang-switcher');
+    const langBtn = document.getElementById('acc-lang-switcher') || document.getElementById('acc-lang-btn');
     if (langBtn) {
       langBtn.addEventListener('click', function () {
         const nextLang = currentLang === 'ar' ? 'en' : 'ar';
@@ -1559,7 +1765,7 @@
       });
     }
 
-    const themeBtn = document.getElementById('acc-theme-toggle');
+    const themeBtn = document.getElementById('acc-theme-toggle') || document.getElementById('acc-theme-btn');
     if (themeBtn) {
       themeBtn.addEventListener('click', function () {
         const nextTheme = currentTheme === 'light' ? 'dark' : 'light';

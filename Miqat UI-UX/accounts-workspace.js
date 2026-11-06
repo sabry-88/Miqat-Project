@@ -183,6 +183,8 @@
     const empRole = document.getElementById('acc-employee-role');
     if (empRole) empRole.textContent = isAr ? 'موظف حسابات مالية' : 'Financial Accounts Officer';
     const empName = document.getElementById('acc-employee-name');
+    const userAvatars = document.querySelectorAll('.acc-user-avatar');
+    userAvatars.forEach(av => { av.textContent = isAr ? 'أ' : 'A'; });
     if (empName) empName.textContent = isAr ? 'أحمد صبري' : 'Ahmed Sabry';
 
     // 2. Brand Link

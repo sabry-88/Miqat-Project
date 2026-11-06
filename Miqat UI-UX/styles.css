@@ -51,6 +51,7 @@
   --color-accent-hover: #AF8B48;
   --color-accent-rich: #D1B16C; /* Richer Gold Accent */
   --color-accent-soft: #F4EBD8; /* Warm Gold Tint */
+  --color-accent-subtle: rgba(197, 161, 94, 0.12);
   --color-accent-text: #183653;
   --color-link: #28577D;
   --color-focus: #3B82F6;
@@ -155,6 +156,7 @@
   --color-accent-hover: #DFBF7A;
   --color-accent-rich: #E5C98A;
   --color-accent-soft: #2D2D24; /* Dark Warm Gold Tint */
+  --color-accent-subtle: rgba(209, 177, 108, 0.16);
   --color-accent-text: #E5C98A; /* Radiant High-Contrast Gold Text */
   --color-link: #8AB7E0;
   --color-focus: #7CB6FF;
@@ -23879,8 +23881,7 @@ body.acc-modal-locked {
   inset: 0;
   background-color: rgba(0, 0, 0, 0.55);
   z-index: 1040;
-  backdrop-filter: blur(2px);
-}
+  }
 
 .acc-drawer-backdrop.is-visible {
   display: block;
@@ -25590,8 +25591,6 @@ body.acc-modal-locked {
   position: fixed;
   inset: 0;
   background-color: rgba(11, 19, 29, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   z-index: 10000;
 }
 
@@ -31001,4 +31000,1224 @@ html[dir="ltr"] .acc-timeline-marker {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+
+/* ==========================================================================
+   PROGRAM & ITINERARY MODIFICATIONS MODULE (ACCOUNTS WORKSPACE - PHASES 1-7)
+   ========================================================================== */
+
+/* Page Header & Stats Bar */
+.acc-mod-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.acc-mod-stat-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.acc-mod-stat-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.acc-mod-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.acc-mod-stat-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.acc-mod-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+
+.acc-mod-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.acc-mod-stat-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Presence Awareness Bar */
+.acc-presence-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.acc-presence-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.acc-presence-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.acc-presence-dot.dot-available {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-subtle);
+}
+
+.acc-presence-dot.dot-busy {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.acc-presence-dot.dot-offline {
+  background-color: var(--color-text-muted);
+}
+
+.acc-presence-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.acc-presence-hint {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.acc-presence-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.acc-presence-btn {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acc-presence-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.acc-presence-btn.is-active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+/* Companies Grid (Page 1 - Strictly NO financial amounts on cards) */
+.acc-companies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.acc-company-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.acc-company-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+.acc-company-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.acc-company-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.acc-company-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.acc-company-card-license {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.acc-company-card-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.acc-company-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.acc-comp-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.acc-comp-metric-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.acc-comp-metric-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.acc-company-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: 12px;
+}
+
+.acc-comp-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.acc-comp-meta-row span:last-child {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.acc-company-card-actions {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.acc-btn-view-company {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.acc-btn-view-company:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+/* Company Header Banner (Page 2) */
+.acc-company-banner {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.acc-company-banner-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acc-company-banner-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.acc-company-banner-tags {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.acc-company-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Excel Export Buttons Toolbar */
+.acc-export-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.acc-btn-export-excel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acc-btn-export-excel:hover {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.acc-btn-export-excel.btn-filtered {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+}
+
+.acc-btn-export-excel.btn-filtered:hover {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+/* 12-Column Table Customizations */
+.acc-mod-table th {
+  white-space: nowrap;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-secondary);
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.acc-mod-table td {
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+}
+
+.acc-cell-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.acc-cell-primary {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.acc-cell-sub {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
+
+.acc-prog-cell {
+  max-width: 160px;
+  line-height: 1.4;
+}
+
+/* Overdue Soft Gold Pulse Animation (Design System Compliant) */
+@keyframes pulseSoftGold {
+  0% {
+    box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(197, 168, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(197, 168, 128, 0);
+  }
+}
+
+.acc-mod-row.is-overdue-row {
+  background-color: rgba(197, 168, 128, 0.05);
+}
+
+.acc-badge-overdue {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  animation: pulseSoftGold 2.2s infinite;
+}
+
+/* Page 3: Sticky Summary Header (Strictly NO finances in header) */
+.acc-details-header-sticky {
+  position: sticky;
+  top: 70px;
+  z-index: 40;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.acc-details-header-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.acc-details-header-id-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.acc-details-header-id {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.acc-details-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.acc-details-header-meta span strong {
+  color: var(--color-text);
+}
+
+.acc-details-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* 7 Collapsible Horizontal Tabs */
+.acc-collapsible-tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.acc-collapsible-tab {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.acc-collapsible-tab.is-open {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.acc-tab-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  background-color: var(--color-surface);
+  border: none;
+  cursor: pointer;
+  text-align: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.acc-tab-header:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.acc-collapsible-tab.is-open .acc-tab-header {
+  background-color: var(--color-accent-subtle);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.acc-tab-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.acc-tab-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  transition: all 0.2s ease;
+}
+
+.acc-collapsible-tab.is-open .acc-tab-icon {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.acc-tab-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.acc-collapsible-tab.is-open .acc-tab-title {
+  color: var(--color-accent);
+}
+
+.acc-tab-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: transform 0.25s ease;
+}
+
+.acc-collapsible-tab.is-open .acc-tab-indicator {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.acc-tab-body {
+  padding: 24px;
+  display: none;
+}
+
+.acc-collapsible-tab.is-open .acc-tab-body {
+  display: block;
+}
+
+/* Tab 2: Program Comparison Table */
+.acc-prog-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.acc-prog-compare-table th {
+  background-color: var(--color-surface-secondary);
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-border);
+  text-align: inherit;
+}
+
+.acc-prog-compare-table td {
+  padding: 12px 16px;
+  font-size: 0.84rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: top;
+}
+
+.acc-prog-compare-table tr:hover td {
+  background-color: var(--color-surface-subtle);
+}
+
+.acc-prog-field-label {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  width: 25%;
+}
+
+.acc-prog-val-orig {
+  color: var(--color-text);
+  width: 37.5%;
+}
+
+.acc-prog-val-new {
+  font-weight: 600;
+  color: var(--color-primary);
+  width: 37.5%;
+}
+
+/* Tab 3: Financial Summary 6 Boxes & Strict Formula Note */
+.acc-fin-boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.acc-fin-box {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.acc-fin-box.box-highlight {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.acc-fin-box.box-remaining {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.acc-fin-box-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.acc-fin-box-val {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.acc-fin-box.box-highlight .acc-fin-box-val {
+  color: var(--color-accent);
+}
+
+.acc-fin-box.box-remaining .acc-fin-box-val {
+  color: var(--color-primary);
+}
+
+.acc-fin-formula-card {
+  background-color: var(--color-surface-secondary);
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.acc-fin-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acc-fin-progress-bar-bg {
+  width: 100%;
+  height: 10px;
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.acc-fin-progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* Tab 5: Status Stepper */
+.acc-status-stepper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.acc-step-item {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.acc-step-item.is-current {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.acc-step-item.is-done {
+  border-color: var(--color-primary);
+}
+
+.acc-step-num {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.acc-step-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.acc-step-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Tab 6: Request Conversation */
+.acc-chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.acc-chat-messages-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 8px 4px;
+}
+
+.acc-chat-bubble {
+  max-width: 78%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.acc-chat-bubble.bubble-miqat {
+  align-self: flex-end;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
+}
+
+.acc-chat-bubble.bubble-company {
+  align-self: flex-start;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.acc-chat-bubble-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.acc-chat-bubble-author {
+  font-weight: 700;
+}
+
+.acc-chat-input-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.acc-chat-closed-alert {
+  padding: 14px 18px;
+  background-color: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Supplementary Cards: Notes & Contact */
+.acc-side-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.acc-supplementary-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.acc-supplementary-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .acc-mod-stats-bar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .acc-fin-boxes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .acc-mod-stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .acc-status-stepper {
+    grid-template-columns: 1fr;
+  }
+  .acc-side-panels-grid {
+    grid-template-columns: 1fr;
+  }
+  .acc-details-header-sticky {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .acc-mod-stats-bar {
+    grid-template-columns: 1fr;
+  }
+  .acc-fin-boxes-grid {
+    grid-template-columns: 1fr;
+  }
+  .acc-company-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ==========================================================================
+   ACCOUNTS WORKSPACE — DARK MODE CONTRAST & MODIFICATIONS COMPONENT REFINEMENT
+   ========================================================================== */
+[data-theme="dark"] .accounts-workspace-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-workspace-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .accounts-workspace-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-workspace-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .acc-company-card-badge {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .acc-presence-btn.is-active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #183653 !important;
+}
+
+[data-theme="dark"] .acc-fin-box.box-highlight {
+  background-color: rgba(209, 177, 108, 0.12);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .acc-fin-box.box-remaining {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .acc-step-item.is-current {
+  background-color: rgba(209, 177, 108, 0.1);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .acc-details-header-sticky {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .acc-prog-compare-table th {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="dark"] .acc-prog-compare-table tr:hover td {
+  background-color: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .acc-collapsible-tab.is-open .acc-tab-header {
+  background-color: rgba(209, 177, 108, 0.1);
+}
+
+[data-theme="dark"] .acc-btn-export-excel {
+  background-color: rgba(209, 177, 108, 0.14);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .acc-btn-export-excel:hover {
+  background-color: var(--color-accent);
+  color: #183653 !important;
+}
+
+/* ==========================================================================
+   ACCOUNTS WORKSPACE — TARGETED REFINEMENT 1: COMPANY REQUESTS FILTERING CARD
+   ========================================================================== */
+.acc-filter-master-card {
+  margin-bottom: 24px;
+}
+
+.acc-filter-select-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.acc-filter-select-wrap {
+  min-width: 170px;
+}
+
+.acc-btn-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: all 0.15s ease;
+}
+
+.acc-btn-filter-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.acc-btn-filter-toggle.is-active {
+  background-color: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .acc-btn-filter-toggle {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .acc-btn-filter-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .acc-btn-filter-toggle.is-active {
+  background-color: rgba(209, 177, 108, 0.18);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.acc-mod-adv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.acc-adv-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--color-border-subtle);
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.acc-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.acc-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   ACCOUNTS WORKSPACE — TARGETED REFINEMENT 2: REQUEST CONVERSATION MESSAGE COMPOSER
+   ========================================================================== */
+.acc-chat-composer {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.acc-chat-composer:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(197, 161, 94, 0.18);
+}
+
+[data-theme="dark"] .acc-chat-composer:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(209, 177, 108, 0.22);
+}
+
+.acc-chat-composer-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-chat-textarea {
+  width: 100%;
+  min-height: 76px;
+  max-height: 220px;
+  padding: 14px 16px;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  resize: vertical;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+
+.acc-chat-textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.85;
+  font-size: 0.86rem;
+}
+
+.acc-chat-composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-top: 1px solid var(--color-border-subtle);
+  background-color: var(--color-surface-secondary);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.acc-chat-composer-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.acc-chat-composer-hint svg {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.acc-chat-composer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.acc-chat-send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.acc-chat-send-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Direction-aware icon flipping for Send icon */
+[dir="rtl"] .acc-chat-send-icon {
+  transform: scaleX(-1);
+}
+
+/* Closed state alert */
+.acc-chat-closed-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background-color: var(--color-surface-secondary);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.acc-chat-closed-icon {
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
 }

@@ -3923,7 +3923,1381 @@
 ];
 
 
+
+  // =========================================================================
+  // PROGRAM & ITINERARY MODIFICATION REQUESTS DATASET (PHASE 1-5 ARCHITECTURE)
+  // =========================================================================
+
+  const TOURISM_COMPANIES_REGISTRY = [
+    {
+      id: 'COMP-101',
+      name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      name_en: 'Al-Huda Religious Travel & Tourism',
+      license: 'ترخيص سياحي رقم ٤١٨ فئة (أ)',
+      license_en: 'Tourism License #418 Category A',
+      phone: '0233458900',
+      email: 'operations@alhuda-travel.com',
+      contact_person_ar: 'أشرف القاضي',
+      contact_person_en: 'Ashraf El-Kady',
+      contact_phone: '01198765432',
+      contact_whatsapp: '01198765432',
+      user_ref: 'EMP-HD-04'
+    },
+    {
+      id: 'COMP-102',
+      name_ar: 'مؤسسة الفيروز لرحلات الحج والعمرة',
+      name_en: 'Al-Fairouz Hajj & Umrah Agency',
+      license: 'ترخيص سياحي رقم ٥١٢ فئة (أ)',
+      license_en: 'Tourism License #512 Category A',
+      phone: '0223984511',
+      email: 'contact@alfairouz-travel.com',
+      contact_person_ar: 'ممدوح الشامي',
+      contact_person_en: 'Mamdouh El-Shamy',
+      contact_phone: '01223456789',
+      contact_whatsapp: '01223456789',
+      user_ref: 'EMP-FZ-02'
+    },
+    {
+      id: 'COMP-103',
+      name_ar: 'شركة مناسك العالمية للسياحة',
+      name_en: 'Manasek Global Travel',
+      license: 'ترخيص سياحي رقم ٦٣٠ فئة (أ)',
+      license_en: 'Tourism License #630 Category A',
+      phone: '0237612099',
+      email: 'support@manasek-travel.com',
+      contact_person_ar: 'حسام البدري',
+      contact_person_en: 'Hossam El-Badry',
+      contact_phone: '01099887766',
+      contact_whatsapp: '01099887766',
+      user_ref: 'EMP-MN-01'
+    },
+    {
+      id: 'COMP-104',
+      name_ar: 'شركة الصفا للنقل والخدمات السياحية',
+      name_en: 'Al-Safa Travel & Tourism',
+      license: 'ترخيص سياحي رقم ٣٢٩ فئة (أ)',
+      license_en: 'Tourism License #329 Category A',
+      phone: '0233045512',
+      email: 'info@alsafa-tours.com',
+      contact_person_ar: 'خالد عبد الوهاب',
+      contact_person_en: 'Khaled Abdel Wahab',
+      contact_phone: '01144556677',
+      contact_whatsapp: '01144556677',
+      user_ref: 'EMP-SF-03'
+    },
+    {
+      id: 'COMP-105',
+      name_ar: 'شركة البركة لخدمات المعتمرين',
+      name_en: 'Al-Baraka Umrah Services',
+      license: 'ترخيص سياحي رقم ٨١٠ فئة (أ)',
+      license_en: 'Tourism License #810 Category A',
+      phone: '0227943310',
+      email: 'operations@albaraka-umrah.com',
+      contact_person_ar: 'نبيل غانم',
+      contact_person_en: 'Nabil Ghanem',
+      contact_phone: '01011223344',
+      contact_whatsapp: '01011223344',
+      user_ref: 'EMP-BK-05'
+    },
+    {
+      id: 'COMP-106',
+      name_ar: 'شركة دار السلام للسياحة والحج والعمرة',
+      name_en: 'Dar Al-Salam Hajj & Umrah',
+      license: 'ترخيص سياحي رقم ١٩٤ فئة (أ)',
+      license_en: 'Tourism License #194 Category A',
+      phone: '0233887140',
+      email: 'contact@daralsalam-travel.com',
+      contact_person_ar: 'طارق منصور',
+      contact_person_en: 'Tarek Mansour',
+      contact_phone: '01277889900',
+      contact_whatsapp: '01277889900',
+      user_ref: 'EMP-DS-01'
+    },
+    {
+      id: 'COMP-107',
+      name_ar: 'شركة التقوى للسياحة والرحلات الدينية',
+      name_en: 'Al-Taqwa Travel & Tourism',
+      license: 'ترخيص سياحي رقم ٤٥٠ فئة (أ)',
+      license_en: 'Tourism License #450 Category A',
+      phone: '0224198755',
+      email: 'support@altaqwa-travel.com',
+      contact_person_ar: 'ياسر رضوان',
+      contact_person_en: 'Yasser Radwan',
+      contact_phone: '01066778899',
+      contact_whatsapp: '01066778899',
+      user_ref: 'EMP-TQ-02'
+    },
+    {
+      id: 'COMP-108',
+      name_ar: 'شركة نور الإيمان لخدمات الحرمين',
+      name_en: 'Noor Al-Eman Haramain Services',
+      license: 'ترخيص سياحي رقم ٧٧٢ فئة (أ)',
+      license_en: 'Tourism License #772 Category A',
+      phone: '0237498210',
+      email: 'operations@nooraleman.com',
+      contact_person_ar: 'علاء عبد الباقي',
+      contact_person_en: 'Alaa Abdel Baqi',
+      contact_phone: '01122334455',
+      contact_whatsapp: '01122334455',
+      user_ref: 'EMP-NE-01'
+    }
+  ];
+
+  let PROGRAM_MODIFICATION_REQUESTS = [
+    // --- Al-Huda (COMP-101) Requests ---
+    {
+      id: 'MOD-2026-101',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_employee: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432',
+        ref: 'EMP-HD-04'
+      },
+      booking_id: 'BK-2026-1045',
+      customer_id: 'CUST-1001',
+      customer_name_ar: 'أحمد محمود الشريف',
+      customer_name_en: 'Ahmed Mahmoud El-Sherif',
+      customer_phone: '01012345671',
+      customer_whatsapp: '01012345671',
+      created_at: '2026-11-06 10:15',
+      timestamp_iso: '2026-11-06T10:15:00',
+      request_status: 'in_progress', // 'new' | 'in_progress' | 'completed' (NO rejected!)
+      payment_status: 'partially_paid',
+      
+      // Original Program Details
+      original_program: {
+        name_ar: 'عمرة اقتصادية موفرة (طيران)',
+        name_en: 'Umrah Economy Saver (Flight)',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-18',
+        return_date: '2027-01-28',
+        total_price: 76000,
+        hotel_ar: 'فندق أنوار الضيافة (مكة) — فندق روابي المدينة (المدينة)',
+        hotel_en: 'Anwar Al-Diyafa (Makkah) — Rawabi Al-Madinah (Madinah)',
+        travelers_count: 2,
+        airline_ar: 'الخطوط الجوية السعودية (القاهرة - جدة)',
+        airline_en: 'Saudia Airlines (Cairo - Jeddah)'
+      },
+
+      // New Program Details (Supplied by Tourism Company)
+      new_program: {
+        name_ar: 'عمرة فاخرة ٥ نجوم أبراج مكة (طيران مباشر)',
+        name_en: 'Deluxe 5-Star Umrah Makkah Towers (Direct Flight)',
+        type_ar: 'طيران مباشر ٥ نجوم',
+        type_en: '5-Star Direct Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-20',
+        return_date: '2027-01-31',
+        total_price: 120000, // Exact test case requirement: 120,000 EGP
+        hotel_ar: 'فندق فيرمونت مكة أبراج البيت (مكة) — أوبروي المدينة (المدينة)',
+        hotel_en: 'Fairmont Makkah Clock Royal Tower — Oberoi Madinah',
+        travelers_count: 2,
+        airline_ar: 'مصر للطيران - درجة رجال الأعمال (القاهرة - المدينة)',
+        airline_en: 'EgyptAir - Business Class (Cairo - Madinah)',
+        modification_reason_ar: 'طلب العميل ترقية فندق الإقامة إلى أبراج وقف الحرم المباشرة لظروف صحية للمرافق، مع مد الإقامة ٣ ليالٍ إضافية.',
+        modification_reason_en: 'Customer requested accommodation upgrade to direct Haram towers due to companion mobility needs, plus 3 additional nights.'
+      },
+
+      // Strict Financial Architecture:
+      // Total Approved Paid Amount = Original Deposit + All Approved Additional Payments
+      // Remaining Amount = New Program Total Price - Total Approved Paid Amount
+      // Test Case Values: New: 120,000 | Deposit: 20,000 | Approved Add: 30,000 | Pending Add: 10,000
+      // Expected Approved Paid: 50,000 | Remaining: 70,000 | Pending: 10,000 | Progress: 41.67%
+      original_deposit: 20000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-881',
+          date: '2026-11-06 11:30',
+          amount: 30000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي (البنك الأهلي)',
+          payment_method_en: 'Bank Transfer (NBE)',
+          receipt_ref: 'RCP-BNK-9901',
+          recorded_by_ar: 'أشرف القاضي (موظف شركة الهدى)',
+          recorded_by_en: 'Ashraf El-Kady (Al-Huda Staff)',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-06 12:15',
+          internal_note_ar: 'تمت مطابقة قسيمة التحويل البنكي مع كشف حساب ميقات واعتماد المبلغ بنجاح.',
+          internal_note_en: 'Bank voucher matched with Miqat central account statement and approved.',
+          evidence: {
+            filename: 'NBE_Slip_MOD_881.pdf',
+            size: '1.4 MB'
+          }
+        },
+        {
+          id: 'PAY-MOD-882',
+          date: '2026-11-06 13:45',
+          amount: 10000,
+          payment_method: 'cash',
+          payment_method_ar: 'إيداع نقدي بإيصال رسمي',
+          payment_method_en: 'Cash Official Deposit',
+          receipt_ref: 'RCP-CSH-4412',
+          recorded_by_ar: 'أشرف القاضي (موظف شركة الهدى)',
+          recorded_by_en: 'Ashraf El-Kady (Al-Huda Staff)',
+          review_status: 'pending_review',
+          reviewed_by_ar: null,
+          reviewed_by_en: null,
+          reviewed_at: null,
+          internal_note_ar: 'بانتظار ورود حافظة الإيداع النقدي للخزينة لمراجعة الإيصال ومطابقته.',
+          internal_note_en: 'Pending treasury cash deposit ledger verification.',
+          evidence: {
+            filename: 'Cash_Receipt_4412.pdf',
+            size: '980 KB'
+          }
+        }
+      ],
+
+      // Private Internal Notes (Miqat internal only, never visible to company or customer)
+      internal_notes: [
+        {
+          id: 'NOTE-101-1',
+          author_ar: 'أحمد صبري',
+          author_en: 'Ahmed Sabry',
+          date: '2026-11-06 10:30',
+          text_ar: 'تم استلام طلب التعديل من شركة الهدى ومراجعة رصيد الدفعة الأصلية المحصلة على حجز BK-2026-1045 بقيمة ٢٠,٠٠٠ ج.م.',
+          text_en: 'Received modification request from Al-Huda and verified original credited deposit of 20,000 EGP on booking BK-2026-1045.'
+        }
+      ],
+
+      // Request Conversation (Between Miqat Accounts Employee & Tourism Company Employee)
+      conversation: {
+        is_closed: false,
+        closed_at: null,
+        messages: [
+          {
+            id: 'MSG-101-1',
+            sender_type: 'company',
+            sender_name_ar: 'أشرف القاضي',
+            sender_name_en: 'Ashraf El-Kady',
+            sender_role_ar: 'مسؤول العمليات — شركة الهدى',
+            sender_role_en: 'Operations Officer — Al-Huda',
+            date: '2026-11-06 10:18',
+            content_ar: 'السلام عليكم أستاذ أحمد، قمنا بتسجيل طلب ترقية حجز العميل أحمد الشريف لفندق فيرمونت وأضفنا دفعة سداد أولى ٣٠ ألف عبر البنك الأهلي.',
+            content_en: 'Hello Mr. Ahmed, we registered the upgrade request for customer Ahmed El-Sherif to Fairmont and added a 30,000 EGP deposit via NBE.'
+          },
+          {
+            id: 'MSG-101-2',
+            sender_type: 'accounts',
+            sender_name_ar: 'أحمد صبري',
+            sender_name_en: 'Ahmed Sabry',
+            sender_role_ar: 'موظف حسابات مالية — ميقات',
+            sender_role_en: 'Financial Accounts Officer — Miqat',
+            date: '2026-11-06 12:16',
+            content_ar: 'أهلاً بك أستاذ أشرف. تم تدقيق التحويل البنكي واعتماد مبلغ ٣٠,٠٠٠ ج.م ليصبح الرصيد المعتمد ٥٠,٠٠٠ ج.م، ونحن بانتظار توريد الدفعة النقدية الثانية.',
+            content_en: 'Welcome Mr. Ashraf. The bank transfer has been verified and 30,000 EGP approved, bringing approved total to 50,000 EGP. Awaiting cash slip review.'
+          }
+        ]
+      },
+
+      // Status Transition History
+      status_history: [
+        {
+          from_status: 'new',
+          to_status: 'in_progress',
+          date: '2026-11-06 10:25',
+          employee_ar: 'أحمد صبري',
+          employee_en: 'Ahmed Sabry',
+          note_ar: 'بدء دراسة التعديل وتدقيق السجلات المالية',
+          note_en: 'Started review and financial audit of modification'
+        }
+      ],
+
+      // Immutable Activity Log
+      activity_log: [
+        {
+          id: 'ACT-MOD-1',
+          date: '2026-11-06 10:15',
+          title_ar: 'تسجيل طلب تعديل البرنامج',
+          title_en: 'Modification Request Submitted',
+          desc_ar: 'تم تسجيل طلب التعديل رقم MOD-2026-101 بواسطة أشرف القاضي (شركة الهدى)',
+          desc_en: 'Modification request MOD-2026-101 created by Ashraf El-Kady (Al-Huda)',
+          actor_ar: 'أشرف القاضي',
+          actor_en: 'Ashraf El-Kady',
+          type: 'creation'
+        },
+        {
+          id: 'ACT-MOD-2',
+          date: '2026-11-06 10:25',
+          title_ar: 'بدء متابعة الطلب',
+          title_en: 'Follow-up Started',
+          desc_ar: 'تغيير حالة الطلب من طلب جديد إلى قيد المتابعة وإيقاف مؤقت الاستجابة',
+          desc_en: 'Request status updated to In Progress; SLA response timer stopped',
+          actor_ar: 'أحمد صبري',
+          actor_en: 'Ahmed Sabry',
+          type: 'status'
+        },
+        {
+          id: 'ACT-MOD-3',
+          date: '2026-11-06 12:15',
+          title_ar: 'اعتماد سداد إضافي',
+          title_en: 'Additional Payment Approved',
+          desc_ar: 'تم تدقيق واعتماد دفعة بنكية بقيمة ٣٠,٠٠٠ ج.م (إيصال RCP-BNK-9901)',
+          desc_en: 'Verified and approved bank payment of 30,000 EGP (Receipt RCP-BNK-9901)',
+          actor_ar: 'أحمد صبري',
+          actor_en: 'Ahmed Sabry',
+          type: 'payment'
+        }
+      ],
+
+      // SLA & Response Monitoring
+      sla: {
+        arrival_time: '2026-11-06 10:15:00',
+        window_hours: 2,
+        is_overdue: false,
+        response_started_at: '2026-11-06 10:25:00'
+      }
+    },
+
+    {
+      id: 'MOD-2026-102',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_employee: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432',
+        ref: 'EMP-HD-04'
+      },
+      booking_id: 'BK-2026-1049',
+      customer_id: 'CUST-1005',
+      customer_name_ar: 'محمد إبراهيم منصور',
+      customer_name_en: 'Mohamed Ibrahim Mansour',
+      customer_phone: '01234567895',
+      customer_whatsapp: '01234567895',
+      created_at: '2026-11-05 14:00',
+      timestamp_iso: '2026-11-05T14:00:00',
+      request_status: 'completed',
+      payment_status: 'paid_full',
+      original_program: {
+        name_ar: 'عمرة أول شعبان الاقتصادية (طيران)',
+        name_en: 'Shaaban Early Economy Umrah (Flight)',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-01-25',
+        return_date: '2027-02-05',
+        total_price: 68000,
+        hotel_ar: 'فندق منازل العين (مكة) — طابة السلام (المدينة)',
+        hotel_en: 'Manazel Al-Ain (Makkah) — Taba Al-Salam (Madinah)',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة العشر الأواخر من رمضان تهجد (طيران مباشر)',
+        name_en: 'Ramadan Last 10-Days Tahajjud Umrah (Direct Flight)',
+        type_ar: 'طيران مباشر موسمي',
+        type_en: 'Seasonal Direct Flight',
+        season_ar: 'رمضان ١٤٤٨ هـ',
+        season_en: 'Ramadan 1448 AH',
+        travel_date: '2027-03-22',
+        return_date: '2027-04-02',
+        total_price: 98000,
+        hotel_ar: 'فندق الشهداء (مكة) — دلة طيبة (المدينة)',
+        hotel_en: 'Al-Shohada Hotel (Makkah) — Dallah Taibah (Madinah)',
+        travelers_count: 2,
+        modification_reason_ar: 'رغبة العميل في أداء مناسك العمرة وصلاة التهجد في العشر الأواخر من رمضان بدلاً من رحلة شعبان.',
+        modification_reason_en: 'Customer wished to perform Umrah and Tahajjud during Ramadan last 10 days instead of Shaaban.'
+      },
+      original_deposit: 25000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-883',
+          date: '2026-11-05 14:20',
+          amount: 45000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي فوري',
+          payment_method_en: 'Instant Bank Transfer',
+          receipt_ref: 'RCP-BNK-9915',
+          recorded_by_ar: 'أشرف القاضي',
+          recorded_by_en: 'Ashraf El-Kady',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-05 15:00',
+          evidence: { filename: 'Bank_Receipt_9915.pdf', size: '1.1 MB' }
+        },
+        {
+          id: 'PAY-MOD-884',
+          date: '2026-11-05 16:10',
+          amount: 28000,
+          payment_method: 'instapay',
+          payment_method_ar: 'إنستاباي فوري',
+          payment_method_en: 'InstaPay Instant',
+          receipt_ref: 'RCP-INS-4420',
+          recorded_by_ar: 'أشرف القاضي',
+          recorded_by_en: 'Ashraf El-Kady',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-05 16:30',
+          evidence: { filename: 'Instapay_4420.png', size: '840 KB' }
+        }
+      ],
+      internal_notes: [
+        {
+          id: 'NOTE-102-1',
+          author_ar: 'أحمد صبري',
+          author_en: 'Ahmed Sabry',
+          date: '2026-11-05 16:40',
+          text_ar: 'تم اعتماد وتصفية الحساب بالكامل بقيمة ٩٨,٠٠٠ ج.م واستيفاء تأكيد شركة الهدى، وتم إغلاق الطلب وتحديث الحجز.',
+          text_en: 'Fully reconciled and settled for 98,000 EGP with Al-Huda confirmation; request completed and booking updated.'
+        }
+      ],
+      conversation: {
+        is_closed: true,
+        closed_at: '2026-11-05 17:00',
+        messages: [
+          {
+            id: 'MSG-102-1',
+            sender_type: 'company',
+            sender_name_ar: 'أشرف القاضي',
+            sender_name_en: 'Ashraf El-Kady',
+            sender_role_ar: 'مسؤول العمليات — شركة الهدى',
+            sender_role_en: 'Operations Officer — Al-Huda',
+            date: '2026-11-05 14:10',
+            content_ar: 'تم استلام وتأكيد موافقة العميل على فارق السعر لرحلة العشر الأواخر، وتم سداد كامل المبلغ.',
+            content_en: 'Customer confirmation and full payment difference for Ramadan 10-days confirmed.'
+          },
+          {
+            id: 'MSG-102-2',
+            sender_type: 'accounts',
+            sender_name_ar: 'أحمد صبري',
+            sender_name_en: 'Ahmed Sabry',
+            sender_role_ar: 'موظف حسابات مالية — ميقات',
+            sender_role_en: 'Financial Accounts Officer — Miqat',
+            date: '2026-11-05 16:55',
+            content_ar: 'تم التحقق من اكتمال السداد وتحديث البرنامج في الحجز المركزي رسمياً، وإغلاق الطلب كمكتمل.',
+            content_en: 'Full payment verified and program updated in central booking officially. Request completed.'
+          }
+        ]
+      },
+      status_history: [
+        {
+          from_status: 'new',
+          to_status: 'in_progress',
+          date: '2026-11-05 14:15',
+          employee_ar: 'أحمد صبري',
+          employee_en: 'Ahmed Sabry',
+          note_ar: 'بدء تدقيق إيصالات سداد رمضان',
+          note_en: 'Started audit of Ramadan receipts'
+        },
+        {
+          from_status: 'in_progress',
+          to_status: 'completed',
+          date: '2026-11-05 17:00',
+          employee_ar: 'أحمد صبري',
+          employee_en: 'Ahmed Sabry',
+          note_ar: 'اكتمال التعديل وسداد كامل الرصيد',
+          note_en: 'Modification completed and balance fully settled'
+        }
+      ],
+      activity_log: [
+        {
+          id: 'ACT-MOD-10',
+          date: '2026-11-05 14:00',
+          title_ar: 'تسجيل طلب تعديل الحجز',
+          title_en: 'Modification Request Submitted',
+          desc_ar: 'تسجيل طلب الترقية للعشر الأواخر من رمضان',
+          desc_en: 'Ramadan last 10 days upgrade request created',
+          actor_ar: 'أشرف القاضي',
+          actor_en: 'Ashraf El-Kady',
+          type: 'creation'
+        },
+        {
+          id: 'ACT-MOD-11',
+          date: '2026-11-05 17:00',
+          title_ar: 'اكتمال تنفيذ طلب التعديل',
+          title_en: 'Modification Request Completed',
+          desc_ar: 'تم اعتماد التعديل رسمياً وإغلاق المحادثة الخاصة بالطلب',
+          desc_en: 'Request officially completed and conversation closed',
+          actor_ar: 'أحمد صبري',
+          actor_en: 'Ahmed Sabry',
+          type: 'status'
+        }
+      ],
+      sla: {
+        arrival_time: '2026-11-05 14:00:00',
+        window_hours: 2,
+        is_overdue: false,
+        response_started_at: '2026-11-05 14:15:00'
+      }
+    },
+
+    {
+      id: 'MOD-2026-103',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_employee: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432',
+        ref: 'EMP-HD-04'
+      },
+      booking_id: 'BK-2026-1052',
+      customer_id: 'CUST-1008',
+      customer_name_ar: 'محمود طه رضوان',
+      customer_name_en: 'Mahmoud Taha Radwan',
+      customer_phone: '01234567898',
+      customer_whatsapp: '01234567898',
+      created_at: '2026-11-06 08:30', // > 2 hours ago -> OVERDUE in 'new' status!
+      timestamp_iso: '2026-11-06T08:30:00',
+      request_status: 'new', // Overdue test case!
+      payment_status: 'partially_paid',
+      original_program: {
+        name_ar: 'عمرة برية اقتصادية (حافلات)',
+        name_en: 'Budget Land Umrah (Buses)',
+        type_ar: 'بري اقتصادي',
+        type_en: 'Budget Land',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-20',
+        return_date: '2027-01-30',
+        total_price: 42000,
+        hotel_ar: 'فندق دار الهجرة (مكة)',
+        hotel_en: 'Dar Al-Hijra (Makkah)',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة سريعة طيران اقتصادي',
+        name_en: 'Express Economy Flight Umrah',
+        type_ar: 'طيران سريع',
+        type_en: 'Express Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-22',
+        return_date: '2027-01-29',
+        total_price: 62000,
+        hotel_ar: 'فندق صفوة مكة (مكة) — أجياد (المدينة)',
+        hotel_en: 'Safwat Makkah — Ajyad (Madinah)',
+        travelers_count: 2,
+        modification_reason_ar: 'تعديل وسيلة السفر من الحافلة البرية إلى الطيران توفيراً للوقت لظروف عمل العميل.',
+        modification_reason_en: 'Changed transport from land coach to flight to accommodate customer work schedule.'
+      },
+      original_deposit: 15000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-885',
+          date: '2026-11-06 09:10',
+          amount: 10000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي (الأهلي)',
+          payment_method_en: 'Bank Transfer (NBE)',
+          receipt_ref: 'RCP-BNK-9922',
+          recorded_by_ar: 'أشرف القاضي',
+          recorded_by_en: 'Ashraf El-Kady',
+          review_status: 'pending_review',
+          evidence: { filename: 'Receipt_9922.pdf', size: '1.2 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: {
+        is_closed: false,
+        closed_at: null,
+        messages: [
+          {
+            id: 'MSG-103-1',
+            sender_type: 'company',
+            sender_name_ar: 'أشرف القاضي',
+            sender_name_en: 'Ashraf El-Kady',
+            sender_role_ar: 'مسؤول العمليات — شركة الهدى',
+            sender_role_en: 'Operations Officer — Al-Huda',
+            date: '2026-11-06 08:32',
+            content_ar: 'يرجى متابعة الطلب للأهمية؛ العميل يرغب في حجز تذاكر الطيران قبل ارتفاع الأسعار.',
+            content_en: 'Please follow up urgently; customer wants to issue flight tickets before price rise.'
+          }
+        ]
+      },
+      status_history: [],
+      activity_log: [
+        {
+          id: 'ACT-MOD-20',
+          date: '2026-11-06 08:30',
+          title_ar: 'وصول طلب تعديل جديد',
+          title_en: 'New Modification Request Received',
+          desc_ar: 'تم إرسال طلب التعديل رقم MOD-2026-103 عبر بوابة الشريك وبدء احتساب مؤقت الاستجابة',
+          desc_en: 'Request MOD-2026-103 arrived via partner portal; response timer started',
+          actor_ar: 'أشرف القاضي',
+          actor_en: 'Ashraf El-Kady',
+          type: 'creation'
+        }
+      ],
+      sla: {
+        arrival_time: '2026-11-06 08:30:00',
+        window_hours: 2,
+        is_overdue: true, // OVERDUE indicator!
+        response_started_at: null
+      }
+    },
+
+    {
+      id: 'MOD-2026-104',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_employee: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432',
+        ref: 'EMP-HD-04'
+      },
+      booking_id: 'BK-2026-1055',
+      customer_id: 'CUST-1011',
+      customer_name_ar: 'عمر خالد الصاوي',
+      customer_name_en: 'Omar Khaled El-Sawy',
+      customer_phone: '01122334411',
+      customer_whatsapp: '01122334411',
+      created_at: '2026-11-06 13:40',
+      timestamp_iso: '2026-11-06T13:40:00',
+      request_status: 'new', // Fresh within SLA
+      payment_status: 'unpaid',
+      original_program: {
+        name_ar: 'عمرة اقتصادية موفرة (طيران)',
+        name_en: 'Umrah Economy Saver (Flight)',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-05',
+        return_date: '2027-02-15',
+        total_price: 54000,
+        hotel_ar: 'فندق منازل العين (مكة)',
+        hotel_en: 'Manazel Al-Ain (Makkah)',
+        travelers_count: 1
+      },
+      new_program: {
+        name_ar: 'عمرة ٤ نجوم مميزة (طيران مباشر)',
+        name_en: '4-Star Distinctive Umrah (Direct Flight)',
+        type_ar: 'طيران ٤ نجوم',
+        type_en: '4-Star Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-05',
+        return_date: '2027-02-15',
+        total_price: 84000,
+        hotel_ar: 'فندق سويس أوتيل المقام (مكة)',
+        hotel_en: 'Swissotel Al Maqam (Makkah)',
+        travelers_count: 1,
+        modification_reason_ar: 'طلب العميل ترقية مستوى الإقامة إلى غرفة مفردة مطلة في فندق سويس أوتيل المقام.',
+        modification_reason_en: 'Customer requested single room upgrade with Haram view in Swissotel Al Maqam.'
+      },
+      original_deposit: 20000,
+      additional_payments: [],
+      internal_notes: [],
+      conversation: {
+        is_closed: false,
+        closed_at: null,
+        messages: [
+          {
+            id: 'MSG-104-1',
+            sender_type: 'company',
+            sender_name_ar: 'أشرف القاضي',
+            sender_name_en: 'Ashraf El-Kady',
+            sender_role_ar: 'مسؤول العمليات — شركة الهدى',
+            sender_role_en: 'Operations Officer — Al-Huda',
+            date: '2026-11-06 13:42',
+            content_ar: 'تم إدخال الطلب وتأكيد توفر الغرفة المفردة، بانتظار سداد الفارق.',
+            content_en: 'Request submitted and single room availability confirmed; awaiting difference payment.'
+          }
+        ]
+      },
+      status_history: [],
+      activity_log: [
+        {
+          id: 'ACT-MOD-30',
+          date: '2026-11-06 13:40',
+          title_ar: 'استلام طلب تعديل جديد',
+          title_en: 'New Modification Request Received',
+          desc_ar: 'تسجيل طلب الترقية لغرفة مفردة في سويس أوتيل',
+          desc_en: 'Single room upgrade request in Swissotel received',
+          actor_ar: 'أشرف القاضي',
+          actor_en: 'Ashraf El-Kady',
+          type: 'creation'
+        }
+      ],
+      sla: {
+        arrival_time: '2026-11-06 13:40:00',
+        window_hours: 2,
+        is_overdue: false,
+        response_started_at: null
+      }
+    },
+
+    // --- Al-Fairouz (COMP-102) Requests ---
+    {
+      id: 'MOD-2026-105',
+      company_id: 'COMP-102',
+      company_name_ar: 'مؤسسة الفيروز لرحلات الحج والعمرة',
+      company_name_en: 'Al-Fairouz Hajj & Umrah Agency',
+      company_employee: {
+        name_ar: 'ممدوح الشامي',
+        name_en: 'Mamdouh El-Shamy',
+        phone: '01223456789',
+        whatsapp: '01223456789',
+        ref: 'EMP-FZ-02'
+      },
+      booking_id: 'BK-2026-1046',
+      customer_id: 'CUST-1002',
+      customer_name_ar: 'منى عبد الرحمن السيد',
+      customer_name_en: 'Mona Abdel-Rahman El-Sayed',
+      customer_phone: '01234567892',
+      customer_whatsapp: '01234567892',
+      created_at: '2026-11-06 09:00',
+      timestamp_iso: '2026-11-06T09:00:00',
+      request_status: 'in_progress',
+      payment_status: 'paid_full',
+      original_program: {
+        name_ar: 'عمرة ٥ نجوم فاخرة (طيران)',
+        name_en: '5-Star Deluxe Umrah (Flight)',
+        type_ar: 'طيران فاخر',
+        type_en: 'Deluxe Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-15',
+        return_date: '2027-01-25',
+        total_price: 124000,
+        hotel_ar: 'فندق دار التوحيد (مكة) — هيلتون المدينة (المدينة)',
+        hotel_en: 'Dar Al-Tawhid (Makkah) — Hilton Madinah',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة كبار الشخصيات VIP (طيران مباشر)',
+        name_en: 'VIP Royal Umrah (Direct Flight)',
+        type_ar: 'طيران VIP خاص',
+        type_en: 'VIP Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-15',
+        return_date: '2027-01-26',
+        total_price: 154000,
+        hotel_ar: 'فندق قصر رافلز مكة (مكة) — أوبروي (المدينة)',
+        hotel_en: 'Raffles Makkah Palace — Oberoi Madinah',
+        travelers_count: 2,
+        modification_reason_ar: 'ترقية باقة الإقامة لجناح ملكي مطل مباشرة على الكعبة المشرفة في فندق رافلز مكة.',
+        modification_reason_en: 'Upgrade to Royal Kaaba-view suite in Raffles Makkah Palace.'
+      },
+      original_deposit: 124000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-886',
+          date: '2026-11-06 09:30',
+          amount: 30000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي بنك مصر',
+          payment_method_en: 'Bank Transfer (BM)',
+          receipt_ref: 'RCP-BNK-9930',
+          recorded_by_ar: 'ممدوح الشامي',
+          recorded_by_en: 'Mamdouh El-Shamy',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-06 10:00',
+          evidence: { filename: 'BM_Transfer_9930.pdf', size: '1.5 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: {
+        is_closed: false,
+        closed_at: null,
+        messages: [
+          {
+            id: 'MSG-105-1',
+            sender_type: 'company',
+            sender_name_ar: 'ممدوح الشامي',
+            sender_name_en: 'Mamdouh El-Shamy',
+            sender_role_ar: 'مدير الحجوزات — مؤسسة الفيروز',
+            sender_role_en: 'Booking Manager — Al-Fairouz',
+            date: '2026-11-06 09:05',
+            content_ar: 'تم تأكيد جناح رافلز للعميلة منى، وتم تحويل فارق السعر كاملاً.',
+            content_en: 'Raffles suite confirmed for client Mona; full difference amount transferred.'
+          }
+        ]
+      },
+      status_history: [
+        {
+          from_status: 'new',
+          to_status: 'in_progress',
+          date: '2026-11-06 09:20',
+          employee_ar: 'أحمد صبري',
+          employee_en: 'Ahmed Sabry',
+          note_ar: 'مراجعة تحويل الفيروز',
+          note_en: 'Audit of Al-Fairouz transfer'
+        }
+      ],
+      activity_log: [],
+      sla: {
+        arrival_time: '2026-11-06 09:00:00',
+        window_hours: 2,
+        is_overdue: false,
+        response_started_at: '2026-11-06 09:20:00'
+      }
+    },
+
+    {
+      id: 'MOD-2026-106',
+      company_id: 'COMP-102',
+      company_name_ar: 'مؤسسة الفيروز لرحلات الحج والعمرة',
+      company_name_en: 'Al-Fairouz Hajj & Umrah Agency',
+      company_employee: {
+        name_ar: 'ممدوح الشامي',
+        name_en: 'Mamdouh El-Shamy',
+        phone: '01223456789',
+        whatsapp: '01223456789',
+        ref: 'EMP-FZ-02'
+      },
+      booking_id: 'BK-2026-1050',
+      customer_id: 'CUST-1006',
+      customer_name_ar: 'سلمى يوسف النجار',
+      customer_name_en: 'Salma Youssef El-Naggar',
+      customer_phone: '01234567896',
+      customer_whatsapp: '01234567896',
+      created_at: '2026-11-04 11:00',
+      timestamp_iso: '2026-11-04T11:00:00',
+      request_status: 'completed',
+      payment_status: 'paid_full',
+      original_program: {
+        name_ar: 'عمرة رجب الاقتصادية (طيران)',
+        name_en: 'Rajab Economy Umrah (Flight)',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-20',
+        return_date: '2027-01-30',
+        total_price: 52000,
+        hotel_ar: 'فندق أبراج الكسوة (مكة)',
+        hotel_en: 'Kiswah Towers (Makkah)',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة رجب ٤ نجوم مميزة',
+        name_en: 'Rajab 4-Star Umrah',
+        type_ar: 'طيران ٤ نجوم',
+        type_en: '4-Star Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-20',
+        return_date: '2027-01-30',
+        total_price: 72000,
+        hotel_ar: 'فندق موفنبيك برج هاجر (مكة)',
+        hotel_en: 'Movenpick Hajar Tower (Makkah)',
+        travelers_count: 2,
+        modification_reason_ar: 'ترقية فندق مكة إلى موفنبيك برج هاجر.',
+        modification_reason_en: 'Hotel upgrade to Movenpick Hajar Tower.'
+      },
+      original_deposit: 52000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-887',
+          date: '2026-11-04 11:30',
+          amount: 20000,
+          payment_method: 'card',
+          payment_method_ar: 'بطاقة ائتمانية بنكية',
+          payment_method_en: 'Credit Card',
+          receipt_ref: 'RCP-CRD-8821',
+          recorded_by_ar: 'ممدوح الشامي',
+          recorded_by_en: 'Mamdouh El-Shamy',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-04 12:00',
+          evidence: { filename: 'Card_Auth_8821.pdf', size: '760 KB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: { is_closed: true, closed_at: '2026-11-04 14:00', messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-04 11:00:00', window_hours: 2, is_overdue: false, response_started_at: '2026-11-04 11:15:00' }
+    },
+
+    // --- Manasek Global (COMP-103) Requests ---
+    {
+      id: 'MOD-2026-107',
+      company_id: 'COMP-103',
+      company_name_ar: 'شركة مناسك العالمية للسياحة',
+      company_name_en: 'Manasek Global Travel',
+      company_employee: {
+        name_ar: 'حسام البدري',
+        name_en: 'Hossam El-Badry',
+        phone: '01099887766',
+        whatsapp: '01099887766',
+        ref: 'EMP-MN-01'
+      },
+      booking_id: 'BK-2026-1047',
+      customer_id: 'CUST-1003',
+      customer_name_ar: 'طارق فؤاد المهدي',
+      customer_name_en: 'Tarek Fouad El-Mahdy',
+      customer_phone: '01234567893',
+      customer_whatsapp: '01234567893',
+      created_at: '2026-11-06 07:15', // > 2 hours -> Overdue!
+      timestamp_iso: '2026-11-06T07:15:00',
+      request_status: 'new', // Overdue test case!
+      payment_status: 'partially_paid',
+      original_program: {
+        name_ar: 'عمرة برية مميزة (حافلات حديثة)',
+        name_en: 'Distinctive Land Umrah (Modern Coaches)',
+        type_ar: 'بري سياحي',
+        type_en: 'Land Coach',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-10',
+        return_date: '2027-01-20',
+        total_price: 36000,
+        hotel_ar: 'فندق صفوة الضيافة (مكة)',
+        hotel_en: 'Safwat Al-Diyafa (Makkah)',
+        travelers_count: 1
+      },
+      new_program: {
+        name_ar: 'عمرة طيران اقتصادي موفر',
+        name_en: 'Economy Saver Flight Umrah',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-12',
+        return_date: '2027-01-20',
+        total_price: 56000,
+        hotel_ar: 'فندق أبراج الكسوة (مكة)',
+        hotel_en: 'Kiswah Towers (Makkah)',
+        travelers_count: 1,
+        modification_reason_ar: 'تعديل موعد السفر وحجز طيران لتفادي إرهاق السفر البري.',
+        modification_reason_en: 'Changed transport to flight to avoid long land coach travel.'
+      },
+      original_deposit: 16000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-888',
+          date: '2026-11-06 07:45',
+          amount: 15000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي الأهلي',
+          payment_method_en: 'Bank Transfer (NBE)',
+          receipt_ref: 'RCP-BNK-9941',
+          recorded_by_ar: 'حسام البدري',
+          recorded_by_en: 'Hossam El-Badry',
+          review_status: 'pending_review',
+          evidence: { filename: 'Receipt_9941.pdf', size: '1.3 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: { is_closed: false, closed_at: null, messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-06 07:15:00', window_hours: 2, is_overdue: true, response_started_at: null }
+    },
+
+    // --- Al-Safa (COMP-104) Requests ---
+    {
+      id: 'MOD-2026-108',
+      company_id: 'COMP-104',
+      company_name_ar: 'شركة الصفا للنقل والخدمات السياحية',
+      company_name_en: 'Al-Safa Travel & Tourism',
+      company_employee: {
+        name_ar: 'خالد عبد الوهاب',
+        name_en: 'Khaled Abdel Wahab',
+        phone: '01144556677',
+        whatsapp: '01144556677',
+        ref: 'EMP-SF-03'
+      },
+      booking_id: 'BK-2026-1048',
+      customer_id: 'CUST-1004',
+      customer_name_ar: 'فاطمة حسن البنا',
+      customer_name_en: 'Fatma Hassan El-Banna',
+      customer_phone: '01234567894',
+      customer_whatsapp: '01234567894',
+      created_at: '2026-11-05 10:00',
+      timestamp_iso: '2026-11-05T10:00:00',
+      request_status: 'in_progress',
+      payment_status: 'partially_paid',
+      original_program: {
+        name_ar: 'عمرة شعبان البرية (حافلات VIP)',
+        name_en: 'Shaaban Land VIP Umrah (VIP Buses)',
+        type_ar: 'بري VIP',
+        type_en: 'Land VIP',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-01',
+        return_date: '2027-02-12',
+        total_price: 48000,
+        hotel_ar: 'فندق دار الإيمان (مكة)',
+        hotel_en: 'Dar Al-Eiman (Makkah)',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة شعبان طيران اقتصادي',
+        name_en: 'Shaaban Economy Flight Umrah',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-03',
+        return_date: '2027-02-12',
+        total_price: 78000,
+        hotel_ar: 'فندق بولمان زمزم مكة',
+        hotel_en: 'Pullman Zamzam Makkah',
+        travelers_count: 2,
+        modification_reason_ar: 'ترقية السفر إلى طيران وإقامة بولمان زمزم.',
+        modification_reason_en: 'Upgraded to flight and Pullman Zamzam hotel.'
+      },
+      original_deposit: 24000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-889',
+          date: '2026-11-05 10:30',
+          amount: 30000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي بنك القاهرة',
+          payment_method_en: 'Bank Transfer (BDC)',
+          receipt_ref: 'RCP-BNK-9952',
+          recorded_by_ar: 'خالد عبد الوهاب',
+          recorded_by_en: 'Khaled Abdel Wahab',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-05 11:15',
+          evidence: { filename: 'Receipt_9952.pdf', size: '1.2 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: { is_closed: false, closed_at: null, messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-05 10:00:00', window_hours: 2, is_overdue: false, response_started_at: '2026-11-05 10:15:00' }
+    },
+
+    // --- Al-Baraka (COMP-105) Requests ---
+    {
+      id: 'MOD-2026-109',
+      company_id: 'COMP-105',
+      company_name_ar: 'شركة البركة لخدمات المعتمرين',
+      company_name_en: 'Al-Baraka Umrah Services',
+      company_employee: {
+        name_ar: 'نبيل غانم',
+        name_en: 'Nabil Ghanem',
+        phone: '01011223344',
+        whatsapp: '01011223344',
+        ref: 'EMP-BK-05'
+      },
+      booking_id: 'BK-2026-1051',
+      customer_id: 'CUST-1007',
+      customer_name_ar: 'زينب مصطفى كمال',
+      customer_name_en: 'Zeinab Mostafa Kamal',
+      customer_phone: '01234567897',
+      customer_whatsapp: '01234567897',
+      created_at: '2026-11-06 11:00',
+      timestamp_iso: '2026-11-06T11:00:00',
+      request_status: 'in_progress',
+      payment_status: 'paid_full',
+      original_program: {
+        name_ar: 'عمرة برية فاخرة — فنادق الحرم',
+        name_en: 'Deluxe Land Umrah — Haram Hotels',
+        type_ar: 'بري فاخر',
+        type_en: 'Deluxe Land',
+        season_ar: 'شوال ١٤٤٨ هـ',
+        season_en: 'Shawwal 1448 AH',
+        travel_date: '2027-04-10',
+        return_date: '2027-04-20',
+        total_price: 56000,
+        hotel_ar: 'فندق أبراج الكسوة (مكة)',
+        hotel_en: 'Kiswah Towers (Makkah)',
+        travelers_count: 1
+      },
+      new_program: {
+        name_ar: 'عمرة شوال الاقتصادية طيران مباشر',
+        name_en: 'Shawwal Economy Umrah Direct Flight',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'شوال ١٤٤٨ هـ',
+        season_en: 'Shawwal 1448 AH',
+        travel_date: '2027-04-12',
+        return_date: '2027-04-20',
+        total_price: 50000,
+        hotel_ar: 'فندق روابي مكة (مكة)',
+        hotel_en: 'Rawabi Makkah (Makkah)',
+        travelers_count: 1,
+        modification_reason_ar: 'تعديل وسيلة السفر إلى طيران مع تخفيض تكلفة الإقامة لتوفير الميزانية.',
+        modification_reason_en: 'Changed transport to flight while adjusting room category to fit budget.'
+      },
+      original_deposit: 50000,
+      additional_payments: [],
+      internal_notes: [],
+      conversation: { is_closed: false, closed_at: null, messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-06 11:00:00', window_hours: 2, is_overdue: false, response_started_at: '2026-11-06 11:20:00' }
+    },
+
+    // --- Dar Al-Salam (COMP-106) Requests ---
+    {
+      id: 'MOD-2026-110',
+      company_id: 'COMP-106',
+      company_name_ar: 'شركة دار السلام للسياحة والحج والعمرة',
+      company_name_en: 'Dar Al-Salam Hajj & Umrah',
+      company_employee: {
+        name_ar: 'طارق منصور',
+        name_en: 'Tarek Mansour',
+        phone: '01277889900',
+        whatsapp: '01277889900',
+        ref: 'EMP-DS-01'
+      },
+      booking_id: 'BK-2026-1053',
+      customer_id: 'CUST-1009',
+      customer_name_ar: 'إيمان فتحي عاشور',
+      customer_name_en: 'Iman Fathy Ashour',
+      customer_phone: '01234567899',
+      customer_whatsapp: '01234567899',
+      created_at: '2026-11-05 16:30',
+      timestamp_iso: '2026-11-05T16:30:00',
+      request_status: 'completed',
+      payment_status: 'paid_full',
+      original_program: {
+        name_ar: 'عمرة اقتصادية موفرة (طيران)',
+        name_en: 'Umrah Economy Saver (Flight)',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-18',
+        return_date: '2027-01-28',
+        total_price: 76000,
+        hotel_ar: 'فندق أنوار الضيافة (مكة)',
+        hotel_en: 'Anwar Al-Diyafa (Makkah)',
+        travelers_count: 2
+      },
+      new_program: {
+        name_ar: 'عمرة ٤ نجوم محبس الجن (طيران)',
+        name_en: '4-Star Mahbas Al-Jin Umrah (Flight)',
+        type_ar: 'طيران ٤ نجوم',
+        type_en: '4-Star Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-18',
+        return_date: '2027-01-28',
+        total_price: 92000,
+        hotel_ar: 'فندق إيلاف أجياد (مكة) — هيلتون المدينة',
+        hotel_en: 'Elaf Ajyad (Makkah) — Hilton Madinah',
+        travelers_count: 2,
+        modification_reason_ar: 'ترقية الفندق بناءً على رغبة العميل وإضافة وجبات بوفيه كامل.',
+        modification_reason_en: 'Hotel upgraded with full buffet meals at customer request.'
+      },
+      original_deposit: 76000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-890',
+          date: '2026-11-05 16:45',
+          amount: 16000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي الأهلي',
+          payment_method_en: 'Bank Transfer (NBE)',
+          receipt_ref: 'RCP-BNK-9963',
+          recorded_by_ar: 'طارق منصور',
+          recorded_by_en: 'Tarek Mansour',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-05 17:15',
+          evidence: { filename: 'Receipt_9963.pdf', size: '1.2 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: { is_closed: true, closed_at: '2026-11-05 17:30', messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-05 16:30:00', window_hours: 2, is_overdue: false, response_started_at: '2026-11-05 16:40:00' }
+    },
+
+    // --- Al-Taqwa (COMP-107) Requests ---
+    {
+      id: 'MOD-2026-111',
+      company_id: 'COMP-107',
+      company_name_ar: 'شركة التقوى للسياحة والرحلات الدينية',
+      company_name_en: 'Al-Taqwa Travel & Tourism',
+      company_employee: {
+        name_ar: 'ياسر رضوان',
+        name_en: 'Yasser Radwan',
+        phone: '01066778899',
+        whatsapp: '01066778899',
+        ref: 'EMP-TQ-02'
+      },
+      booking_id: 'BK-2026-1054',
+      customer_id: 'CUST-1010',
+      customer_name_ar: 'جمال توفيق البدري',
+      customer_name_en: 'Gamal Tawfiq El-Badry',
+      customer_phone: '01234567810',
+      customer_whatsapp: '01234567810',
+      created_at: '2026-11-06 12:00',
+      timestamp_iso: '2026-11-06T12:00:00',
+      request_status: 'in_progress',
+      payment_status: 'partially_paid',
+      original_program: {
+        name_ar: 'عمرة التوفير البرية',
+        name_en: 'Budget Saver Land Umrah',
+        type_ar: 'بري اقتصادي',
+        type_en: 'Budget Land',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-24',
+        return_date: '2027-02-03',
+        total_price: 34000,
+        hotel_ar: 'فندق دار السلام (مكة)',
+        hotel_en: 'Dar Al-Salam (Makkah)',
+        travelers_count: 1
+      },
+      new_program: {
+        name_ar: 'عمرة رجب ٤ نجوم طيران',
+        name_en: 'Rajab 4-Star Flight Umrah',
+        type_ar: 'طيران ٤ نجوم',
+        type_en: '4-Star Flight',
+        season_ar: 'رجب ١٤٤٨ هـ',
+        season_en: 'Rajab 1448 AH',
+        travel_date: '2027-01-25',
+        return_date: '2027-02-03',
+        total_price: 64000,
+        hotel_ar: 'فندق ساعة مكة فيرمونت',
+        hotel_en: 'Fairmont Makkah Clock Tower',
+        travelers_count: 1,
+        modification_reason_ar: 'ترقية إلى طيران وإقامة ٥ نجوم بفيرمونت.',
+        modification_reason_en: 'Upgraded to flight and Fairmont Makkah.'
+      },
+      original_deposit: 15000,
+      additional_payments: [
+        {
+          id: 'PAY-MOD-891',
+          date: '2026-11-06 12:30',
+          amount: 25000,
+          payment_method: 'bank_transfer',
+          payment_method_ar: 'تحويل بنكي مصر',
+          payment_method_en: 'Bank Transfer (BM)',
+          receipt_ref: 'RCP-BNK-9975',
+          recorded_by_ar: 'ياسر رضوان',
+          recorded_by_en: 'Yasser Radwan',
+          review_status: 'approved',
+          reviewed_by_ar: 'أحمد صبري',
+          reviewed_by_en: 'Ahmed Sabry',
+          reviewed_at: '2026-11-06 13:00',
+          evidence: { filename: 'Receipt_9975.pdf', size: '1.1 MB' }
+        }
+      ],
+      internal_notes: [],
+      conversation: { is_closed: false, closed_at: null, messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-06 12:00:00', window_hours: 2, is_overdue: false, response_started_at: '2026-11-06 12:15:00' }
+    },
+
+    // --- Noor Al-Eman (COMP-108) Requests ---
+    {
+      id: 'MOD-2026-112',
+      company_id: 'COMP-108',
+      company_name_ar: 'شركة نور الإيمان لخدمات الحرمين',
+      company_name_en: 'Noor Al-Eman Haramain Services',
+      company_employee: {
+        name_ar: 'علاء عبد الباقي',
+        name_en: 'Alaa Abdel Baqi',
+        phone: '01122334455',
+        whatsapp: '01122334455',
+        ref: 'EMP-NE-01'
+      },
+      booking_id: 'BK-2026-1056',
+      customer_id: 'CUST-1012',
+      customer_name_ar: 'أشرف عبد الرحيم الديب',
+      customer_name_en: 'Ashraf Abdel Rahim El-Deeb',
+      customer_phone: '01122334412',
+      customer_whatsapp: '01122334412',
+      created_at: '2026-11-06 13:10',
+      timestamp_iso: '2026-11-06T13:10:00',
+      request_status: 'new',
+      payment_status: 'unpaid',
+      original_program: {
+        name_ar: 'عمرة اقتصادية طيران موفر',
+        name_en: 'Economy Saver Flight Umrah',
+        type_ar: 'طيران اقتصادي',
+        type_en: 'Economy Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-10',
+        return_date: '2027-02-20',
+        total_price: 58000,
+        hotel_ar: 'فندق أبراج الكسوة (مكة)',
+        hotel_en: 'Kiswah Towers (Makkah)',
+        travelers_count: 1
+      },
+      new_program: {
+        name_ar: 'عمرة النصف من شعبان المميزة',
+        name_en: 'Mid-Shaaban Premium Umrah',
+        type_ar: 'طيران مميز',
+        type_en: 'Premium Flight',
+        season_ar: 'شعبان ١٤٤٨ هـ',
+        season_en: 'Shaaban 1448 AH',
+        travel_date: '2027-02-15',
+        return_date: '2027-02-26',
+        total_price: 88000,
+        hotel_ar: 'فندق كونراد مكة جبل عمر',
+        hotel_en: 'Conrad Makkah Jabal Omar',
+        travelers_count: 1,
+        modification_reason_ar: 'تأجيل موعد السفر لمنتصف شعبان وترقية فندق مكة إلى كونراد جبل عمر.',
+        modification_reason_en: 'Rescheduled travel to mid-Shaaban and upgraded hotel to Conrad Jabal Omar.'
+      },
+      original_deposit: 20000,
+      additional_payments: [],
+      internal_notes: [],
+      conversation: { is_closed: false, closed_at: null, messages: [] },
+      status_history: [],
+      activity_log: [],
+      sla: { arrival_time: '2026-11-06 13:10:00', window_hours: 2, is_overdue: false, response_started_at: null }
+    }
+  ];
+
+  // Helper calculating approved amounts strictly
+  function calculateRequestFinancials(req) {
+    const origPrice = (req.original_program && req.original_program.total_price) || 0;
+    const newPrice = (req.new_program && req.new_program.total_price) || 0;
+    const origDeposit = req.original_deposit || 0;
+
+    const payments = req.additional_payments || [];
+    const approvedAdd = payments
+      .filter(p => p.review_status === 'approved')
+      .reduce((sum, p) => sum + (p.amount || 0), 0);
+    const pendingAdd = payments
+      .filter(p => p.review_status === 'pending_review' || p.review_status === 'pending')
+      .reduce((sum, p) => sum + (p.amount || 0), 0);
+
+    const totalApprovedPaid = origDeposit + approvedAdd;
+    const remainingAmount = Math.max(0, newPrice - totalApprovedPaid);
+    const progressPct = newPrice > 0 ? Math.min(100, Number(((totalApprovedPaid / newPrice) * 100).toFixed(2))) : 0;
+
+    return {
+      originalPrice: origPrice,
+      newPrice: newPrice,
+      originalDeposit: origDeposit,
+      approvedAdditional: approvedAdd,
+      pendingAdditional: pendingAdd,
+      totalApprovedPaid: totalApprovedPaid,
+      remainingAmount: remainingAmount,
+      progressPct: progressPct
+    };
+  }
+
+  let SLA_CONFIG_HOURS = 2; // Default 2 hours, max 24 hours
+
   return {
+    TOURISM_COMPANIES_REGISTRY,
+    PROGRAM_MODIFICATION_REQUESTS,
     BASE_KPIS,
     CUSTOMERS,
     TRANSACTIONS,
@@ -4686,6 +6060,349 @@
       return list;
     }
 
+,
+
+    // --- Program & Itinerary Modification Services (Phases 1-5) ---
+    getTourismCompaniesWithModifications: function () {
+      return TOURISM_COMPANIES_REGISTRY.map(comp => {
+        const compRequests = PROGRAM_MODIFICATION_REQUESTS.filter(r => r.company_id === comp.id);
+        const total = compRequests.length;
+        const newCount = compRequests.filter(r => r.request_status === 'new').length;
+        const inProgressCount = compRequests.filter(r => r.request_status === 'in_progress').length;
+        const completedCount = compRequests.filter(r => r.request_status === 'completed').length;
+
+        // Last request date
+        let lastDate = '—';
+        if (compRequests.length > 0) {
+          const sorted = compRequests.slice().sort((a, b) => (b.timestamp_iso || b.created_at).localeCompare(a.timestamp_iso || a.created_at));
+          lastDate = sorted[0].created_at;
+        }
+
+        return {
+          ...comp,
+          totalRequests: total,
+          newRequests: newCount,
+          inProgressRequests: inProgressCount,
+          completedRequests: completedCount,
+          lastRequestDate: lastDate
+        };
+      });
+    },
+
+    getCompanyDetails: function (companyId) {
+      return TOURISM_COMPANIES_REGISTRY.find(c => c.id === companyId) || null;
+    },
+
+    getCompanyModificationSummary: function (companyId) {
+      const compRequests = PROGRAM_MODIFICATION_REQUESTS.filter(r => r.company_id === companyId);
+      const total = compRequests.length;
+      const newCount = compRequests.filter(r => r.request_status === 'new').length;
+      const inProgressCount = compRequests.filter(r => r.request_status === 'in_progress').length;
+      const completedCount = compRequests.filter(r => r.request_status === 'completed').length;
+
+      // Strict Financial Rule: Total remaining balance of customers with modification requests
+      // Calculated using approved financial information only. Pending payments excluded.
+      const totalRemaining = compRequests.reduce((sum, req) => {
+        const fin = calculateRequestFinancials(req);
+        return sum + fin.remainingAmount;
+      }, 0);
+
+      return {
+        totalRequests: total,
+        newRequests: newCount,
+        inProgressRequests: inProgressCount,
+        completedRequests: completedCount,
+        totalRemainingBalance: totalRemaining
+      };
+    },
+
+    getCompanyModificationRequests: function (companyId, filterOptions) {
+      let list = PROGRAM_MODIFICATION_REQUESTS.filter(r => r.company_id === companyId);
+      const opts = filterOptions || {};
+
+      // 1. Search (Request ID, Booking ID, Customer Name, Customer Phone)
+      if (opts.search) {
+        const q = opts.search.toLowerCase().trim();
+        list = list.filter(r => {
+          return (r.id && r.id.toLowerCase().includes(q)) ||
+                 (r.booking_id && r.booking_id.toLowerCase().includes(q)) ||
+                 (r.customer_name_ar && r.customer_name_ar.toLowerCase().includes(q)) ||
+                 (r.customer_name_en && r.customer_name_en.toLowerCase().includes(q)) ||
+                 (r.customer_phone && r.customer_phone.includes(q));
+        });
+      }
+
+      // 2. Basic Filters
+      if (opts.modificationStatus && opts.modificationStatus !== 'all') {
+        list = list.filter(r => r.request_status === opts.modificationStatus);
+      }
+      if (opts.paymentStatus && opts.paymentStatus !== 'all') {
+        list = list.filter(r => r.payment_status === opts.paymentStatus);
+      }
+      if (opts.requestDateFrom) {
+        list = list.filter(r => (r.created_at.slice(0, 10)) >= opts.requestDateFrom);
+      }
+      if (opts.requestDateTo) {
+        list = list.filter(r => (r.created_at.slice(0, 10)) <= opts.requestDateTo);
+      }
+
+      // 3. Advanced Filters
+      if (opts.originalProgram && opts.originalProgram !== 'all') {
+        list = list.filter(r => r.original_program && r.original_program.name_ar === opts.originalProgram);
+      }
+      if (opts.newProgram && opts.newProgram !== 'all') {
+        list = list.filter(r => r.new_program && r.new_program.name_ar === opts.newProgram);
+      }
+      if (opts.travelDate) {
+        list = list.filter(r => r.new_program && r.new_program.travel_date === opts.travelDate);
+      }
+      if (opts.paymentReviewStatus && opts.paymentReviewStatus !== 'all') {
+        if (opts.paymentReviewStatus === 'has_pending') {
+          list = list.filter(r => (r.additional_payments || []).some(p => p.review_status === 'pending_review' || p.review_status === 'pending'));
+        } else if (opts.paymentReviewStatus === 'all_approved') {
+          list = list.filter(r => (r.additional_payments || []).length > 0 && (r.additional_payments || []).every(p => p.review_status === 'approved'));
+        }
+      }
+      if (opts.overdueOnly) {
+        list = list.filter(r => r.sla && r.sla.is_overdue);
+      }
+
+      // 4. Default Sorting: Newest First (timestamp descending)
+      list.sort((a, b) => {
+        const tsA = a.timestamp_iso || a.created_at;
+        const tsB = b.timestamp_iso || b.created_at;
+        return tsB.localeCompare(tsA);
+      });
+
+      return list.map(r => ({
+        ...r,
+        financials: calculateRequestFinancials(r)
+      }));
+    },
+
+    getModificationDetails: function (requestId) {
+      const req = PROGRAM_MODIFICATION_REQUESTS.find(r => r.id === requestId);
+      if (!req) return null;
+      return {
+        ...req,
+        financials: calculateRequestFinancials(req)
+      };
+    },
+
+    approveModificationPayment: function (requestId, paymentId, reviewerName) {
+      const req = PROGRAM_MODIFICATION_REQUESTS.find(r => r.id === requestId);
+      if (!req) return false;
+      const payment = (req.additional_payments || []).find(p => p.id === paymentId);
+      if (!payment) return false;
+
+      payment.review_status = 'approved';
+      payment.reviewed_by_ar = reviewerName || 'أحمد صبري';
+      payment.reviewed_by_en = (reviewerName === 'أحمد صبري' || !reviewerName) ? 'Ahmed Sabry' : reviewerName;
+      payment.reviewed_at = new Date().toISOString().replace('T', ' ').slice(0, 16);
+
+      // Check if all payments approved and balance zero to adjust overall payment status
+      const fin = calculateRequestFinancials(req);
+      if (fin.remainingAmount === 0) {
+        req.payment_status = 'paid_full';
+      } else if (fin.totalApprovedPaid > 0) {
+        req.payment_status = 'partially_paid';
+      }
+
+      // Add to activity log
+      req.activity_log.unshift({
+        id: 'ACT-MOD-' + Date.now(),
+        date: payment.reviewed_at,
+        title_ar: 'اعتماد سداد إضافي',
+        title_en: 'Additional Payment Approved',
+        desc_ar: 'تم اعتماد المعاملة ' + payment.id + ' بمبلغ ' + payment.amount.toLocaleString() + ' ج.م بنجاح.',
+        desc_en: 'Transaction ' + payment.id + ' of ' + payment.amount.toLocaleString() + ' EGP approved successfully.',
+        actor_ar: payment.reviewed_by_ar,
+        actor_en: payment.reviewed_by_en,
+        type: 'payment'
+      });
+
+      return true;
+    },
+
+    sendModificationChatMessage: function (requestId, text, senderRole, senderName) {
+      return this.sendModificationMessage(requestId, text, senderName, senderRole);
+    },
+
+    updateModificationStatus: function (requestId, newStatus, employeeName, confirmationData) {
+      const req = PROGRAM_MODIFICATION_REQUESTS.find(r => r.id === requestId);
+      if (!req) return false;
+      if (newStatus !== 'new' && newStatus !== 'in_progress' && newStatus !== 'completed') return false;
+
+      const prevStatus = req.request_status;
+      req.request_status = newStatus;
+      const nowStr = new Date().toISOString().replace('T', ' ').slice(0, 16);
+
+      // If moved to in_progress from new, stop initial SLA timer
+      if (prevStatus === 'new' && newStatus === 'in_progress') {
+        if (req.sla) {
+          req.sla.response_started_at = nowStr;
+          req.sla.is_overdue = false;
+        }
+      }
+
+      // If completed, automatically close conversation and record confirmation
+      if (newStatus === 'completed') {
+        if (req.conversation) {
+          req.conversation.is_closed = true;
+          req.conversation.closed_at = nowStr;
+        }
+      }
+
+      const empAr = employeeName || 'أحمد صبري';
+      const empEn = empAr === 'أحمد صبري' ? 'Ahmed Sabry' : empAr;
+
+      req.status_history.unshift({
+        from_status: prevStatus,
+        to_status: newStatus,
+        date: nowStr,
+        employee_ar: empAr,
+        employee_en: empEn,
+        note_ar: newStatus === 'completed' ? 'تم استيفاء تأكيد شركة السياحة باكتمال التعديل وتحديث البرنامج دفترياً' : 'بدء متابعة ودراسة طلب التعديل',
+        note_en: newStatus === 'completed' ? 'Company confirmation satisfied and program updated in booking' : 'Started request follow-up and review'
+      });
+
+      req.activity_log.unshift({
+        id: 'ACT-MOD-' + Date.now(),
+        date: nowStr,
+        title_ar: newStatus === 'completed' ? 'اكتمال تنفيذ طلب التعديل' : 'تحديث حالة الطلب إلى قيد المتابعة',
+        title_en: newStatus === 'completed' ? 'Modification Request Completed' : 'Status Updated to In Progress',
+        desc_ar: newStatus === 'completed' ? 'تم اعتماد التعديل رسمياً وإغلاق المحادثة' : 'تم بدء المتابعة وإيقاف مؤقت الاستجابة الأولي',
+        desc_en: newStatus === 'completed' ? 'Request officially completed and conversation closed' : 'Follow-up initiated; initial response timer stopped',
+        actor_ar: empAr,
+        actor_en: empEn,
+        type: 'status'
+      });
+
+      return true;
+    },
+
+    sendModificationChatMessage: function (requestId, text, senderRole, senderName) {
+      return this.sendModificationMessage(requestId, text, senderName, senderRole);
+    },
+
+    addModificationInternalNote: function (requestId, text, authorName) {
+      const req = PROGRAM_MODIFICATION_REQUESTS.find(r => r.id === requestId);
+      if (!req || !text) return false;
+
+      const nowStr = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const authAr = authorName || 'أحمد صبري';
+      const authEn = authAr === 'أحمد صبري' ? 'Ahmed Sabry' : authAr;
+
+      req.internal_notes.unshift({
+        id: 'NOTE-' + Date.now(),
+        author_ar: authAr,
+        author_en: authEn,
+        date: nowStr,
+        text_ar: text,
+        text_en: text
+      });
+
+      req.activity_log.unshift({
+        id: 'ACT-MOD-' + Date.now(),
+        date: nowStr,
+        title_ar: 'إضافة ملاحظة داخلية خاصة',
+        title_en: 'Internal Note Added',
+        desc_ar: text.length > 50 ? text.slice(0, 50) + '...' : text,
+        desc_en: text.length > 50 ? text.slice(0, 50) + '...' : text,
+        actor_ar: authAr,
+        actor_en: authEn,
+        type: 'note'
+      });
+
+      return true;
+    },
+
+    sendModificationChatMessage: function (requestId, text, senderRole, senderName) {
+      return this.sendModificationMessage(requestId, text, senderName, senderRole);
+    },
+
+    sendModificationMessage: function (requestId, text, senderName, senderRole) {
+      const req = PROGRAM_MODIFICATION_REQUESTS.find(r => r.id === requestId);
+      if (!req || !text) return false;
+      if (req.conversation && req.conversation.is_closed) return false;
+
+      const nowStr = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const nameAr = senderName || 'أحمد صبري';
+      const nameEn = nameAr === 'أحمد صبري' ? 'Ahmed Sabry' : nameAr;
+
+      if (!req.conversation) {
+        req.conversation = { is_closed: false, closed_at: null, messages: [] };
+      }
+
+      req.conversation.messages.push({
+        id: 'MSG-' + Date.now(),
+        sender_type: 'accounts',
+        sender_name_ar: nameAr,
+        sender_name_en: nameEn,
+        sender_role_ar: senderRole || 'موظف حسابات مالية — ميقات',
+        sender_role_en: senderRole || 'Financial Accounts Officer — Miqat',
+        date: nowStr,
+        content_ar: text,
+        content_en: text
+      });
+
+      req.activity_log.unshift({
+        id: 'ACT-MOD-' + Date.now(),
+        date: nowStr,
+        title_ar: 'إرسال رسالة في محادثة الطلب',
+        title_en: 'Message Sent in Conversation',
+        desc_ar: text.length > 40 ? text.slice(0, 40) + '...' : text,
+        desc_en: text.length > 40 ? text.slice(0, 40) + '...' : text,
+        actor_ar: nameAr,
+        actor_en: nameEn,
+        type: 'message'
+      });
+
+      return true;
+    },
+
+    sendModificationChatMessage: function (requestId, text, senderRole, senderName) {
+      return this.sendModificationMessage(requestId, text, senderName, senderRole);
+    },
+
+    getSLAConfigHours: function () {
+      return SLA_CONFIG_HOURS;
+    },
+
+    setSLAConfigHours: function (hours) {
+      const h = Number(hours);
+      if (h > 0 && h <= 24) {
+        SLA_CONFIG_HOURS = h;
+        return true;
+      }
+      return false;
+    },
+
+    // Presence & Busy State Simulation (Accounts Staff)
+    _employeeState: 'online_available', // 'online_available' | 'online_busy' | 'offline'
+
+    getEmployeePresenceState: function () {
+      return this._employeeState;
+    },
+
+    setEmployeePresenceState: function (state) {
+      if (['online_available', 'online_busy', 'offline'].includes(state)) {
+        this._employeeState = state;
+        return true;
+      }
+      return false;
+    },
+
+    // Mock WhatsApp notification dispatch abstraction
+    sendMockWhatsAppNotification: function (phone, message) {
+      return {
+        success: true,
+        channel: 'whatsapp_mock_gateway',
+        recipient: phone,
+        message: message,
+        timestamp: new Date().toISOString()
+      };
+    }
 
   };
 });

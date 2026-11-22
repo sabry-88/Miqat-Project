@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="accounts_workspace.can_page_title">سجل الإلغاءات والتسوية | ميقات</title>
+  <!-- Google Fonts Preconnect & Professional Enterprise UI Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page accounts-cancellations-page">
+
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <!-- Top Global Header (Strictly Reused from Workspace Architecture) -->
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      
+      <!-- Brand & Mobile Toggle Area -->
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="فتح قائمة التنقل الجانبية" aria-expanded="false" data-i18n-aria="accounts_workspace.btn_open_menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="accounts-dashboard.html" class="acc-brand-link" aria-label="منصة ميقات للحسابات المالية">
+          <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="accounts_workspace.portal_brand">منصة ميقات للحسابات المالية</span>
+          </div>
+        </a>
+
+        <!-- Prominent Demo Data Badge -->
+        <div class="acc-demo-pill" role="status" aria-label="بيئة تجريبية توضيحية">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span data-i18n="accounts_workspace.demo_badge">بيانات توضيحية تجريبية</span>
+        </div>
+      </div>
+
+      <!-- Header Controls: Lang, Theme, Employee Card, Safe Logout -->
+      <div class="acc-header-actions acc-header-controls">
+        <!-- Language Switcher Button (Shows EN / AR) -->
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="acc-lang-switcher" aria-label="Switch to English" title="Switch Language">
+          <span class="lang-btn-text acc-lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="acc-theme-toggle" aria-label="Switch Theme" title="Toggle Light / Dark Mode">
+          <svg class="icon-moon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Employee Identity Card with Interactive Hover State -->
+        <div class="acc-employee-card" id="acc-employee-card" role="button" tabindex="0" aria-label="بيانات الموظف ومسؤول الحسابات" title="ملف موظف الحسابات | Accounts Officer Profile">
+          <div class="acc-employee-avatar" id="acc-employee-avatar">أ</div>
+          <div class="acc-employee-info acc-employee-details">
+            <span class="acc-employee-name" id="acc-employee-name" data-i18n="accounts_workspace.employee_name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" id="acc-employee-role" data-i18n="accounts_workspace.employee_role_badge">موظف حسابات مالية</span>
+          </div>
+        </div>
+
+        <!-- Safe Logout Button with Protective Confirmation Dialog -->
+        <button type="button" class="acc-logout-btn" id="acc-logout-btn" aria-label="تسجيل الخروج الآمن" data-i18n-aria="accounts_workspace.btn_logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="acc-logout-btn-text" data-i18n="accounts_workspace.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Layout Wrapper with Direction-Aware Sidebar -->
+  <div class="acc-layout-wrapper">
+    
+    <!-- Sidebar Drawer Backdrop (Mobile only) -->
+    <div class="acc-sidebar-backdrop acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <!-- 11-Item Shared Employee Sidebar -->
+    <aside class="acc-sidebar" id="acc-sidebar" role="navigation" aria-label="قائمة التنقل المحاسبية">
+      
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="accounts_workspace.nav_workspace_title">أقسام الحسابات المالية</span>
+        <button type="button" class="acc-drawer-close-btn acc-sidebar-close-btn" id="acc-drawer-close-btn" aria-label="إغلاق القائمة" data-i18n-aria="accounts_workspace.btn_close_menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="acc-sidebar-nav acc-nav-list" role="navigation">
+        <!-- 1. Dashboard -->
+        <a href="accounts-dashboard.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"></rect>
+              <rect x="14" y="3" width="7" height="5"></rect>
+              <rect x="14" y="12" width="7" height="9"></rect>
+              <rect x="3" y="16" width="7" height="5"></rect>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_dashboard">لوحة التحكم المالية</span>
+        </a>
+
+        <!-- 2. Customers Directory -->
+        <a href="accounts-customers.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 010 7.75"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customers">دليل العملاء والمعتمرين</span>
+        </a>
+
+        <!-- 3. Customer Profile -->
+        <a href="accounts-customer-details.html" class="acc-nav-item" id="acc-nav-customer-profile">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customer_profile">ملف العميل</span>
+        </a>
+
+        <!-- 4. Unified Bookings Register -->
+        <a href="accounts-bookings.html" class="acc-nav-item" id="acc-nav-bookings">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_bookings">سجل الحجوزات الموحد</span>
+        </a>
+
+        <!-- 5. Program & Itinerary Modifications -->
+        <a href="accounts-trip-changes.html" class="acc-nav-item" id="acc-nav-trip-changes">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_trip_changes">تعديلات البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. ACTIVE: Cancellations & Settlements Register -->
+        <a href="accounts-cancellations.html" class="acc-nav-item is-active" id="acc-nav-cancellations" aria-current="page">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_cancellations">سجل الإلغاءات والتسوية</span>
+        </a>
+
+        <!-- 7. Collections -->
+        <a href="#collections" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_collections">التحصيلات وإيداعات النقدية</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 8. Refunds Management -->
+        <a href="#refunds" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_refunds">إدارة طلبات الاسترداد</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 9. Reports -->
+        <a href="#reports" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_reports">التقارير اليومية والنسخ الاحتياطي</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 10. Notifications -->
+        <a href="#notifications" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_notifications">الإشعارات والتنبيهات المالية</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 11. Profile -->
+        <a href="#profile" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_profile">الملف الشخصي والإعدادات</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="acc-main-content" id="main-content" role="main">
+      <div class="acc-content-container">
+        
+        <!-- Page Header -->
+        <div class="acc-page-header">
+          <div class="acc-page-title-wrap">
+            <h1 class="acc-page-title can-title" data-i18n="accounts_workspace.can_header_title">سجل الإلغاءات والتسوية المالية</h1>
+            <p class="acc-page-subtitle" data-i18n="accounts_workspace.can_header_desc">إدارة وتدقيق طلبات إلغاء الحجوزات، تسوية المبالغ المستردة، ومتابعة التحويلات البنكية</p>
+          </div>
+          <div class="acc-page-header-actions">
+            <button type="button" class="btn btn-secondary" id="can-btn-quick-export" title="تصدير السجل المباشر بصيغة Excel">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.can_btn_export_all_xlsx">تصدير السجل كاملاً (Excel)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Phase 1: Summary KPI Cards Grid (5 Cards) -->
+        <section class="can-kpi-grid" aria-label="مؤشرات أداء سجل الإلغاءات والتسوية">
+          <!-- Card 1: Total Requests -->
+          <div class="can-kpi-card">
+            <div class="can-kpi-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+              </svg>
+            </div>
+            <div class="can-kpi-content">
+              <span class="can-kpi-title" data-i18n="accounts_workspace.can_kpi_total_requests">إجمالي طلبات الإلغاء</span>
+              <span class="can-kpi-value" id="kpi-total-requests">12</span>
+              <span class="can-kpi-sub" data-i18n="accounts_workspace.badge_within_sla">كافة السجلات المسجلة</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Awaiting Review -->
+          <div class="can-kpi-card is-warning">
+            <div class="can-kpi-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="can-kpi-content">
+              <span class="can-kpi-title" data-i18n="accounts_workspace.can_kpi_awaiting_review">بانتظار المراجعة والتدقيق</span>
+              <span class="can-kpi-value" id="kpi-awaiting-review">3</span>
+              <span class="can-kpi-sub" data-i18n="accounts_workspace.stepper_waiting">تحتاج تدقيقاً محاسبياً</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Pending Refunds -->
+          <div class="can-kpi-card">
+            <div class="can-kpi-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+            </div>
+            <div class="can-kpi-content">
+              <span class="can-kpi-title" data-i18n="accounts_workspace.can_kpi_pending_refunds">مستحقات بانتظار التحويل</span>
+              <span class="can-kpi-value" id="kpi-pending-refunds">4</span>
+              <span class="can-kpi-sub" id="kpi-pending-val">٣٥٦,٠٠٠ ج.م معلق</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Completed Refunds -->
+          <div class="can-kpi-card">
+            <div class="can-kpi-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="can-kpi-content">
+              <span class="can-kpi-title" data-i18n="accounts_workspace.can_kpi_completed_refunds">تسويات مستردة مكتملة</span>
+              <span class="can-kpi-value" id="kpi-completed-refunds">3</span>
+              <span class="can-kpi-sub" id="kpi-completed-val">١٩٢,٠٠٠ ج.م مسدد</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Failed Operations -->
+          <div class="can-kpi-card is-warning">
+            <div class="can-kpi-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="can-kpi-content">
+              <span class="can-kpi-title" data-i18n="accounts_workspace.can_kpi_failed_refunds">عمليات استرداد متعثرة</span>
+              <span class="can-kpi-value" id="kpi-failed-refunds">1</span>
+              <span class="can-kpi-sub" data-i18n="accounts_workspace.can_kpi_failed_refunds_sub">تتطلب تدخلاً وتصحيحاً</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Phase 2: Register Section Tabs (Current, Archive, All, Report Center) -->
+        <div class="can-register-tabs-wrap">
+          <nav class="can-register-tabs" role="tablist" aria-label="أقسام سجل الإلغاءات">
+            <button type="button" class="can-tab-btn is-active" id="can-tab-current" role="tab" aria-selected="true" data-section="current">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span data-i18n="accounts_workspace.can_tab_current">الإلغاءات الحالية</span>
+              <span class="can-tab-badge" id="badge-count-current">7</span>
+            </button>
+
+            <button type="button" class="can-tab-btn" id="can-tab-archive" role="tab" aria-selected="false" data-section="archive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                <rect x="1" y="3" width="22" height="5"></rect>
+                <line x1="10" y1="12" x2="14" y2="12"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.can_tab_archive">الحجوزات الملغاة السابقة (الأرشيف)</span>
+              <span class="can-tab-badge" id="badge-count-archive">3</span>
+            </button>
+
+            <button type="button" class="can-tab-btn" id="can-tab-all" role="tab" aria-selected="false" data-section="all">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.can_tab_all">جميع طلبات الإلغاء</span>
+              <span class="can-tab-badge" id="badge-count-all">12</span>
+            </button>
+
+            <button type="button" class="can-tab-btn" id="can-tab-reports" role="tab" aria-selected="false" data-section="reports">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.can_tab_reports">مركز التقارير والجدولة الآلية</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Section: Register Table & Filters (Displayed for current, archive, and all) -->
+        <div id="can-register-view">
+          
+          <!-- Toolbar Card: Search & Filters -->
+          <div class="can-toolbar-card">
+            <div class="can-toolbar-row">
+              <!-- Search Box -->
+              <div class="can-search-box">
+                <div class="can-search-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </div>
+                <input type="text" class="can-search-input" id="can-search-input" placeholder="بحث برقم الإلغاء، رقم الحجز، اسم العميل، الهاتف، أو شركة السياحة..." data-i18n-placeholder="accounts_workspace.can_search_placeholder">
+              </div>
+
+              <!-- Source Filter (Strictly: Customer vs Company) -->
+              <div class="can-filter-select-wrap">
+                <label for="can-filter-source" class="can-filter-label" data-i18n="accounts_workspace.can_filter_source_label">مصدر الطلب:</label>
+                <select class="can-select" id="can-filter-source">
+                  <option value="all" data-i18n="accounts_workspace.can_filter_source_all">كافة المصادر</option>
+                  <option value="customer" data-i18n="accounts_workspace.can_filter_source_customer">طلب إلغاء من العميل</option>
+                  <option value="company" data-i18n="accounts_workspace.can_filter_source_company">طلب إلغاء من شركة السياحة</option>
+                </select>
+              </div>
+
+              <!-- Cancellation Status Filter -->
+              <div class="can-filter-select-wrap">
+                <label for="can-filter-cancellation-status" class="can-filter-label" data-i18n="accounts_workspace.can_filter_can_status_label">حالة الإلغاء:</label>
+                <select class="can-select" id="can-filter-cancellation-status">
+                  <option value="all" data-i18n="accounts_workspace.can_filter_can_all">كافة حالات الإلغاء</option>
+                  <option value="under_review" data-i18n="accounts_workspace.can_filter_can_under_review">قيد المراجعة والتدقيق</option>
+                  <option value="cancelled" data-i18n="accounts_workspace.can_filter_can_approved">ملغي معتمد</option>
+                  <option value="rejected" data-i18n="accounts_workspace.can_filter_can_rejected">مرفوض</option>
+                </select>
+              </div>
+
+              <!-- Refund Status Filter -->
+              <div class="can-filter-select-wrap">
+                <label for="can-filter-refund-status" class="can-filter-label" data-i18n="accounts_workspace.can_filter_ref_status_label">حالة الاسترداد:</label>
+                <select class="can-select" id="can-filter-refund-status">
+                  <option value="all" data-i18n="accounts_workspace.can_filter_ref_all">كافة حالات الاسترداد</option>
+                  <option value="pending" data-i18n="accounts_workspace.can_filter_ref_pending">بانتظار التحويل</option>
+                  <option value="processing" data-i18n="accounts_workspace.can_filter_ref_processing">قيد المعالجة البنكية</option>
+                  <option value="completed" data-i18n="accounts_workspace.can_filter_ref_completed">مكتمل ومؤكد</option>
+                  <option value="failed" data-i18n="accounts_workspace.can_filter_ref_failed">متعثر / فاشل</option>
+                </select>
+              </div>
+
+              <!-- Advanced Filters Toggle & Actions -->
+              <div class="can-toolbar-actions">
+                <button type="button" class="btn btn-secondary btn-sm" id="can-btn-advanced-toggle">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                  <span data-i18n="accounts_workspace.can_btn_advanced_filters">تصفية متقدمة</span>
+                </button>
+
+                <button type="button" class="btn btn-secondary btn-sm" id="can-btn-clear-filters" title="إعادة ضبط الفلاتر">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                  </svg>
+                  <span data-i18n="accounts_workspace.can_btn_clear_filters">إعادة ضبط</span>
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm" id="can-btn-export-filtered" title="تصدير النتائج المفلترة للقسم الحالي">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span data-i18n="accounts_workspace.can_btn_export_filtered_xlsx">تصدير النتائج (Excel)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Advanced Filter Drawer -->
+            <div class="can-advanced-panel" id="can-advanced-panel">
+              <div class="can-advanced-grid">
+                <div class="can-advanced-item">
+                  <label for="can-filter-date-from" class="can-filter-label" data-i18n="accounts_workspace.filter_date_from">من تاريخ:</label>
+                  <input type="date" class="can-select" id="can-filter-date-from">
+                </div>
+
+                <div class="can-advanced-item">
+                  <label for="can-filter-date-to" class="can-filter-label" data-i18n="accounts_workspace.filter_date_to">إلى تاريخ:</label>
+                  <input type="date" class="can-select" id="can-filter-date-to">
+                </div>
+
+                <div class="can-advanced-item" style="grid-column: span 2; display: flex; align-items: center; gap: 8px; margin-top: 18px;">
+                  <input type="checkbox" id="can-filter-has-pending" style="width: 18px; height: 18px; cursor: pointer;">
+                  <label for="can-filter-has-pending" style="font-size: 0.82rem; font-weight: 600; cursor: pointer;" data-i18n="accounts_workspace.filter_payment_pending">يحتوي على مدفوعات معلقة بانتظار الاعتماد (مستثناة من الاسترداد)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Chips Bar -->
+          <div class="can-chips-bar" id="can-chips-bar" style="display: none;">
+            <span class="can-chips-heading" data-i18n="accounts_workspace.can_active_filters_heading">الفلاتر النشطة:</span>
+            <div id="can-chips-list" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+          </div>
+
+          <!-- Multi-column Data Table (13 Columns) -->
+          <div class="can-table-container">
+            <table class="can-table" id="can-table" aria-label="جدول سجل الإلغاءات والتسوية">
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_id">رقم الإلغاء</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_booking_id">رقم الحجز</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_customer">اسم العميل</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_company">شركة السياحة</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_source">المصدر</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_request_date">تاريخ الطلب</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_booking_total">قيمة الحجز</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_approved_paid">المدفوع المعتمد</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_refund_due">المستحق للاسترداد</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_can_status">حالة الإلغاء</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_ref_status">حالة الاسترداد</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_updated_at">آخر تحديث</th>
+                  <th scope="col" data-i18n="accounts_workspace.can_th_actions">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="can-table-body">
+                <!-- Dynamically populated by accounts-cancellations.js -->
+              </tbody>
+            </table>
+
+            <!-- Empty State -->
+            <div class="can-empty-state" id="can-empty-state" style="display: none;">
+              <div class="can-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </div>
+              <h3 class="can-empty-title" data-i18n="accounts_workspace.can_no_records_found">لا توجد طلبات إلغاء مطابقة لمعايير البحث الحالية</h3>
+              <p class="can-empty-desc" data-i18n="accounts_workspace.can_btn_clear_filters">جرّب تعديل كلمات البحث أو مسح فلاتر التصفية المطبقة لإظهار كافة السجلات.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Section: Phase 7 Report Center & Automated Schedules View -->
+        <div id="can-reports-view" style="display: none;">
+          <div class="acc-card" style="margin-bottom: 24px;">
+            <div class="acc-card-header">
+              <div>
+                <h2 class="acc-card-title" data-i18n="accounts_workspace.can_rep_center_title">مركز التقارير والجدولة الآلية للإلغاءات</h2>
+                <p class="acc-card-subtitle" data-i18n="accounts_workspace.can_rep_center_desc">إدارة التقارير المجدولة دورياً، تصدير كشوفات الإلغاءات المخصصة، وتتبع الإشعارات الآلية</p>
+              </div>
+            </div>
+
+            <!-- Scheduled Templates Grid -->
+            <h3 style="font-size: 0.94rem; font-weight: 700; margin: 16px 0 12px;" data-i18n="accounts_workspace.can_rep_scheduled_heading">جداول التقارير الدورية الآلية (Cron)</h3>
+            <div class="can-report-template-grid" id="can-scheduled-templates-grid">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Manual Report Generator Card -->
+            <div class="can-refund-card" style="margin-top: 10px;">
+              <div class="can-refund-header">
+                <h3 style="font-size: 0.9rem; font-weight: 700;" data-i18n="accounts_workspace.can_rep_manual_heading">توليد تقرير مخصص فوري (Excel XLSX)</h3>
+                <span class="can-status-badge can-badge-source">Excel .XLSX</span>
+              </div>
+              <div class="can-toolbar-row" style="margin-bottom: 14px;">
+                <div class="can-filter-select-wrap">
+                  <label class="can-filter-label" data-i18n="accounts_workspace.can_rep_filter_section">النطاق المشمول:</label>
+                  <select class="can-select" id="can-report-param-section">
+                    <option value="all" data-i18n="accounts_workspace.can_tab_all">جميع طلبات الإلغاء</option>
+                    <option value="current" data-i18n="accounts_workspace.can_tab_current">الإلغاءات الحالية فقط</option>
+                    <option value="archive" data-i18n="accounts_workspace.can_tab_archive">الحجوزات الملغاة السابقة (الأرشيف)</option>
+                  </select>
+                </div>
+                <div class="can-filter-select-wrap">
+                  <label class="can-filter-label" data-i18n="accounts_workspace.can_rep_filter_date_from">من تاريخ:</label>
+                  <input type="date" class="can-select" id="can-report-param-from" value="2026-10-01">
+                </div>
+                <div class="can-filter-select-wrap">
+                  <label class="can-filter-label" data-i18n="accounts_workspace.can_rep_filter_date_to">إلى تاريخ:</label>
+                  <input type="date" class="can-select" id="can-report-param-to" value="2026-11-06">
+                </div>
+                <div style="margin-inline-start: auto;">
+                  <button type="button" class="btn btn-primary" id="can-btn-generate-manual-report">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span data-i18n="accounts_workspace.can_rep_btn_generate_now">إنشاء وتنزيل تقرير Excel فوري</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Past Report Generation History Table -->
+            <h3 style="font-size: 0.94rem; font-weight: 700; margin: 24px 0 12px;" data-i18n="accounts_workspace.can_rep_history_heading">سجل التقارير المنشأة مسبقاً</h3>
+            <div class="can-table-container">
+              <table class="can-table" style="min-width: 800px;">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_id">رقم التقرير</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_title">عنوان التقرير</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_date">تاريخ الإنشاء</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_generated_by">الجهة المنشئة</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_records">عدد السجلات</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_size">الحجم</th>
+                    <th scope="col" data-i18n="accounts_workspace.can_rep_th_actions">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="can-report-history-body">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Automated Periodic Email Preview Modal -->
+  <div class="can-modal-backdrop" id="can-email-preview-modal" role="dialog" aria-modal="true" aria-labelledby="can-email-modal-title">
+    <div class="can-modal-card" style="max-width: 680px;">
+      <div class="can-modal-header">
+        <h3 class="can-modal-title" id="can-email-modal-title" data-i18n="accounts_workspace.can_rep_email_modal_title">معاينة رسالة الإشعار البريدي الدوري للإدارة العليا</h3>
+        <button type="button" class="can-modal-close-btn" id="can-email-modal-close" aria-label="إغلاق">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="can-modal-body">
+        <div style="background: var(--color-surface-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px;">
+          <div><strong data-i18n="accounts_workspace.can_rep_email_to">إلى:</strong> <span id="email-preview-to">finance.director@miqat.com, accounts.ops@miqat.com, settlements@miqat.com</span></div>
+          <div><strong data-i18n="accounts_workspace.can_rep_email_subject">الموضوع:</strong> <span id="email-preview-subject">التصريح المالي الدوري — سجل الإلغاءات والتسويات</span></div>
+          <div><strong data-i18n="accounts_workspace.can_rep_email_att">المرفق الآلي:</strong> <span class="can-chip" id="email-preview-attachment">Miqat_Cancellations_Daily.xlsx (Excel)</span></div>
+        </div>
+        <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 16px; font-size: 0.84rem; line-height: 1.6;">
+          <p data-i18n="accounts_workspace.can_rep_email_greeting" style="font-weight: 700; margin-bottom: 8px;">السادة أعضاء الإدارة المالية وإدارة العمليات المحترمين،</p>
+          <p data-i18n="accounts_workspace.can_rep_email_body" style="margin-bottom: 12px;">نرفق لسيادتكم كشف الإلغاءات والتسويات المالية الدوري المحدث. يوضح الجدول أدناه ملخص المؤشرات الرئيسية للفترة التشغيلية، وملف Excel التفصيلي مرفق بالكامل للاطلاع والمطابقة المحاسبية.</p>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 0.8rem;">
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--color-border-subtle);">
+                <td style="padding: 6px 0; color: var(--color-text-muted);" data-i18n="accounts_workspace.can_kpi_total_requests">إجمالي طلبات الإلغاء المسجلة:</td>
+                <td style="padding: 6px 0; font-weight: 700; text-align: end;" id="email-kpi-total">12 طلب</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--color-border-subtle);">
+                <td style="padding: 6px 0; color: var(--color-text-muted);" data-i18n="accounts_workspace.can_kpi_awaiting_review">طلبات قيد المراجعة والتدقيق:</td>
+                <td style="padding: 6px 0; font-weight: 700; text-align: end;" id="email-kpi-under-review">3 طلبات</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--color-border-subtle);">
+                <td style="padding: 6px 0; color: var(--color-text-muted);" data-i18n="accounts_workspace.can_kpi_pending_refunds">مستحقات استرداد بانتظار التحويل:</td>
+                <td style="padding: 6px 0; font-weight: 700; text-align: end;" id="email-kpi-pending-refunds">356,000 EGP</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--color-border-subtle);">
+                <td style="padding: 6px 0; color: var(--color-text-muted);" data-i18n="accounts_workspace.can_kpi_completed_refunds">تسويات مستردة مكتملة ومؤكدة:</td>
+                <td style="padding: 6px 0; font-weight: 700; text-align: end;" id="email-kpi-completed-refunds">192,000 EGP</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0; color: var(--color-text-muted);" data-i18n="accounts_workspace.can_kpi_failed_refunds">عمليات استرداد متعثرة (إخفاقات بنكية):</td>
+                <td style="padding: 6px 0; font-weight: 700; text-align: end; color: var(--color-accent);" id="email-kpi-failed">1 عملية (تحت التصحيح)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p data-i18n="accounts_workspace.can_rep_email_sign" style="color: var(--color-text-muted); font-size: 0.78rem;">فريق الحسابات المالية المركزية — منصة ميقات</p>
+        </div>
+      </div>
+      <div class="can-modal-footer">
+        <button type="button" class="btn btn-secondary" id="can-email-modal-dismiss" data-i18n="accounts_workspace.dlg_btn_cancel">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Safe Logout Protective Dialog -->
+  <div class="acc-modal-backdrop" id="acc-logout-modal" role="dialog" aria-modal="true" aria-labelledby="acc-logout-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="acc-logout-title" data-i18n="accounts_workspace.logout_confirm_title">تأكيد تسجيل الخروج الآمن</h3>
+      </div>
+      <div class="acc-modal-body">
+        <p data-i18n="accounts_workspace.logout_confirm_msg">هل أنت متأكد من رغبتك في تسجيل الخروج من منصة الحسابات؟ سيتم حفظ كافة عمليات التدقيق المكتملة بأمان.</p>
+      </div>
+      <div class="acc-modal-footer">
+        <button type="button" class="btn btn-secondary" id="acc-logout-cancel-btn" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="acc-logout-confirm-btn" data-i18n="accounts_workspace.btn_logout">تأكيد تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/xlsx.full.min.js"></script>
+  <script src="./accounts-mock-data.js"></script>
+  <script src="./accounts-workspace.js"></script>
+  <script src="./accounts-cancellations.js"></script>
+</body>
+</html>

@@ -4,6 +4,7 @@
 > Location: `docs/MIQAT-DESIGN-SYSTEM-REFERENCE.md`  
 > Baseline Reference Files:
 > - `docs/MIQAT-DESIGN-SYSTEM-REFERENCE.md` (Design tokens, color specifications, typography scale, surface contrast)
+> - `docs/MIQAT-UI-QUALITY-STANDARD.md` (Component standards, dimensions, layout hierarchy, and localization integrity)
 > - `RESPONSIVE_DESIGN_GUIDELINES.md` (Viewport scale: 1920px down to 320px, logical properties, direction-aware drawers)
 > - `Miqat UI-UX/styles.css` (Root `:root` and `[data-theme="dark"]` CSS variable definitions)
 
@@ -109,3 +110,4 @@ In the Accounts Workspace, harsh red and vibrant green are strictly forbidden ac
 3. **Never duplicate the shared Navbar or Sidebar.** Reuse the exact markup and selectors established in `accounts-dashboard.html` and `accounts-customers.html`.
 4. **Scope all page-specific rules** under the body class (e.g. `.accounts-customer-details-page`).
 5. **Always verify against both themes** (`light` and `dark`) and both directions (`rtl` and `ltr`).
+6. **Mandatory UI Quality Standard**: Follow all component sizing, typography scales, card layouts, table containment rules, and localization zero-leak requirements detailed in `docs/MIQAT-UI-QUALITY-STANDARD.md`.

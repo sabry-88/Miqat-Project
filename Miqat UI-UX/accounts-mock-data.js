@@ -5293,11 +5293,1004 @@
     };
   }
 
+  // --- Master Cancellations & Settlements Requests Dataset ---
+  const CANCELLATION_REQUESTS = [
+    {
+      id: 'CAN-2026-001',
+      booking_id: 'BK-2026-1048',
+      customer_id: 'CUST-1004',
+      customer_name_ar: 'محمود فوزي رضوان',
+      customer_name_en: 'Mahmoud Fawzy Radwan',
+      customer_phone: '01149201948',
+      customer_whatsapp: '01149201948',
+      customer_email: 'm.fawzy@hotmail.com',
+      customer_national_id: '28910151203491',
+      customer_governorate_ar: 'المنوفية',
+      customer_governorate_en: 'Monufia',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة طيبة لإدارة رحلات الحج والعمرة',
+      company_name_en: 'Tayba Pilgrimage & Umrah Management',
+      company_license: '1142',
+      company_contact: {
+        name_ar: 'مروان السعيد',
+        name_en: 'Marwan El-Saeed',
+        phone: '01011223344',
+        whatsapp: '01011223344'
+      },
+      program_ar: 'عمرة رجب الاقتصادية المعيارية',
+      program_en: 'Standard Rajab Economy Umrah',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'محمود فوزي رضوان', name_en: 'Mahmoud Fawzy Radwan', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A28910452', birth_date: '1985-06-14' },
+        { name_ar: 'هناء عبد السميع البنا', name_en: 'Hanaa Abdel-Sameea El-Banna', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A28910453', birth_date: '1989-11-20' }
+      ],
+      source: 'customer', // Exactly two sources: 'customer' | 'company'
+      cancellation_status: 'under_review', // 'under_review' | 'cancelled' | 'rejected'
+      refund_status: 'pending', // 'pending' | 'processing' | 'completed' | 'failed' | 'none'
+      created_at: '2026-11-05 09:30',
+      timestamp_iso: '2026-11-05T09:30:00',
+      updated_at: '2026-11-05 10:15',
+      cancellation_reason_ar: 'ظروف صحية طارئة للمعتمر الرئيسي تمنع من السفر بموجب تقرير طبي رسمي معتمد من المستشفى.',
+      cancellation_reason_en: 'Emergency medical condition preventing travel as per certified hospital medical report.',
+      cancellation_notes_ar: 'طلب العميل إلغاء الحجز كاملاً واسترداد كافة المبالغ المعتمدة لحسابه البنكي بالبنك الأهلي المصري.',
+      cancellation_notes_en: 'Customer requested full booking cancellation and refund of all approved payments to National Bank of Egypt account.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 52000,
+        total_paid_records: 52000,
+        approved_paid: 32000, // Approved only!
+        pending_paid: 20000, // Pending review -> strictly excluded from refund!
+        refund_due: 32000, // Refund Due = Approved Paid ONLY
+        executed_refund: 0,
+        remaining_refund: 32000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-101', date: '2026-10-20 14:00', amount: 20000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-901', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' },
+        { id: 'PAY-BK-102', date: '2026-10-25 11:30', amount: 12000, method_ar: 'بطاقة ائتمان', method_en: 'Credit Card', receipt_ref: 'CRD-2026-441', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' },
+        { id: 'PAY-BK-103', date: '2026-11-02 16:00', amount: 20000, method_ar: 'إيداع نقدي', method_en: 'Cash Deposit', receipt_ref: 'CSH-PEND-881', status: 'pending_review', reviewer_ar: '—', reviewer_en: '—' }
+      ],
+      attachments: [
+        { id: 'ATT-001', name_ar: 'تقرير طبي مستشفى دار الفؤاد.pdf', name_en: 'Medical_Report_Dar_AlFouad.pdf', size: '1.4 MB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-002', name_ar: 'خطاب طلب الإلغاء الرسمي موقع ومختوم.pdf', name_en: 'Signed_Cancellation_Request_Letter.pdf', size: '820 KB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-003', name_ar: 'مستند الآيبان البنكي للعميل.jpg', name_en: 'Customer_Bank_IBAN_Proof.jpg', size: '450 KB', date: '2026-11-05', type: 'image/jpeg', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [
+        { id: 'NOTE-CAN-1', author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 10:15', text_ar: 'تم فحص المرفق الطبي وهو معتمد ومختوم. تم استبعاد الدفعة النقدية (٢٠ ألف ج.م) المعلقة من احتساب الاسترداد حتى التحقق من توريدها المركزي.', text_en: 'Medical certificate verified and authentic. Excluded pending cash deposit (20k EGP) from refund due until ledger reconciliation.' }
+      ],
+      activity_log: [
+        { id: 'ACT-CAN-101', date: '2026-11-05 09:30', title_ar: 'استلام طلب الإلغاء من العميل', title_en: 'Cancellation Request Received', desc_ar: 'تم تقديم طلب الإلغاء عبر بوابة المعتمر مع إرفاق التقارير الطبية والآيبان.', desc_en: 'Request submitted via pilgrim portal with medical report and bank IBAN certificate.', actor_ar: 'محمود فوزي رضوان', actor_en: 'Mahmoud Fawzy Radwan', type: 'creation' },
+        { id: 'ACT-CAN-102', date: '2026-11-05 10:15', title_ar: 'بدء التدقيق والمراجعة الحسابية', title_en: 'Audit & Reconciliation Initiated', desc_ar: 'بدء فحص الحوالات والتحقق من المبالغ المسددة المعتمدة واستبعاد المعلق.', desc_en: 'Reconciliation started, approved payments calculated, pending payments excluded.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'audit' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-002',
+      booking_id: 'BK-2026-1045',
+      customer_id: 'CUST-1001',
+      customer_name_ar: 'أحمد محمود الشريف',
+      customer_name_en: 'Ahmed Mahmoud El-Sherif',
+      customer_phone: '01012345671',
+      customer_whatsapp: '01012345671',
+      customer_email: 'ahmed.elsherif@gmail.com',
+      customer_national_id: '28005121402219',
+      customer_governorate_ar: 'الجيزة',
+      customer_governorate_en: 'Giza',
+      company_id: 'COMP-102',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_license: '2091',
+      company_contact: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432'
+      },
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'أحمد محمود الشريف', name_en: 'Ahmed Mahmoud El-Sherif', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A28005121', birth_date: '1980-05-12' },
+        { name_ar: 'سلوى مصطفى خليل', name_en: 'Salwa Moustafa Khalil', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A28005122', birth_date: '1984-09-03' }
+      ],
+      source: 'company', // Exactly company source!
+      cancellation_status: 'under_review',
+      refund_status: 'pending',
+      created_at: '2026-11-05 11:20',
+      timestamp_iso: '2026-11-05T11:20:00',
+      updated_at: '2026-11-05 12:00',
+      cancellation_reason_ar: 'إلغاء الرحلة المجدولة من قبل شركة الطيران الناقلة وتعذر توفير مقاعد بديلة في نفس الأسبوع.',
+      cancellation_reason_en: 'Flight cancellation by carrier with no alternative seats available within the operational week.',
+      cancellation_notes_ar: 'تطلب شركة السياحة إلغاء الحجز وإعادة المبلغ كاملاً للعميل لعدم توفر مقاعد طيران بديلة.',
+      cancellation_notes_en: 'Agency requests cancellation and full customer refund due to flight cancellation.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 76000,
+        total_paid_records: 76000,
+        approved_paid: 76000,
+        pending_paid: 0,
+        refund_due: 76000,
+        executed_refund: 0,
+        remaining_refund: 76000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-201', date: '2026-10-25 10:00', amount: 76000, method_ar: 'إنستاباي IPN', method_en: 'InstaPay IPN', receipt_ref: 'IPN-2026-9041', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-004', name_ar: 'إشعار إلغاء الرحلة من الخطوط الجوية.pdf', name_en: 'Airline_Flight_Cancellation_Notice.pdf', size: '1.1 MB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' },
+        { id: 'ATT-005', name_ar: 'إقرار شركة السياحة بالموافقة على الاسترداد الكامل.pdf', name_en: 'Company_Full_Refund_Consent_Affidavit.pdf', size: '680 KB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-201', date: '2026-11-05 11:20', title_ar: 'استلام طلب الإلغاء من شركة السياحة', title_en: 'Cancellation Received from Agency', desc_ar: 'سجلت شركة الهدى طلب إلغاء الحجز بسبب إلغاء رحلة الطيران من الناقل.', desc_en: 'Al-Huda Travel recorded cancellation request due to carrier flight cancellation.', actor_ar: 'أشرف القاضي', actor_en: 'Ashraf El-Kady', type: 'creation' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-003',
+      booking_id: 'BK-2026-1049',
+      customer_id: 'CUST-1005',
+      customer_name_ar: 'فاطمة الزهراء علي',
+      customer_name_en: 'Fatima Al-Zahraa Ali',
+      customer_phone: '01232574706',
+      customer_whatsapp: '01232574706',
+      customer_email: 'fatima.ali@outlook.com',
+      customer_national_id: '29208141201982',
+      customer_governorate_ar: 'الدقهلية',
+      customer_governorate_en: 'Dakahlia',
+      company_id: 'COMP-103',
+      company_name_ar: 'شركة الدرة للسياحة',
+      company_name_en: 'Al Dorra Travel',
+      company_license: '1845',
+      company_contact: {
+        name_ar: 'هاني سراج',
+        name_en: 'Hani Serag',
+        phone: '01223344556',
+        whatsapp: '01223344556'
+      },
+      program_ar: 'عمرة شعبان VIP برج الساعة',
+      program_en: 'Shaban VIP Clock Tower Umrah',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'فاطمة الزهراء علي', name_en: 'Fatima Al-Zahraa Ali', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A29208141', birth_date: '1992-08-14' },
+        { name_ar: 'علي محمود سالم', name_en: 'Ali Mahmoud Salem', relation_ar: 'الوالد', relation_en: 'Father', passport: 'A29208142', birth_date: '1961-04-10' }
+      ],
+      source: 'customer',
+      cancellation_status: 'cancelled', // Approved!
+      refund_status: 'pending', // Awaiting refund transfer execution!
+      created_at: '2026-11-04 14:10',
+      timestamp_iso: '2026-11-04T14:10:00',
+      updated_at: '2026-11-04 16:30',
+      cancellation_reason_ar: 'وفاة والد المعتمرة الرئيسي بموجب شهادة الوفاة الرسمية المرفقة وتعذر السفر.',
+      cancellation_reason_en: 'Death of lead pilgrim’s father as confirmed by official death certificate.',
+      cancellation_notes_ar: 'تم التحقق من شهادة الوفاة واعتماد الإلغاء كاملاً بدون أي رسوم وإحالة الملف لتحويل الاسترداد.',
+      cancellation_notes_en: 'Verified death certificate, approved full cancellation without deductions, queued for refund wire.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 148000,
+        total_paid_records: 148000,
+        approved_paid: 148000,
+        pending_paid: 0,
+        refund_due: 148000,
+        executed_refund: 0,
+        remaining_refund: 148000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-301', date: '2026-11-01 10:00', amount: 100000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'CIB-TX-8831', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' },
+        { id: 'PAY-BK-302', date: '2026-11-02 13:40', amount: 48000, method_ar: 'اتصالات كاش', method_en: 'Etisalat Cash', receipt_ref: 'MQ-RCP-2026-0808', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' }
+      ],
+      attachments: [
+        { id: 'ATT-006', name_ar: 'شهادة الوفاة الرسمية المميكنة.pdf', name_en: 'Official_Death_Certificate.pdf', size: '980 KB', date: '2026-11-04', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-007', name_ar: 'إفادة الحساب البنكي والآيبان من بنك CIB.pdf', name_en: 'Bank_IBAN_Letter_CIB.pdf', size: '520 KB', date: '2026-11-04', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [
+        { id: 'NOTE-CAN-3', author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-04 16:30', text_ar: 'حالة وفاة مثبتة رسمياً - تم اعتماد الإلغاء الكامل وإعفاء الحجز من أي مصاريف إدارية.', text_en: 'Documented bereavement case - approved full refund with zero administrative fees.' }
+      ],
+      activity_log: [
+        { id: 'ACT-CAN-301', date: '2026-11-04 14:10', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'تسجيل طلب الإلغاء لظرف وفاة مرفقاً بالشهادة الرسمية.', desc_en: 'Cancellation recorded due to death certificate.', actor_ar: 'فاطمة الزهراء علي', actor_en: 'Fatima Al-Zahraa Ali', type: 'creation' },
+        { id: 'ACT-CAN-302', date: '2026-11-04 16:30', title_ar: 'اعتماد إلغاء الحجز رسميًا', title_en: 'Cancellation Formally Approved', desc_ar: 'تم اعتماد الإلغاء من قبل موظف الحسابات وإدراج المبلغ (١٤٨,٠٠٠ ج.م) في قائمة انتظار التحويل.', desc_en: 'Cancellation approved by accounts officer, (148,000 EGP) queued for wire execution.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-004',
+      booking_id: 'BK-2026-1050',
+      customer_id: 'CUST-1006',
+      customer_name_ar: 'عبد الرحمن طارق الجمل',
+      customer_name_en: 'Abdulrahman Tarek El-Gammal',
+      customer_phone: '01289736991',
+      customer_whatsapp: '01289736991',
+      customer_email: 'a.gammal@gmail.com',
+      customer_national_id: '28607180102914',
+      customer_governorate_ar: 'الإسكندرية',
+      customer_governorate_en: 'Alexandria',
+      company_id: 'COMP-104',
+      company_name_ar: 'شركة الصفا والمروة',
+      company_name_en: 'Al Safa & Marwa Travel',
+      company_license: '1630',
+      company_contact: {
+        name_ar: 'حاتم الشوربجي',
+        name_en: 'Hatem El-Shorbagy',
+        phone: '01066554433',
+        whatsapp: '01066554433'
+      },
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'عبد الرحمن طارق الجمل', name_en: 'Abdulrahman Tarek El-Gammal', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A28607180', birth_date: '1986-07-18' },
+        { name_ar: 'مريم عادل الشافعي', name_en: 'Mariam Adel El-Shafei', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A28607181', birth_date: '1990-03-25' }
+      ],
+      source: 'company',
+      cancellation_status: 'cancelled',
+      refund_status: 'processing', // Transfer initiated with bank!
+      created_at: '2026-11-03 10:00',
+      timestamp_iso: '2026-11-03T10:00:00',
+      updated_at: '2026-11-04 09:30',
+      cancellation_reason_ar: 'إغلاق الفندق المتعاقد عليه بمكة المكرمة لأعمال صيانة بلدية طارئة وتعذر توفير بديل مناسب.',
+      cancellation_reason_en: 'Contracted Makkah hotel closure due to municipal maintenance with no equivalent alternative.',
+      cancellation_notes_ar: 'وافقت الشركة على إعادة المبلغ كاملاً وتم إرسال أمر التحويل البنكي للمقاصة.',
+      cancellation_notes_en: 'Company approved full refund and bank transfer dispatch instruction was sent.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 64000,
+        total_paid_records: 64000,
+        approved_paid: 64000,
+        pending_paid: 0,
+        refund_due: 64000,
+        executed_refund: 0,
+        remaining_refund: 64000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-401', date: '2026-10-28 11:00', amount: 45500, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-7712', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' },
+        { id: 'PAY-BK-402', date: '2026-11-02 14:00', amount: 18500, method_ar: 'إنستاباي', method_en: 'InstaPay', receipt_ref: 'MQ-RCP-2026-0807', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-008', name_ar: 'إشعار صيانة الفندق الصادر من أمانة العاصمة المقدسة.pdf', name_en: 'Hotel_Municipal_Notice.pdf', size: '1.3 MB', date: '2026-11-03', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' },
+        { id: 'ATT-009', name_ar: 'إيصال أمر التحويل البنكي الصادر من الحسابات.pdf', name_en: 'Refund_Bank_Transfer_Order.pdf', size: '610 KB', date: '2026-11-04', type: 'application/pdf', uploaded_by_ar: 'حسابات ميقات', uploaded_by_en: 'Miqat Accounts' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-401',
+          date: '2026-11-04 09:30',
+          amount: 64000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Wire',
+          bank_name_ar: 'بنك مصر',
+          bank_name_en: 'Banque Misr',
+          beneficiary_name_ar: 'عبد الرحمن طارق الجمل',
+          beneficiary_name_en: 'Abdulrahman Tarek El-Gammal',
+          account_iban: 'EG290002000100000004819204918',
+          reference_no: 'TRX-REF-992104',
+          status: 'processing',
+          status_ar: 'قيد التحويل والمعالجة البنكية',
+          status_en: 'Processing with Bank',
+          voucher_file: 'Refund_Bank_Transfer_Order.pdf',
+          voucher_size: '610 KB',
+          notes_ar: 'تم إرسال أمر التحويل إلى بنك مصر بانتظار إشعار المقاصة النهائي وتأكيد الإيداع',
+          notes_en: 'Wire instruction sent to Banque Misr awaiting final settlement credit notification'
+        }
+      ],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-401', date: '2026-11-03 10:00', title_ar: 'تسجيل طلب الإلغاء من شركة السياحة', title_en: 'Agency Cancellation Logged', desc_ar: 'طلب إلغاء بسبب إغلاق الفندق المتعاقد عليه بمكة.', desc_en: 'Cancellation requested due to hotel maintenance closure.', actor_ar: 'حاتم الشوربجي', actor_en: 'Hatem El-Shorbagy', type: 'creation' },
+        { id: 'ACT-CAN-402', date: '2026-11-03 14:00', title_ar: 'اعتماد الإلغاء والمطابقة المالية', title_en: 'Cancellation Approved & Reconciled', desc_ar: 'تم اعتماد الإلغاء كاملاً وإحالة المستحقات البالغة ٦٤,٠٠٠ ج.م للتحويل.', desc_en: 'Approved full cancellation; 64,000 EGP forwarded for transfer.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-403', date: '2026-11-04 09:30', title_ar: 'تسجيل أمر التحويل البنكي', title_en: 'Bank Wire Instruction Recorded', desc_ar: 'تم تسجيل تحويل استرداد بمبلغ ٦٤,٠٠٠ ج.م عبر بنك مصر بالمرجع: TRX-REF-992104.', desc_en: 'Refund wire recorded for 64,000 EGP via Banque Misr, Ref: TRX-REF-992104.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-005',
+      booking_id: 'BK-2026-1047',
+      customer_id: 'CUST-1003',
+      customer_name_ar: 'سارة خالد المنصوري',
+      customer_name_en: 'Sarah Khaled El-Mansoury',
+      customer_phone: '01225077617',
+      customer_whatsapp: '01225077617',
+      customer_email: 'sarah.mansoury@gmail.com',
+      customer_national_id: '29503110103429',
+      customer_governorate_ar: 'القاهرة',
+      customer_governorate_en: 'Cairo',
+      company_id: 'COMP-102',
+      company_name_ar: 'شركة هداية المعتمد للسياحة',
+      company_name_en: 'Hedaya Travel',
+      company_license: '1902',
+      company_contact: {
+        name_ar: 'مدحت عزمي',
+        name_en: 'Medhat Azmy',
+        phone: '01122339988',
+        whatsapp: '01122339988'
+      },
+      program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+      program_en: '5-Star Premium Umrah (Fairmont)',
+      travelers_count: 1,
+      travelers: [
+        { name_ar: 'سارة خالد المنصوري', name_en: 'Sarah Khaled El-Mansoury', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A29503110', birth_date: '1995-03-11' }
+      ],
+      source: 'customer',
+      cancellation_status: 'cancelled',
+      refund_status: 'failed', // CRITICAL FAILURE SCENARIO
+      created_at: '2026-11-01 11:00',
+      timestamp_iso: '2026-11-01T11:00:00',
+      updated_at: '2026-11-03 14:15',
+      cancellation_reason_ar: 'ظرف عائلي قاهر يستدعي إلغاء السفر واسترداد الرصيد المالي.',
+      cancellation_reason_en: 'Compelling family emergency requiring trip cancellation and funds refund.',
+      cancellation_notes_ar: 'تم اعتماد الإلغاء، لكن ارتد التحويل البنكي بسبب خطأ في بيانات الآيبان المقدمة من العميل.',
+      cancellation_notes_en: 'Cancellation approved, but wire bounced due to erroneous IBAN credentials provided by customer.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 92000,
+        total_paid_records: 92000,
+        approved_paid: 92000,
+        pending_paid: 0,
+        refund_due: 92000,
+        executed_refund: 0,
+        remaining_refund: 92000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-501', date: '2026-10-22 12:00', amount: 77000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-5510', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' },
+        { id: 'PAY-BK-502', date: '2026-11-02 17:20', amount: 15000, method_ar: 'فودافون كاش', method_en: 'Vodafone Cash', receipt_ref: 'MQ-RCP-2026-0809', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' }
+      ],
+      attachments: [
+        { id: 'ATT-010', name_ar: 'طلب إلغاء الحجز من العميلة سارة المنصوري.pdf', name_en: 'Customer_Cancellation_Request.pdf', size: '650 KB', date: '2026-11-01', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-011', name_ar: 'إشعار ارتداد التحويل من البنك المركزي المصري.pdf', name_en: 'Central_Bank_ACH_Reversal_Notice.pdf', size: '420 KB', date: '2026-11-03', type: 'application/pdf', uploaded_by_ar: 'حسابات ميقات', uploaded_by_en: 'Miqat Accounts' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-501',
+          date: '2026-11-02 10:00',
+          amount: 92000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Wire',
+          bank_name_ar: 'البنك التجاري الدولي CIB',
+          bank_name_en: 'Commercial International Bank (CIB)',
+          beneficiary_name_ar: 'سارة خالد المنصوري',
+          beneficiary_name_en: 'Sarah Khaled El-Mansoury',
+          account_iban: 'EG330002000100000009918237719', // Erroneous IBAN
+          reference_no: 'TRX-REF-550119',
+          status: 'failed',
+          status_ar: 'عملية تحويل متعثرة (مرتدة من البنك)',
+          status_en: 'Failed Transfer (ACH Reversal)',
+          voucher_file: 'Central_Bank_ACH_Reversal_Notice.pdf',
+          voucher_size: '420 KB',
+          notes_ar: 'ارتدت الحوالة بسبب خطأ في رقم الآيبان البنكي أو عدم تطابق اسم المستفيد مع سجلات الفرع',
+          notes_en: 'Wire bounced due to invalid IBAN or beneficiary name mismatch at destination branch'
+        }
+      ],
+      corrective_actions: [],
+      internal_notes: [
+        { id: 'NOTE-CAN-5', author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-03 14:15', text_ar: 'تم التواصل مع العميلة لطلب كشف حساب بنكي رسمي أو شهادة آيبان مختومة لإعادة المحاولة بعد التصحيح.', text_en: 'Contacted customer requesting certified bank certificate with valid IBAN to initiate retry.' }
+      ],
+      activity_log: [
+        { id: 'ACT-CAN-501', date: '2026-11-01 11:00', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'طلب إلغاء لظرف عائلي خاص.', desc_en: 'Cancellation submitted.', actor_ar: 'سارة خالد المنصوري', actor_en: 'Sarah Khaled El-Mansoury', type: 'creation' },
+        { id: 'ACT-CAN-502', date: '2026-11-01 15:30', title_ar: 'اعتماد الإلغاء والمستحقات', title_en: 'Cancellation Approved', desc_ar: 'اعتماد إلغاء الحجز ومستحقات الاسترداد (٩٢,٠٠٠ ج.م).', desc_en: 'Cancellation approved for 92,000 EGP refund.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-503', date: '2026-11-02 10:00', title_ar: 'إرسال أمر التحويل البنكي', title_en: 'Wire Instruction Sent', desc_ar: 'إرسال تحويل ٩٢,٠٠٠ ج.م عبر بنك CIB بالمرجع: TRX-REF-550119.', desc_en: 'Wire dispatched via CIB, Ref: TRX-REF-550119.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' },
+        { id: 'ACT-CAN-504', date: '2026-11-03 14:15', title_ar: 'تعثر التحويل البنكي (ارتداد الحوالة)', title_en: 'Transfer Failed (ACH Reversal)', desc_ar: 'ورد إشعار رسمي من البنك المركزي بارتداد الحوالة لخطأ في بيانات الآيبان. يتطلب إجراءً تصحيحياً وإعادة محاولة.', desc_en: 'Central Bank ACH reversal notice received: Invalid IBAN. Requires corrective action and retry.', actor_ar: 'نظام المقاصة البنكية', actor_en: 'Bank Clearing Gateway', type: 'failure' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-006',
+      booking_id: 'BK-2026-1051',
+      customer_id: 'CUST-1007',
+      customer_name_ar: 'خالد محمد النجار',
+      customer_name_en: 'Khaled Mohamed El-Naggar',
+      customer_phone: '01098452134',
+      customer_whatsapp: '01098452134',
+      customer_email: 'khaled.naggar@gmail.com',
+      customer_national_id: '27712101401823',
+      customer_governorate_ar: 'الشرقية',
+      customer_governorate_en: 'Sharqia',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة طيبة لإدارة رحلات الحج والعمرة',
+      company_name_en: 'Tayba Pilgrimage & Umrah Management',
+      company_license: '1142',
+      company_contact: {
+        name_ar: 'مروان السعيد',
+        name_en: 'Marwan El-Saeed',
+        phone: '01011223344',
+        whatsapp: '01011223344'
+      },
+      program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+      program_en: '5-Star Premium Umrah (Fairmont)',
+      travelers_count: 3,
+      travelers: [
+        { name_ar: 'خالد محمد النجار', name_en: 'Khaled Mohamed El-Naggar', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A27712101', birth_date: '1977-12-10' },
+        { name_ar: 'نجلاء إبراهيم خضر', name_en: 'Naglaa Ibrahim Khedr', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A27712102', birth_date: '1981-06-22' },
+        { name_ar: 'عمر خالد النجار', name_en: 'Omar Khaled El-Naggar', relation_ar: 'الابن', relation_en: 'Son', passport: 'A27712103', birth_date: '2008-03-15' }
+      ],
+      source: 'customer',
+      cancellation_status: 'cancelled',
+      refund_status: 'processing', // Retried after corrective action!
+      created_at: '2026-10-30 15:30',
+      timestamp_iso: '2026-10-30T15:30:00',
+      updated_at: '2026-11-04 11:20',
+      cancellation_reason_ar: 'تعذر الحصول على إجازة عمل رسمية للمعتمر ومرافقيه خلال فترة البرنامج.',
+      cancellation_reason_en: 'Unable to secure official leave approvals for pilgrim and family during program dates.',
+      cancellation_notes_ar: 'ارتد التحويل الأول لخطأ في رقم الحساب، وتم استلام شهادة بنكية رسمية وتصحيح الآيبان وإعادة التحويل.',
+      cancellation_notes_en: 'Initial wire bounced; received certified bank certificate, corrected IBAN, and re-dispatched wire.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 135000,
+        total_paid_records: 135000,
+        approved_paid: 135000,
+        pending_paid: 0,
+        refund_due: 135000,
+        executed_refund: 0,
+        remaining_refund: 135000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-601', date: '2026-10-18 16:10', amount: 135000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-9901', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-012', name_ar: 'طلب إلغاء حجز موقع من خالد النجار.pdf', name_en: 'Cancellation_Request_Letter.pdf', size: '720 KB', date: '2026-10-30', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-013', name_ar: 'شهادة حساب بنكي مصدق بالآيبان من بنك مصر.pdf', name_en: 'Certified_IBAN_Certificate_Banque_Misr.pdf', size: '890 KB', date: '2026-11-03', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-602',
+          date: '2026-11-04 11:20',
+          amount: 135000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي سريع (إعادة محاولة)',
+          method_en: 'Express Bank Wire (Retry)',
+          bank_name_ar: 'بنك مصر',
+          bank_name_en: 'Banque Misr',
+          beneficiary_name_ar: 'خالد محمد النجار',
+          beneficiary_name_en: 'Khaled Mohamed El-Naggar',
+          account_iban: 'EG120002000100000009948211029', // Corrected IBAN
+          reference_no: 'RETRY-TRX-884102',
+          status: 'processing',
+          status_ar: 'قيد إعادة المحاولة والمعالجة البنكية',
+          status_en: 'Retrying & Processing',
+          voucher_file: 'Retry_Bank_Transfer_Slip.pdf',
+          voucher_size: '512 KB',
+          notes_ar: 'إعادة إرسال أمر التحويل بنجاح بالآيبان المصحح للعميل',
+          notes_en: 'Transfer re-dispatched with customer’s validated corrected IBAN'
+        },
+        {
+          id: 'REF-OP-601',
+          date: '2026-11-01 10:00',
+          amount: 135000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Wire',
+          bank_name_ar: 'بنك مصر',
+          bank_name_en: 'Banque Misr',
+          beneficiary_name_ar: 'خالد محمد النجار',
+          beneficiary_name_en: 'Khaled Mohamed El-Naggar',
+          account_iban: 'EG120002000100000009948211000', // Faulty
+          reference_no: 'TRX-REF-109283',
+          status: 'failed',
+          status_ar: 'عملية تحويل متعثرة (مرتدة من البنك)',
+          status_en: 'Failed Transfer (ACH Reversal)',
+          voucher_file: 'Initial_Failed_Transfer.pdf',
+          voucher_size: '410 KB',
+          notes_ar: 'ارتدت الحوالة لخطأ في الأرقام الأخيرة لرقم الحساب',
+          notes_en: 'Wire bounced due to last digits typo in account number'
+        }
+      ],
+      corrective_actions: [
+        {
+          id: 'CORR-001',
+          date: '2026-11-03 16:45',
+          type: 'iban_update',
+          type_ar: 'تصحيح رقم الحساب والآيبان البنكي',
+          type_en: 'Bank Account & IBAN Correction',
+          desc_ar: 'تم التحقق من شهادة الحساب البنكي الرسمية المعتمدة وتصحيح رقم الآيبان المعتمد للعميل ليصبح EG120002000100000009948211029',
+          desc_en: 'Verified official bank certificate and updated customer IBAN to EG120002000100000009948211029',
+          actor_ar: 'أحمد صبري',
+          actor_en: 'Ahmed Sabry'
+        }
+      ],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-601', date: '2026-10-30 15:30', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'طلب إلغاء الحجز لتعذر الإجازة.', desc_en: 'Cancellation request received.', actor_ar: 'خالد محمد النجار', actor_en: 'Khaled Mohamed El-Naggar', type: 'creation' },
+        { id: 'ACT-CAN-602', date: '2026-10-31 11:00', title_ar: 'اعتماد الإلغاء', title_en: 'Cancellation Approved', desc_ar: 'اعتماد إلغاء الحجز ومبلغ الاسترداد (١٣٥,٠٠٠ ج.م).', desc_en: 'Approved for 135,000 EGP refund.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-603', date: '2026-11-01 10:00', title_ar: 'إرسال الحوالة الأولى', title_en: 'First Wire Dispatched', desc_ar: 'تحويل ١٣٥,٠٠٠ ج.م عبر بنك مصر بالمرجع: TRX-REF-109283.', desc_en: 'Wire sent via Banque Misr, Ref: TRX-REF-109283.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' },
+        { id: 'ACT-CAN-604', date: '2026-11-02 12:00', title_ar: 'ارتداد الحوالة وتوثيق التعثر', title_en: 'Wire Bounced / Failed', desc_ar: 'إشعار ارتداد الحوالة لخطأ في رقم الحساب.', desc_en: 'Reversal notice received for account typo.', actor_ar: 'نظام المقاصة البنكية', actor_en: 'Bank Clearing Gateway', type: 'failure' },
+        { id: 'ACT-CAN-605', date: '2026-11-03 16:45', title_ar: 'تسجيل إجراء تصحيحي نظامي', title_en: 'Corrective Action Recorded', desc_ar: 'تم التحقق من شهادة الآيبان الرسمية من بنك مصر وتحديث بيانات التحويل.', desc_en: 'Verified Banque Misr IBAN certificate and updated record.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'corrective_action' },
+        { id: 'ACT-CAN-606', date: '2026-11-04 11:20', title_ar: 'إعادة محاولة التحويل بنجاح', title_en: 'Transfer Retry Executed', desc_ar: 'إعادة تنفيذ تحويل ١٣٥,٠٠٠ ج.م بالمرجع الجديد: RETRY-TRX-884102.', desc_en: 'Transfer re-dispatched with Ref: RETRY-TRX-884102.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'retry_initiated' }
+      ]
+    },
+
+    // --- Archive Scenarios: Cancelled + Refund Completed & Confirmed -> Belongs to Previous Cancelled Bookings Tab ---
+    {
+      id: 'CAN-2026-007',
+      booking_id: 'BK-2026-1042',
+      customer_id: 'CUST-1010',
+      customer_name_ar: 'حسن علي منصور',
+      customer_name_en: 'Hassan Ali Mansour',
+      customer_phone: '01155443322',
+      customer_whatsapp: '01155443322',
+      customer_email: 'hassan.mansour@gmail.com',
+      customer_national_id: '27509121402918',
+      customer_governorate_ar: 'الجيزة',
+      customer_governorate_en: 'Giza',
+      company_id: 'COMP-103',
+      company_name_ar: 'شركة الدرة للسياحة',
+      company_name_en: 'Al Dorra Travel',
+      company_license: '1845',
+      company_contact: {
+        name_ar: 'هاني سراج',
+        name_en: 'Hani Serag',
+        phone: '01223344556',
+        whatsapp: '01223344556'
+      },
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      travelers_count: 1,
+      travelers: [
+        { name_ar: 'حسن علي منصور', name_en: 'Hassan Ali Mansour', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A27509121', birth_date: '1975-09-12' }
+      ],
+      source: 'company',
+      cancellation_status: 'cancelled',
+      refund_status: 'completed', // SETTLED & ARCHIVED!
+      created_at: '2026-10-22 09:00',
+      timestamp_iso: '2026-10-22T09:00:00',
+      updated_at: '2026-10-26 13:40',
+      cancellation_reason_ar: 'إعادة جدولة الحصة العددية وتصفية الباقة بالكامل من قبل شركة السياحة.',
+      cancellation_reason_en: 'Quota reallocation and full package cancellation by tourism company.',
+      cancellation_notes_ar: 'تم اعتماد الإلغاء وتنفيذ الاسترداد المالي كاملاً ومطابقة كشف الحساب ونقل الحجز للأرشيف.',
+      cancellation_notes_en: 'Cancellation approved, full refund executed, bank reconciled, record moved to archive.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 58000,
+        total_paid_records: 58000,
+        approved_paid: 58000,
+        pending_paid: 0,
+        refund_due: 58000,
+        executed_refund: 58000,
+        remaining_refund: 0
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-701', date: '2026-10-15 11:00', amount: 58000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-4401', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-014', name_ar: 'خطاب الإلغاء الرسمي المعتمد من شركة الدرة.pdf', name_en: 'Official_Company_Cancellation_Letter.pdf', size: '750 KB', date: '2026-10-22', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' },
+        { id: 'ATT-015', name_ar: 'إيصال التحويل البنكي النهائي المعتمد بنك CIB.pdf', name_en: 'Final_Refund_Receipt_CIB.pdf', size: '820 KB', date: '2026-10-26', type: 'application/pdf', uploaded_by_ar: 'حسابات ميقات', uploaded_by_en: 'Miqat Accounts' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-701',
+          date: '2026-10-24 10:00',
+          amount: 58000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Wire',
+          bank_name_ar: 'البنك التجاري الدولي CIB',
+          bank_name_en: 'Commercial International Bank (CIB)',
+          beneficiary_name_ar: 'حسن علي منصور',
+          beneficiary_name_en: 'Hassan Ali Mansour',
+          account_iban: 'EG450002000100000007812903411',
+          reference_no: 'TRX-REF-771890',
+          status: 'completed',
+          status_ar: 'مكتمل ومؤكد بنكياً',
+          status_en: 'Completed & Confirmed',
+          voucher_file: 'Final_Refund_Receipt_CIB.pdf',
+          voucher_size: '820 KB',
+          confirmed_at: '2026-10-26 13:40',
+          notes_ar: 'تم تأكيد وصول التحويل لحساب المستفيد ومطابقة كشف الحساب وإقفال الملف بنجاح',
+          notes_en: 'Confirmed wire credit to beneficiary, reconciled bank statement, successfully closed claim'
+        }
+      ],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-701', date: '2026-10-22 09:00', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'طلب إلغاء من شركة الدرة.', desc_en: 'Agency cancellation received.', actor_ar: 'هاني سراج', actor_en: 'Hani Serag', type: 'creation' },
+        { id: 'ACT-CAN-702', date: '2026-10-22 14:00', title_ar: 'اعتماد الإلغاء', title_en: 'Cancellation Approved', desc_ar: 'اعتماد إلغاء الحجز ومبلغ ٥٨,٠٠٠ ج.م.', desc_en: 'Approved cancellation for 58,000 EGP.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-703', date: '2026-10-24 10:00', title_ar: 'تنفيذ التحويل البنكي', title_en: 'Refund Wire Executed', desc_ar: 'تحويل مبلغ ٥٨,٠٠٠ ج.م عبر بنك CIB بالمرجع: TRX-REF-771890.', desc_en: 'Wired 58,000 EGP via CIB, Ref: TRX-REF-771890.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' },
+        { id: 'ACT-CAN-704', date: '2026-10-26 13:40', title_ar: 'تأكيد اكتمال الاسترداد والتسوية النهائية', title_en: 'Refund Settlement Confirmed & Completed', desc_ar: 'تم تأكيد وصول الحوالة ومطابقة كشف الحساب البنكي وإقفال المطالبة وأرشفتها.', desc_en: 'Confirmed funds credit, bank statement reconciled, claim closed and archived.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_completed' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-008',
+      booking_id: 'BK-2026-1039',
+      customer_id: 'CUST-1011',
+      customer_name_ar: 'نادية محمد السيد',
+      customer_name_en: 'Nadia Mohamed El-Sayed',
+      customer_phone: '01066778899',
+      customer_whatsapp: '01066778899',
+      customer_email: 'nadia.elsayed@gmail.com',
+      customer_national_id: '28111240101924',
+      customer_governorate_ar: 'القاهرة',
+      customer_governorate_en: 'Cairo',
+      company_id: 'COMP-104',
+      company_name_ar: 'شركة الصفا والمروة',
+      company_name_en: 'Al Safa & Marwa Travel',
+      company_license: '1630',
+      company_contact: {
+        name_ar: 'حاتم الشوربجي',
+        name_en: 'Hatem El-Shorbagy',
+        phone: '01066554433',
+        whatsapp: '01066554433'
+      },
+      program_ar: 'عمرة رجب الاقتصادية المعيارية',
+      program_en: 'Standard Rajab Economy Umrah',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'نادية محمد السيد', name_en: 'Nadia Mohamed El-Sayed', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A28111240', birth_date: '1981-11-24' },
+        { name_ar: 'سلمى أحمد فؤاد', name_en: 'Salma Ahmed Fouad', relation_ar: 'الابنة', relation_en: 'Daughter', passport: 'A28111241', birth_date: '2005-08-14' }
+      ],
+      source: 'customer',
+      cancellation_status: 'cancelled',
+      refund_status: 'completed', // SETTLED & ARCHIVED!
+      created_at: '2026-10-18 11:15',
+      timestamp_iso: '2026-10-18T11:15:00',
+      updated_at: '2026-10-23 16:00',
+      cancellation_reason_ar: 'تعارض مواعيد الامتحانات الجامعية للمرافقة مع موعد انطلاق الرحلة.',
+      cancellation_reason_en: 'University final exam schedule clash with trip departure schedule.',
+      cancellation_notes_ar: 'تم التحقق من جدول الامتحانات واعتماد الإلغاء ورد المبلغ بالكامل لحساب العميلة.',
+      cancellation_notes_en: 'Verified exam schedule, approved cancellation, fully refunded to customer account.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 85000,
+        total_paid_records: 85000,
+        approved_paid: 85000,
+        pending_paid: 0,
+        refund_due: 85000,
+        executed_refund: 85000,
+        remaining_refund: 0
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-801', date: '2026-10-10 14:00', amount: 85000, method_ar: 'إنستاباي IPN', method_en: 'InstaPay IPN', receipt_ref: 'IPN-2026-8819', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' }
+      ],
+      attachments: [
+        { id: 'ATT-016', name_ar: 'إفادة جدول الامتحانات من جامعة القاهرة.pdf', name_en: 'University_Exam_Schedule.pdf', size: '540 KB', date: '2026-10-18', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-017', name_ar: 'إشعار تحويل استرداد إنستاباي مسدد بالكامل.pdf', name_en: 'InstaPay_Refund_Receipt.pdf', size: '480 KB', date: '2026-10-23', type: 'application/pdf', uploaded_by_ar: 'حسابات ميقات', uploaded_by_en: 'Miqat Accounts' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-801',
+          date: '2026-10-21 11:30',
+          amount: 85000,
+          method: 'instapay',
+          method_ar: 'شبكة المدفوعات اللحظية (إنستاباي)',
+          method_en: 'InstaPay IPN Network',
+          bank_name_ar: 'البنك الأهلي المصري',
+          bank_name_en: 'National Bank of Egypt (NBE)',
+          beneficiary_name_ar: 'نادية محمد السيد',
+          beneficiary_name_en: 'Nadia Mohamed El-Sayed',
+          account_iban: 'nadia.elsayed@instapay',
+          reference_no: 'IPN-REF-884192',
+          status: 'completed',
+          status_ar: 'مكتمل ومؤكد بنكياً',
+          status_en: 'Completed & Confirmed',
+          voucher_file: 'InstaPay_Refund_Receipt.pdf',
+          voucher_size: '480 KB',
+          confirmed_at: '2026-10-23 16:00',
+          notes_ar: 'تم التحويل الفوري بنجاح وتأكيد الاستلام مع العميلة بالرسالة النصية',
+          notes_en: 'Instant transfer confirmed by recipient SMS receipt token'
+        }
+      ],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-801', date: '2026-10-18 11:15', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'طلب إلغاء بسبب الامتحانات الجامعية.', desc_en: 'Cancellation requested due to exams.', actor_ar: 'نادية محمد السيد', actor_en: 'Nadia Mohamed El-Sayed', type: 'creation' },
+        { id: 'ACT-CAN-802', date: '2026-10-19 12:00', title_ar: 'اعتماد الإلغاء', title_en: 'Cancellation Approved', desc_ar: 'اعتماد إلغاء الحجز ومبلغ ٨٥,٠٠٠ ج.م.', desc_en: 'Approved cancellation for 85,000 EGP.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-803', date: '2026-10-21 11:30', title_ar: 'تنفيذ الاسترداد عبر إنستاباي', title_en: 'Refund Executed via InstaPay', desc_ar: 'تحويل ٨٥,٠٠٠ ج.م عبر إنستاباي بالمرجع: IPN-REF-884192.', desc_en: 'Transferred 85,000 EGP via InstaPay, Ref: IPN-REF-884192.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' },
+        { id: 'ACT-CAN-804', date: '2026-10-23 16:00', title_ar: 'تأكيد اكتمال الاسترداد والتسوية النهائية', title_en: 'Refund Settlement Confirmed & Completed', desc_ar: 'تأكيد التسوية المكتملة وأرشفة السجل.', desc_en: 'Settlement confirmed, record archived.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_completed' }
+      ]
+    },
+
+    // --- Rejected Scenarios: Cancellation Rejected (Mandatory Reason Documented) & Refund Blocked ---
+    {
+      id: 'CAN-2026-009',
+      booking_id: 'BK-2026-1053',
+      customer_id: 'CUST-1012',
+      customer_name_ar: 'ياسر عبد الرحمن عثمان',
+      customer_name_en: 'Yasser Abdel-Rahman Osman',
+      customer_phone: '01277889900',
+      customer_whatsapp: '01277889900',
+      customer_email: 'yasser.osman@hotmail.com',
+      customer_national_id: '27904152101948',
+      customer_governorate_ar: 'الفيوم',
+      customer_governorate_en: 'Fayoum',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة طيبة لإدارة رحلات الحج والعمرة',
+      company_name_en: 'Tayba Pilgrimage & Umrah Management',
+      company_license: '1142',
+      company_contact: {
+        name_ar: 'مروان السعيد',
+        name_en: 'Marwan El-Saeed',
+        phone: '01011223344',
+        whatsapp: '01011223344'
+      },
+      program_ar: 'عمرة رجب الاقتصادية المعيارية',
+      program_en: 'Standard Rajab Economy Umrah',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'ياسر عبد الرحمن عثمان', name_en: 'Yasser Abdel-Rahman Osman', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A27904152', birth_date: '1979-04-15' },
+        { name_ar: 'هناء رجب السويفي', name_en: 'Hanaa Ragab El-Sewefy', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A27904153', birth_date: '1983-10-09' }
+      ],
+      source: 'customer',
+      cancellation_status: 'rejected', // REJECTED!
+      refund_status: 'none', // Refund blocked!
+      created_at: '2026-11-02 12:40',
+      timestamp_iso: '2026-11-02T12:40:00',
+      updated_at: '2026-11-03 15:10',
+      cancellation_reason_ar: 'طلب استرداد المبالغ بعد إصدار التأشيرات وتثبيت تذاكر الطيران غير القابلة للاسترداد.',
+      cancellation_reason_en: 'Requested refund after visa issuance and confirmed non-refundable flight ticketing.',
+      cancellation_notes_ar: 'طلب العميل إلغاء الحجز قبل ٤٨ ساعة فقط من موعد الرحلة بدون عذر طبي أو قهري معتمد.',
+      cancellation_notes_en: 'Customer requested cancellation only 48 hours prior to trip without certified medical emergency.',
+      rejection_reason_ar: 'تم رفض طلب الإلغاء لمخالفته الصريحة لبنود عقد الوساطة المعتمد: تم بالفعل إصدار التأشيرات وحجز تذاكر الطيران غير القابلة للاسترداد وتجاوز المهلة النظامية للإلغاء المجاني. الحجز يظل سارياً وقائماً.',
+      rejection_reason_en: 'Cancellation rejected: Contract violation — non-refundable flight tickets and visas already issued; statutory cancellation window expired. Booking remains active.',
+      financials: {
+        booking_total: 62000,
+        total_paid_records: 62000,
+        approved_paid: 62000,
+        pending_paid: 0,
+        refund_due: 0, // Blocked because rejected!
+        executed_refund: 0,
+        remaining_refund: 0
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-901', date: '2026-10-25 15:00', amount: 62000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-9102', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-018', name_ar: 'طلب الإلغاء المتأخر المقدم من العميل.pdf', name_en: 'Late_Cancellation_Request.pdf', size: '510 KB', date: '2026-11-02', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-019', name_ar: 'تأشيرات العمرة الصادرة وتذاكر الطيران المؤكدة غير القابلة للاسترداد.pdf', name_en: 'Issued_Visas_And_Nonrefundable_Tickets.pdf', size: '1.6 MB', date: '2026-11-03', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [
+        { id: 'NOTE-CAN-9', author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-03 15:10', text_ar: 'تم رفض الإلغاء بموافقة الإدارة القانونية لصدور التذاكر والتأشيرات وتجاوز المهلة المحددة، وتم إبلاغ العميل هاتفياً.', text_en: 'Rejected with legal approval due to ticket issuance and window expiry; customer notified.' }
+      ],
+      activity_log: [
+        { id: 'ACT-CAN-901', date: '2026-11-02 12:40', title_ar: 'استلام طلب الإلغاء', title_en: 'Cancellation Received', desc_ar: 'طلب إلغاء متأخر مقدم قبل الرحلة بيومين.', desc_en: 'Late cancellation submitted 2 days before trip.', actor_ar: 'ياسر عبد الرحمن عثمان', actor_en: 'Yasser Abdel-Rahman Osman', type: 'creation' },
+        { id: 'ACT-CAN-902', date: '2026-11-03 15:10', title_ar: 'رفض طلب الإلغاء وتثبيت الحجز', title_en: 'Cancellation Request Rejected', desc_ar: 'تم رفض طلب الإلغاء مع توثيق السبب الإلزامي: مخالفة بنود العقد وصدور التذاكر غير القابلة للاسترداد. تم تثبيت الحجز وحجب الاسترداد.', desc_en: 'Cancellation rejected with mandatory reason: Issued non-refundable tickets. Booking retained, refund blocked.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'rejection' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-010',
+      booking_id: 'BK-2026-1054',
+      customer_id: 'CUST-1013',
+      customer_name_ar: 'سميرة محمود الكفراوي',
+      customer_name_en: 'Samira Mahmoud El-Kafrawy',
+      customer_phone: '01022334455',
+      customer_whatsapp: '01022334455',
+      customer_email: 'samira.kafrawy@yahoo.com',
+      customer_national_id: '26806121601923',
+      customer_governorate_ar: 'الغربية',
+      customer_governorate_en: 'Gharbia',
+      company_id: 'COMP-102',
+      company_name_ar: 'شركة هداية المعتمد للسياحة',
+      company_name_en: 'Hedaya Travel',
+      company_license: '1902',
+      company_contact: {
+        name_ar: 'مدحت عزمي',
+        name_en: 'Medhat Azmy',
+        phone: '01122339988',
+        whatsapp: '01122339988'
+      },
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'سميرة محمود الكفراوي', name_en: 'Samira Mahmoud El-Kafrawy', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A26806121', birth_date: '1968-06-12' },
+        { name_ar: 'هدى مصطفى رضوان', name_en: 'Hoda Moustafa Radwan', relation_ar: 'الأخت', relation_en: 'Sister', passport: 'A26806122', birth_date: '1972-01-20' }
+      ],
+      source: 'company',
+      cancellation_status: 'rejected', // REJECTED!
+      refund_status: 'none', // Refund blocked!
+      created_at: '2026-11-01 14:00',
+      timestamp_iso: '2026-11-01T14:00:00',
+      updated_at: '2026-11-02 10:30',
+      cancellation_reason_ar: 'طلب الشركة إلغاء حجز مؤكد ومسدد بالكامل لرغبتها في إعادة بيع الغرفة بسعر أعلى في الموسم.',
+      cancellation_reason_en: 'Agency requested cancellation of confirmed paid booking to resell room at higher seasonal rate.',
+      cancellation_notes_ar: 'رفضت إدارة الحسابات إلغاء الحجز لعدم موافقة العميل ولحماية حقوق المعتمر النظامية.',
+      cancellation_notes_en: 'Accounts rejected cancellation to protect customer rights; no customer consent provided.',
+      rejection_reason_ar: 'رُفض طلب الإلغاء لعدم إرفاق موافقة خطية موثقة من المعتمر على الإلغاء. وفقاً لضوابط حماية المستهلك المعتمدة بمنصة ميقات، لا يجوز للشركة الشريكة إلغاء حجز مؤكد ومسدد دون موافقة كتابية صريحة.',
+      rejection_reason_en: 'Rejected: No documented written consent from pilgrim. Per Miqat consumer protection policy, agencies cannot cancel confirmed paid bookings unilaterally.',
+      financials: {
+        booking_total: 78000,
+        total_paid_records: 78000,
+        approved_paid: 78000,
+        pending_paid: 0,
+        refund_due: 0,
+        executed_refund: 0,
+        remaining_refund: 0
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-1001', date: '2026-10-24 16:00', amount: 78000, method_ar: 'إنستاباي', method_en: 'InstaPay', receipt_ref: 'IPN-2026-7714', status: 'approved', reviewer_ar: 'سارة خالد', reviewer_en: 'Sarah Khaled' }
+      ],
+      attachments: [
+        { id: 'ATT-020', name_ar: 'طلب الإلغاء الأحادي المقدم من شركة هداية للسياحة.pdf', name_en: 'Unilateral_Agency_Cancellation_Request.pdf', size: '490 KB', date: '2026-11-01', type: 'application/pdf', uploaded_by_ar: 'شركة السياحة', uploaded_by_en: 'Tourism Company' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-1001', date: '2026-11-01 14:00', title_ar: 'استلام طلب الإلغاء الأحادي من الشركة', title_en: 'Unilateral Agency Request Received', desc_ar: 'طلب إلغاء مقدم من شركة هداية.', desc_en: 'Agency request submitted.', actor_ar: 'مدحت عزمي', actor_en: 'Medhat Azmy', type: 'creation' },
+        { id: 'ACT-CAN-1002', date: '2026-11-02 10:30', title_ar: 'رفض طلب الإلغاء وحماية حجز المعتمر', title_en: 'Cancellation Rejected / Customer Protected', desc_ar: 'تم رفض طلب الشركة لعدم وجود موافقة خطية من المعتمر. الحجز مستمر وقائم.', desc_en: 'Rejected due to lack of customer consent. Booking remains active and confirmed.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'rejection' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-011',
+      booking_id: 'BK-2026-1055',
+      customer_id: 'CUST-1002',
+      customer_name_ar: 'عمر عبد العزيز الشريف',
+      customer_name_en: 'Omar Abdelaziz El-Sherif',
+      customer_phone: '01285536230',
+      customer_whatsapp: '01285536230',
+      customer_email: 'omar.aziz@gmail.com',
+      customer_national_id: '28409150102914',
+      customer_governorate_ar: 'القاهرة',
+      customer_governorate_en: 'Cairo',
+      company_id: 'COMP-101',
+      company_name_ar: 'شركة طيبة لإدارة رحلات الحج والعمرة',
+      company_name_en: 'Tayba Pilgrimage & Umrah Management',
+      company_license: '1142',
+      company_contact: {
+        name_ar: 'مروان السعيد',
+        name_en: 'Marwan El-Saeed',
+        phone: '01011223344',
+        whatsapp: '01011223344'
+      },
+      program_ar: 'عمرة ٥ نجوم متميزة (فيرمونت)',
+      program_en: '5-Star Premium Umrah (Fairmont)',
+      travelers_count: 2,
+      travelers: [
+        { name_ar: 'عمر عبد العزيز الشريف', name_en: 'Omar Abdelaziz El-Sherif', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A28409150', birth_date: '1984-09-15' },
+        { name_ar: 'مها طارق العوضي', name_en: 'Maha Tarek El-Awady', relation_ar: 'الزوجة', relation_en: 'Spouse', passport: 'A28409151', birth_date: '1988-12-04' }
+      ],
+      source: 'customer',
+      cancellation_status: 'under_review',
+      refund_status: 'pending',
+      created_at: '2026-11-05 15:45',
+      timestamp_iso: '2026-11-05T15:45:00',
+      updated_at: '2026-11-05 16:30',
+      cancellation_reason_ar: 'انتداب عمل دولي مفاجئ للمعتمر خارج جمهورية مصر العربية قبل موعد السفر المجدول.',
+      cancellation_reason_en: 'Sudden international work assignment outside Egypt prior to scheduled travel date.',
+      cancellation_notes_ar: 'الحجز عالي القيمة (VIP). تم سداد ١٠٠ ألف ج.م معتمدة، ويوجد إيصال تحويل بـ ٦٥ ألف ج.م بانتظار المقاصة البنكية ومستثنى من الاسترداد.',
+      cancellation_notes_en: 'VIP booking. 100k EGP approved paid; 65k EGP transfer slip pending bank clearance and excluded from refund.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 165000,
+        total_paid_records: 165000,
+        approved_paid: 100000, // Strictly approved payments only!
+        pending_paid: 65000, // Pending review -> excluded!
+        refund_due: 100000, // Refund Due = Approved Paid ONLY
+        executed_refund: 0,
+        remaining_refund: 100000
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-1101', date: '2026-10-27 12:00', amount: 100000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-9988', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' },
+        { id: 'PAY-BK-1102', date: '2026-11-04 15:00', amount: 65000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-PEND-1029', status: 'pending_review', reviewer_ar: '—', reviewer_en: '—' }
+      ],
+      attachments: [
+        { id: 'ATT-021', name_ar: 'خطاب الانتداب والعمل الخارجي المعتمد من الشركة متعددة الجنسيات.pdf', name_en: 'International_Assignment_Letter.pdf', size: '1.2 MB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-022', name_ar: 'صورة جواز السفر وتأشيرة العمل الدولية.pdf', name_en: 'Passport_Copy_And_Work_Visa.pdf', size: '750 KB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-023', name_ar: 'شهادة الآيبان البنكي الصادرة من بنك HSBC مصر.pdf', name_en: 'Bank_IBAN_Certificate_HSBC.pdf', size: '620 KB', date: '2026-11-05', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' }
+      ],
+      refund_operations: [],
+      corrective_actions: [],
+      internal_notes: [
+        { id: 'NOTE-CAN-11', author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 16:30', text_ar: 'تأكيد الالتزام بالقاعدة المالية: تم احتساب المستحق للاسترداد (١٠٠ ألف ج.م) فقط. التحويل الإضافي (٦٥ ألف ج.م) لم يظهر بكشف حساب البنك المركزي حتى تاريخه ولن يتم اعتماده قبل وصول إشعار الإيداع الرسمي.', text_en: 'Strict financial rule enforced: Refund due calculated at approved 100k EGP only. Pending 65k excluded.' }
+      ],
+      activity_log: [
+        { id: 'ACT-CAN-1101', date: '2026-11-05 15:45', title_ar: 'استلام طلب الإلغاء للبرنامج الفاخر', title_en: 'VIP Cancellation Request Received', desc_ar: 'طلب إلغاء لعمرة ٥ نجوم متميزة مرفقاً بخطاب الانتداب الدولي وشهادة الآيبان.', desc_en: '5-Star VIP Umrah cancellation submitted with work assignment proof.', actor_ar: 'عمر عبد العزيز الشريف', actor_en: 'Omar Abdelaziz El-Sherif', type: 'creation' },
+        { id: 'ACT-CAN-1102', date: '2026-11-05 16:30', title_ar: 'تدقيق المدفوعات واستبعاد المعلق', title_en: 'Payment Audit & Pending Exclusion', desc_ar: 'فحص الحوالات: تم اعتماد ١٠٠ ألف واستبعاد ٦٥ ألف معلقة من رصيد الاسترداد.', desc_en: 'Audited payments: 100k approved, 65k pending excluded from refund due.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'audit' }
+      ]
+    },
+
+    {
+      id: 'CAN-2026-012',
+      booking_id: 'BK-2026-1036',
+      customer_id: 'CUST-1014',
+      customer_name_ar: 'كمال سيد بدوي',
+      customer_name_en: 'Kamal Sayed Badawi',
+      customer_phone: '01133221100',
+      customer_whatsapp: '01133221100',
+      customer_email: 'kamal.badawi@gmail.com',
+      customer_national_id: '27003182201948',
+      customer_governorate_ar: 'بني سويف',
+      customer_governorate_en: 'Beni Suef',
+      company_id: 'COMP-102',
+      company_name_ar: 'شركة الهدى للسياحة والخدمات الدينية',
+      company_name_en: 'Al-Huda Religious Travel & Tourism',
+      company_license: '2091',
+      company_contact: {
+        name_ar: 'أشرف القاضي',
+        name_en: 'Ashraf El-Kady',
+        phone: '01198765432',
+        whatsapp: '01198765432'
+      },
+      program_ar: 'عمرة اقتصادية موفرة (طيران)',
+      program_en: 'Umrah Economy Saver (Flight)',
+      travelers_count: 1,
+      travelers: [
+        { name_ar: 'كمال سيد بدوي', name_en: 'Kamal Sayed Badawi', relation_ar: 'المعتمر الرئيسي', relation_en: 'Lead Pilgrim', passport: 'A27003182', birth_date: '1970-03-18' }
+      ],
+      source: 'customer',
+      cancellation_status: 'cancelled',
+      refund_status: 'completed', // SETTLED & ARCHIVED!
+      created_at: '2026-10-15 08:30',
+      timestamp_iso: '2026-10-15T08:30:00',
+      updated_at: '2026-10-19 14:00',
+      cancellation_reason_ar: 'تعذر إصدار التأشيرة الإلكترونية لعدم استيفاء الشروط النظامية من الجهات المصدرة.',
+      cancellation_reason_en: 'E-visa issuance denied by issuing authorities due to regulatory requirements.',
+      cancellation_notes_ar: 'تم التحقق من إشعار رفض التأشيرة واعتماد الإلغاء الكامل ورد المبلغ لحساب العميل وإقفال السجل.',
+      cancellation_notes_en: 'Verified visa denial notice, approved cancellation, fully refunded and archived.',
+      rejection_reason_ar: null,
+      rejection_reason_en: null,
+      financials: {
+        booking_total: 49000,
+        total_paid_records: 49000,
+        approved_paid: 49000,
+        pending_paid: 0,
+        refund_due: 49000,
+        executed_refund: 49000,
+        remaining_refund: 0
+      },
+      payments_breakdown: [
+        { id: 'PAY-BK-1201', date: '2026-10-10 09:00', amount: 49000, method_ar: 'تحويل بنكي', method_en: 'Bank Wire', receipt_ref: 'BNK-TX-3310', status: 'approved', reviewer_ar: 'أحمد صبري', reviewer_en: 'Ahmed Sabry' }
+      ],
+      attachments: [
+        { id: 'ATT-024', name_ar: 'إشعار تعذر إصدار التأشيرة الصادر من بوابة التأشيرات.pdf', name_en: 'Visa_System_Denial_Notice.pdf', size: '580 KB', date: '2026-10-15', type: 'application/pdf', uploaded_by_ar: 'العميل', uploaded_by_en: 'Customer' },
+        { id: 'ATT-025', name_ar: 'إيصال التحويل البنكي للاسترداد من البنك الأهلي.pdf', name_en: 'NBE_Refund_Transfer_Receipt.pdf', size: '710 KB', date: '2026-10-19', type: 'application/pdf', uploaded_by_ar: 'حسابات ميقات', uploaded_by_en: 'Miqat Accounts' }
+      ],
+      refund_operations: [
+        {
+          id: 'REF-OP-1201',
+          date: '2026-10-18 10:30',
+          amount: 49000,
+          method: 'bank_transfer',
+          method_ar: 'تحويل بنكي رسمي',
+          method_en: 'Official Bank Wire',
+          bank_name_ar: 'البنك الأهلي المصري',
+          bank_name_en: 'National Bank of Egypt (NBE)',
+          beneficiary_name_ar: 'كمال سيد بدوي',
+          beneficiary_name_en: 'Kamal Sayed Badawi',
+          account_iban: 'EG900002000100000005518293019',
+          reference_no: 'TRX-REF-331980',
+          status: 'completed',
+          status_ar: 'مكتمل ومؤكد بنكياً',
+          status_en: 'Completed & Confirmed',
+          voucher_file: 'NBE_Refund_Transfer_Receipt.pdf',
+          voucher_size: '710 KB',
+          confirmed_at: '2026-10-19 14:00',
+          notes_ar: 'تم تأكيد الإيداع بحساب العميل وإقفال المطالبة المالية بنجاح',
+          notes_en: 'Deposit confirmed in customer account and claim closed successfully'
+        }
+      ],
+      corrective_actions: [],
+      internal_notes: [],
+      activity_log: [
+        { id: 'ACT-CAN-1201', date: '2026-10-15 08:30', title_ar: 'استلام طلب الإلغاء لتعذر التأشيرة', title_en: 'Cancellation Received (Visa Denied)', desc_ar: 'طلب إلغاء لعدم صدور التأشيرة.', desc_en: 'Cancellation request received.', actor_ar: 'كمال سيد بدوي', actor_en: 'Kamal Sayed Badawi', type: 'creation' },
+        { id: 'ACT-CAN-1202', date: '2026-10-16 11:00', title_ar: 'اعتماد الإلغاء الكامل', title_en: 'Full Cancellation Approved', desc_ar: 'اعتماد إلغاء الحجز ومبلغ ٤٩,٠٠٠ ج.م.', desc_en: 'Approved cancellation for 49,000 EGP.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'approval' },
+        { id: 'ACT-CAN-1203', date: '2026-10-18 10:30', title_ar: 'تنفيذ التحويل البنكي', title_en: 'Wire Executed', desc_ar: 'تحويل ٤٩,٠٠٠ ج.م عبر البنك الأهلي بالمرجع: TRX-REF-331980.', desc_en: 'Transferred 49,000 EGP via NBE, Ref: TRX-REF-331980.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_processing' },
+        { id: 'ACT-CAN-1204', date: '2026-10-19 14:00', title_ar: 'تأكيد اكتمال الاسترداد والتسوية النهائية', title_en: 'Refund Settlement Confirmed & Completed', desc_ar: 'تأكيد التسوية المكتملة وأرشفة السجل.', desc_en: 'Settlement confirmed, record archived.', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', type: 'refund_completed' }
+      ]
+    }
+  ];
+
   let SLA_CONFIG_HOURS = 2; // Default 2 hours, max 24 hours
 
   return {
     TOURISM_COMPANIES_REGISTRY,
     PROGRAM_MODIFICATION_REQUESTS,
+    CANCELLATION_REQUESTS,
     BASE_KPIS,
     CUSTOMERS,
     TRANSACTIONS,
@@ -6402,6 +7395,508 @@
         message: message,
         timestamp: new Date().toISOString()
       };
+    },
+
+    // =========================================================================
+    // CANCELLATIONS & SETTLEMENTS REGISTER DATASET & WORKFLOW ENGINE
+    // =========================================================================
+    getCancellationRequests: function (filterParams) {
+      const filters = filterParams || {};
+      let list = CANCELLATION_REQUESTS.slice();
+
+      // Section filtering: 'current', 'archive', 'all'
+      if (filters.section === 'current') {
+        // Current: under_review OR (cancelled with refund NOT completed)
+        list = list.filter(r => r.cancellation_status === 'under_review' || 
+          (r.cancellation_status === 'cancelled' && r.refund_status !== 'completed'));
+      } else if (filters.section === 'archive') {
+        // Archive: Previous cancelled bookings where cancellation is cancelled AND refund is completed and settled
+        list = list.filter(r => r.cancellation_status === 'cancelled' && r.refund_status === 'completed');
+      } // 'all' includes everything (current, archive, rejected)
+
+      // Query filter
+      if (filters.query && typeof filters.query === 'string' && filters.query.trim()) {
+        const q = filters.query.toLowerCase().trim();
+        list = list.filter(r => {
+          return (r.id && r.id.toLowerCase().includes(q)) ||
+            (r.booking_id && r.booking_id.toLowerCase().includes(q)) ||
+            (r.customer_name_ar && r.customer_name_ar.toLowerCase().includes(q)) ||
+            (r.customer_name_en && r.customer_name_en.toLowerCase().includes(q)) ||
+            (r.customer_phone && r.customer_phone.includes(q)) ||
+            (r.company_name_ar && r.company_name_ar.toLowerCase().includes(q)) ||
+            (r.company_name_en && r.company_name_en.toLowerCase().includes(q));
+        });
+      }
+
+      // Source filter: 'customer', 'company', or 'all'
+      if (filters.source && filters.source !== 'all') {
+        list = list.filter(r => r.source === filters.source);
+      }
+
+      // Cancellation status filter
+      if (filters.cancellation_status && filters.cancellation_status !== 'all') {
+        list = list.filter(r => r.cancellation_status === filters.cancellation_status);
+      }
+
+      // Refund status filter
+      if (filters.refund_status && filters.refund_status !== 'all') {
+        list = list.filter(r => r.refund_status === filters.refund_status);
+      }
+
+      // Date range filter
+      if (filters.dateFrom) {
+        list = list.filter(r => r.created_at.slice(0, 10) >= filters.dateFrom);
+      }
+      if (filters.dateTo) {
+        list = list.filter(r => r.created_at.slice(0, 10) <= filters.dateTo);
+      }
+
+      // Has pending payments filter
+      if (filters.hasPendingPayments === true) {
+        list = list.filter(r => (r.financials && r.financials.pending_paid > 0));
+      }
+
+      return list;
+    },
+
+    getCancellationDetails: function (id) {
+      if (!id) return null;
+      return CANCELLATION_REQUESTS.find(r => r.id === id) || null;
+    },
+
+    getCancellationSummary: function () {
+      const all = CANCELLATION_REQUESTS;
+      const totalRequests = all.length;
+      const awaitingReview = all.filter(r => r.cancellation_status === 'under_review').length;
+      const pendingRefunds = all.filter(r => r.cancellation_status === 'cancelled' && (r.refund_status === 'pending' || r.refund_status === 'processing')).length;
+      const completedRefunds = all.filter(r => r.cancellation_status === 'cancelled' && r.refund_status === 'completed').length;
+      const failedOperations = all.filter(r => r.refund_status === 'failed').length;
+
+      // Financial totals
+      let totalRefundDuePending = 0;
+      let totalRefundExecuted = 0;
+      all.forEach(r => {
+        if (r.cancellation_status === 'cancelled') {
+          if (r.refund_status === 'completed') {
+            totalRefundExecuted += (r.financials.executed_refund || 0);
+          } else {
+            totalRefundDuePending += (r.financials.refund_due || 0);
+          }
+        }
+      });
+
+      return {
+        totalRequests: totalRequests,
+        awaitingReview: awaitingReview,
+        pendingRefunds: pendingRefunds,
+        completedRefunds: completedRefunds,
+        failedOperations: failedOperations,
+        totalRefundDuePending: totalRefundDuePending,
+        totalRefundExecuted: totalRefundExecuted
+      };
+    },
+
+    approveCancellation: function (id, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+      if (req.cancellation_status !== 'under_review') {
+        return { success: false, error: 'Request is not under review' };
+      }
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      req.cancellation_status = 'cancelled';
+      // Strictly set refund_status to pending so it moves to refund workflow
+      req.refund_status = 'pending';
+      req.updated_at = now;
+
+      // Update financial balance
+      req.financials.refund_due = req.financials.approved_paid;
+      req.financials.remaining_refund = req.financials.refund_due;
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'اعتماد إلغاء الحجز رسمياً',
+        title_en: 'Booking Cancellation Approved',
+        desc_ar: 'تم اعتماد طلب الإلغاء من قبل موظف الحسابات وإحالة المستحقات المالية لقسم الاسترداد (' + req.financials.refund_due.toLocaleString('ar-EG') + ' ج.م).',
+        desc_en: 'Cancellation request approved by accounts officer and forwarded for refund execution (' + req.financials.refund_due.toLocaleString('en-US') + ' EGP).',
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'approval'
+      });
+
+      return { success: true, request: req };
+    },
+
+    rejectCancellation: function (id, reasonAr, reasonEn, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+      if (!reasonAr || !reasonAr.trim()) {
+        return { success: false, error: 'Mandatory rejection reason missing' };
+      }
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      req.cancellation_status = 'rejected';
+      req.refund_status = 'none'; // Refund blocked!
+      req.rejection_reason_ar = reasonAr.trim();
+      req.rejection_reason_en = reasonEn && reasonEn.trim() ? reasonEn.trim() : reasonAr.trim();
+      req.updated_at = now;
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'رفض طلب الإلغاء وتثبيت الحجز',
+        title_en: 'Cancellation Rejected (Booking Retained)',
+        desc_ar: 'تم رفض طلب الإلغاء مع ذكر السبب الإلزامي: ' + req.rejection_reason_ar,
+        desc_en: 'Cancellation request rejected with mandatory reason: ' + req.rejection_reason_en,
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'rejection'
+      });
+
+      return { success: true, request: req };
+    },
+
+    recordRefund: function (id, refundData, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+      if (req.cancellation_status !== 'cancelled') {
+        return { success: false, error: 'Cancellation must be approved before recording refund' };
+      }
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      const opId = 'REF-OP-' + Date.now();
+      const amount = Number(refundData.amount) || req.financials.refund_due;
+      const method = refundData.method || 'bank_transfer';
+      const methodMapAr = {
+        'bank_transfer': 'تحويل بنكي رسمي',
+        'instapay': 'شبكة المدفوعات اللحظية (إنستاباي)',
+        'card_reversal': 'رد للبطاقة الائتمانية الأصلية',
+        'vodafone_cash': 'محفظة فودافون كاش'
+      };
+      const methodMapEn = {
+        'bank_transfer': 'Official Bank Wire',
+        'instapay': 'InstaPay IPN Network',
+        'card_reversal': 'Credit Card Reversal',
+        'vodafone_cash': 'Vodafone Cash E-Wallet'
+      };
+
+      const newOp = {
+        id: opId,
+        date: now,
+        amount: amount,
+        method: method,
+        method_ar: methodMapAr[method] || method,
+        method_en: methodMapEn[method] || method,
+        bank_name_ar: refundData.bank_name_ar || 'البنك الأهلي المصري',
+        bank_name_en: refundData.bank_name_en || 'National Bank of Egypt (NBE)',
+        beneficiary_name_ar: refundData.beneficiary_name_ar || req.customer_name_ar,
+        beneficiary_name_en: refundData.beneficiary_name_en || req.customer_name_en,
+        account_iban: refundData.iban || 'EG380002000100000002938472910',
+        reference_no: refundData.reference_no || ('TRX-REF-' + Math.floor(100000 + Math.random() * 900000)),
+        status: 'processing',
+        status_ar: 'قيد التحويل والمعالجة البنكية',
+        status_en: 'Processing with Bank',
+        voucher_file: refundData.voucher_file || 'Refund_Bank_Transfer_Slip.pdf',
+        voucher_size: '640 KB',
+        notes_ar: refundData.notes_ar || 'تم إرسال أمر التحويل إلى البنك المعتمد للمقاصة والتنفيذ',
+        notes_en: refundData.notes_en || 'Transfer instruction dispatched to partner clearing bank'
+      };
+
+      if (!req.refund_operations) req.refund_operations = [];
+      req.refund_operations.unshift(newOp);
+
+      req.refund_status = 'processing';
+      req.updated_at = now;
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'تسجيل أمر تحويل الاسترداد المالي',
+        title_en: 'Refund Transfer Instruction Recorded',
+        desc_ar: 'تم تسجيل تحويل استرداد بمبلغ (' + amount.toLocaleString('ar-EG') + ' ج.م) عبر ' + newOp.method_ar + ' بالمرجع: ' + newOp.reference_no,
+        desc_en: 'Recorded refund transfer of (' + amount.toLocaleString('en-US') + ' EGP) via ' + newOp.method_en + ' Ref: ' + newOp.reference_no,
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'refund_processing'
+      });
+
+      return { success: true, operation: newOp, request: req };
+    },
+
+    confirmRefundCompletion: function (id, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+      if (req.cancellation_status !== 'cancelled') {
+        return { success: false, error: 'Cancellation is not approved' };
+      }
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      req.refund_status = 'completed';
+      req.financials.executed_refund = req.financials.refund_due;
+      req.financials.remaining_refund = 0;
+      req.updated_at = now;
+
+      // Update latest refund op to completed
+      if (req.refund_operations && req.refund_operations.length > 0) {
+        req.refund_operations[0].status = 'completed';
+        req.refund_operations[0].status_ar = 'مكتمل ومؤكد بنكياً';
+        req.refund_operations[0].status_en = 'Completed & Confirmed';
+        req.refund_operations[0].confirmed_at = now;
+      }
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'تأكيد اكتمال الاسترداد والتسوية النهائية',
+        title_en: 'Refund Settlement Confirmed & Completed',
+        desc_ar: 'تم تأكيد وصول التحويل لحساب المستفيد ومطابقة كشف الحساب البنكي وإقفال المطالبة المالية بنجاح ونقل السجل للأرشيف.',
+        desc_en: 'Confirmed funds credit to beneficiary, bank statement reconciled, claim closed and archived.',
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'refund_completed'
+      });
+
+      return { success: true, request: req };
+    },
+
+    retryFailedRefund: function (id, retryData, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      const newRef = retryData.reference_no || ('RETRY-TRX-' + Math.floor(100000 + Math.random() * 900000));
+      const retryOp = {
+        id: 'REF-RETRY-' + Date.now(),
+        date: now,
+        amount: req.financials.refund_due,
+        method: retryData.method || 'bank_transfer',
+        method_ar: retryData.method_ar || 'تحويل بنكي سريع (إعادة محاولة)',
+        method_en: retryData.method_en || 'Express Bank Wire (Retry)',
+        bank_name_ar: retryData.bank_name_ar || 'بنك مصر',
+        bank_name_en: retryData.bank_name_en || 'Banque Misr',
+        beneficiary_name_ar: retryData.beneficiary_name_ar || req.customer_name_ar,
+        beneficiary_name_en: retryData.beneficiary_name_en || req.customer_name_en,
+        account_iban: retryData.iban || 'EG120002000100000009948211029',
+        reference_no: newRef,
+        status: 'processing',
+        status_ar: 'قيد إعادة المحاولة والمعالجة',
+        status_en: 'Retrying & Processing',
+        voucher_file: retryData.voucher_file || 'Retry_Bank_Transfer_Slip.pdf',
+        voucher_size: '512 KB',
+        notes_ar: retryData.notes_ar || 'إعادة إرسال التحويل بعد تصحيح بيانات الآيبان البنكي',
+        notes_en: retryData.notes_en || 'Transfer re-dispatched after IBAN correction'
+      };
+
+      if (!req.refund_operations) req.refund_operations = [];
+      req.refund_operations.unshift(retryOp);
+
+      req.refund_status = 'processing';
+      req.updated_at = now;
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'إعادة محاولة تحويل الاسترداد المتعثر',
+        title_en: 'Retry Initiated for Failed Refund',
+        desc_ar: 'تمت إعادة تنفيذ التحويل المالي برقم مرجع: ' + newRef + ' بعد تحديث وتصحيح البيانات البنكية.',
+        desc_en: 'Re-executed transfer with ref: ' + newRef + ' after bank credentials update.',
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'retry_initiated'
+      });
+
+      return { success: true, operation: retryOp, request: req };
+    },
+
+    recordCorrectiveAction: function (id, correctiveData, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req) return { success: false, error: 'Request not found' };
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      const actionRecord = {
+        id: 'CORR-' + Date.now(),
+        date: now,
+        type: correctiveData.type || 'iban_update',
+        type_ar: correctiveData.type_ar || 'تصحيح رقم الحساب والآيبان البنكي',
+        type_en: correctiveData.type_en || 'Bank Account & IBAN Correction',
+        desc_ar: correctiveData.desc_ar || 'تم التحقق من شهادة الحساب البنكي وتصحيح رقم الآيبان المعتمد للعميل',
+        desc_en: correctiveData.desc_en || 'Verified customer bank certificate and updated approved IBAN',
+        actor_ar: actorAr,
+        actor_en: actorEn
+      };
+
+      if (!req.corrective_actions) req.corrective_actions = [];
+      req.corrective_actions.unshift(actionRecord);
+      req.updated_at = now;
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'تسجيل إجراء تصحيحي نظامي',
+        title_en: 'Systemic Corrective Action Recorded',
+        desc_ar: actionRecord.type_ar + ': ' + actionRecord.desc_ar,
+        desc_en: actionRecord.type_en + ': ' + actionRecord.desc_en,
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'corrective_action'
+      });
+
+      return { success: true, action: actionRecord, request: req };
+    },
+
+    addCancellationInternalNote: function (id, noteText, actorName) {
+      const req = CANCELLATION_REQUESTS.find(r => r.id === id);
+      if (!req || !noteText) return false;
+
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      const actorAr = actorName || 'أحمد صبري';
+      const actorEn = actorAr === 'أحمد صبري' ? 'Ahmed Sabry' : actorAr;
+
+      if (!req.internal_notes) req.internal_notes = [];
+      req.internal_notes.unshift({
+        id: 'CAN-NOTE-' + Date.now(),
+        author_ar: actorAr,
+        author_en: actorEn,
+        date: now,
+        text_ar: noteText,
+        text_en: noteText
+      });
+
+      req.activity_log.unshift({
+        id: 'ACT-CAN-' + Date.now(),
+        date: now,
+        title_ar: 'إضافة ملاحظة داخلية خاصة بالإلغاء',
+        title_en: 'Internal Cancellation Note Added',
+        desc_ar: noteText.length > 50 ? noteText.slice(0, 50) + '...' : noteText,
+        desc_en: noteText.length > 50 ? noteText.slice(0, 50) + '...' : noteText,
+        actor_ar: actorAr,
+        actor_en: actorEn,
+        type: 'internal_note'
+      });
+
+      return true;
+    },
+
+    getScheduledReportTemplates: function () {
+      return [
+        {
+          id: 'REP-SCH-01',
+          name_ar: 'التقرير اليومي الآلي للإلغاءات والتسويات',
+          name_en: 'Daily Automated Cancellations & Settlements Report',
+          frequency_ar: 'يومياً الساعة ٠٨:٠٠ صباحاً (بتوقيت القاهرة)',
+          frequency_en: 'Daily at 08:00 AM (Cairo Time)',
+          next_run: '2026-11-07 08:00',
+          status: 'active',
+          status_ar: 'مجدول ونشط',
+          status_en: 'Active Schedule',
+          recipients: ['finance.director@miqat.com', 'accounts.ops@miqat.com', 'settlements@miqat.com'],
+          format: 'XLSX (Excel)',
+          description_ar: 'يتضمن كشفاً بجميع الطلبات الجديدة، المبالغ المستردة المنفذة، والعمليات المتعثرة خلال الـ ٢٤ ساعة الماضية.',
+          description_en: 'Covers all new cancellation requests, executed refunds, and failed operations during the last 24 hours.'
+        },
+        {
+          id: 'REP-SCH-02',
+          name_ar: 'التقرير الأسبوعي الشامل للمستحقات والعمليات المتعثرة',
+          name_en: 'Weekly Comprehensive Dues & Failed Operations Report',
+          frequency_ar: 'كل يوم أحد الساعة ٠٨:٠٠ صباحاً',
+          frequency_en: 'Every Sunday at 08:00 AM',
+          next_run: '2026-11-08 08:00',
+          status: 'active',
+          status_ar: 'مجدول ونشط',
+          status_en: 'Active Schedule',
+          recipients: ['cfo@miqat.com', 'auditing@miqat.com', 'finance.director@miqat.com'],
+          format: 'XLSX (Excel)',
+          description_ar: 'تحليل أسبوعي تراكمي للأرصدة المستحقة للاسترداد، نسب الإنجاز، وأداء معالجة الإخفاقات البنكية.',
+          description_en: 'Weekly cumulative audit of pending refund dues, completion rates, and banking resolution performance.'
+        },
+        {
+          id: 'REP-SCH-03',
+          name_ar: 'تقرير الإقفال المالي الشهري لحسابات الإلغاء',
+          name_en: 'Monthly Financial Closing Report for Cancellations',
+          frequency_ar: 'اليوم الأول من كل شهر ميلادي الساعة ٠٨:٠٠ صباحاً',
+          frequency_en: '1st of every month at 08:00 AM',
+          next_run: '2026-12-01 08:00',
+          status: 'active',
+          status_ar: 'مجدول ونشط',
+          status_en: 'Active Schedule',
+          recipients: ['cfo@miqat.com', 'external.auditors@miqat.com', 'board.finance@miqat.com'],
+          format: 'XLSX (Excel)',
+          description_ar: 'كشف المطابقة المالية الشامل لمستحقات شركات السياحة والعملاء للأغراض المحاسبية والميزانية العامة.',
+          description_en: 'Comprehensive financial reconciliation of agency and customer settlements for statutory ledger balance.'
+        }
+      ];
+    },
+
+    getReportHistory: function () {
+      return [
+        {
+          id: 'RPT-GEN-2026-088',
+          title_ar: 'التقرير اليومي لسجل الإلغاءات — ٠٥ نوفمبر ٢٠٢٦',
+          title_en: 'Daily Cancellations Register Report — Nov 05, 2026',
+          generated_at: '2026-11-05 08:00',
+          generated_by_ar: 'النظام الآلي (Cron)',
+          generated_by_en: 'Automated System (Cron)',
+          type: 'daily_auto',
+          records_count: 12,
+          file_size: '48.5 KB',
+          filename: 'Miqat_Cancellations_Daily_2026-11-05.xlsx'
+        },
+        {
+          id: 'RPT-GEN-2026-087',
+          title_ar: 'التقرير اليومي لسجل الإلغاءات — ٠٤ نوفمبر ٢٠٢٦',
+          title_en: 'Daily Cancellations Register Report — Nov 04, 2026',
+          generated_at: '2026-11-04 08:00',
+          generated_by_ar: 'النظام الآلي (Cron)',
+          generated_by_en: 'Automated System (Cron)',
+          type: 'daily_auto',
+          records_count: 11,
+          file_size: '46.2 KB',
+          filename: 'Miqat_Cancellations_Daily_2026-11-04.xlsx'
+        },
+        {
+          id: 'RPT-GEN-2026-086',
+          title_ar: 'التقرير الأسبوعي للمستحقات والعمليات المتعثرة — أسبوع ٤٤',
+          title_en: 'Weekly Settlements & Failed Operations Report — Week 44',
+          generated_at: '2026-11-01 08:00',
+          generated_by_ar: 'النظام الآلي (Cron)',
+          generated_by_en: 'Automated System (Cron)',
+          type: 'weekly_auto',
+          records_count: 38,
+          file_size: '112.4 KB',
+          filename: 'Miqat_Cancellations_Weekly_W44_2026.xlsx'
+        },
+        {
+          id: 'RPT-GEN-2026-085',
+          title_ar: 'تقرير مخصص يدوي — الربع الثالث والربع الرابع',
+          title_en: 'Custom Manual Export — Q3 & Q4 Settled Claims',
+          generated_at: '2026-10-31 16:45',
+          generated_by_ar: 'أحمد صبري (موظف حسابات)',
+          generated_by_en: 'Ahmed Sabry (Accounts Officer)',
+          type: 'manual_custom',
+          records_count: 24,
+          file_size: '78.9 KB',
+          filename: 'Miqat_Custom_Cancellations_Oct2026.xlsx'
+        }
+      ];
     }
 
   };

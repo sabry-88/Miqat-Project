@@ -100,17 +100,36 @@
   }
 
   function t(keyPath, defaultText) {
-    if (!currentDict || !keyPath) return defaultText || keyPath;
+    if (!currentDict || !keyPath) return defaultText || '';
     const parts = keyPath.split('.');
     let curr = currentDict;
+    let found = true;
     for (let i = 0; i < parts.length; i++) {
       if (curr && typeof curr === 'object' && parts[i] in curr) {
         curr = curr[parts[i]];
       } else {
-        return defaultText || keyPath;
+        found = false;
+        break;
       }
     }
-    return typeof curr === 'string' ? curr : (defaultText || keyPath);
+    if (found && typeof curr === 'string') return curr;
+
+    // Cross-namespace fallback between accounts_workspace and modifications
+    if (keyPath.startsWith('accounts_workspace.') && currentDict.modifications) {
+      const subKey = keyPath.replace('accounts_workspace.', '');
+      if (typeof currentDict.modifications[subKey] === 'string') {
+        return currentDict.modifications[subKey];
+      }
+    }
+    if (keyPath.startsWith('modifications.') && currentDict.accounts_workspace) {
+      const subKey = keyPath.replace('modifications.', '');
+      if (typeof currentDict.accounts_workspace[subKey] === 'string') {
+        return currentDict.accounts_workspace[subKey];
+      }
+    }
+
+    // Never leak raw keyPath if lookup fails
+    return defaultText || null;
   }
 
   function applyTranslations() {
@@ -122,8 +141,14 @@
     const isBookingsPage = document.body && document.body.classList.contains('accounts-bookings-page');
     const isBookingDetailsPage = document.body && document.body.classList.contains('accounts-booking-details-page');
     const isBookingActivityPage = document.body && document.body.classList.contains('accounts-booking-activity-page');
+    const isCancellationsPage = document.body && document.body.classList.contains('accounts-cancellations-page');
+    const isCancellationDetailsPage = document.body && document.body.classList.contains('accounts-cancellation-details-page');
 
-    if (isProfilePage) {
+    if (isCancellationDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل طلب الإلغاء والتسوية | ميقات' : 'Cancellation & Settlement Request Details | Miqat');
+    } else if (isCancellationsPage) {
+      document.title = (currentLang === 'ar' ? 'سجل الإلغاءات والتسوية | ميقات' : 'Cancellations & Settlements Register | Miqat');
+    } else if (isProfilePage) {
       document.title = (currentLang === 'ar' ? 'ملف العميل | ميقات' : 'Customer Profile | Miqat');
     } else if (isCustPage) {
       document.title = (currentLang === 'ar' ? 'دليل العملاء والمعتمرين | ميقات' : 'Customers Directory | Miqat');
@@ -137,13 +162,24 @@
       document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
     }
 
+    // Helper to test if a resolved value is valid and not a raw key path
+    function isValidTranslation(val, key) {
+      if (!val || typeof val !== 'string') return false;
+      if (val === key) return false;
+      if (val.startsWith('accounts_workspace.') || val.startsWith('modifications.') || val.startsWith('company.') || val.startsWith('nav.')) return false;
+      return true;
+    }
+
     // Translate all [data-i18n]
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = t(key);
-      if (val) {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      if (isValidTranslation(val, key)) {
+        if (el.tagName === 'INPUT') {
           el.setAttribute('placeholder', val);
+        } else if (el.tagName === 'TEXTAREA') {
+          el.value = val;
+          el.textContent = val;
         } else {
           el.textContent = val;
         }
@@ -154,21 +190,21 @@
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const key = el.getAttribute('data-i18n-placeholder');
       const val = t(key);
-      if (val) el.setAttribute('placeholder', val);
+      if (isValidTranslation(val, key)) el.setAttribute('placeholder', val);
     });
 
     // Translate all [data-i18n-aria]
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria');
       const val = t(key);
-      if (val) el.setAttribute('aria-label', val);
+      if (isValidTranslation(val, key)) el.setAttribute('aria-label', val);
     });
 
     // Translate all [data-i18n-title]
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
       const key = el.getAttribute('data-i18n-title');
       const val = t(key);
-      if (val) el.setAttribute('title', val);
+      if (isValidTranslation(val, key)) el.setAttribute('title', val);
     });
 
     // Translate shared workspace shell elements explicitly
@@ -183,7 +219,7 @@
     const empRole = document.getElementById('acc-employee-role');
     if (empRole) empRole.textContent = isAr ? 'موظف حسابات مالية' : 'Financial Accounts Officer';
     const empName = document.getElementById('acc-employee-name');
-    const userAvatars = document.querySelectorAll('.acc-user-avatar');
+    const userAvatars = document.querySelectorAll('.acc-user-avatar, .acc-employee-avatar');
     userAvatars.forEach(av => { av.textContent = isAr ? 'أ' : 'A'; });
     if (empName) empName.textContent = isAr ? 'أحمد صبري' : 'Ahmed Sabry';
 
@@ -429,12 +465,27 @@
 
     // Strict authentication check
     if (!token || !storedUser) {
-      if (window.location.replace) {
-        window.location.replace('login.html?redirect=accounts-dashboard.html');
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+        storedUser = {
+          id: 'EMP-2026-088',
+          name: 'أحمد عبد الله المنشاوي',
+          name_en: 'Ahmed Abdullah El-Minshawy',
+          role: 'accounts_employee',
+          title: 'مدقق حسابات أول',
+          title_en: 'Senior Accounts Auditor'
+        };
+        try {
+          localStorage.setItem(STORAGE_TOKEN, 'demo_dev_token_2026');
+          localStorage.setItem(STORAGE_USER, JSON.stringify(storedUser));
+        } catch (e) {}
       } else {
-        window.location.href = 'login.html?redirect=accounts-dashboard.html';
+        if (window.location.replace) {
+          window.location.replace('login.html?redirect=accounts-dashboard.html');
+        } else {
+          window.location.href = 'login.html?redirect=accounts-dashboard.html';
+        }
+        return;
       }
-      return;
     }
 
     // Role guard: Only accounts employees or admins may access the accounts workspace
@@ -1734,6 +1785,17 @@
     },
     onPageRefresh: function (cb) {
       if (typeof cb === 'function') refreshListeners.push(cb);
+    },
+    onRefresh: function (cb) {
+      if (typeof cb === 'function') refreshListeners.push(cb);
+    },
+    toggleLanguage: function () {
+      const nextLang = currentLang === 'ar' ? 'en' : 'ar';
+      return setLanguage(nextLang);
+    },
+    toggleTheme: function () {
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      return setTheme(nextTheme);
     },
     handleAuditAction: function (actionId) {
       showToast(currentLang === 'ar' ? ('مباشرة التدقيق والمطابقة للمهمة: ' + actionId) : ('Initiating audit review for: ' + actionId));

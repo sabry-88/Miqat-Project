@@ -143,8 +143,17 @@
     const isBookingActivityPage = document.body && document.body.classList.contains('accounts-booking-activity-page');
     const isCancellationsPage = document.body && document.body.classList.contains('accounts-cancellations-page');
     const isCancellationDetailsPage = document.body && document.body.classList.contains('accounts-cancellation-details-page');
+    const isCollectionsPage = document.body && document.body.classList.contains('accounts-collections-page');
+    const isCollectionDetailsPage = document.body && document.body.classList.contains('accounts-collection-details-page');
+    const isSettlementDetailsPage = document.body && document.body.classList.contains('accounts-settlement-details-page');
 
-    if (isCancellationDetailsPage) {
+    if (isCollectionDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل التحصيل الإلكتروني | ميقات' : 'Collection Details | Miqat');
+    } else if (isSettlementDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل تسوية شركة السياحة | ميقات' : 'Company Settlement Details | Miqat');
+    } else if (isCollectionsPage) {
+      document.title = (currentLang === 'ar' ? 'التحصيلات والإيداعات النقدية | ميقات' : 'Collections & Cash Deposits | Miqat');
+    } else if (isCancellationDetailsPage) {
       document.title = (currentLang === 'ar' ? 'تفاصيل طلب الإلغاء والتسوية | ميقات' : 'Cancellation & Settlement Request Details | Miqat');
     } else if (isCancellationsPage) {
       document.title = (currentLang === 'ar' ? 'سجل الإلغاءات والتسوية | ميقات' : 'Cancellations & Settlements Register | Miqat');

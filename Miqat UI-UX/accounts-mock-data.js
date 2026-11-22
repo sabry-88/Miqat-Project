@@ -7897,7 +7897,1059 @@
           filename: 'Miqat_Custom_Cancellations_Oct2026.xlsx'
         }
       ];
-    }
+    },
+
+    /* =========================================================================
+     * PAGE 7: COLLECTIONS & CASH DEPOSITS / SETTLEMENTS MOCK DATA & ENGINES
+     * ========================================================================= */
+
+    // Configurable Settlement Financial Settings (provisional rates, not hardcoded formulas)
+    SETTLEMENT_CONFIG: {
+      commissionRate: 0.20, // 20% provisional
+      depositRate: 0.30     // 30% provisional
+    },
+
+    getSettlementConfig: function () {
+      return Object.assign({}, this.SETTLEMENT_CONFIG);
+    },
+
+    updateSettlementConfig: function (newConfig) {
+      if (newConfig && typeof newConfig.commissionRate === 'number') {
+        this.SETTLEMENT_CONFIG.commissionRate = newConfig.commissionRate;
+      }
+      if (newConfig && typeof newConfig.depositRate === 'number') {
+        this.SETTLEMENT_CONFIG.depositRate = newConfig.depositRate;
+      }
+      return this.getSettlementConfig();
+    },
+
+    // Collections Mock Dataset (Electronic only: Bank Transfer, InstaPay, Vodafone Cash, Wallets)
+    COLLECTIONS_DATA: [
+      {
+        id: 'COL-2026-0501',
+        booking_id: 'BKG-2026-1042',
+        customer_id: 'CUST-1042',
+        customer_name_ar: 'محمد إبراهيم السيد',
+        customer_name_en: 'Mohamed Ibrahim El-Sayed',
+        customer_phone: '+20 100 123 4567',
+        program_name_ar: 'عمرة رجب الاقتصادية — 1448 هـ',
+        program_name_en: 'Rajab Economy Umrah — 1448 AH',
+        program_total: 120000,
+        amount: 36000,
+        payment_method: 'bank_transfer',
+        transaction_date: '2026-11-04 14:20',
+        status: 'approved',
+        provider_status: 'verified',
+        provider_name: 'National Bank of Egypt (NBE)',
+        rrn: 'NBE-9928104829',
+        sender_account: 'EG3800020001000000123456789',
+        beneficiary_account: 'Miqat Main Escrow — NBE (EG9200030001000000998877665)',
+        proof_file: {
+          filename: 'NBE_Transfer_Receipt_36000.png',
+          size: '2.4 MB',
+          uploaded_at: '2026-11-04 14:25',
+          thumb_label: 'إشعار تحويل البنك الأهلي المصري'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-04 14:35', text: 'تمت مطابقة رقم العملية RRN مع كشف حساب البنك الأهلي واعتماد التحصيل فوراً.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-04 14:25', actor_ar: 'العميل (البوابة الإلكترونية)', actor_en: 'Customer (Portal)', details_ar: 'تم رفع إشعار تحويل بنكي بمبلغ ٣٦,٠٠٠ ج.م', details_en: 'Uploaded bank transfer receipt for 36,000 EGP' },
+          { action: 'provider_verified', date: '2026-11-04 14:30', actor_ar: 'نظام الربط البنكي الآلي', actor_en: 'Automated Bank Gateway', details_ar: 'تم التأكد من قيد المبلغ في حساب ميقات الرئيسي', details_en: 'Confirmed funds credit to Miqat main escrow account' },
+          { action: 'collection_approved', date: '2026-11-04 14:35', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', details_ar: 'اعتماد التحصيل وربطه بدفعة حجز BKG-2026-1042', details_en: 'Approved collection and linked to booking BKG-2026-1042' }
+        ]
+      },
+      {
+        id: 'COL-2026-0502',
+        booking_id: 'BKG-2026-1039',
+        customer_id: 'CUST-1039',
+        customer_name_ar: 'فاطمة الزهراء الشربيني',
+        customer_name_en: 'Fatima Al-Zahraa El-Sherbini',
+        customer_phone: '+20 111 884 9201',
+        program_name_ar: 'رحلة عمرة شعبان المميزة — فنادق الحرم',
+        program_name_en: 'Shaban Premium Umrah — Haram Hotels',
+        program_total: 180000,
+        amount: 54000,
+        payment_method: 'instapay',
+        transaction_date: '2026-11-05 10:15',
+        status: 'under_review',
+        provider_status: 'pending',
+        provider_name: 'InstaPay Network (IPN)',
+        rrn: 'IPN-8849201847',
+        sender_account: 'fatima.sherbini@instapay',
+        beneficiary_account: 'miqat.business@instapay',
+        proof_file: {
+          filename: 'InstaPay_Confirmation_54000.jpg',
+          size: '1.1 MB',
+          uploaded_at: '2026-11-05 10:18',
+          thumb_label: 'لقطة شاشة تأكيد إنستاباي'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 10:45', text: 'بانتظار تسوية شبكة إنستاباي اليومية للتأكد من القيد البنكي النهائي.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-05 10:18', actor_ar: 'العميل (تطبيق الهاتف)', actor_en: 'Customer (Mobile App)', details_ar: 'رفع إشعار تحويل إنستاباي ٥٤,٠٠٠ ج.م', details_en: 'Uploaded InstaPay confirmation for 54,000 EGP' },
+          { action: 'under_review', date: '2026-11-05 10:20', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', details_ar: 'قيد مراجعة التسوية اللحظية للمزود', details_en: 'Under instant gateway settlement audit' }
+        ]
+      },
+      {
+        id: 'COL-2026-0503',
+        booking_id: 'BKG-2026-1025',
+        customer_id: 'CUST-1025',
+        customer_name_ar: 'محمود عبد العزيز الجمال',
+        customer_name_en: 'Mahmoud Abdel Aziz El-Gammal',
+        customer_phone: '+20 122 345 6789',
+        program_name_ar: 'برنامج العمرة الاقتصادية — باقة رجب 1448',
+        program_name_en: 'Economy Umrah Package — Rajab 1448',
+        program_total: 95000,
+        amount: 28500,
+        payment_method: 'vodafone_cash',
+        transaction_date: '2026-11-04 16:50',
+        status: 'approved',
+        provider_status: 'verified',
+        provider_name: 'Vodafone Cash Merchant',
+        rrn: 'VF-6638102948',
+        sender_account: '+20 122 345 6789',
+        beneficiary_account: 'Miqat Corporate Wallet (01099887766)',
+        proof_file: {
+          filename: 'Vodafone_Cash_SMS_28500.png',
+          size: '850 KB',
+          uploaded_at: '2026-11-04 16:55',
+          thumb_label: 'رسالة إتمام تحويل محفظة فودافون كاش'
+        },
+        assigned_emp_ar: 'سارة ممدوح',
+        assigned_emp_en: 'Sarah Mamdouh',
+        notes: [
+          { author_ar: 'سارة ممدوح', author_en: 'Sarah Mamdouh', date: '2026-11-04 17:10', text: 'تم التحقق من رسالة بوابة فودافون ورقم المعاملة مطابق.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-04 16:55', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'إشعار سداد محفظة فودافون كاش', details_en: 'Vodafone Cash wallet payment proof' },
+          { action: 'provider_verified', date: '2026-11-04 17:05', actor_ar: 'بوابة فودافون للشركات', actor_en: 'Vodafone Corporate API', details_ar: 'تأكيد استلام المبلغ في المحفظة التجارية', details_en: 'Confirmed receipt in merchant wallet' },
+          { action: 'collection_approved', date: '2026-11-04 17:10', actor_ar: 'سارة ممدوح', actor_en: 'Sarah Mamdouh', details_ar: 'اعتماد التحصيل بنجاح', details_en: 'Collection successfully approved' }
+        ]
+      },
+      {
+        id: 'COL-2026-0504',
+        booking_id: 'BKG-2026-0988',
+        customer_id: 'CUST-0988',
+        customer_name_ar: 'طارق حسام الدين فهمي',
+        customer_name_en: 'Tarek Hossam El-Din Fahmy',
+        customer_phone: '+20 102 998 7766',
+        program_name_ar: 'عمرة النصف من شعبان — فندق دار التوحيد',
+        program_name_en: 'Mid-Shaban Umrah — Dar Al-Tawhid',
+        program_total: 150000,
+        amount: 45000,
+        payment_method: 'bank_transfer',
+        transaction_date: '2026-11-05 09:30',
+        status: 'under_review',
+        provider_status: 'mismatch',
+        provider_name: 'Banque Misr Gateway',
+        rrn: 'BM-291048201',
+        sender_account: 'EG1200020001000000887766554',
+        beneficiary_account: 'Miqat Main Escrow — BM (EG5500020001000000112233445)',
+        proof_file: {
+          filename: 'Banque_Misr_Transfer_Slip.pdf',
+          size: '3.1 MB',
+          uploaded_at: '2026-11-05 09:35',
+          thumb_label: 'إيصال تحويل بنك مصر ورقي'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 10:00', text: 'المبلغ المذكور في الإيصال الورقي ٤٥,٠٠٠ ج.م بينما المبلغ المسجل بحساب البنك ٤٤,٥٠٠ ج.م بسبب خصم عمولة تحويل. جاري التدقيق مع العميل.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-05 09:35', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'رفع إيصال تحويل بنك مصر', details_en: 'Uploaded Banque Misr receipt' },
+          { action: 'under_review', date: '2026-11-05 10:00', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', details_ar: 'تحديد تفاوت ٥٠٠ ج.م عمولة تحويل بنكي', details_en: 'Identified 500 EGP bank fee deduction variance' }
+        ]
+      },
+      {
+        id: 'COL-2026-0505',
+        booking_id: 'BKG-2026-0954',
+        customer_id: 'CUST-0954',
+        customer_name_ar: 'سعاد أحمد المنشاوي',
+        customer_name_en: 'Souad Ahmed El-Menshawy',
+        customer_phone: '+20 114 556 7788',
+        program_name_ar: 'برنامج عمرة رمضان المبارك — العشر الأوائل',
+        program_name_en: 'Ramadan Umrah — First 10 Days',
+        program_total: 210000,
+        amount: 63000,
+        payment_method: 'instapay',
+        transaction_date: '2026-11-03 18:40',
+        status: 'approved',
+        provider_status: 'verified',
+        provider_name: 'InstaPay Network (IPN)',
+        rrn: 'IPN-5549201948',
+        sender_account: 'souad.menshawy@instapay',
+        beneficiary_account: 'miqat.business@instapay',
+        proof_file: {
+          filename: 'InstaPay_Receipt_63000.png',
+          size: '1.4 MB',
+          uploaded_at: '2026-11-03 18:42',
+          thumb_label: 'إشعار تحويل إنستاباي مكتمل'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-03 19:00', text: 'تم التحقق من مطابقة الحساب والاسم مع سجل الحجز.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-03 18:42', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'رفع إشعار تحويل فوري', details_en: 'Instant transfer proof uploaded' },
+          { action: 'provider_verified', date: '2026-11-03 18:50', actor_ar: 'شبكة المدفوعات اللحظية IPN', actor_en: 'IPN Network', details_ar: 'تسوية لحظية معتمدة', details_en: 'Instant settlement approved' },
+          { action: 'collection_approved', date: '2026-11-03 19:00', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', details_ar: 'اعتماد التحصيل بالكامل', details_en: 'Collection fully approved' }
+        ]
+      },
+      {
+        id: 'COL-2026-0506',
+        booking_id: 'BKG-2026-0920',
+        customer_id: 'CUST-0920',
+        customer_name_ar: 'ياسر كمال الألفي',
+        customer_name_en: 'Yasser Kamal El-Alfy',
+        customer_phone: '+20 101 223 3445',
+        program_name_ar: 'عمرة رجب الاقتصادية — باقة الهدى',
+        program_name_en: 'Rajab Economy Umrah — Al-Huda Package',
+        program_total: 110000,
+        amount: 33000,
+        payment_method: 'bank_transfer',
+        transaction_date: '2026-11-02 11:20',
+        status: 'rejected',
+        provider_status: 'unverified',
+        provider_name: 'CIB Egypt Gateway',
+        rrn: 'CIB-1948201948',
+        sender_account: 'EG4400030001000000334455667',
+        beneficiary_account: 'Miqat Main Escrow — CIB (EG1100030001000000990011223)',
+        proof_file: {
+          filename: 'CIB_Receipt_Unclear.jpg',
+          size: '540 KB',
+          uploaded_at: '2026-11-02 11:25',
+          thumb_label: 'صورة غير واضحة للإيصال'
+        },
+        assigned_emp_ar: 'سارة ممدوح',
+        assigned_emp_en: 'Sarah Mamdouh',
+        notes: [
+          { author_ar: 'سارة ممدوح', author_en: 'Sarah Mamdouh', date: '2026-11-02 12:00', text: 'الصورة المرفوعة مظلمة تماماً ولا يظهر بها تاريخ العملية أو الحساب المحول إليه. تم رفض الإشعار وطلب إعادة الإرفاق.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-02 11:25', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'رفع إشعار تحويل CIB', details_en: 'Uploaded CIB receipt' },
+          { action: 'collection_rejected', date: '2026-11-02 12:00', actor_ar: 'سارة ممدوح', actor_en: 'Sarah Mamdouh', details_ar: 'رفض الإشعار لعدم وضوح البيانات وطلب إعادة الإرفاق', details_en: 'Rejected receipt due to illegible image and requested re-upload' }
+        ]
+      },
+      {
+        id: 'COL-2026-0507',
+        booking_id: 'BKG-2026-0899',
+        customer_id: 'CUST-0899',
+        customer_name_ar: 'خالد عبد الرحمن السواح',
+        customer_name_en: 'Khaled Abdel Rahman El-Sawah',
+        customer_phone: '+20 120 776 5544',
+        program_name_ar: 'رحلة عمرة شعبان الاقتصادية — 1448 هـ',
+        program_name_en: 'Shaban Economy Umrah — 1448 AH',
+        program_total: 100000,
+        amount: 30000,
+        payment_method: 'wallet',
+        transaction_date: '2026-11-05 11:00',
+        status: 'awaiting_provider',
+        provider_status: 'pending',
+        provider_name: 'Etisalat Cash Gateway',
+        rrn: 'ET-994820194',
+        sender_account: '+20 120 776 5544',
+        beneficiary_account: 'Miqat Digital Wallet (01188776655)',
+        proof_file: {
+          filename: 'Etisalat_Cash_Slip_30000.png',
+          size: '920 KB',
+          uploaded_at: '2026-11-05 11:02',
+          thumb_label: 'إيصال تحويل اتصالات كاش'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 11:15', text: 'بانتظار رد استعلام Webhook من مزود بوابة الدفع.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-05 11:02', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'رفع إشعار محفظة اتصالات كاش', details_en: 'Uploaded Etisalat Cash wallet slip' },
+          { action: 'awaiting_provider', date: '2026-11-05 11:15', actor_ar: 'نظام الربط الإلكتروني', actor_en: 'Electronic Gateway System', details_ar: 'إرسال طلب تحقق من حالة العملية', details_en: 'Dispatched transaction verification request' }
+        ]
+      },
+      {
+        id: 'COL-2026-0508',
+        booking_id: 'BKG-2026-0870',
+        customer_id: 'CUST-0870',
+        customer_name_ar: 'نادية إبراهيم القاضي',
+        customer_name_en: 'Nadia Ibrahim El-Kadi',
+        customer_phone: '+20 115 443 2211',
+        program_name_ar: 'عمرة رجب — باقة المدينة ومكة الميسرة',
+        program_name_en: 'Rajab Umrah — Medina & Mecca Budget',
+        program_total: 130000,
+        amount: 39000,
+        payment_method: 'instapay',
+        transaction_date: '2026-11-01 15:30',
+        status: 'approved',
+        provider_status: 'verified',
+        provider_name: 'InstaPay Network (IPN)',
+        rrn: 'IPN-3349201844',
+        sender_account: 'nadia.kadi@instapay',
+        beneficiary_account: 'miqat.business@instapay',
+        proof_file: {
+          filename: 'InstaPay_Receipt_39000.jpg',
+          size: '1.2 MB',
+          uploaded_at: '2026-11-01 15:32',
+          thumb_label: 'إشعار إنستاباي بنك مصر'
+        },
+        assigned_emp_ar: 'أحمد صبري',
+        assigned_emp_en: 'Ahmed Sabry',
+        notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-01 15:45', text: 'تم تدقيق الإشعار والقيد سليم.' }
+        ],
+        history: [
+          { action: 'proof_uploaded', date: '2026-11-01 15:32', actor_ar: 'العميل', actor_en: 'Customer', details_ar: 'رفع إشعار تحويل', details_en: 'Proof uploaded' },
+          { action: 'provider_verified', date: '2026-11-01 15:40', actor_ar: 'شبكة IPN', actor_en: 'IPN Network', details_ar: 'مطابقة المعاملة وقيد الرصيد', details_en: 'Transaction matched and credited' },
+          { action: 'collection_approved', date: '2026-11-01 15:45', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', details_ar: 'اعتماد نهائي للتحصيل', details_en: 'Final collection approval' }
+        ]
+      }
+    ],
+
+    // Settlements Mock Dataset (Independent record per booking with configurable equations)
+    SETTLEMENTS_DATA: [
+      {
+        id: 'SET-2026-0301',
+        booking_id: 'BKG-2026-1042',
+        customer_name_ar: 'محمد إبراهيم السيد',
+        customer_name_en: 'Mohamed Ibrahim El-Sayed',
+        tourism_company_ar: 'شركة الهداية للسياحة الدينية',
+        tourism_company_en: 'Al-Hedaya Religious Tourism Co.',
+        program_name_ar: 'عمرة رجب الاقتصادية — 1448 هـ',
+        program_name_en: 'Rajab Economy Umrah — 1448 AH',
+        program_total: 120000,
+        deposit_paid: 36000,      // 30% received by Miqat
+        direct_paid: 84000,       // 70% paid directly to tourism company
+        commission_rate: 0.20,    // 20% provisional
+        commission_amount: 24000, // 120,000 * 20%
+        net_settlement: 12000,    // Deposit 36,000 - Commission 24,000 = 12,000 (Miqat owes company)
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'confirmed',
+          confirmed_at: '2026-11-03 16:30',
+          confirmed_amount: 84000,
+          company_ref: 'HED-REC-8849',
+          notes: 'تم استلام المتبقي كاملاً نقداً وبإيصال رسمي من العميل بمقر الشركة.'
+        },
+        status: 'approved', // Approved — Awaiting Transfer
+        version: 1,
+        version_history: [
+          {
+            version: 'v1.0',
+            date: '2026-11-04 11:00',
+            author_ar: 'أحمد صبري (موظف حسابات)',
+            author_en: 'Ahmed Sabry (Accounts Officer)',
+            changes_ar: 'إعداد مسودة التسوية الأولى واحتساب عمولة ميقات ٢٤,٠٠٠ ج.م وصافي مستحق للشركة ١٢,٠٠٠ ج.م',
+            changes_en: 'Prepared initial settlement draft, calculated Miqat commission 24,000 EGP, net payable 12,000 EGP',
+            program_total: 120000,
+            deposit_paid: 36000,
+            commission_amount: 24000,
+            net_settlement: 12000
+          }
+        ],
+        workflow_log: [
+          { step: 'company_confirmed', date: '2026-11-03 16:30', actor_ar: 'شركة الهداية للسياحة', actor_en: 'Al-Hedaya Tourism Co.', note_ar: 'تأكيد استلام المتبقي ٨٤,٠٠٠ ج.م', note_en: 'Confirmed direct receipt of 84,000 EGP' },
+          { step: 'accounts_prepared', date: '2026-11-04 11:00', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', note_ar: 'إعداد التسوية ورفعها للاعتماد الإداري', note_en: 'Prepared settlement and submitted for Admin approval' },
+          { step: 'admin_approved', date: '2026-11-04 15:30', actor_ar: 'محمود فهمي (المدير المالي)', actor_en: 'Mahmoud Fahmy (Financial Admin)', note_ar: 'اعتماد التسوية والموافقة على الصرف البنكي', note_en: 'Approved settlement and cleared for bank disbursement' }
+        ],
+        transfer_details: null,
+        internal_notes: [
+          { author_ar: 'محمود فهمي (المدير المالي)', author_en: 'Mahmoud Fahmy (Financial Admin)', date: '2026-11-04 15:30', text: 'معتمدة للصرف ضمن دفعة التحويلات البنكية الأسبوعية.' }
+        ]
+      },
+      {
+        id: 'SET-2026-0302',
+        booking_id: 'BKG-2026-1039',
+        customer_name_ar: 'فاطمة الزهراء الشربيني',
+        customer_name_en: 'Fatima Al-Zahraa El-Sherbini',
+        tourism_company_ar: 'شركة مناسك المشاعر للسياحة',
+        tourism_company_en: 'Manasek Al-Mashaer Tourism',
+        program_name_ar: 'رحلة عمرة شعبان المميزة — فنادق الحرم',
+        program_name_en: 'Shaban Premium Umrah — Haram Hotels',
+        program_total: 180000,
+        deposit_paid: 54000,       // 30% received by Miqat
+        direct_paid: 126000,       // 70% direct
+        commission_rate: 0.20,     // 20%
+        commission_amount: 36000,  // 180,000 * 20%
+        net_settlement: 18000,     // Deposit 54,000 - Commission 36,000 = 18,000 (Miqat owes company)
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'pending',
+          confirmed_at: null,
+          confirmed_amount: 0,
+          company_ref: null,
+          notes: 'الشركة لم تؤكد بعد استلام المتبقي من العميلة. التسوية معلقة.'
+        },
+        status: 'awaiting_conf', // BLOCKED: Awaiting Company Confirmation
+        version: 1,
+        version_history: [],
+        workflow_log: [
+          { step: 'blocked_pending_conf', date: '2026-11-05 10:20', actor_ar: 'نظام التسويات الآلي', actor_en: 'Settlements Core Engine', note_ar: 'التسوية معلقة بانتظار إشعار تأكيد شركة مناسك المشاعر', note_en: 'Settlement blocked pending agency confirmation slip' }
+        ],
+        transfer_details: null,
+        internal_notes: [
+          { author_ar: 'أحمد صبري', author_en: 'Ahmed Sabry', date: '2026-11-05 10:30', text: 'تم التواصل هاتفياً مع مسؤول الشركة وسيقوم بتأكيد السداد فور توقيع العقد النهائي.' }
+        ]
+      },
+      {
+        id: 'SET-2026-0303',
+        booking_id: 'BKG-2026-1025',
+        customer_name_ar: 'محمود عبد العزيز الجمال',
+        customer_name_en: 'Mahmoud Abdel Aziz El-Gammal',
+        tourism_company_ar: 'شركة طيبة الدولية للحج والعمرة',
+        tourism_company_en: 'Taiba International Hajj & Umrah',
+        program_name_ar: 'برنامج العمرة الاقتصادية — باقة رجب 1448',
+        program_name_en: 'Economy Umrah Package — Rajab 1448',
+        program_total: 95000,
+        deposit_paid: 28500,       // 30%
+        direct_paid: 66500,        // 70%
+        commission_rate: 0.20,     // 20%
+        commission_amount: 19000,  // 95,000 * 20%
+        net_settlement: 9500,      // Deposit 28,500 - Commission 19,000 = 9,500 (Miqat owes company)
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'confirmed',
+          confirmed_at: '2026-11-04 17:30',
+          confirmed_amount: 66500,
+          company_ref: 'TAIBA-CONF-7721',
+          notes: 'تم استلام المبلغ المتبقي عبر تحويل بنكي لحساب الشركة.'
+        },
+        status: 'awaiting_admin', // Prepared by Accounts, Awaiting Admin Approval
+        version: 1,
+        version_history: [
+          {
+            version: 'v1.0',
+            date: '2026-11-05 09:15',
+            author_ar: 'أحمد صبري (موظف حسابات)',
+            author_en: 'Ahmed Sabry (Accounts Officer)',
+            changes_ar: 'تم احتساب المعادلة المالية وصافي المستحق للشركة ٩,٥٠٠ ج.م وإرسالها للاعتماد الإداري',
+            changes_en: 'Calculated financial breakdown, net payable 9,500 EGP, submitted for admin approval',
+            program_total: 95000,
+            deposit_paid: 28500,
+            commission_amount: 19000,
+            net_settlement: 9500
+          }
+        ],
+        workflow_log: [
+          { step: 'company_confirmed', date: '2026-11-04 17:30', actor_ar: 'شركة طيبة الدولية', actor_en: 'Taiba International', note_ar: 'تأكيد استلام المتبقي ٦٦,٥٠٠ ج.م', note_en: 'Confirmed direct receipt of 66,500 EGP' },
+          { step: 'accounts_prepared', date: '2026-11-05 09:15', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', note_ar: 'إعداد التسوية ورفعها للاعتماد الإداري', note_en: 'Prepared settlement and submitted for Admin approval' }
+        ],
+        transfer_details: null,
+        internal_notes: []
+      },
+      {
+        id: 'SET-2026-0304',
+        booking_id: 'BKG-2026-0988',
+        customer_name_ar: 'طارق حسام الدين فهمي',
+        customer_name_en: 'Tarek Hossam El-Din Fahmy',
+        tourism_company_ar: 'شركة الفردوس للسياحة والخدمات الدينية',
+        tourism_company_en: 'Al-Ferdous Religious Tourism Co.',
+        program_name_ar: 'عمرة النصف من شعبان — فندق دار التوحيد',
+        program_name_en: 'Mid-Shaban Umrah — Dar Al-Tawhid',
+        program_total: 150000,
+        deposit_paid: 45000,
+        direct_paid: 105000,
+        commission_rate: 0.20,
+        commission_amount: 30000,
+        net_settlement: 15000,
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'confirmed',
+          confirmed_at: '2026-11-02 14:00',
+          confirmed_amount: 105000,
+          company_ref: 'FER-REC-9941',
+          notes: 'تم استلام المبلغ بموجب شيك مصرفي مقبول الدفع.'
+        },
+        status: 'returned', // Returned for Correction by Admin
+        version: 2,
+        version_history: [
+          {
+            version: 'v1.0',
+            date: '2026-11-03 10:00',
+            author_ar: 'سارة ممدوح (موظفة حسابات)',
+            author_en: 'Sarah Mamdouh (Accounts Officer)',
+            changes_ar: 'الإصدار المبدئي المرفوع للاعتماد',
+            changes_en: 'Initial draft submitted for approval',
+            program_total: 150000,
+            deposit_paid: 45000,
+            commission_amount: 30000,
+            net_settlement: 15000
+          }
+        ],
+        admin_return_reason: 'تم اكتشاف خصم مصاريف إدارية إضافية بقيمة ٥٠٠ ج.م غير مخصومة من صافي التسوية. يرجى تعديل المعادلة وإعادة الرفع.',
+        workflow_log: [
+          { step: 'company_confirmed', date: '2026-11-02 14:00', actor_ar: 'شركة الفردوس للسياحة', actor_en: 'Al-Ferdous Tourism Co.', note_ar: 'تأكيد استلام ١٠٥,٠٠٠ ج.م', note_en: 'Confirmed 105,000 EGP receipt' },
+          { step: 'accounts_prepared', date: '2026-11-03 10:00', actor_ar: 'سارة ممدوح', actor_en: 'Sarah Mamdouh', note_ar: 'رفع مسودة التسوية الأولى', note_en: 'Submitted initial draft v1.0' },
+          { step: 'admin_returned', date: '2026-11-03 14:20', actor_ar: 'محمود فهمي (المدير المالي)', actor_en: 'Mahmoud Fahmy (Financial Admin)', note_ar: 'إعادة التسوية مع طلب خصم ٥٠٠ ج.م مصاريف إدارية', note_en: 'Returned with note to deduct 500 EGP admin fee' }
+        ],
+        transfer_details: null,
+        internal_notes: [
+          { author_ar: 'محمود فهمي (المدير المالي)', author_en: 'Mahmoud Fahmy (Financial Admin)', date: '2026-11-03 14:20', text: 'يرجى مراجعة إشعار بنك مصر المرفق بحساب العميل والتحقق من العمولة الإضافية.' }
+        ]
+      },
+      {
+        id: 'SET-2026-0305',
+        booking_id: 'BKG-2026-0954',
+        customer_name_ar: 'سعاد أحمد المنشاوي',
+        customer_name_en: 'Souad Ahmed El-Menshawy',
+        tourism_company_ar: 'شركة الهداية للسياحة الدينية',
+        tourism_company_en: 'Al-Hedaya Religious Tourism Co.',
+        program_name_ar: 'برنامج عمرة رمضان المبارك — العشر الأوائل',
+        program_name_en: 'Ramadan Umrah — First 10 Days',
+        program_total: 210000,
+        deposit_paid: 63000,
+        direct_paid: 147000,
+        commission_rate: 0.20,
+        commission_amount: 42000,
+        net_settlement: 21000,
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'confirmed',
+          confirmed_at: '2026-10-30 11:20',
+          confirmed_amount: 147000,
+          company_ref: 'HED-REC-7719',
+          notes: 'مؤكد استلام كامل المتبقي بحساب الشركة بالبنك التجاري الدولي.'
+        },
+        status: 'completed', // Transfer Executed and Completed
+        version: 1,
+        version_history: [
+          {
+            version: 'v1.0',
+            date: '2026-10-31 09:30',
+            author_ar: 'أحمد صبري',
+            author_en: 'Ahmed Sabry',
+            changes_ar: 'تم إعداد التسوية واعتمادها وصرفها بنكياً',
+            changes_en: 'Prepared, approved and disbursed',
+            program_total: 210000,
+            deposit_paid: 63000,
+            commission_amount: 42000,
+            net_settlement: 21000
+          }
+        ],
+        workflow_log: [
+          { step: 'company_confirmed', date: '2026-10-30 11:20', actor_ar: 'شركة الهداية', actor_en: 'Al-Hedaya Co.', note_ar: 'تأكيد استلام ١٤٧,٠٠٠ ج.م', note_en: 'Confirmed receipt 147,000 EGP' },
+          { step: 'accounts_prepared', date: '2026-10-31 09:30', actor_ar: 'أحمد صبري', actor_en: 'Ahmed Sabry', note_ar: 'إعداد التسوية ورفعها', note_en: 'Prepared draft' },
+          { step: 'admin_approved', date: '2026-10-31 12:00', actor_ar: 'محمود فهمي (المدير المالي)', actor_en: 'Mahmoud Fahmy', note_ar: 'اعتماد نهائي', note_en: 'Final approval' },
+          { step: 'transfer_completed', date: '2026-11-01 10:15', actor_ar: 'محمود فهمي (المدير المالي)', actor_en: 'Mahmoud Fahmy', note_ar: 'تنفيذ التحويل البنكي وإرفاق إشعار السويفت', note_en: 'Swift transfer executed and recorded' }
+        ],
+        transfer_details: {
+          bank_ref: 'SWIFT-NBE-8839201',
+          sender_bank: 'National Bank of Egypt (NBE) Corporate',
+          company_iban: 'EG4500020001000000998811223',
+          transfer_date: '2026-11-01 10:15',
+          amount: 21000,
+          proof_filename: 'Swift_Transfer_Advice_21000.pdf',
+          verified_by_ar: 'محمود فهمي (المدير المالي)',
+          verified_by_en: 'Mahmoud Fahmy (Financial Admin)'
+        },
+        internal_notes: []
+      },
+      {
+        id: 'SET-2026-0306',
+        booking_id: 'BKG-2026-0870',
+        customer_name_ar: 'نادية إبراهيم القاضي',
+        customer_name_en: 'Nadia Ibrahim El-Kadi',
+        tourism_company_ar: 'شركة مناسك المشاعر للسياحة',
+        tourism_company_en: 'Manasek Al-Mashaer Tourism',
+        program_name_ar: 'عمرة رجب — باقة المدينة ومكة الميسرة',
+        program_name_en: 'Rajab Umrah — Medina & Mecca Budget',
+        program_total: 130000,
+        deposit_paid: 39000,
+        direct_paid: 91000,
+        commission_rate: 0.20,
+        commission_amount: 26000,
+        net_settlement: 13000,
+        net_direction: 'payable_to_company',
+        company_confirmation: {
+          status: 'confirmed',
+          confirmed_at: '2026-11-01 16:00',
+          confirmed_amount: 91000,
+          company_ref: 'MAN-CONF-3312',
+          notes: 'تم استلام المبلغ نقداً مع توقيع العقد.'
+        },
+        status: 'eligible', // Eligible for Review (Confirmation confirmed, waiting for Accounts to prepare)
+        version: 0,
+        version_history: [],
+        workflow_log: [
+          { step: 'company_confirmed', date: '2026-11-01 16:00', actor_ar: 'شركة مناسك المشاعر', actor_en: 'Manasek Al-Mashaer', note_ar: 'تأكيد استلام المتبقي ٩١,٠٠٠ ج.م', note_en: 'Confirmed direct receipt of 91,000 EGP' }
+        ],
+        transfer_details: null,
+        internal_notes: []
+      }
+    ],
+
+    // Methods for Collections
+    getCollectionsSummaryKPIs: function () {
+      const allCols = this.COLLECTIONS_DATA || [];
+      const allSets = this.SETTLEMENTS_DATA || [];
+
+      // 1. Total Approved Collections (Miqat received and approved only)
+      const approvedCols = allCols.filter(function (c) { return c.status === 'approved'; });
+      const totalApprovedAmount = approvedCols.reduce(function (sum, c) { return sum + (c.amount || 0); }, 0);
+
+      // 2. Collections Awaiting Review
+      const reviewPendingCount = allCols.filter(function (c) {
+        return c.status === 'under_review' || c.status === 'awaiting_provider';
+      }).length;
+
+      // 3. Bookings Awaiting Company Confirmation
+      const companyPendingCount = allSets.filter(function (s) {
+        return s.company_confirmation && s.company_confirmation.status === 'pending';
+      }).length;
+
+      // 4. Settlements Awaiting Admin Approval
+      const settlementsPendingAdminCount = allSets.filter(function (s) {
+        return s.status === 'awaiting_admin';
+      }).length;
+
+      // 5. Approved Settlements Awaiting Transfer
+      const settlementsPendingTransferCount = allSets.filter(function (s) {
+        return s.status === 'approved';
+      }).length;
+
+      // 6. Completed Settlements
+      const settlementsCompletedCount = allSets.filter(function (s) {
+        return s.status === 'completed';
+      }).length;
+
+      return {
+        totalApprovedAmount: totalApprovedAmount,
+        approvedCollectionsCount: approvedCols.length,
+        reviewPendingCount: reviewPendingCount,
+        companyPendingCount: companyPendingCount,
+        settlementsPendingAdminCount: settlementsPendingAdminCount,
+        settlementsPendingTransferCount: settlementsPendingTransferCount,
+        settlementsCompletedCount: settlementsCompletedCount
+      };
+    },
+
+    getCollectionsList: function (filters) {
+      filters = filters || {};
+      let list = (this.COLLECTIONS_DATA || []).slice();
+
+      if (filters.search) {
+        const q = String(filters.search).toLowerCase().trim();
+        list = list.filter(function (item) {
+          return (
+            (item.id && item.id.toLowerCase().includes(q)) ||
+            (item.booking_id && item.booking_id.toLowerCase().includes(q)) ||
+            (item.customer_name_ar && item.customer_name_ar.toLowerCase().includes(q)) ||
+            (item.customer_name_en && item.customer_name_en.toLowerCase().includes(q)) ||
+            (item.customer_phone && item.customer_phone.includes(q)) ||
+            (item.rrn && item.rrn.toLowerCase().includes(q))
+          );
+        });
+      }
+
+      if (filters.status && filters.status !== 'all') {
+        list = list.filter(function (item) { return item.status === filters.status; });
+      }
+
+      if (filters.method && filters.method !== 'all') {
+        list = list.filter(function (item) { return item.payment_method === filters.method; });
+      }
+
+      if (filters.providerStatus && filters.providerStatus !== 'all') {
+        list = list.filter(function (item) { return item.provider_status === filters.providerStatus; });
+      }
+
+      if (filters.minAmount) {
+        list = list.filter(function (item) { return (item.amount || 0) >= Number(filters.minAmount); });
+      }
+
+      if (filters.maxAmount) {
+        list = list.filter(function (item) { return (item.amount || 0) <= Number(filters.maxAmount); });
+      }
+
+      return list;
+    },
+
+    getCollectionDetails: function (id) {
+      if (!id) return null;
+      const found = (this.COLLECTIONS_DATA || []).find(function (c) { return c.id === id; });
+      return found ? JSON.parse(JSON.stringify(found)) : null;
+    },
+
+    approveCollection: function (id, noteText) {
+      const col = (this.COLLECTIONS_DATA || []).find(function (c) { return c.id === id; });
+      if (!col) return { success: false, message: 'Collection not found' };
+
+      col.status = 'approved';
+      col.provider_status = 'verified';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      col.history.push({
+        action: 'collection_approved',
+        date: nowStr,
+        actor_ar: 'أحمد صبري (موظف حسابات)',
+        actor_en: 'Ahmed Sabry (Accounts Officer)',
+        details_ar: noteText ? ('تم اعتماد التحصيل: ' + noteText) : 'تم اعتماد التحصيل بنجاح وقيد الرصيد',
+        details_en: noteText ? ('Collection approved: ' + noteText) : 'Collection approved and credited'
+      });
+
+      if (noteText) {
+        col.notes.push({
+          author_ar: 'أحمد صبري',
+          author_en: 'Ahmed Sabry',
+          date: nowStr,
+          text: noteText
+        });
+      }
+
+      return { success: true, collection: col };
+    },
+
+    rejectCollection: function (id, reasonText) {
+      const col = (this.COLLECTIONS_DATA || []).find(function (c) { return c.id === id; });
+      if (!col) return { success: false, message: 'Collection not found' };
+      if (!reasonText || !reasonText.trim()) return { success: false, message: 'Mandatory reason required' };
+
+      col.status = 'rejected';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      col.history.push({
+        action: 'collection_rejected',
+        date: nowStr,
+        actor_ar: 'أحمد صبري (موظف حسابات)',
+        actor_en: 'Ahmed Sabry (Accounts Officer)',
+        details_ar: 'تم رفض التحصيل لسبب: ' + reasonText,
+        details_en: 'Collection rejected: ' + reasonText
+      });
+
+      col.notes.push({
+        author_ar: 'أحمد صبري',
+        author_en: 'Ahmed Sabry',
+        date: nowStr,
+        text: 'سبب الرفض: ' + reasonText
+      });
+
+      return { success: true, collection: col };
+    },
+
+    requestCollectionReupload: function (id, instructions) {
+      const col = (this.COLLECTIONS_DATA || []).find(function (c) { return c.id === id; });
+      if (!col) return { success: false, message: 'Collection not found' };
+
+      col.status = 'awaiting_proof';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      col.history.push({
+        action: 'reupload_requested',
+        date: nowStr,
+        actor_ar: 'أحمد صبري (موظف حسابات)',
+        actor_en: 'Ahmed Sabry (Accounts Officer)',
+        details_ar: 'طلب إعادة إرفاق إشعار أوضح من العميل: ' + (instructions || ''),
+        details_en: 'Requested clearer proof re-upload from customer: ' + (instructions || '')
+      });
+
+      return { success: true, collection: col };
+    },
+
+    addCollectionNote: function (id, noteText) {
+      const col = (this.COLLECTIONS_DATA || []).find(function (c) { return c.id === id; });
+      if (!col) return { success: false, message: 'Collection not found' };
+      if (!noteText || !noteText.trim()) return { success: false, message: 'Empty note' };
+
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+      col.notes.push({
+        author_ar: 'أحمد صبري',
+        author_en: 'Ahmed Sabry',
+        date: nowStr,
+        text: noteText.trim()
+      });
+
+      return { success: true, notes: col.notes };
+    },
+
+    // Methods for Settlements
+    getSettlementsList: function (filters) {
+      filters = filters || {};
+      let list = (this.SETTLEMENTS_DATA || []).slice();
+
+      if (filters.search) {
+        const q = String(filters.search).toLowerCase().trim();
+        list = list.filter(function (item) {
+          return (
+            (item.id && item.id.toLowerCase().includes(q)) ||
+            (item.booking_id && item.booking_id.toLowerCase().includes(q)) ||
+            (item.customer_name_ar && item.customer_name_ar.toLowerCase().includes(q)) ||
+            (item.customer_name_en && item.customer_name_en.toLowerCase().includes(q)) ||
+            (item.tourism_company_ar && item.tourism_company_ar.toLowerCase().includes(q)) ||
+            (item.tourism_company_en && item.tourism_company_en.toLowerCase().includes(q))
+          );
+        });
+      }
+
+      if (filters.status && filters.status !== 'all') {
+        list = list.filter(function (item) { return item.status === filters.status; });
+      }
+
+      if (filters.company && filters.company !== 'all') {
+        list = list.filter(function (item) {
+          return item.tourism_company_ar === filters.company || item.tourism_company_en === filters.company;
+        });
+      }
+
+      if (filters.confStatus && filters.confStatus !== 'all') {
+        list = list.filter(function (item) {
+          return item.company_confirmation && item.company_confirmation.status === filters.confStatus;
+        });
+      }
+
+      return list;
+    },
+
+    getSettlementDetails: function (id) {
+      if (!id) return null;
+      const found = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      return found ? JSON.parse(JSON.stringify(found)) : null;
+    },
+
+    prepareSettlement: function (id, data) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+
+      // Blocked check: must have confirmed company payment
+      if (!set.company_confirmation || set.company_confirmation.status !== 'confirmed') {
+        return { success: false, message: 'Cannot prepare settlement before tourism company confirms payment' };
+      }
+
+      const cfg = this.getSettlementConfig();
+      const progTotal = set.program_total || 0;
+      const deposit = set.deposit_paid || (progTotal * cfg.depositRate);
+      const commission = progTotal * cfg.commissionRate;
+      const net = deposit - commission;
+
+      set.commission_rate = cfg.commissionRate;
+      set.commission_amount = commission;
+      set.net_settlement = Math.abs(net);
+      set.net_direction = net >= 0 ? 'payable_to_company' : 'receivable_from_company';
+      set.status = 'prepared';
+
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+      set.workflow_log.push({
+        step: 'accounts_prepared',
+        date: nowStr,
+        actor_ar: 'أحمد صبري (موظف حسابات)',
+        actor_en: 'Ahmed Sabry (Accounts Officer)',
+        note_ar: 'تم احتساب مسودة التسوية وفق الإعدادات الاسترشادية الحالية',
+        note_en: 'Prepared settlement draft with current provisional settings'
+      });
+
+      return { success: true, settlement: set };
+    },
+
+    submitSettlementForApproval: function (id) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+
+      if (!set.company_confirmation || set.company_confirmation.status !== 'confirmed') {
+        return { success: false, message: 'Blocked: company confirmation required' };
+      }
+
+      set.status = 'awaiting_admin';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      set.workflow_log.push({
+        step: 'submitted_to_admin',
+        date: nowStr,
+        actor_ar: 'أحمد صبري (موظف حسابات)',
+        actor_en: 'Ahmed Sabry (Accounts Officer)',
+        note_ar: 'تم إرسال التسوية للاعتماد النهائي من الإدارة المالية',
+        note_en: 'Submitted settlement for Admin final decision'
+      });
+
+      return { success: true, settlement: set };
+    },
+
+    adminApproveSettlement: function (id, noteText) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+
+      set.status = 'approved'; // Approved — Awaiting Transfer
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      set.workflow_log.push({
+        step: 'admin_approved',
+        date: nowStr,
+        actor_ar: 'محمود فهمي (المدير المالي)',
+        actor_en: 'Mahmoud Fahmy (Financial Admin)',
+        note_ar: noteText ? ('تم اعتماد التسوية: ' + noteText) : 'تم اعتماد التسوية نهائياً وجاهزة للصرف البنكي',
+        note_en: noteText ? ('Settlement approved: ' + noteText) : 'Settlement approved and cleared for bank transfer'
+      });
+
+      return { success: true, settlement: set };
+    },
+
+    adminReturnSettlement: function (id, returnReason) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+      if (!returnReason || !returnReason.trim()) return { success: false, message: 'Mandatory return reason required' };
+
+      set.status = 'returned';
+      set.admin_return_reason = returnReason.trim();
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      // Preserve previous version in history
+      const vNum = (set.version || 1);
+      set.version_history.push({
+        version: 'v' + vNum + '.0',
+        date: nowStr,
+        author_ar: 'محمود فهمي (المدير المالي)',
+        author_en: 'Mahmoud Fahmy (Financial Admin)',
+        changes_ar: 'إعادة التسوية للتعديل: ' + returnReason.trim(),
+        changes_en: 'Returned for correction: ' + returnReason.trim(),
+        program_total: set.program_total,
+        deposit_paid: set.deposit_paid,
+        commission_amount: set.commission_amount,
+        net_settlement: set.net_settlement
+      });
+      set.version = vNum + 1;
+
+      set.workflow_log.push({
+        step: 'admin_returned',
+        date: nowStr,
+        actor_ar: 'محمود فهمي (المدير المالي)',
+        actor_en: 'Mahmoud Fahmy (Financial Admin)',
+        note_ar: 'إعادة التسوية للتعديل: ' + returnReason.trim(),
+        note_en: 'Returned for correction: ' + returnReason.trim()
+      });
+
+      return { success: true, settlement: set };
+    },
+
+    adminExecuteTransfer: function (id, transferData) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+      if (!transferData || !transferData.bank_ref) {
+        return { success: false, message: 'Bank reference required for transfer execution' };
+      }
+
+      set.status = 'completed';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+      set.transfer_details = {
+        bank_ref: transferData.bank_ref,
+        sender_bank: transferData.sender_bank || 'National Bank of Egypt (NBE) Corporate',
+        company_iban: transferData.company_iban || 'EG9900020001000000887766554',
+        transfer_date: transferData.transfer_date || nowStr.split(' ')[0],
+        amount: set.net_settlement,
+        proof_filename: transferData.proof_filename || ('Swift_Advice_' + set.id + '.pdf'),
+        verified_by_ar: 'محمود فهمي (المدير المالي)',
+        verified_by_en: 'Mahmoud Fahmy (Financial Admin)'
+      };
+
+      set.workflow_log.push({
+        step: 'transfer_completed',
+        date: nowStr,
+        actor_ar: 'محمود فهمي (المدير المالي)',
+        actor_en: 'Mahmoud Fahmy (Financial Admin)',
+        note_ar: 'تم تنفيذ الحوالة البنكية بنجاح برقم سويفت ' + transferData.bank_ref,
+        note_en: 'Bank transfer executed successfully with Swift Ref ' + transferData.bank_ref
+      });
+
+      return { success: true, settlement: set };
+    },
+
+    addSettlementNote: function (id, noteText) {
+      const set = (this.SETTLEMENTS_DATA || []).find(function (s) { return s.id === id; });
+      if (!set) return { success: false, message: 'Settlement not found' };
+      if (!noteText || !noteText.trim()) return { success: false, message: 'Empty note' };
+
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 16);
+      if (!set.internal_notes) set.internal_notes = [];
+      set.internal_notes.push({
+        author_ar: 'أحمد صبري',
+        author_en: 'Ahmed Sabry',
+        date: nowStr,
+        text: noteText.trim()
+      });
+
+      return { success: true, notes: set.internal_notes };
+    },
+
+    // Method for Section Four: Reports & Reconciliation
+    getReconciliationReport: function (filters) {
+      filters = filters || {};
+      const sets = this.SETTLEMENTS_DATA || [];
+      const cols = this.COLLECTIONS_DATA || [];
+
+      // Stream 1: Approved Miqat Collections
+      const approvedCols = cols.filter(function (c) { return c.status === 'approved'; });
+      const stream1Total = approvedCols.reduce(function (sum, c) { return sum + (c.amount || 0); }, 0);
+
+      // Stream 2: Direct Company Collections (confirmed)
+      const confirmedSets = sets.filter(function (s) {
+        return s.company_confirmation && s.company_confirmation.status === 'confirmed';
+      });
+      const stream2Total = confirmedSets.reduce(function (sum, s) { return sum + (s.direct_paid || 0); }, 0);
+
+      // Stream 3: Net Settlements (completed + approved)
+      const validSets = sets.filter(function (s) {
+        return s.status === 'completed' || s.status === 'approved';
+      });
+      const stream3Total = validSets.reduce(function (sum, s) { return sum + (s.net_settlement || 0); }, 0);
+
+      // Booking-level 3-way reconciliation rows
+      let items = sets.map(function (s) {
+        const pTotal = s.program_total || 0;
+        const miqatDeposit = s.deposit_paid || 0;
+        const directPaid = s.direct_paid || 0;
+        const comm = s.commission_amount || 0;
+        const net = s.net_settlement || 0;
+
+        let recStatus = 'matched';
+        if (!s.company_confirmation || s.company_confirmation.status !== 'confirmed') {
+          recStatus = 'pending_conf';
+        } else if (s.status === 'returned') {
+          recStatus = 'variance';
+        }
+
+        return {
+          booking_id: s.booking_id,
+          settlement_id: s.id,
+          customer_ar: s.customer_name_ar,
+          customer_en: s.customer_name_en,
+          company_ar: s.tourism_company_ar,
+          company_en: s.tourism_company_en,
+          program_total: pTotal,
+          miqat_deposit: miqatDeposit,
+          direct_paid: directPaid,
+          commission: comm,
+          net_settlement: net,
+          reconciliation_status: recStatus
+        };
+      });
+
+      if (filters.search) {
+        const q = String(filters.search).toLowerCase().trim();
+        items = items.filter(function (i) {
+          return (
+            i.booking_id.toLowerCase().includes(q) ||
+            i.customer_ar.toLowerCase().includes(q) ||
+            i.customer_en.toLowerCase().includes(q) ||
+            i.company_ar.toLowerCase().includes(q) ||
+            i.company_en.toLowerCase().includes(q)
+          );
+        });
+      }
+
+      if (filters.status && filters.status !== 'all') {
+        items = items.filter(function (i) { return i.reconciliation_status === filters.status; });
+      }
+
+      return {
+        stream1Total: stream1Total,
+        stream2Total: stream2Total,
+        stream3Total: stream3Total,
+        reconciliationItems: items
+      };
+    },
 
   };
 });

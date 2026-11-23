@@ -22,3 +22,6 @@ data/*.db-shm
 
 #Testing
 scratch/
+
+# Modern Web Guidance
+.modern-web-guidance/

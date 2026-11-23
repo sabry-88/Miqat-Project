@@ -8951,5 +8951,2303 @@
       };
     },
 
+    // =========================================================================
+    // MASTER DATASET: REFUND REQUESTS MANAGEMENT (PAGE 8)
+    // =========================================================================
+    REFUND_REQUESTS_MASTER: [
+      {
+        id: 'REF-2026-001',
+        booking_id: 'BKG-2026-104',
+        customer_id: 'CUST-1001',
+        customer_name_ar: 'أحمد محمود الشريف',
+        customer_name_en: 'Ahmed Mahmoud El-Sherif',
+        customer_phone: '01012345671',
+        customer_email: 'ahmed.elsherif@gmail.com',
+        customer_national_id: '29010141200192',
+        company_id: 'COMP-101',
+        company_name_ar: 'شركة الفجر لرحلات الحج والعمرة',
+        company_name_en: 'Al-Fajr Hajj & Umrah Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-11-05 10:15',
+        last_updated: '2026-11-05 10:15',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل',
+        refund_type_en: 'Full Refund',
+        status: 'refund_requested',
+        status_ar: 'طلب استرداد جديد',
+        status_en: 'Refund Requested',
+        cancellation: {
+          id: 'CAN-2026-001',
+          date: '2026-11-03 14:00',
+          reason_ar: 'ظروف عمل طارئة خارج البلاد تمنع السفر في الموعد المحدد',
+          reason_en: 'Emergency overseas work assignment preventing scheduled departure',
+          policy_type_ar: 'سياسة الإلغاء المبكر (> 21 يوماً قبل السفر)',
+          policy_type_en: 'Early Cancellation (> 21 days before departure)',
+          deduction_fee: 2000,
+          attachments: [
+            { id: 'ATT-REF-001', name_ar: 'خطاب انتداب العمل الرسمي للخارج.pdf', name_en: 'Official_Work_Assignment_Notice.pdf', size: '1.4 MB' },
+            { id: 'ATT-REF-002', name_ar: 'نموذج طلب الاسترداد المالي الموقع.pdf', name_en: 'Signed_Refund_Application_Form.pdf', size: '850 KB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج الهدى المميز - طيران مباشر',
+          program_en: 'Al-Hoda Premium Program - Direct Flight',
+          travelers_count: 1,
+          total_price: 50000,
+          room_type_ar: 'غرفة ثنائية مطلة على الحرم',
+          room_type_en: 'Double Haram View Room',
+          departure_date: '2026-11-25',
+          return_date: '2026-12-05'
+        },
+        financials: {
+          booking_total: 50000,
+          total_paid_records: 50000,
+          eligible_approved_payments: 50000,
+          pending_payments: 0,
+          policy_deduction: 2000,
+          previous_refunds: 0,
+          max_refundable_limit: 48000,
+          requested_amount: 48000,
+          approved_amount: null,
+          actually_refunded: 0,
+          remaining_to_refund: 48000,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-001',
+            timestamp: '2026-11-05 10:15',
+            actor_ar: 'أحمد محمود الشريف',
+            actor_en: 'Ahmed Mahmoud El-Sherif',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد إلكتروني',
+            title_en: 'Electronic Refund Request Submitted',
+            desc_ar: 'قدم العميل طلب استرداد بمبلغ ٤٨,٠٠٠ ج.م بعد إلغاء الحجز BKG-2026-104',
+            desc_en: 'Customer submitted refund request for 48,000 EGP following cancellation of BKG-2026-104'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-002',
+        booking_id: 'BKG-2026-108',
+        customer_id: 'CUST-1002',
+        customer_name_ar: 'محمود فوزي عبد الله',
+        customer_name_en: 'Mahmoud Fawzy Abdullah',
+        customer_phone: '01023456782',
+        customer_email: 'mahmoud.fawzy@hotmail.com',
+        customer_national_id: '28504151400231',
+        company_id: 'COMP-102',
+        company_name_ar: 'شركة الصفا والرحاب للحج والعمرة',
+        company_name_en: 'Al-Safa & Al-Rehab Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-11-04 11:20',
+        last_updated: '2026-11-04 11:20',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل',
+        refund_type_en: 'Full Refund',
+        status: 'under_review',
+        status_ar: 'قيد التدقيق المحاسبي',
+        status_en: 'Under Review',
+        cancellation: {
+          id: 'CAN-2026-002',
+          date: '2026-11-02 09:30',
+          reason_ar: 'تقرير طبي بعدم اللياقة البدنية للسفر إثر جراحة طارئة',
+          reason_en: 'Medical report stating travel unfitness following emergency surgery',
+          policy_type_ar: 'إلغاء لظرف قهري طبي موثق (استثناء كامل)',
+          policy_type_en: 'Force Majeure Medical Exception',
+          deduction_fee: 0,
+          attachments: [
+            { id: 'ATT-REF-003', name_ar: 'التقرير الطبي المعتمد من مستشفى دار الفؤاد.pdf', name_en: 'Certified_Medical_Hospital_Report.pdf', size: '2.1 MB' },
+            { id: 'ATT-REF-004', name_ar: 'إيصالات السداد البنكي للمراجعة.pdf', name_en: 'Payment_Deposit_Slips.pdf', size: '1.1 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج الصفا الاقتصادي ٥ نجوم',
+          program_en: 'Al-Safa 5-Star Economy Program',
+          travelers_count: 1,
+          total_price: 35000,
+          room_type_ar: 'غرفة ثلاثية مشتركة',
+          room_type_en: 'Triple Shared Room',
+          departure_date: '2026-11-28',
+          return_date: '2026-12-08'
+        },
+        financials: {
+          booking_total: 35000,
+          total_paid_records: 35000,
+          eligible_approved_payments: 28000,
+          pending_payments: 7000,
+          policy_deduction: 0,
+          previous_refunds: 0,
+          max_refundable_limit: 28000,
+          requested_amount: 35000,
+          approved_amount: null,
+          actually_refunded: 0,
+          remaining_to_refund: 28000,
+          requested_exceeds_limit: true,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-002',
+            timestamp: '2026-11-04 11:20',
+            actor_ar: 'محمود فوزي عبد الله',
+            actor_en: 'Mahmoud Fawzy Abdullah',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد إلكتروني',
+            title_en: 'Electronic Refund Request Submitted',
+            desc_ar: 'طلب العميل استرداد كامل المبلغ (٣٥,٠٠٠ ج.م) بينما الدفعات المعتمدة دفترياً ٢٨,٠٠٠ ج.م فقط',
+            desc_en: 'Customer requested 35,000 EGP while approved eligible payments total only 28,000 EGP'
+          },
+          {
+            id: 'LOG-REF-003',
+            timestamp: '2026-11-04 12:00',
+            actor_ar: 'النظام الآلي للرقابة المالية',
+            actor_en: 'Automated Financial Rule Engine',
+            role_ar: 'النظام المحاسبي',
+            role_en: 'System',
+            action_type: 'limit_warning',
+            title_ar: 'تنبيه: المبلغ المطلوب يتجاوز الرصيد المحصل المعتمد',
+            title_en: 'Alert: Requested Amount Exceeds Eligible Approved Funds',
+            desc_ar: 'تم حظر الموافقة المباشرة لحين تعديل المبلغ إلى الحد الأقصى المسموح (٢٨,٠٠٠ ج.م) مع ذكر السبب الإلزامي',
+            desc_en: 'Direct approval blocked until amount adjusted to eligible maximum (28,000 EGP) with mandatory justification'
+          }
+        ],
+        internal_notes: [
+          {
+            id: 'NOTE-REF-001',
+            author_ar: 'أحمد صبري',
+            author_en: 'Ahmed Sabry',
+            date: '2026-11-04 12:15',
+            text: 'يوجد إيداع بقيمة ٧,٠٠٠ ج.م معلق قيد المطابقة مع كشف حساب بنك مصر، لا يمكن احتسابه في الرصيد القابل للاسترداد حالياً.'
+          }
+        ]
+      },
+
+      {
+        id: 'REF-2026-003',
+        booking_id: 'BKG-2026-112',
+        customer_id: 'CUST-1003',
+        customer_name_ar: 'فاطمة حسن البشير',
+        customer_name_en: 'Fatima Hassan Al-Bashir',
+        customer_phone: '01034567893',
+        customer_email: 'fatima.bashir@yahoo.com',
+        customer_national_id: '29208221800345',
+        company_id: 'COMP-103',
+        company_name_ar: 'شركة نور الهدى للسياحة الدينية',
+        company_name_en: 'Noor Al-Hoda Religious Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-11-03 14:40',
+        last_updated: '2026-11-04 09:30',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل',
+        refund_type_en: 'Full Refund',
+        status: 'pending_admin_approval',
+        status_ar: 'بانتظار اعتماد الإدارة',
+        status_en: 'Pending Admin Approval',
+        cancellation: {
+          id: 'CAN-2026-003',
+          date: '2026-11-01 16:00',
+          reason_ar: 'تعذر الحصول على موافقة جهة العمل الرسمية على إجازة الحج',
+          reason_en: 'Inability to obtain employer vacation approval for pilgrimage',
+          policy_type_ar: 'سياسة الإلغاء الاعتيادية (خصم رسوم إدارية ٣,٠٠٠ ج.م)',
+          policy_type_en: 'Standard Policy (3,000 EGP Admin Fee)',
+          deduction_fee: 3000,
+          attachments: [
+            { id: 'ATT-REF-005', name_ar: 'إفادة جهة العمل بتأجيل الإجازة السنوية.pdf', name_en: 'Employer_Vacation_Denial_Notice.pdf', size: '920 KB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج نور الهدى الذهبي - إقامة أمام الحرم',
+          program_en: 'Noor Al-Hoda Golden Program - Haram Front',
+          travelers_count: 1,
+          total_price: 45000,
+          room_type_ar: 'غرفة ثنائية فاخرة',
+          room_type_en: 'Luxury Double Room',
+          departure_date: '2026-12-01',
+          return_date: '2026-12-11'
+        },
+        financials: {
+          booking_total: 45000,
+          total_paid_records: 45000,
+          eligible_approved_payments: 45000,
+          pending_payments: 0,
+          policy_deduction: 3000,
+          previous_refunds: 0,
+          max_refundable_limit: 42000,
+          requested_amount: 42000,
+          approved_amount: 42000,
+          actually_refunded: 0,
+          remaining_to_refund: 42000,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-004',
+            timestamp: '2026-11-03 14:40',
+            actor_ar: 'فاطمة حسن البشير',
+            actor_en: 'Fatima Hassan Al-Bashir',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد إلكتروني',
+            title_en: 'Electronic Refund Request Submitted',
+            desc_ar: 'تقديم طلب استرداد صافي المبلغ المستحق ٤٢,٠٠٠ ج.م بعد خصم المصروفات الإدارية',
+            desc_en: 'Customer submitted refund request for net due 42,000 EGP after admin fee deduction'
+          },
+          {
+            id: 'LOG-REF-005',
+            timestamp: '2026-11-04 09:30',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'accounts_approved',
+            title_ar: 'اعتماد موظف الحسابات وإحالة للإدارة',
+            title_en: 'Accounts Officer Approval & Admin Submission',
+            desc_ar: 'تم تدقيق كافة الدفعات البنكية ومطابقة سياسة الإلغاء واعتماد الاسترداد بمبلغ ٤٢,٠٠٠ ج.م وإحالته لمدير الحسابات',
+            desc_en: 'Verified bank payments, matched cancellation policy, approved 42,000 EGP and submitted to Admin'
+          }
+        ],
+        internal_notes: [
+          {
+            id: 'NOTE-REF-002',
+            author_ar: 'أحمد صبري',
+            author_en: 'Ahmed Sabry',
+            date: '2026-11-04 09:30',
+            text: 'تمت مراجعة المدفوعات عبر البنك الأهلي وهي مطابقة دفترياً بالكامل. يرجى التكرم بالاعتماد الإداري للتنفيذ.'
+          }
+        ]
+      },
+
+      {
+        id: 'REF-2026-004',
+        booking_id: 'BKG-2026-115',
+        customer_id: 'CUST-1004',
+        customer_name_ar: 'خالد عبد الرحمن السعيد',
+        customer_name_en: 'Khaled Abdelrahman Al-Saeed',
+        customer_phone: '01045678904',
+        customer_email: 'khaled.saeed@outlook.com',
+        customer_national_id: '27809121500456',
+        company_id: 'COMP-104',
+        company_name_ar: 'شركة باب مكة للسياحة',
+        company_name_en: 'Bab Makkah Travel',
+        request_source: 'company',
+        source_ar: 'شركة سياحة',
+        source_en: 'Tourism Company',
+        request_date: '2026-11-02 16:10',
+        last_updated: '2026-11-03 11:15',
+        refund_type: 'partial',
+        refund_type_ar: 'استرداد جزئي (إلغاء مقعد مرافق)',
+        refund_type_en: 'Partial Refund (Companion Seat Cancellation)',
+        status: 'returned_for_review',
+        status_ar: 'مُعاد للمراجعة من الإدارة',
+        status_en: 'Returned for Review',
+        admin_return: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          admin_role_ar: 'مدير الحسابات العام',
+          admin_role_en: 'General Accounts Admin',
+          returned_at: '2026-11-03 11:15',
+          reason_ar: 'يرجى تدقيق خصم رسوم تذاكر الطيران غير المستردة من شركة مصر للطيران ومطابقة الإشعار المرفق قبل الاعتماد النهائي.',
+          reason_en: 'Please verify non-refundable flight ticket fee deduction with EgyptAir and cross-check the attached notice before final approval.'
+        },
+        cancellation: {
+          id: 'CAN-2026-004',
+          date: '2026-11-02 15:00',
+          reason_ar: 'إلغاء حجز الوالدة لظروف صحية مع استمرار حجز المعتمر الرئيسي',
+          reason_en: 'Cancellation of mother booking due to health reasons while keeping primary booking active',
+          policy_type_ar: 'إلغاء جزئي لمعتمر واحد من البرنامج الرباعي',
+          policy_type_en: 'Partial Cancellation for 1 Traveler',
+          deduction_fee: 5000,
+          attachments: [
+            { id: 'ATT-REF-006', name_ar: 'طلب شركة السياحة لإلغاء المقعد الإضافي.pdf', name_en: 'Company_Partial_Cancellation_Letter.pdf', size: '1.2 MB' },
+            { id: 'ATT-REF-007', name_ar: 'إشعار خطوط الطيران الخاص بالتذكرة.pdf', name_en: 'Airlines_Ticket_Penalty_Notice.pdf', size: '640 KB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج باب مكة الاقتصادي المجمع',
+          program_en: 'Bab Makkah Economy Package',
+          travelers_count: 2,
+          total_price: 60000,
+          room_type_ar: 'غرفة ثنائية',
+          room_type_en: 'Double Room',
+          departure_date: '2026-11-30',
+          return_date: '2026-12-10'
+        },
+        financials: {
+          booking_total: 60000,
+          total_paid_records: 60000,
+          eligible_approved_payments: 60000,
+          pending_payments: 0,
+          policy_deduction: 5000,
+          previous_refunds: 0,
+          max_refundable_limit: 25000,
+          requested_amount: 25000,
+          approved_amount: 25000,
+          actually_refunded: 0,
+          remaining_to_refund: 25000,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-006',
+            timestamp: '2026-11-02 16:10',
+            actor_ar: 'شركة باب مكة للسياحة',
+            actor_en: 'Bab Makkah Travel',
+            role_ar: 'شركة السياحة',
+            role_en: 'Tourism Company',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد جزئي',
+            title_en: 'Partial Refund Request Filed',
+            desc_ar: 'تقديم طلب استرداد ٢٥,٠٠٠ ج.م لإلغاء مقعد المعتمر المرافق',
+            desc_en: 'Filed partial refund of 25,000 EGP for companion cancellation'
+          },
+          {
+            id: 'LOG-REF-007',
+            timestamp: '2026-11-03 09:00',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'accounts_approved',
+            title_ar: 'موافقة أولية وإرسال للإدارة',
+            title_en: 'Initial Approval & Sent to Admin',
+            desc_ar: 'تم تدقيق الحساب وإرسال الطلب للاعتماد الإداري',
+            desc_en: 'Audited accounts and forwarded for administrative approval'
+          },
+          {
+            id: 'LOG-REF-008',
+            timestamp: '2026-11-03 11:15',
+            actor_ar: 'إبراهيم الدسوقي',
+            actor_en: 'Ibrahim El-Desouky',
+            role_ar: 'مدير الحسابات العام',
+            role_en: 'General Accounts Admin',
+            action_type: 'admin_returned',
+            title_ar: 'إعادة الطلب للمراجعة من مدير الحسابات',
+            title_en: 'Request Returned for Review by Admin',
+            desc_ar: 'يرجى تدقيق خصم رسوم تذاكر الطيران غير المستردة من شركة مصر للطيران ومطابقة الإشعار المرفق قبل الاعتماد النهائي.',
+            desc_en: 'Please verify non-refundable flight ticket fee deduction with EgyptAir and cross-check the attached notice before final approval.'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-005',
+        booking_id: 'BKG-2026-120',
+        customer_id: 'CUST-1005',
+        customer_name_ar: 'سارة إبراهيم القاضي',
+        customer_name_en: 'Sarah Ibrahim Al-Qadi',
+        customer_phone: '01056789015',
+        customer_email: 'sarah.qadi@gmail.com',
+        customer_national_id: '29511052100567',
+        company_id: 'COMP-105',
+        company_name_ar: 'شركة قباء للسياحة',
+        company_name_en: 'Quba Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-11-01 12:00',
+        last_updated: '2026-11-02 15:30',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل',
+        refund_type_en: 'Full Refund',
+        status: 'approved_for_refund',
+        status_ar: 'معتمد للصرف (جاهز للتحويل)',
+        status_en: 'Approved for Refund',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-11-02 15:30',
+          approval_ref: 'ADM-APPR-2026-891'
+        },
+        cancellation: {
+          id: 'CAN-2026-005',
+          date: '2026-10-30 11:00',
+          reason_ar: 'إلغاء السفر لظروف عائلية خاصة مع طلب استرداد المستحقات',
+          reason_en: 'Personal family emergency cancellation with refund request',
+          policy_type_ar: 'سياسة الإلغاء القياسية (خصم ٢,٠٠٠ ج.م مصاريف)',
+          policy_type_en: 'Standard Cancellation (2,000 EGP fee)',
+          deduction_fee: 2000,
+          attachments: [
+            { id: 'ATT-REF-008', name_ar: 'طلب الإلغاء الموقع واستمارة الاسترداد.pdf', name_en: 'Cancellation_Refund_Request.pdf', size: '1.5 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج قباء الماسي - فنادق الصف الأول',
+          program_en: 'Quba Diamond Program - First Row Hotels',
+          travelers_count: 1,
+          total_price: 52000,
+          room_type_ar: 'غرفة مفردة كينج',
+          room_type_en: 'Single King Room',
+          departure_date: '2026-11-26',
+          return_date: '2026-12-06'
+        },
+        financials: {
+          booking_total: 52000,
+          total_paid_records: 52000,
+          eligible_approved_payments: 52000,
+          pending_payments: 0,
+          policy_deduction: 2000,
+          previous_refunds: 0,
+          max_refundable_limit: 50000,
+          requested_amount: 50000,
+          approved_amount: 50000,
+          actually_refunded: 0,
+          remaining_to_refund: 50000,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-009',
+            timestamp: '2026-11-01 12:00',
+            actor_ar: 'سارة إبراهيم القاضي',
+            actor_en: 'Sarah Ibrahim Al-Qadi',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد إلكتروني',
+            title_en: 'Electronic Refund Request Submitted',
+            desc_ar: 'تقديم طلب استرداد بقيمة ٥٠,٠٠٠ ج.م',
+            desc_en: 'Customer filed 50,000 EGP refund request'
+          },
+          {
+            id: 'LOG-REF-010',
+            timestamp: '2026-11-02 10:15',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'accounts_approved',
+            title_ar: 'اعتماد الموظف وإحالة للأدمن',
+            title_en: 'Employee Approval & Sent to Admin',
+            desc_ar: 'تم اعتماد مبلغ ٥٠,٠٠٠ ج.م بنجاح وإحالته للاعتماد النهائي',
+            desc_en: 'Approved 50,000 EGP and submitted for final admin authorization'
+          },
+          {
+            id: 'LOG-REF-011',
+            timestamp: '2026-11-02 15:30',
+            actor_ar: 'إبراهيم الدسوقي',
+            actor_en: 'Ibrahim El-Desouky',
+            role_ar: 'مدير الحسابات العام',
+            role_en: 'General Accounts Admin',
+            action_type: 'admin_approved',
+            title_ar: 'اعتماد الصرف من مدير الحسابات',
+            title_en: 'Admin Payout Authorization Signed',
+            desc_ar: 'تم التصديق النهائي على أمر الصرف بمبلغ ٥٠,٠٠٠ ج.م وأصبح جاهزاً للتحويل المالي المباشر أو المقسم',
+            desc_en: 'Final admin sign-off for 50,000 EGP refund recorded; ready for single or split transfer execution'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-006',
+        booking_id: 'BKG-2026-125',
+        customer_id: 'CUST-1006',
+        customer_name_ar: 'طارق رضوان المصري',
+        customer_name_en: 'Tarek Radwan Al-Masry',
+        customer_phone: '01067890126',
+        customer_email: 'tarek.masry@gmail.com',
+        customer_national_id: '28003181600678',
+        company_id: 'COMP-106',
+        company_name_ar: 'شركة البركة لخدمات المعتمرين',
+        company_name_en: 'Al-Baraka Umrah Services',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-10-28 09:45',
+        last_updated: '2026-11-01 14:20',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل (تحويلات متعددة)',
+        refund_type_en: 'Full Refund (Multiple Transfers)',
+        status: 'partially_refunded',
+        status_ar: 'مسترد جزئياً (بانتظار التحويل المتبقي)',
+        status_en: 'Partially Refunded',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-10-31 16:00',
+          approval_ref: 'ADM-APPR-2026-872'
+        },
+        cancellation: {
+          id: 'CAN-2026-006',
+          date: '2026-10-27 12:00',
+          reason_ar: 'تأجيل الحج لموسم قادم مع استرداد المبلغ المعتمد',
+          reason_en: 'Postponement of pilgrimage with request for approved refund',
+          policy_type_ar: 'سياسة الإلغاء الاعتيادية (خصم ٥,٠٠٠ ج.م)',
+          policy_type_en: 'Standard Policy (5,000 EGP fee)',
+          deduction_fee: 5000,
+          attachments: [
+            { id: 'ATT-REF-009', name_ar: 'طلب الاسترداد وتفاصيل الحساب البنكي.pdf', name_en: 'Bank_Details_Refund_Request.pdf', size: '1.3 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج البركة للعائلات - جناح تنفيذي',
+          program_en: 'Al-Baraka Family Program - Executive Suite',
+          travelers_count: 2,
+          total_price: 65000,
+          room_type_ar: 'جناح عائلي مطل',
+          room_type_en: 'Family Suite View',
+          departure_date: '2026-11-20',
+          return_date: '2026-12-02'
+        },
+        financials: {
+          booking_total: 65000,
+          total_paid_records: 65000,
+          eligible_approved_payments: 65000,
+          pending_payments: 0,
+          policy_deduction: 5000,
+          previous_refunds: 0,
+          max_refundable_limit: 60000,
+          requested_amount: 60000,
+          approved_amount: 60000,
+          actually_refunded: 35000,
+          remaining_to_refund: 25000,
+          adjustment: null
+        },
+        transfers: [
+          {
+            id: 'TRF-001',
+            transfer_ref: 'CIB-REF-981203',
+            amount: 35000,
+            date: '2026-11-01 14:20',
+            method: 'bank_transfer',
+            method_ar: 'تحويل بنكي (البنك التجاري الدولي CIB)',
+            method_en: 'Bank Wire (CIB)',
+            recipient_name: 'طارق رضوان المصري',
+            recipient_details: 'EG8200050000000012345678901 - بنك CIB',
+            receipt_file: 'receipt_trf_001.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'الدفعة الأولى من الاسترداد المعتمد بمبلغ ٣٥,٠٠٠ ج.م من حساب ميقات بـ CIB',
+            notes_en: 'First installment of approved refund (35,000 EGP) from Miqat CIB account',
+            status: 'completed',
+            customer_confirmed: true,
+            customer_confirmed_at: '2026-11-02 10:00'
+          }
+        ],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-012',
+            timestamp: '2026-10-28 09:45',
+            actor_ar: 'طارق رضوان المصري',
+            actor_en: 'Tarek Radwan Al-Masry',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب الاسترداد',
+            title_en: 'Refund Request Filed',
+            desc_ar: 'طلب استرداد ٦٠,٠٠٠ ج.م',
+            desc_en: 'Customer requested 60,000 EGP refund'
+          },
+          {
+            id: 'LOG-REF-013',
+            timestamp: '2026-10-31 16:00',
+            actor_ar: 'إبراهيم الدسوقي',
+            actor_en: 'Ibrahim El-Desouky',
+            role_ar: 'مدير الحسابات العام',
+            role_en: 'General Accounts Admin',
+            action_type: 'admin_approved',
+            title_ar: 'اعتماد الاسترداد بالكامل',
+            title_en: 'Refund Approved by Admin',
+            desc_ar: 'اعتماد صرف ٦٠,٠٠٠ ج.م مع إمكانية التجزئة على دفعتين بحسب السيولة المتاحة',
+            desc_en: 'Authorized 60,000 EGP refund with multi-transfer option based on liquidity'
+          },
+          {
+            id: 'LOG-REF-014',
+            timestamp: '2026-11-01 14:20',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'transfer_recorded',
+            title_ar: 'تنفيذ التحويل البنكي الأول (٣٥,٠٠٠ ج.م)',
+            title_en: 'First Transfer Executed (35,000 EGP)',
+            desc_ar: 'تم قيد التحويل البنكي الأول بنجاح عبر CIB والمتبقي ٢٥,٠٠٠ ج.م بانتظار التحويل الثاني',
+            desc_en: 'First transfer of 35,000 EGP dispatched via CIB; 25,000 EGP remaining for second transfer'
+          }
+        ],
+        internal_notes: [
+          {
+            id: 'NOTE-REF-003',
+            author_ar: 'أحمد صبري',
+            author_en: 'Ahmed Sabry',
+            date: '2026-11-01 14:25',
+            text: 'تم التنسيق مع العميل هاتفياً لتحويل المتبقي (٢٥,٠٠٠ ج.م) غداً فور إتاحة سيولة الحساب الرئيسي.'
+          }
+        ]
+      },
+
+      {
+        id: 'REF-2026-007',
+        booking_id: 'BKG-2026-130',
+        customer_id: 'CUST-1007',
+        customer_name_ar: 'ياسر عبد الله الصاوي',
+        customer_name_en: 'Yasser Abdullah Al-Sawy',
+        customer_phone: '01078901237',
+        customer_email: 'yasser.sawy@gmail.com',
+        customer_national_id: '28807251700789',
+        company_id: 'COMP-107',
+        company_name_ar: 'شركة الروضة الشريفة للسياحة',
+        company_name_en: 'Al-Rawda Al-Sharifa Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-10-27 15:30',
+        last_updated: '2026-11-04 11:15',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل عبر إنستاباي',
+        refund_type_en: 'Full Refund via InstaPay',
+        status: 'awaiting_customer_confirmation',
+        status_ar: 'بانتظار تأكيد استلام العميل (المرحلة الثانية)',
+        status_en: 'Awaiting Customer Confirmation',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-10-29 11:00',
+          approval_ref: 'ADM-APPR-2026-855'
+        },
+        cancellation: {
+          id: 'CAN-2026-007',
+          date: '2026-10-26 14:00',
+          reason_ar: 'ظروف خاصة طارئة مع طلب تسوية عاجلة عبر إنستاباي',
+          reason_en: 'Urgent personal reasons with instant InstaPay refund request',
+          policy_type_ar: 'سياسة الإلغاء القياسية (خصم ٢,٠٠٠ ج.م)',
+          policy_type_en: 'Standard Policy (2,000 EGP fee)',
+          deduction_fee: 2000,
+          attachments: [
+            { id: 'ATT-REF-010', name_ar: 'طلب الاسترداد العاجل عبر إنستاباي.pdf', name_en: 'Urgent_InstaPay_Refund_Letter.pdf', size: '780 KB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج الروضة السريع ٤ أيام',
+          program_en: 'Al-Rawda Express 4-Day Program',
+          travelers_count: 1,
+          total_price: 20000,
+          room_type_ar: 'غرفة ثنائية',
+          room_type_en: 'Double Room',
+          departure_date: '2026-11-15',
+          return_date: '2026-11-19'
+        },
+        financials: {
+          booking_total: 20000,
+          total_paid_records: 20000,
+          eligible_approved_payments: 20000,
+          pending_payments: 0,
+          policy_deduction: 2000,
+          previous_refunds: 0,
+          max_refundable_limit: 18000,
+          requested_amount: 18000,
+          approved_amount: 18000,
+          actually_refunded: 18000,
+          remaining_to_refund: 0,
+          adjustment: null
+        },
+        transfers: [
+          {
+            id: 'TRF-002',
+            transfer_ref: 'INSTA-884102',
+            amount: 18000,
+            date: '2026-11-04 11:15',
+            method: 'instapay',
+            method_ar: 'إنستاباي (InstaPay)',
+            method_en: 'InstaPay',
+            recipient_name: 'ياسر عبد الله الصاوي',
+            recipient_details: 'yasser.alsawy@instapay (IPA)',
+            receipt_file: 'receipt_trf_002.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'تم التحويل اللحظي بنجاح عبر شبكة المدفوعات اللحظية IPN / InstaPay',
+            notes_en: 'Instant transfer dispatched via Instant Payment Network (IPN)',
+            status: 'transferred',
+            customer_confirmed: false,
+            customer_confirmed_at: null
+          }
+        ],
+        customer_confirmation: {
+          is_confirmed: false,
+          confirmed_at: null,
+          channel: null,
+          miqat_confirmed_at: '2026-11-04 11:15',
+          miqat_confirmed_by: 'أحمد صبري'
+        },
+        dispute: null,
+        automated_reminders: {
+          is_active: true,
+          interval_hours: 24,
+          reminders_sent_count: 1,
+          last_sent: '2026-11-04 18:00',
+          next_reminder: '2026-11-05 18:00',
+          employee_alert_triggered: false
+        },
+        activity_log: [
+          {
+            id: 'LOG-REF-015',
+            timestamp: '2026-10-27 15:30',
+            actor_ar: 'ياسر عبد الله الصاوي',
+            actor_en: 'Yasser Abdullah Al-Sawy',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب الاسترداد',
+            title_en: 'Refund Request Submitted',
+            desc_ar: 'طلب استرداد ١٨,٠٠٠ ج.م لحساب إنستاباي',
+            desc_en: 'Submitted 18,000 EGP refund to InstaPay'
+          },
+          {
+            id: 'LOG-REF-016',
+            timestamp: '2026-10-29 11:00',
+            actor_ar: 'إبراهيم الدسوقي',
+            actor_en: 'Ibrahim El-Desouky',
+            role_ar: 'مدير الحسابات العام',
+            role_en: 'General Accounts Admin',
+            action_type: 'admin_approved',
+            title_ar: 'اعتماد الصرف الإداري',
+            title_en: 'Admin Payout Authorization',
+            desc_ar: 'تم توقيع واعتماد أمر الصرف بكامل المبلغ ١٨,٠٠٠ ج.م',
+            desc_en: 'Signed payout authorization for 18,000 EGP'
+          },
+          {
+            id: 'LOG-REF-017',
+            timestamp: '2026-11-04 11:15',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'transfer_recorded',
+            title_ar: 'تنفيذ التحويل وتأكيد ميقات (المرحلة الأولى)',
+            title_en: 'Transfer Dispatched & Miqat Confirmed (Stage 1)',
+            desc_ar: 'تم تنفيذ التحويل عبر إنستاباي بنجاح وإرفاق إشعار التحويل الرقمي INSTA-884102. الطلب مفتوح بانتظار تأكيد استلام العميل (المرحلة الثانية)',
+            desc_en: 'Transfer dispatched via InstaPay with receipt INSTA-884102. Remains open awaiting Stage 2 customer confirmation'
+          },
+          {
+            id: 'LOG-REF-018',
+            timestamp: '2026-11-04 18:00',
+            actor_ar: 'نظام التنبيهات الآلية',
+            actor_en: 'Automated Notification System',
+            role_ar: 'النظام',
+            role_en: 'System',
+            action_type: 'reminder_sent',
+            title_ar: 'إرسال تذكير آلي للعميل عبر الرسائل القصيرة والتطبيق',
+            title_en: 'Automated Receipt Confirmation Reminder Sent to Customer',
+            desc_ar: 'تم إرسال إشعار للعميل لتأكيد استلام حوالة إنستاباي في حسابه البنكي',
+            desc_en: 'Notification sent prompting customer to acknowledge receipt in Miqat app'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-008',
+        booking_id: 'BKG-2026-134',
+        customer_id: 'CUST-1008',
+        customer_name_ar: 'منى إبراهيم عثمان',
+        customer_name_en: 'Mona Ibrahim Othman',
+        customer_phone: '01089012348',
+        customer_email: 'mona.othman@gmail.com',
+        customer_national_id: '29106091800890',
+        company_id: 'COMP-108',
+        company_name_ar: 'شركة مناسك للسياحة والحج',
+        company_name_en: 'Manasek Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-10-25 10:00',
+        last_updated: '2026-11-02 12:10',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل عبر فودافون كاش',
+        refund_type_en: 'Full Refund via Vodafone Cash',
+        status: 'refund_dispute',
+        status_ar: 'نزاع مالي مفتوح (موقوف لحين التسوية)',
+        status_en: 'Refund Dispute',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-10-28 14:00',
+          approval_ref: 'ADM-APPR-2026-840'
+        },
+        cancellation: {
+          id: 'CAN-2026-008',
+          date: '2026-10-24 11:30',
+          reason_ar: 'إلغاء لظروف صحية طارئة',
+          reason_en: 'Emergency health conditions',
+          policy_type_ar: 'سياسة الإلغاء الاعتيادية (خصم ٢,٠٠٠ ج.م)',
+          policy_type_en: 'Standard Policy (2,000 EGP fee)',
+          deduction_fee: 2000,
+          attachments: [
+            { id: 'ATT-REF-011', name_ar: 'التقرير الطبي وطلب الاسترداد للمحفظة.pdf', name_en: 'Medical_Report_Wallet_Refund.pdf', size: '1.6 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج مناسك الروحاني - مكة والمدينة',
+          program_en: 'Manasek Spiritual Package',
+          travelers_count: 1,
+          total_price: 22000,
+          room_type_ar: 'غرفة ثنائية',
+          room_type_en: 'Double Room',
+          departure_date: '2026-11-12',
+          return_date: '2026-11-18'
+        },
+        financials: {
+          booking_total: 22000,
+          total_paid_records: 22000,
+          eligible_approved_payments: 22000,
+          pending_payments: 0,
+          policy_deduction: 2000,
+          previous_refunds: 0,
+          max_refundable_limit: 20000,
+          requested_amount: 20000,
+          approved_amount: 20000,
+          actually_refunded: 20000,
+          remaining_to_refund: 0,
+          adjustment: null
+        },
+        transfers: [
+          {
+            id: 'TRF-003',
+            transfer_ref: 'VF-CASH-710492',
+            amount: 20000,
+            date: '2026-10-29 16:30',
+            method: 'vodafone_cash',
+            method_ar: 'فودافون كاش (Vodafone Cash)',
+            method_en: 'Vodafone Cash',
+            recipient_name: 'منى إبراهيم عثمان',
+            recipient_details: '01089012348',
+            receipt_file: 'receipt_trf_003.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'تم تحويل مبلغ ٢٠,٠٠٠ ج.م لمحفظة فودافون كاش وصدر إشعار تأكيد من فودافون',
+            notes_en: 'Transferred 20,000 EGP to Vodafone Cash wallet with confirmation receipt',
+            status: 'disputed',
+            customer_confirmed: false,
+            customer_confirmed_at: null
+          }
+        ],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: {
+          is_disputed: true,
+          opened_at: '2026-11-02 12:10',
+          dispute_id: 'DSP-2026-001',
+          dispute_reason_ar: 'العميلة تفيد باستلام ١٥,٠٠٠ ج.م فقط في محفظتها وتطالب بالمبلغ المتبقي ٥,٠٠٠ ج.م، بالرغم من صدور إشعار تحويل بكامل المبلغ ٢٠,٠٠٠ ج.م من منصة ميقات.',
+          dispute_reason_en: 'Customer claims receipt of only 15,000 EGP and disputes 5,000 EGP discrepancy despite full 20,000 EGP transfer dispatch receipt.',
+          claimed_difference: 5000,
+          status: 'investigating',
+          investigation_notes: [
+            {
+              id: 'DISP-NOTE-01',
+              author_ar: 'أحمد صبري',
+              author_en: 'Ahmed Sabry',
+              date: '2026-11-02 14:00',
+              text: 'تم التواصل مع الدعم الفني لفودافون كاش للاستعلام عن كود العملية 710492 والتأكد من عدم وجود حد يومي للمحفظة تسبب في حجز ٥,٠٠٠ ج.م.'
+            }
+          ]
+        },
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-019',
+            timestamp: '2026-10-25 10:00',
+            actor_ar: 'منى إبراهيم عثمان',
+            actor_en: 'Mona Ibrahim Othman',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب الاسترداد',
+            title_en: 'Refund Request Submitted',
+            desc_ar: 'طلب استرداد ٢٠,٠٠٠ ج.م لمحفظة فودافون كاش',
+            desc_en: 'Requested 20,000 EGP refund to Vodafone Cash'
+          },
+          {
+            id: 'LOG-REF-020',
+            timestamp: '2026-10-29 16:30',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'transfer_recorded',
+            title_ar: 'تنفيذ التحويل وإرفاق الإشعار',
+            title_en: 'Transfer Dispatched & Receipt Attached',
+            desc_ar: 'تم تنفيذ التحويل برقم VF-CASH-710492',
+            desc_en: 'Transfer recorded with ref VF-CASH-710492'
+          },
+          {
+            id: 'LOG-REF-021',
+            timestamp: '2026-11-02 12:10',
+            actor_ar: 'منى إبراهيم عثمان',
+            actor_en: 'Mona Ibrahim Othman',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'dispute_opened',
+            title_ar: 'فتح نزاع مالي من قبل العميل',
+            title_en: 'Customer Dispute Opened',
+            desc_ar: 'فتحت العميلة نزاعاً مالياً لعدم اكتمال المبلغ المحول للمحفظة (استلام ١٥,٠٠٠ ج.م من أصل ٢٠,٠٠٠ ج.م). تم إيقاف إغلاق الطلب تلقائياً لحين التسوية والتحقيق.',
+            desc_en: 'Customer opened dispute regarding partial receipt (15,000 of 20,000 EGP). Request auto-locked until investigation completes'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-009',
+        booking_id: 'BKG-2026-138',
+        customer_id: 'CUST-1009',
+        customer_name_ar: 'عمرو خالد سليم',
+        customer_name_en: 'Amr Khaled Selim',
+        customer_phone: '01090123459',
+        customer_email: 'amr.selim@gmail.com',
+        customer_national_id: '28205161400901',
+        company_id: 'COMP-109',
+        company_name_ar: 'شركة التيسير لرحلات العمرة',
+        company_name_en: 'Al-Tayseer Umrah',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-10-20 11:00',
+        last_updated: '2026-10-26 14:00',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل عبر تحويل بنكي',
+        refund_type_en: 'Full Refund via Bank Wire',
+        status: 'refund_completed',
+        status_ar: 'استرداد وتسوية مكتملة ومؤكدة',
+        status_en: 'Refund Completed',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-10-22 13:00',
+          approval_ref: 'ADM-APPR-2026-810'
+        },
+        cancellation: {
+          id: 'CAN-2026-009',
+          date: '2026-10-19 15:00',
+          reason_ar: 'إلغاء مبكر وتغيير خطة السفر',
+          reason_en: 'Early cancellation and travel plan rescheduling',
+          policy_type_ar: 'سياسة الإلغاء المبكر (خصم ٢,٠٠٠ ج.م)',
+          policy_type_en: 'Early Cancellation (2,000 EGP fee)',
+          deduction_fee: 2000,
+          attachments: [
+            { id: 'ATT-REF-012', name_ar: 'إشعار التحويل البنكي المعتمد والموقع.pdf', name_en: 'Certified_Bank_Transfer_Slip.pdf', size: '1.4 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج التيسير المميز',
+          program_en: 'Al-Tayseer Premium Package',
+          travelers_count: 1,
+          total_price: 32000,
+          room_type_ar: 'غرفة ثنائية',
+          room_type_en: 'Double Room',
+          departure_date: '2026-11-10',
+          return_date: '2026-11-17'
+        },
+        financials: {
+          booking_total: 32000,
+          total_paid_records: 32000,
+          eligible_approved_payments: 32000,
+          pending_payments: 0,
+          policy_deduction: 2000,
+          previous_refunds: 0,
+          max_refundable_limit: 30000,
+          requested_amount: 30000,
+          approved_amount: 30000,
+          actually_refunded: 30000,
+          remaining_to_refund: 0,
+          adjustment: null
+        },
+        transfers: [
+          {
+            id: 'TRF-004',
+            transfer_ref: 'NBE-REF-654109',
+            amount: 30000,
+            date: '2026-10-24 10:30',
+            method: 'bank_transfer',
+            method_ar: 'تحويل بنكي (البنك الأهلي المصري NBE)',
+            method_en: 'Bank Wire (NBE)',
+            recipient_name: 'عمرو خالد سليم',
+            recipient_details: 'EG4900030000000098765432101 - البنك الأهلي',
+            receipt_file: 'receipt_trf_004.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'تم التحويل لحساب العميل بالبنك الأهلي وصدر إشعار المطابقة البنكي',
+            notes_en: 'Wire dispatched to NBE account with clearing confirmation',
+            status: 'completed',
+            customer_confirmed: true,
+            customer_confirmed_at: '2026-10-26 14:00'
+          }
+        ],
+        customer_confirmation: {
+          is_confirmed: true,
+          confirmed_at: '2026-10-26 14:00',
+          channel: 'miqat_app',
+          customer_notes_ar: 'تم تأكيد وصول المبلغ كاملاً في حسابي بالبنك الأهلي، شكراً لتعاونكم.',
+          customer_notes_en: 'Confirmed full receipt in NBE account, thank you.'
+        },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-022',
+            timestamp: '2026-10-20 11:00',
+            actor_ar: 'عمرو خالد سليم',
+            actor_en: 'Amr Khaled Selim',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب الاسترداد',
+            title_en: 'Refund Request Filed',
+            desc_ar: 'طلب استرداد ٣٠,٠٠٠ ج.م',
+            desc_en: 'Requested 30,000 EGP refund'
+          },
+          {
+            id: 'LOG-REF-023',
+            timestamp: '2026-10-24 10:30',
+            actor_ar: 'أحمد صبري',
+            actor_en: 'Ahmed Sabry',
+            role_ar: 'موظف الحسابات المالية',
+            role_en: 'Accounts Officer',
+            action_type: 'transfer_recorded',
+            title_ar: 'تنفيذ التحويل البنكي وتأكيد ميقات (المرحلة الأولى)',
+            title_en: 'Wire Dispatched & Miqat Confirmed (Stage 1)',
+            desc_ar: 'تم تنفيذ التحويل البنكي برقم NBE-REF-654109 بمبلغ ٣٠,٠٠٠ ج.م',
+            desc_en: 'Dispatched 30,000 EGP wire via NBE'
+          },
+          {
+            id: 'LOG-REF-024',
+            timestamp: '2026-10-26 14:00',
+            actor_ar: 'عمرو خالد سليم',
+            actor_en: 'Amr Khaled Selim',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'customer_confirmed',
+            title_ar: 'تأكيد استلام العميل واكتمال التسوية (المرحلة الثانية)',
+            title_en: 'Customer Acknowledged Receipt & Settlement Completed (Stage 2)',
+            desc_ar: 'أكد العميل استلام المبلغ كاملاً عبر تطبيق ميقات وتم إغلاق وأرشفة طلب الاسترداد بنجاح',
+            desc_en: 'Customer confirmed full receipt in app; refund request closed and settled successfully'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-010',
+        booking_id: 'BKG-2026-142',
+        customer_id: 'CUST-1010',
+        customer_name_ar: 'حسام حسن الهواري',
+        customer_name_en: 'Hossam Hassan Al-Hawary',
+        customer_phone: '01001234560',
+        customer_email: 'hossam.hawary@gmail.com',
+        customer_national_id: '27508101900123',
+        company_id: 'COMP-110',
+        company_name_ar: 'شركة زمزم للسياحة',
+        company_name_en: 'Zamzam Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-10-15 08:30',
+        last_updated: '2026-10-24 16:30',
+        refund_type: 'full',
+        refund_type_ar: 'استرداد كامل (تحويلان مكتملان)',
+        refund_type_en: 'Full Refund (2 Completed Transfers)',
+        status: 'refund_completed',
+        status_ar: 'استرداد وتسوية مكتملة ومؤكدة',
+        status_en: 'Refund Completed',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-10-17 11:30',
+          approval_ref: 'ADM-APPR-2026-790'
+        },
+        cancellation: {
+          id: 'CAN-2026-010',
+          date: '2026-10-14 16:00',
+          reason_ar: 'إلغاء لظروف عمل قاهرة مع التنازل عن رسوم الإلغاء الجزئية',
+          reason_en: 'Emergency work cancellation with partial fee waiver',
+          policy_type_ar: 'سياسة الإلغاء المبكر (خصم ٥,٠٠٠ ج.م رسوم حجز)',
+          policy_type_en: 'Early Cancellation (5,000 EGP fee)',
+          deduction_fee: 5000,
+          attachments: [
+            { id: 'ATT-REF-013', name_ar: 'نموذج التسوية المالية المعتمد.pdf', name_en: 'Approved_Financial_Settlement.pdf', size: '1.8 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج زمزم الملكي VIP',
+          program_en: 'Zamzam Royal VIP Package',
+          travelers_count: 2,
+          total_price: 85000,
+          room_type_ar: 'جناح ملكي مطل على الكعبة',
+          room_type_en: 'Kaaba View Royal Suite',
+          departure_date: '2026-11-05',
+          return_date: '2026-11-16'
+        },
+        financials: {
+          booking_total: 85000,
+          total_paid_records: 85000,
+          eligible_approved_payments: 85000,
+          pending_payments: 0,
+          policy_deduction: 5000,
+          previous_refunds: 0,
+          max_refundable_limit: 80000,
+          requested_amount: 80000,
+          approved_amount: 80000,
+          actually_refunded: 80000,
+          remaining_to_refund: 0,
+          adjustment: null
+        },
+        transfers: [
+          {
+            id: 'TRF-005',
+            transfer_ref: 'BM-REF-109234',
+            amount: 50000,
+            date: '2026-10-20 12:00',
+            method: 'bank_transfer',
+            method_ar: 'تحويل بنكي (بنك مصر)',
+            method_en: 'Bank Wire (Banque Misr)',
+            recipient_name: 'حسام حسن الهواري',
+            recipient_details: 'EG1900020000000054321678901 - بنك مصر',
+            receipt_file: 'receipt_trf_005.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'الدفعة الأولى من الاسترداد بمبلغ ٥٠,٠٠٠ ج.م عبر بنك مصر',
+            notes_en: 'First installment of 50,000 EGP via Banque Misr',
+            status: 'completed',
+            customer_confirmed: true,
+            customer_confirmed_at: '2026-10-21 16:00'
+          },
+          {
+            id: 'TRF-006',
+            transfer_ref: 'INSTA-992104',
+            amount: 30000,
+            date: '2026-10-23 11:30',
+            method: 'instapay',
+            method_ar: 'إنستاباي (InstaPay)',
+            method_en: 'InstaPay',
+            recipient_name: 'حسام حسن الهواري',
+            recipient_details: 'hossam.hawary@instapay',
+            receipt_file: 'receipt_trf_006.pdf',
+            employee: 'أحمد صبري',
+            notes_ar: 'الدفعة الثانية والمتبقية بمبلغ ٣٠,٠٠٠ ج.م عبر إنستاباي',
+            notes_en: 'Second and final installment of 30,000 EGP via InstaPay',
+            status: 'completed',
+            customer_confirmed: true,
+            customer_confirmed_at: '2026-10-24 16:30'
+          }
+        ],
+        customer_confirmation: {
+          is_confirmed: true,
+          confirmed_at: '2026-10-24 16:30',
+          channel: 'miqat_app',
+          customer_notes_ar: 'تم استلام الدفعتين بنجاح واكتمال كامل المبلغ المستحق ٨٠,٠٠٠ ج.م.',
+          customer_notes_en: 'Confirmed both installments totaling 80,000 EGP.'
+        },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-025',
+            timestamp: '2026-10-15 08:30',
+            actor_ar: 'حسام حسن الهواري',
+            actor_en: 'Hossam Hassan Al-Hawary',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب الاسترداد',
+            title_en: 'Refund Request Filed',
+            desc_ar: 'طلب استرداد ٨٠,٠٠٠ ج.م',
+            desc_en: 'Requested 80,000 EGP refund'
+          },
+          {
+            id: 'LOG-REF-026',
+            timestamp: '2026-10-24 16:30',
+            actor_ar: 'حسام حسن الهواري',
+            actor_en: 'Hossam Hassan Al-Hawary',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'customer_confirmed',
+            title_ar: 'تأكيد العميل واكتمال الاسترداد المقسم بالكامل',
+            title_en: 'Customer Acknowledged Split Refund Full Completion',
+            desc_ar: 'تم تأكيد وصول الدفعة الثانية وبذلك تم إغلاق طلب الاسترداد واكتماله نهائياً',
+            desc_en: 'Confirmed receipt of final installment; refund closed and fully settled'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-011',
+        booking_id: 'BKG-2026-146',
+        customer_id: 'CUST-1011',
+        customer_name_ar: 'ندى كمال عبد السميع',
+        customer_name_en: 'Nada Kamal Abdel Samie',
+        customer_phone: '01011223344',
+        customer_email: 'nada.samie@gmail.com',
+        customer_national_id: '29302141500112',
+        company_id: 'COMP-111',
+        company_name_ar: 'شركة الصفوة لخدمات المعتمرين',
+        company_name_en: 'Al-Safwa Umrah',
+        request_source: 'company',
+        source_ar: 'شركة سياحة',
+        source_en: 'Tourism Company',
+        request_date: '2026-11-04 16:00',
+        last_updated: '2026-11-04 16:00',
+        refund_type: 'partial',
+        refund_type_ar: 'استرداد جزئي (إلغاء مقعد معتمر)',
+        refund_type_en: 'Partial Refund (Passenger Cancellation)',
+        status: 'under_review',
+        status_ar: 'قيد التدقيق المحاسبي',
+        status_en: 'Under Review',
+        cancellation: {
+          id: 'CAN-2026-011',
+          date: '2026-11-04 14:30',
+          reason_ar: 'إلغاء مقعد معتمرة مراسلة لظروف صحية من الشركة',
+          reason_en: 'Health cancellation filed by company on traveler behalf',
+          policy_type_ar: 'سياسة الاسترداد الجزئي لشركات السياحة',
+          policy_type_en: 'Corporate Partial Refund Policy',
+          deduction_fee: 500,
+          attachments: [
+            { id: 'ATT-REF-014', name_ar: 'خطاب شركة الصفوة المعتمد لطلب الاسترداد الجزئي.pdf', name_en: 'Al_Safwa_Corporate_Refund_Letter.pdf', size: '1.1 MB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج الصفوة الاقتصادي الجماعي',
+          program_en: 'Al-Safwa Group Economy Package',
+          travelers_count: 2,
+          total_price: 30000,
+          room_type_ar: 'غرفة ثنائية',
+          room_type_en: 'Double Room',
+          departure_date: '2026-12-05',
+          return_date: '2026-12-15'
+        },
+        financials: {
+          booking_total: 30000,
+          total_paid_records: 30000,
+          eligible_approved_payments: 30000,
+          pending_payments: 0,
+          policy_deduction: 500,
+          previous_refunds: 0,
+          max_refundable_limit: 14500,
+          requested_amount: 14500,
+          approved_amount: null,
+          actually_refunded: 0,
+          remaining_to_refund: 14500,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-027',
+            timestamp: '2026-11-04 16:00',
+            actor_ar: 'شركة الصفوة لخدمات المعتمرين',
+            actor_en: 'Al-Safwa Umrah',
+            role_ar: 'شركة السياحة',
+            role_en: 'Tourism Company',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد من شركة السياحة',
+            title_en: 'Corporate Refund Request Filed',
+            desc_ar: 'قدمت شركة الصفوة طلب استرداد جزئي بمبلغ ١٤,٥٠٠ ج.م نيابة عن المعتمرة',
+            desc_en: 'Al-Safwa filed partial refund of 14,500 EGP on behalf of traveler'
+          }
+        ],
+        internal_notes: []
+      },
+
+      {
+        id: 'REF-2026-012',
+        booking_id: 'BKG-2026-150',
+        customer_id: 'CUST-1012',
+        customer_name_ar: 'وليد مصطفى النجار',
+        customer_name_en: 'Waleed Mostafa Al-Najjar',
+        customer_phone: '01022334455',
+        customer_email: 'waleed.najjar@gmail.com',
+        customer_national_id: '28701051200234',
+        company_id: 'COMP-112',
+        company_name_ar: 'شركة دار السلام للحج والعمرة',
+        company_name_en: 'Dar Al-Salam Travel',
+        request_source: 'customer',
+        source_ar: 'عميل مباشر',
+        source_en: 'Direct Customer',
+        request_date: '2026-11-03 13:15',
+        last_updated: '2026-11-04 15:45',
+        refund_type: 'partial',
+        refund_type_ar: 'استرداد فارق ترقية برنامج',
+        refund_type_en: 'Partial Refund (Program Downgrade)',
+        status: 'approved_for_refund',
+        status_ar: 'معتمد للصرف (محفظة فودافون كاش)',
+        status_en: 'Approved for Refund',
+        admin_approval: {
+          admin_name_ar: 'إبراهيم الدسوقي',
+          admin_name_en: 'Ibrahim El-Desouky',
+          approved_at: '2026-11-04 15:45',
+          approval_ref: 'ADM-APPR-2026-895'
+        },
+        cancellation: {
+          id: 'CAN-2026-012',
+          date: '2026-11-02 18:00',
+          reason_ar: 'تعديل حجز وترقية إلى فئة مختلفة مع وجود فارق مسترد للعميل',
+          reason_en: 'Booking modification and plan change with refundable price difference',
+          policy_type_ar: 'تسوية فارق تعديل حجز بدون رسوم إلغاء',
+          policy_type_en: 'Modification Settlement (No Fee)',
+          deduction_fee: 0,
+          attachments: [
+            { id: 'ATT-REF-015', name_ar: 'إشعار تعديل الحجز وفارق السعر.pdf', name_en: 'Modification_Refund_Notice.pdf', size: '890 KB' }
+          ]
+        },
+        booking: {
+          program_ar: 'برنامج دار السلام الكلاسيكي',
+          program_en: 'Dar Al-Salam Classic Program',
+          travelers_count: 1,
+          total_price: 24000,
+          room_type_ar: 'غرفة ثلاثية',
+          room_type_en: 'Triple Room',
+          departure_date: '2026-11-22',
+          return_date: '2026-11-29'
+        },
+        financials: {
+          booking_total: 24000,
+          total_paid_records: 24000,
+          eligible_approved_payments: 24000,
+          pending_payments: 0,
+          policy_deduction: 0,
+          previous_refunds: 0,
+          max_refundable_limit: 8000,
+          requested_amount: 8000,
+          approved_amount: 8000,
+          actually_refunded: 0,
+          remaining_to_refund: 8000,
+          adjustment: null
+        },
+        transfers: [],
+        customer_confirmation: { is_confirmed: false, confirmed_at: null, channel: null },
+        dispute: null,
+        automated_reminders: { is_active: false, interval_hours: 48, reminders_sent_count: 0, last_sent: null },
+        activity_log: [
+          {
+            id: 'LOG-REF-028',
+            timestamp: '2026-11-03 13:15',
+            actor_ar: 'وليد مصطفى النجار',
+            actor_en: 'Waleed Mostafa Al-Najjar',
+            role_ar: 'العميل',
+            role_en: 'Customer',
+            action_type: 'request_submitted',
+            title_ar: 'تقديم طلب استرداد فارق مالي',
+            title_en: 'Price Difference Refund Request Filed',
+            desc_ar: 'طلب استرداد ٨,٠٠٠ ج.م فارق تعديل البرنامج',
+            desc_en: 'Requested 8,000 EGP refund for program adjustment'
+          },
+          {
+            id: 'LOG-REF-029',
+            timestamp: '2026-11-04 15:45',
+            actor_ar: 'إبراهيم الدسوقي',
+            actor_en: 'Ibrahim El-Desouky',
+            role_ar: 'مدير الحسابات العام',
+            role_en: 'General Accounts Admin',
+            action_type: 'admin_approved',
+            title_ar: 'اعتماد الصرف الإداري',
+            title_en: 'Admin Payout Authorization',
+            desc_ar: 'تم توقيع واعتماد أمر الصرف بمبلغ ٨,٠٠٠ ج.م جاهز للتحويل لمحفظة فودافون كاش',
+            desc_en: 'Authorized 8,000 EGP refund ready for Vodafone Cash wallet transfer'
+          }
+        ],
+        internal_notes: []
+      }
+    ],
+
+    // =========================================================================
+    // MASTER DATASET: RECENT OPERATIONAL ACTIVITIES (PAGE 8)
+    // =========================================================================
+    REFUND_ACTIVITIES_MASTER: [
+      {
+        id: 'ACT-REF-101',
+        refund_id: 'REF-2026-001',
+        timestamp: '2026-11-05 10:15',
+        actor_ar: 'أحمد محمود الشريف',
+        actor_en: 'Ahmed Mahmoud El-Sherif',
+        action_type: 'request_submitted',
+        status_badge: 'refund_requested',
+        title_ar: 'تقديم طلب استرداد جديد',
+        title_en: 'New Refund Request Submitted',
+        desc_ar: 'قدم العميل طلباً جديداً لاسترداد ٤٨,٠٠٠ ج.م للحجز BKG-2026-104',
+        desc_en: 'Customer submitted new refund request of 48,000 EGP for booking BKG-2026-104'
+      },
+      {
+        id: 'ACT-REF-102',
+        refund_id: 'REF-2026-003',
+        timestamp: '2026-11-04 09:30',
+        actor_ar: 'أحمد صبري',
+        actor_en: 'Ahmed Sabry',
+        action_type: 'accounts_approved',
+        status_badge: 'pending_admin_approval',
+        title_ar: 'اعتماد موظف الحسابات وإحالة للأدمن',
+        title_en: 'Accounts Approval & Sent to Admin',
+        desc_ar: 'اعتمد موظف الحسابات طلب الاسترداد بمبلغ ٤٢,٠٠٠ ج.م وأحاله للاعتماد الإداري',
+        desc_en: 'Accounts officer approved 42,000 EGP and submitted for admin sign-off'
+      },
+      {
+        id: 'ACT-REF-103',
+        refund_id: 'REF-2026-007',
+        timestamp: '2026-11-04 11:15',
+        actor_ar: 'أحمد صبري',
+        actor_en: 'Ahmed Sabry',
+        action_type: 'transfer_recorded',
+        status_badge: 'awaiting_customer_confirmation',
+        title_ar: 'تنفيذ تحويل إنستاباي وتأكيد ميقات (المرحلة الأولى)',
+        title_en: 'InstaPay Transfer Executed & Confirmed by Miqat (Stage 1)',
+        desc_ar: 'تم تنفيذ تحويل ١٨,٠٠٠ ج.م عبر إنستاباي، والطلب مفتوح بانتظار تأكيد استلام العميل',
+        desc_en: '18,000 EGP dispatched via InstaPay; request open awaiting customer receipt confirmation'
+      },
+      {
+        id: 'ACT-REF-104',
+        refund_id: 'REF-2026-012',
+        timestamp: '2026-11-04 15:45',
+        actor_ar: 'إبراهيم الدسوقي',
+        actor_en: 'Ibrahim El-Desouky',
+        action_type: 'admin_approved',
+        status_badge: 'approved_for_refund',
+        title_ar: 'اعتماد أمر الصرف من مدير الحسابات',
+        title_en: 'Admin Payout Authorization Signed',
+        desc_ar: 'اعتمد مدير الحسابات أمر الصرف بمبلغ ٨,٠٠٠ ج.م لمستحقات وليد النجار',
+        desc_en: 'Admin signed payout order of 8,000 EGP for Waleed Al-Najjar'
+      },
+      {
+        id: 'ACT-REF-105',
+        refund_id: 'REF-2026-004',
+        timestamp: '2026-11-03 11:15',
+        actor_ar: 'إبراهيم الدسوقي',
+        actor_en: 'Ibrahim El-Desouky',
+        action_type: 'admin_returned',
+        status_badge: 'returned_for_review',
+        title_ar: 'إعادة طلب الاسترداد للمراجعة والتدقيق',
+        title_en: 'Refund Request Returned for Review',
+        desc_ar: 'أعاد مدير الحسابات الطلب للمراجعة لتدقيق خصم تذكرة الطيران ومطابقة الإشعار',
+        desc_en: 'Admin returned request to verify flight ticket deduction and penalty notice'
+      },
+      {
+        id: 'ACT-REF-106',
+        refund_id: 'REF-2026-008',
+        timestamp: '2026-11-02 12:10',
+        actor_ar: 'منى إبراهيم عثمان',
+        actor_en: 'Mona Ibrahim Othman',
+        action_type: 'dispute_opened',
+        status_badge: 'refund_dispute',
+        title_ar: 'فتح نزاع مالي من قبل العميل',
+        title_en: 'Customer Financial Dispute Opened',
+        desc_ar: 'أفادت العميلة بوجود تفاوت ٥,٠٠٠ ج.م في مبلغ محفظة فودافون كاش المستلم وجاري التحقيق',
+        desc_en: 'Customer opened dispute claiming 5,000 EGP discrepancy in wallet transfer'
+      },
+      {
+        id: 'ACT-REF-107',
+        refund_id: 'REF-2026-005',
+        timestamp: '2026-11-02 15:30',
+        actor_ar: 'إبراهيم الدسوقي',
+        actor_en: 'Ibrahim El-Desouky',
+        action_type: 'admin_approved',
+        status_badge: 'approved_for_refund',
+        title_ar: 'اعتماد الصرف بالكامل بمبلغ ٥٠,٠٠٠ ج.م',
+        title_en: 'Full Refund Payout Approved (50,000 EGP)',
+        desc_ar: 'تم اعتماد الاسترداد لسارة القاضي وجاهز للصرف المالي المباشر أو المقسم',
+        desc_en: 'Approved 50,000 EGP payout for Sarah Al-Qadi; ready for transfer execution'
+      },
+      {
+        id: 'ACT-REF-108',
+        refund_id: 'REF-2026-006',
+        timestamp: '2026-11-01 14:20',
+        actor_ar: 'أحمد صبري',
+        actor_en: 'Ahmed Sabry',
+        action_type: 'transfer_recorded',
+        status_badge: 'partially_refunded',
+        title_ar: 'تنفيذ التحويل البنكي الأول (٣٥,٠٠٠ ج.م)',
+        title_en: 'First Installment Wire Dispatched (35,000 EGP)',
+        desc_ar: 'تم تحويل الدفعة الأولى لطرق رضوان عبر CIB والمتبقي ٢٥,٠٠٠ ج.م بانتظار التحويل الثاني',
+        desc_en: 'First transfer of 35,000 EGP executed via CIB; 25,000 EGP remaining'
+      },
+      {
+        id: 'ACT-REF-109',
+        refund_id: 'REF-2026-009',
+        timestamp: '2026-10-26 14:00',
+        actor_ar: 'عمرو خالد سليم',
+        actor_en: 'Amr Khaled Selim',
+        action_type: 'customer_confirmed',
+        status_badge: 'refund_completed',
+        title_ar: 'تأكيد العميل واكتمال الاسترداد والتسوية (المرحلة الثانية)',
+        title_en: 'Customer Acknowledged Receipt & Refund Completed (Stage 2)',
+        desc_ar: 'أكد العميل استلام كامل المبلغ ٣٠,٠٠٠ ج.م في حسابه البنكي وتمت التسوية النهائية',
+        desc_en: 'Customer confirmed full 30,000 EGP receipt in bank account; refund settled'
+      },
+      {
+        id: 'ACT-REF-110',
+        refund_id: 'REF-2026-010',
+        timestamp: '2026-10-24 16:30',
+        actor_ar: 'حسام حسن الهواري',
+        actor_en: 'Hossam Hassan Al-Hawary',
+        action_type: 'customer_confirmed',
+        status_badge: 'refund_completed',
+        title_ar: 'تأكيد استلام الدفعة الثانية واكتمال التسوية (٨٠,٠٠٠ ج.م)',
+        title_en: 'Final Installment Confirmed & Settled (80,000 EGP)',
+        desc_ar: 'أكد العميل استلام الدفعة الثانية وتم إغلاق وأرشفة طلب الاسترداد المقسم بنجاح',
+        desc_en: 'Customer confirmed receipt of second installment; split refund completed'
+      }
+    ],
+
+    // =========================================================================
+    // REFUND MANAGEMENT HELPER & BUSINESS LOGIC METHODS
+    // =========================================================================
+    getRefundsSummaryKPIs: function (filters) {
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      
+      const totalRequests = all.length;
+      
+      // Requests requiring review: refund_requested, under_review, returned_for_review
+      const requiringReview = all.filter(function (r) {
+        return r.status === 'refund_requested' || r.status === 'under_review' || r.status === 'returned_for_review';
+      }).length;
+
+      // Pending Admin Approval: pending_admin_approval or accounts_approved
+      const pendingAdmin = all.filter(function (r) {
+        return r.status === 'pending_admin_approval' || r.status === 'accounts_approved';
+      }).length;
+
+      // Awaiting Customer Confirmation: awaiting_customer_confirmation
+      const awaitingConfirmation = all.filter(function (r) {
+        return r.status === 'awaiting_customer_confirmation';
+      }).length;
+
+      // Total Requested Refund Amount
+      const totalRequested = all.reduce(function (sum, r) {
+        return sum + (r.financials && r.financials.requested_amount ? r.financials.requested_amount : 0);
+      }, 0);
+
+      // Total Actually Refunded Amount
+      const totalRefunded = all.reduce(function (sum, r) {
+        return sum + (r.financials && r.financials.actually_refunded ? r.financials.actually_refunded : 0);
+      }, 0);
+
+      return {
+        totalRequests: totalRequests,
+        requiringReview: requiringReview,
+        pendingAdmin: pendingAdmin,
+        awaitingConfirmation: awaitingConfirmation,
+        totalRequested: totalRequested,
+        totalRefunded: totalRefunded
+      };
+    },
+
+    getRefundsList: function (filters) {
+      filters = filters || {};
+      let items = (this.REFUND_REQUESTS_MASTER || []).slice();
+
+      if (filters.search) {
+        const q = String(filters.search).toLowerCase().trim();
+        items = items.filter(function (r) {
+          return (
+            r.id.toLowerCase().includes(q) ||
+            r.booking_id.toLowerCase().includes(q) ||
+            (r.customer_name_ar && r.customer_name_ar.toLowerCase().includes(q)) ||
+            (r.customer_name_en && r.customer_name_en.toLowerCase().includes(q)) ||
+            (r.customer_phone && r.customer_phone.includes(q)) ||
+            (r.company_name_ar && r.company_name_ar.toLowerCase().includes(q)) ||
+            (r.company_name_en && r.company_name_en.toLowerCase().includes(q))
+          );
+        });
+      }
+
+      if (filters.status && filters.status !== 'all') {
+        items = items.filter(function (r) {
+          return r.status === filters.status;
+        });
+      }
+
+      if (filters.source && filters.source !== 'all') {
+        items = items.filter(function (r) {
+          return r.request_source === filters.source;
+        });
+      }
+
+      if (filters.refund_type && filters.refund_type !== 'all') {
+        items = items.filter(function (r) {
+          return r.refund_type === filters.refund_type;
+        });
+      }
+
+      if (filters.date_range && filters.date_range !== 'all') {
+        if (filters.date_range === 'today') {
+          items = items.filter(function (r) { return r.request_date && r.request_date.startsWith('2026-11-05'); });
+        } else if (filters.date_range === 'seven_days') {
+          items = items.filter(function (r) { return r.request_date && r.request_date >= '2026-10-29'; });
+        } else if (filters.date_range === 'this_month') {
+          items = items.filter(function (r) { return r.request_date && r.request_date.startsWith('2026-11'); });
+        }
+      }
+
+      return items;
+    },
+
+    getRefundDetails: function (id) {
+      if (!id) return null;
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          return JSON.parse(JSON.stringify(all[i]));
+        }
+      }
+      return null;
+    },
+
+    getRefundRecentActivities: function (limit) {
+      limit = limit || 10;
+      return (this.REFUND_ACTIVITIES_MASTER || []).slice(0, limit);
+    },
+
+    adjustRefundAmount: function (id, adjustedAmount, reason, employeeName) {
+      employeeName = employeeName || 'أحمد صبري';
+      adjustedAmount = Number(adjustedAmount);
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const maxLimit = target.financials.max_refundable_limit;
+      if (adjustedAmount > maxLimit) {
+        return { success: false, error: 'Adjusted amount exceeds maximum eligible refundable limit (' + maxLimit + ' EGP)' };
+      }
+
+      const origAmount = target.financials.requested_amount;
+      const nowStr = '2026-11-05 14:30';
+
+      target.financials.requested_amount = adjustedAmount;
+      target.financials.requested_exceeds_limit = false;
+      target.financials.adjustment = {
+        original_amount: origAmount,
+        adjusted_amount: adjustedAmount,
+        reason_ar: reason,
+        reason_en: reason,
+        employee_ar: employeeName,
+        employee_en: employeeName,
+        timestamp: nowStr
+      };
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        role_ar: 'موظف الحسابات المالية',
+        role_en: 'Accounts Officer',
+        action_type: 'amount_adjusted',
+        title_ar: 'تعديل مبلغ الاسترداد المطلوب وتوثيق السبب',
+        title_en: 'Refund Amount Adjusted with Mandatory Justification',
+        desc_ar: 'تم تعديل المبلغ من ' + origAmount.toLocaleString('en-US') + ' ج.م إلى ' + adjustedAmount.toLocaleString('en-US') + ' ج.م. السبب: ' + reason,
+        desc_en: 'Amount adjusted from ' + origAmount.toLocaleString('en-US') + ' EGP to ' + adjustedAmount.toLocaleString('en-US') + ' EGP. Reason: ' + reason
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        action_type: 'amount_adjusted',
+        status_badge: target.status,
+        title_ar: 'تعديل المبلغ المطلوب (' + target.id + ')',
+        title_en: 'Requested Amount Adjusted (' + target.id + ')',
+        desc_ar: 'تم تعديل المبلغ إلى ' + adjustedAmount.toLocaleString('en-US') + ' ج.م لمطابقة الحد الأقصى المسموح',
+        desc_en: 'Adjusted to ' + adjustedAmount.toLocaleString('en-US') + ' EGP per eligible limit'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    accountsApproveRefund: function (id, employeeName) {
+      employeeName = employeeName || 'أحمد صبري';
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 14:45';
+      target.status = 'pending_admin_approval';
+      target.status_ar = 'بانتظار اعتماد الإدارة';
+      target.status_en = 'Pending Admin Approval';
+      target.last_updated = nowStr;
+      target.financials.approved_amount = target.financials.requested_amount;
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        role_ar: 'موظف الحسابات المالية',
+        role_en: 'Accounts Officer',
+        action_type: 'accounts_approved',
+        title_ar: 'اعتماد موظف الحسابات وإحالة للأدمن',
+        title_en: 'Accounts Officer Approval & Forwarded to Admin',
+        desc_ar: 'اعتمد موظف الحسابات المبلغ (' + target.financials.approved_amount.toLocaleString('en-US') + ' ج.م) وأحاله للاعتماد الإداري النهائي',
+        desc_en: 'Approved ' + target.financials.approved_amount.toLocaleString('en-US') + ' EGP and submitted for final admin sign-off'
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        action_type: 'accounts_approved',
+        status_badge: 'pending_admin_approval',
+        title_ar: 'اعتماد حسابات وإرسال للإدارة (' + target.id + ')',
+        title_en: 'Accounts Approved & Sent to Admin (' + target.id + ')',
+        desc_ar: 'تم اعتماد مبلغ ' + target.financials.approved_amount.toLocaleString('en-US') + ' ج.م وإحالته للإدارة',
+        desc_en: 'Approved ' + target.financials.approved_amount.toLocaleString('en-US') + ' EGP and submitted to Admin'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    adminApproveRefund: function (id, adminName) {
+      adminName = adminName || 'إبراهيم الدسوقي';
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 15:00';
+      target.status = 'approved_for_refund';
+      target.status_ar = 'معتمد للصرف (جاهز للتحويل)';
+      target.status_en = 'Approved for Refund';
+      target.last_updated = nowStr;
+      target.admin_approval = {
+        admin_name_ar: adminName,
+        admin_name_en: adminName,
+        approved_at: nowStr,
+        approval_ref: 'ADM-APPR-2026-' + Math.floor(100 + Math.random() * 900)
+      };
+      target.financials.remaining_to_refund = target.financials.approved_amount - (target.financials.actually_refunded || 0);
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: adminName,
+        actor_en: adminName,
+        role_ar: 'مدير الحسابات العام',
+        role_en: 'General Accounts Admin',
+        action_type: 'admin_approved',
+        title_ar: 'اعتماد الصرف المالي من الإدارة',
+        title_en: 'Admin Payout Authorization Signed',
+        desc_ar: 'صادق مدير الحسابات على أمر الصرف بمبلغ ' + target.financials.approved_amount.toLocaleString('en-US') + ' ج.م وأصبح جاهزاً للتحويل المالي المباشر أو المقسم',
+        desc_en: 'Admin signed payout authorization for ' + target.financials.approved_amount.toLocaleString('en-US') + ' EGP; ready for transfer execution'
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: adminName,
+        actor_en: adminName,
+        action_type: 'admin_approved',
+        status_badge: 'approved_for_refund',
+        title_ar: 'اعتماد الإدارة لأمر الصرف (' + target.id + ')',
+        title_en: 'Admin Authorized Payout (' + target.id + ')',
+        desc_ar: 'تم اعتماد صرف ' + target.financials.approved_amount.toLocaleString('en-US') + ' ج.م وأصبح جاهزاً للتحويل',
+        desc_en: 'Payout of ' + target.financials.approved_amount.toLocaleString('en-US') + ' EGP authorized for execution'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    adminReturnRefund: function (id, returnReason, adminName) {
+      adminName = adminName || 'إبراهيم الدسوقي';
+      if (!returnReason || !returnReason.trim()) {
+        return { success: false, error: 'Mandatory return reason is required' };
+      }
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 15:10';
+      target.status = 'returned_for_review';
+      target.status_ar = 'مُعاد للمراجعة من الإدارة';
+      target.status_en = 'Returned for Review';
+      target.last_updated = nowStr;
+      target.admin_return = {
+        admin_name_ar: adminName,
+        admin_name_en: adminName,
+        returned_at: nowStr,
+        reason_ar: returnReason,
+        reason_en: returnReason
+      };
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: adminName,
+        actor_en: adminName,
+        role_ar: 'مدير الحسابات العام',
+        role_en: 'General Accounts Admin',
+        action_type: 'admin_returned',
+        title_ar: 'إعادة الطلب لموظف الحسابات مع سبب إلزامي',
+        title_en: 'Request Returned to Accounts with Mandatory Justification',
+        desc_ar: 'أعاد مدير الحسابات الطلب للمراجعة. السبب: ' + returnReason,
+        desc_en: 'Admin returned request for review. Reason: ' + returnReason
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: adminName,
+        actor_en: adminName,
+        action_type: 'admin_returned',
+        status_badge: 'returned_for_review',
+        title_ar: 'إعادة طلب الاسترداد للمراجعة (' + target.id + ')',
+        title_en: 'Refund Request Returned (' + target.id + ')',
+        desc_ar: 'أعاد الأدمن الطلب: ' + returnReason,
+        desc_en: 'Returned by Admin: ' + returnReason
+      });
+
+      return { success: true, refund: target };
+    },
+
+    recordRefundTransfer: function (id, transferData, employeeName) {
+      employeeName = employeeName || 'أحمد صبري';
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      if (target.status !== 'approved_for_refund' && target.status !== 'partially_refunded' && target.status !== 'refund_processing') {
+        return { success: false, error: 'Transfer execution is not allowed before Admin approval (current status: ' + target.status_ar + ')' };
+      }
+
+      const amount = Number(transferData.amount);
+      const remainingBefore = target.financials.remaining_to_refund;
+      if (amount <= 0 || amount > remainingBefore) {
+        return { success: false, error: 'Transfer amount must be greater than 0 and cannot exceed remaining refundable amount (' + remainingBefore + ' EGP)' };
+      }
+
+      const nowStr = '2026-11-05 15:30';
+      const methodLabels = {
+        bank_transfer: { ar: 'تحويل بنكي', en: 'Bank Wire' },
+        instapay: { ar: 'إنستاباي (InstaPay)', en: 'InstaPay' },
+        vodafone_cash: { ar: 'فودافون كاش', en: 'Vodafone Cash' },
+        orange_cash: { ar: 'أورنج كاش', en: 'Orange Cash' },
+        etisalat_cash: { ar: 'اتصالات كاش', en: 'Etisalat Cash' },
+        we_pay: { ar: 'وي باي (WE Pay)', en: 'WE Pay' }
+      };
+      const mKey = transferData.method || 'bank_transfer';
+      const mObj = methodLabels[mKey] || { ar: 'تحويل مالي', en: 'Electronic Transfer' };
+
+      const newTransfer = {
+        id: 'TRF-00' + (target.transfers.length + 1),
+        transfer_ref: transferData.transfer_ref || ('MQT-TRF-' + Math.floor(100000 + Math.random() * 900000)),
+        amount: amount,
+        date: nowStr,
+        method: mKey,
+        method_ar: mObj.ar,
+        method_en: mObj.en,
+        recipient_name: transferData.recipient_name || target.customer_name_ar,
+        recipient_details: transferData.recipient_details || (target.customer_phone + ' / حساب بنكي'),
+        receipt_file: transferData.receipt_file || 'receipt_transfer_' + Date.now() + '.pdf',
+        employee: employeeName,
+        notes_ar: transferData.notes_ar || 'تم تنفيذ التحويل من حساب ميقات المعتمد',
+        notes_en: transferData.notes_en || 'Dispatched from Miqat master clearing account',
+        status: 'transferred',
+        customer_confirmed: false,
+        customer_confirmed_at: null
+      };
+
+      target.transfers.push(newTransfer);
+      target.financials.actually_refunded = (target.financials.actually_refunded || 0) + amount;
+      target.financials.remaining_to_refund = target.financials.approved_amount - target.financials.actually_refunded;
+      target.last_updated = nowStr;
+
+      // Update stage 1 confirmation
+      target.customer_confirmation.miqat_confirmed_at = nowStr;
+      target.customer_confirmation.miqat_confirmed_by = employeeName;
+
+      // Check remaining
+      if (target.financials.remaining_to_refund === 0) {
+        target.status = 'awaiting_customer_confirmation';
+        target.status_ar = 'بانتظار تأكيد استلام العميل (المرحلة الثانية)';
+        target.status_en = 'Awaiting Customer Confirmation';
+      } else {
+        target.status = 'partially_refunded';
+        target.status_ar = 'مسترد جزئياً (بانتظار باقي التحويل)';
+        target.status_en = 'Partially Refunded';
+      }
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        role_ar: 'موظف الحسابات المالية',
+        role_en: 'Accounts Officer',
+        action_type: 'transfer_recorded',
+        title_ar: 'قيد تنفيذ تحويل مالي (' + amount.toLocaleString('en-US') + ' ج.م) عبر ' + mObj.ar,
+        title_en: 'Transfer Recorded (' + amount.toLocaleString('en-US') + ' EGP) via ' + mObj.en,
+        desc_ar: 'تم تسجيل التحويل برقم مرجعي ' + newTransfer.transfer_ref + '. المتبقي للصرف: ' + target.financials.remaining_to_refund.toLocaleString('en-US') + ' ج.م',
+        desc_en: 'Recorded transfer with ref ' + newTransfer.transfer_ref + '. Remaining: ' + target.financials.remaining_to_refund.toLocaleString('en-US') + ' EGP'
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        action_type: 'transfer_recorded',
+        status_badge: target.status,
+        title_ar: 'تسجيل تحويل استرداد (' + target.id + ')',
+        title_en: 'Refund Transfer Executed (' + target.id + ')',
+        desc_ar: 'تم تحويل ' + amount.toLocaleString('en-US') + ' ج.م عبر ' + mObj.ar,
+        desc_en: 'Dispatched ' + amount.toLocaleString('en-US') + ' EGP via ' + mObj.en
+      });
+
+      return { success: true, refund: target, transfer: newTransfer };
+    },
+
+    confirmCustomerRefundReceipt: function (id, confirmationData, actorName) {
+      actorName = actorName || 'أحمد صبري';
+      confirmationData = confirmationData || {};
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      if (target.financials.remaining_to_refund > 0) {
+        return { success: false, error: 'Cannot confirm completion while remaining amount is unrefunded (' + target.financials.remaining_to_refund + ' EGP)' };
+      }
+
+      const nowStr = '2026-11-05 16:00';
+      target.status = 'refund_completed';
+      target.status_ar = 'استرداد وتسوية مكتملة ومؤكدة';
+      target.status_en = 'Refund Completed';
+      target.last_updated = nowStr;
+
+      target.customer_confirmation.is_confirmed = true;
+      target.customer_confirmation.confirmed_at = nowStr;
+      target.customer_confirmation.channel = confirmationData.channel || 'miqat_app';
+      target.customer_confirmation.customer_notes_ar = confirmationData.notes_ar || 'تم تأكيد الاستلام بنجاح من قبل العميل.';
+      target.customer_confirmation.customer_notes_en = confirmationData.notes_en || 'Customer acknowledged full receipt.';
+
+      // Mark all transfers confirmed
+      for (let t = 0; t < target.transfers.length; t++) {
+        target.transfers[t].customer_confirmed = true;
+        target.transfers[t].customer_confirmed_at = nowStr;
+        target.transfers[t].status = 'completed';
+      }
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        role_ar: 'موظف الحسابات / العميل',
+        role_en: 'Accounts Officer / Customer',
+        action_type: 'customer_confirmed',
+        title_ar: 'تأكيد استلام العميل واكتمال التسوية (المرحلة الثانية)',
+        title_en: 'Customer Receipt Confirmed & Full Settlement Closed (Stage 2)',
+        desc_ar: 'تم استيفاء شرطي التأكيد الثنائي (تأكيد تحويل ميقات + تأكيد استلام العميل)، واكتمال التسوية المالية وإغلاق الطلب',
+        desc_en: 'Both two-stage confirmation conditions fulfilled (Miqat transfer + customer receipt); request closed and settled'
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        action_type: 'customer_confirmed',
+        status_badge: 'refund_completed',
+        title_ar: 'اكتمال الاسترداد والتسوية (' + target.id + ')',
+        title_en: 'Refund Fully Completed & Settled (' + target.id + ')',
+        desc_ar: 'تم تأكيد استلام العميل وإغلاق الطلب ' + target.id + ' بنجاح',
+        desc_en: 'Customer confirmed receipt; request ' + target.id + ' closed successfully'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    openRefundDispute: function (id, disputeData, actorName) {
+      actorName = actorName || 'أحمد صبري';
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 16:15';
+      target.status = 'refund_dispute';
+      target.status_ar = 'نزاع مالي مفتوح (موقوف لحين التسوية)';
+      target.status_en = 'Refund Dispute';
+      target.last_updated = nowStr;
+
+      target.dispute = {
+        is_disputed: true,
+        opened_at: nowStr,
+        dispute_id: 'DSP-2026-' + Math.floor(100 + Math.random() * 900),
+        dispute_reason_ar: disputeData.reason_ar || 'فتح نزاع لعدم تطابق المبلغ المستلم في حساب العميل',
+        dispute_reason_en: disputeData.reason_en || 'Customer opened dispute regarding receipt mismatch',
+        claimed_difference: Number(disputeData.claimed_difference) || 0,
+        status: 'open',
+        investigation_notes: [
+          {
+            id: 'DISP-NOTE-' + Date.now(),
+            author_ar: actorName,
+            author_en: actorName,
+            date: nowStr,
+            text: disputeData.notes || 'تم فتح ملف النزاع المالي والتحفظ على إغلاق الطلب لحين استكمال التحقيق ومراجعة البنك.'
+          }
+        ]
+      };
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        role_ar: 'مسؤول النزاعات والشكاوى',
+        role_en: 'Disputes & Complaints Officer',
+        action_type: 'dispute_opened',
+        title_ar: 'فتح نزاع مالي وإيقاف إغلاق الطلب',
+        title_en: 'Financial Dispute Opened & Closure Locked',
+        desc_ar: 'تم فتح نزاع مالي برقم ' + target.dispute.dispute_id + '. السبب: ' + target.dispute.dispute_reason_ar,
+        desc_en: 'Dispute ' + target.dispute.dispute_id + ' opened. Reason: ' + target.dispute.dispute_reason_en
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        action_type: 'dispute_opened',
+        status_badge: 'refund_dispute',
+        title_ar: 'فتح نزاع مالي (' + target.id + ')',
+        title_en: 'Refund Dispute Opened (' + target.id + ')',
+        desc_ar: 'تم فتح نزاع مالي برقم ' + target.dispute.dispute_id,
+        desc_en: 'Dispute ' + target.dispute.dispute_id + ' registered'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    resolveRefundDispute: function (id, resolutionData, actorName) {
+      actorName = actorName || 'أحمد صبري';
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target || !target.dispute) return { success: false, error: 'Dispute not found' };
+
+      const nowStr = '2026-11-05 16:30';
+      target.dispute.status = 'resolved';
+      target.dispute.resolved_at = nowStr;
+      target.dispute.resolution_ar = resolutionData.notes_ar || 'تمت التسوية البنكية والتأكد من استلام العميل لكامل المستحقات.';
+      target.dispute.resolution_en = resolutionData.notes_en || 'Settled with clearing bank and confirmed full receipt.';
+
+      if (target.financials.remaining_to_refund === 0) {
+        target.status = 'refund_completed';
+        target.status_ar = 'استرداد وتسوية مكتملة ومؤكدة';
+        target.status_en = 'Refund Completed';
+        target.customer_confirmation.is_confirmed = true;
+        target.customer_confirmation.confirmed_at = nowStr;
+      } else {
+        target.status = 'partially_refunded';
+        target.status_ar = 'مسترد جزئياً (بانتظار باقي التحويل)';
+        target.status_en = 'Partially Refunded';
+      }
+
+      const logEntry = {
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        role_ar: 'مسؤول النزاعات والشكاوى',
+        role_en: 'Disputes & Complaints Officer',
+        action_type: 'dispute_resolved',
+        title_ar: 'تسوية النزاع المالي وإغلاق الشكوى',
+        title_en: 'Financial Dispute Resolved & Closed',
+        desc_ar: 'تم حل النزاع بنجاح وتوثيق نتيجة التحقيق: ' + target.dispute.resolution_ar,
+        desc_en: 'Dispute resolved successfully: ' + target.dispute.resolution_en
+      };
+      target.activity_log.unshift(logEntry);
+
+      this.REFUND_ACTIVITIES_MASTER.unshift({
+        id: 'ACT-REF-' + Date.now(),
+        refund_id: target.id,
+        timestamp: nowStr,
+        actor_ar: actorName,
+        actor_en: actorName,
+        action_type: 'dispute_resolved',
+        status_badge: target.status,
+        title_ar: 'تسوية النزاع المالي (' + target.id + ')',
+        title_en: 'Dispute Resolved (' + target.id + ')',
+        desc_ar: 'تم إنهاء النزاع المالي للطلب ' + target.id + ' واستكمال التسوية',
+        desc_en: 'Dispute resolved and settlement updated'
+      });
+
+      return { success: true, refund: target };
+    },
+
+    addRefundInternalNote: function (id, noteText, authorName) {
+      authorName = authorName || 'أحمد صبري';
+      if (!noteText || !noteText.trim()) return { success: false, error: 'Note text cannot be empty' };
+
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 16:45';
+      const newNote = {
+        id: 'NOTE-REF-' + Date.now(),
+        author_ar: authorName,
+        author_en: authorName,
+        date: nowStr,
+        text: noteText.trim()
+      };
+      target.internal_notes.push(newNote);
+
+      target.activity_log.unshift({
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: authorName,
+        actor_en: authorName,
+        role_ar: 'موظف حسابات',
+        role_en: 'Accounts Officer',
+        action_type: 'note_added',
+        title_ar: 'إضافة ملاحظة إدارية داخلية',
+        title_en: 'Internal Note Added',
+        desc_ar: noteText.trim(),
+        desc_en: noteText.trim()
+      });
+
+      return { success: true, note: newNote };
+    },
+
+    scheduleRefundReminder: function (id, reminderConfig, employeeName) {
+      employeeName = employeeName || 'أحمد صبري';
+      reminderConfig = reminderConfig || {};
+      const all = this.REFUND_REQUESTS_MASTER || [];
+      let target = null;
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].id.toUpperCase() === String(id).toUpperCase()) {
+          target = all[i];
+          break;
+        }
+      }
+      if (!target) return { success: false, error: 'Refund request not found' };
+
+      const nowStr = '2026-11-05 17:00';
+      const intervalHours = Number(reminderConfig.interval_hours) || 24;
+      target.automated_reminders = {
+        is_active: true,
+        interval_hours: intervalHours,
+        reminders_sent_count: (target.automated_reminders ? target.automated_reminders.reminders_sent_count : 0) + 1,
+        last_sent: nowStr,
+        next_reminder: '2026-11-06 17:00',
+        employee_alert_triggered: false
+      };
+
+      target.activity_log.unshift({
+        id: 'LOG-REF-' + Date.now(),
+        timestamp: nowStr,
+        actor_ar: employeeName,
+        actor_en: employeeName,
+        role_ar: 'موظف الحسابات المالية',
+        role_en: 'Accounts Officer',
+        action_type: 'reminder_scheduled',
+        title_ar: 'جدولة تذكير آلي للعميل عبر الرسائل القصيرة والتطبيق',
+        title_en: 'Automated Customer Reminder Scheduled',
+        desc_ar: 'تم ضبط التذكير الآلي كل ' + intervalHours + ' ساعة لتأكيد استلام الحوالة',
+        desc_en: 'Automated reminder set every ' + intervalHours + ' hours for receipt acknowledgement'
+      });
+
+      return { success: true, refund: target };
+    },
+
+
+
   };
 });

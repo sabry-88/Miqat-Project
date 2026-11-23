@@ -26518,6 +26518,11 @@ html[lang="en"] .acc-btn {
     max-width: 85vw;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: none !important;
+  }
+
+  .acc-sidebar.is-open {
+    display: flex !important;
   }
 
   [dir="rtl"] .acc-sidebar {
@@ -34073,3 +34078,1409 @@ html[dir="ltr"] .acc-timeline-marker {
   border-inline-start: 4px solid var(--color-accent) !important;
 }
 
+
+
+/* ==========================================================================
+   Page 8: Refund Requests Management & Details
+   Scoped Styles, Accessible Components, Two-Stage Workflows & Dual Theming
+   ========================================================================== */
+
+/* Layout & Page Body Scoping */
+.accounts-refunds-page,
+.accounts-refund-details-page {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: clip;
+}
+
+.accounts-refunds-page .acc-layout-wrapper,
+.accounts-refund-details-page .acc-layout-wrapper {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-refunds-page .acc-main-content,
+.accounts-refund-details-page .acc-main-content {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-refunds-page .acc-content-container,
+.accounts-refund-details-page .acc-content-container {
+  width: 100%;
+  max-width: var(--container-max, 1320px);
+  min-width: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Page Header & Actions Responsive Flex */
+.accounts-refunds-page .acc-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+}
+
+.accounts-refunds-page .acc-page-title-wrap {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.accounts-refunds-page .acc-page-header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+/* Card Surface Standard */
+.accounts-refunds-page .acc-card,
+.accounts-refund-details-page .acc-card,
+.ref-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  color: var(--color-text);
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-bottom: 20px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.ref-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.ref-card-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 0;
+  margin-bottom: 16px;
+  line-height: 1.45;
+}
+
+.ref-card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-width: 0;
+  width: 100%;
+}
+
+/* 1. Summary KPI Grid (6-Indicators) */
+.ref-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 1600px) {
+  .ref-kpi-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.ref-detail-kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  min-width: 0;
+  width: 100%;
+}
+
+.ref-kpi-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ref-kpi-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.ref-kpi-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  flex-shrink: 0;
+}
+
+.ref-kpi-card.is-warning .ref-kpi-icon-wrap {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+}
+
+.ref-kpi-card.is-accent .ref-kpi-icon-wrap {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent);
+}
+
+.ref-kpi-card.is-success .ref-kpi-icon-wrap {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+}
+
+.ref-kpi-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ref-kpi-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.ref-kpi-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  display: block;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  white-space: nowrap;
+}
+
+.ref-kpi-sub {
+  font-size: 0.70rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 2. Recent Operational Activity Section */
+.ref-activity-card {
+  padding: 18px 20px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ref-activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+  width: 100%;
+}
+
+.ref-activity-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.ref-section-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ref-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.ref-section-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 0 0;
+}
+
+.ref-activity-badge-count {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.ref-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ref-activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  transition: all 0.15s ease;
+  gap: 12px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ref-activity-item:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.ref-activity-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ref-activity-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.ref-activity-info {
+  min-width: 0;
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.ref-activity-title-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ref-activity-desc-text {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ref-activity-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.ref-activity-time {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.ref-activity-link {
+  height: 30px;
+  font-size: 0.74rem;
+  padding: 0 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 3. Register Toolbar & Filters */
+.ref-toolbar-card {
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  background-color: var(--color-surface);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ref-toolbar-primary-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+}
+
+.ref-search-wrap {
+  flex: 1 1 220px;
+  min-width: min(100%, 220px);
+  position: relative;
+}
+
+.ref-search-icon {
+  position: absolute;
+  inset-inline-start: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.ref-search-input {
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  padding-inline-start: 36px;
+  padding-inline-end: 12px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.ref-search-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(197, 161, 94, 0.2);
+}
+
+.ref-filter-select-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ref-filter-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.ref-select {
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  padding: 0 10px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  min-width: 130px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.ref-select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.ref-advanced-panel {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+.ref-advanced-grid {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* 4. Table Architecture */
+.accounts-refunds-page .ref-register-section {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.ref-table-card,
+.accounts-refunds-page .acc-table-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.ref-table-responsive,
+.accounts-refunds-page .acc-table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+.ref-table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+  text-align: start;
+  font-size: 0.82rem;
+}
+
+.ref-table th {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.ref-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text);
+  vertical-align: middle;
+}
+
+.ref-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.ref-col-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ref-col-actions {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ref-table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ref-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ref-page-number {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* 5. Status Badges & Pills (Strict Zero Red / Zero Green) */
+.ref-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ref-status-pill.status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.ref-status-pill.status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border: 1px solid rgba(197, 161, 94, 0.4);
+}
+
+.ref-status-pill.status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
+}
+
+.ref-status-pill.status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* 6. Sticky Header in Details Page */
+.ref-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.ref-sticky-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.ref-sticky-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ref-sticky-id {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  font-family: var(--font-mono, monospace);
+  padding-inline-end: 10px;
+  border-inline-end: 2px solid var(--color-border);
+}
+
+.ref-sticky-meta-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.ref-sticky-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 7. Tabs in Details Page */
+.ref-details-tabs-wrap {
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+.ref-details-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.ref-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.ref-tab-btn:hover {
+  color: var(--color-primary);
+}
+
+.ref-tab-btn.is-active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.ref-tab-badge {
+  font-size: 0.70rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+/* 8. Stepper Layout */
+.ref-stepper-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 20px 0 10px 0;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  gap: 4px;
+}
+
+.ref-stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+  position: relative;
+}
+
+.ref-stepper-step::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  inset-inline-start: -50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-border);
+  z-index: 1;
+}
+
+.ref-stepper-step:first-child::before {
+  display: none;
+}
+
+.ref-stepper-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  z-index: 2;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: all 0.15s ease;
+}
+
+.ref-stepper-label {
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  line-height: 1.3;
+  max-width: 95px;
+}
+
+.ref-stepper-step.is-done .ref-stepper-circle {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.ref-stepper-step.is-done::before {
+  background-color: var(--color-primary);
+}
+
+.ref-stepper-step.is-current .ref-stepper-circle {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #183653;
+  box-shadow: 0 0 0 3px rgba(197, 161, 94, 0.25);
+}
+
+.ref-stepper-step.is-current .ref-stepper-label {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* 9. Formula & Alert Box */
+.ref-rule-alert-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: var(--color-surface-secondary);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.ref-rule-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ref-rule-formula {
+  margin: 6px 0;
+}
+
+.ref-formula-code {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  display: inline-block;
+}
+
+.ref-rule-desc {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+  line-height: 1.45;
+}
+
+/* 10. Action Highlight Box */
+.ref-action-highlight-box {
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-surface);
+  padding: 16px 20px;
+}
+
+.ref-action-box-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.ref-action-box-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.ref-action-box-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+.ref-action-box-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* 11. Two-Column Grid & Details */
+.ref-two-col-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.ref-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ref-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ref-detail-label {
+  color: var(--color-text-muted);
+}
+
+.ref-detail-val {
+  color: var(--color-text);
+  text-align: end;
+}
+
+.ref-sub-heading {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.ref-mono {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.80rem;
+}
+
+.ref-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* 12. Attachments Grid */
+.ref-attachments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.ref-attachment-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+}
+
+.ref-attachment-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.ref-attachment-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ref-attachment-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.ref-attachment-meta {
+  font-size: 0.70rem;
+  color: var(--color-text-muted);
+}
+
+/* 13. Financial Ledger Table */
+.ref-fin-ledger-table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+}
+
+.ref-ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.ref-ledger-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ref-ledger-highlight-row {
+  background-color: var(--color-surface-secondary);
+}
+
+.ref-ledger-highlight-row td {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.ref-ledger-remaining-row {
+  background-color: var(--color-surface-secondary);
+  border-top: 2px solid var(--color-border);
+}
+
+.ref-ledger-remaining-row td {
+  font-weight: 800;
+  color: var(--color-accent);
+  font-size: 0.90rem;
+}
+
+/* 14. Operations Progress & Two-Stage Confirmation */
+.ref-ops-progress-wrap {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 14px 16px;
+}
+
+.ref-ops-metrics-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.80rem;
+  color: var(--color-text);
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ref-progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ref-progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.ref-twostage-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.ref-stage-box {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 12px 14px;
+}
+
+.ref-stage-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ref-stage-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ref-stage-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.ref-stage-desc {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 0 0;
+}
+
+.ref-stage-status {
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: 0.78rem;
+}
+
+/* 15. Audit Trail & Timeline */
+.ref-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 16px 0;
+  padding-inline-start: 20px;
+}
+
+.ref-timeline::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  inset-inline-start: 6px;
+  width: 2px;
+  background-color: var(--color-border);
+}
+
+.ref-timeline-item {
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.ref-timeline-marker {
+  position: absolute;
+  inset-inline-start: -20px;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-primary);
+}
+
+.ref-timeline-content {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 10px 14px;
+}
+
+.ref-timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 0.76rem;
+}
+
+.ref-timeline-actor {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.ref-timeline-time {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ref-timeline-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 2px 0;
+}
+
+.ref-timeline-desc {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 16. Modals Form Grid */
+.ref-modal-large {
+  max-width: 600px;
+}
+
+.ref-modal-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.ref-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ref-full-col {
+  grid-column: 1 / -1;
+}
+
+.ref-form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ref-form-input,
+.ref-form-select {
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  padding: 0 10px;
+  font-size: 0.82rem;
+  font-family: inherit;
+}
+
+.ref-form-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.ref-modal-desc {
+  font-size: 0.80rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Page 8: Dark Mode Theme Adaptations
+   ========================================================================== */
+[data-theme="dark"] .ref-card,
+[data-theme="dark"] .ref-kpi-card,
+[data-theme="dark"] .ref-table-card,
+[data-theme="dark"] .ref-toolbar-card,
+[data-theme="dark"] .ref-sticky-header {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .ref-activity-item,
+[data-theme="dark"] .ref-attachment-card,
+[data-theme="dark"] .ref-stage-box,
+[data-theme="dark"] .ref-timeline-content,
+[data-theme="dark"] .ref-rule-alert-box,
+[data-theme="dark"] .ref-ops-progress-wrap,
+[data-theme="dark"] .ref-activity-badge-count {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .ref-activity-item:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-table th {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="dark"] .ref-table td {
+  color: var(--color-text);
+  border-bottom-color: var(--color-border-subtle);
+}
+
+[data-theme="dark"] .ref-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .ref-tab-btn.is-active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-sticky-id {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-ledger-highlight-row {
+  background-color: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .ref-ledger-highlight-row td {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .ref-ledger-remaining-row {
+  background-color: var(--color-surface-tertiary);
+}
+
+[data-theme="dark"] .ref-ledger-remaining-row td {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-formula-code {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-stepper-step.is-done .ref-stepper-circle {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .ref-stepper-step.is-current .ref-stepper-label {
+  color: var(--color-accent);
+}
+
+[data-theme="dark"] .ref-stepper-step.is-done::before {
+  background-color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Page 8: Responsive Layout Adaptations (1024px, 768px, 480px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .ref-kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .ref-toolbar-primary-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ref-filter-select-wrap {
+    width: 100%;
+  }
+  .ref-select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .ref-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ref-sticky-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ref-sticky-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .ref-two-col-grid {
+    grid-template-columns: 1fr;
+  }
+  .ref-activity-item {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .ref-activity-left {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ref-activity-info {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ref-activity-desc-text {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .ref-activity-right {
+    width: 100%;
+    max-width: 100%;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .accounts-refunds-page .acc-page-header-actions {
+    width: 100%;
+  }
+  .accounts-refunds-page .acc-page-header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ref-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .ref-stepper-container {
+    justify-content: flex-start;
+  }
+  .ref-stepper-step {
+    flex: none;
+    width: 80px;
+  }
+}
+
+/* Dark Mode High-Contrast Refinements for Refunds Workspace Buttons */
+[data-theme="dark"] .accounts-refunds-page .btn-secondary,
+[data-theme="dark"] .accounts-refund-details-page .btn-secondary,
+[data-theme="dark"] .ref-sticky-header .btn-secondary,
+[data-theme="dark"] .ref-table .btn-secondary,
+[data-theme="dark"] #tbody-transfers-history .btn-secondary {
+  background-color: var(--color-surface-secondary) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+[data-theme="dark"] .accounts-refunds-page .btn-secondary:hover,
+[data-theme="dark"] .accounts-refund-details-page .btn-secondary:hover,
+[data-theme="dark"] .ref-sticky-header .btn-secondary:hover,
+[data-theme="dark"] .ref-table .btn-secondary:hover,
+[data-theme="dark"] #tbody-transfers-history .btn-secondary:hover {
+  background-color: var(--color-surface-tertiary) !important;
+  color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}

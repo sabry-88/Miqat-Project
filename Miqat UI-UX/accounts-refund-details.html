@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="accounts_workspace.ref_details_title">تفاصيل طلب الاسترداد المالي | منصة ميقات</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Master Application Styles -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page accounts-refund-details-page">
+  
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="accounts_workspace.skip_to_content">التخطي إلى المحتوى الرئيسي</a>
+
+  <!-- Top Global Header (Strictly Reused from Workspace Architecture) -->
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      
+      <!-- Brand & Mobile Toggle Area -->
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="فتح قائمة التنقل الجانبية" aria-expanded="false" data-i18n-aria="accounts_workspace.btn_open_menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="accounts-dashboard.html" class="acc-brand-link" aria-label="منصة ميقات للحسابات المالية">
+          <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="accounts_workspace.portal_brand">منصة ميقات للحسابات المالية</span>
+          </div>
+        </a>
+
+        <!-- Prominent Demo Data Badge -->
+        <div class="acc-demo-pill" role="status" aria-label="بيئة تجريبية توضيحية">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span data-i18n="accounts_workspace.demo_badge">بيانات توضيحية تجريبية</span>
+        </div>
+      </div>
+
+      <!-- Header Controls: Lang, Theme, Employee Card, Safe Logout -->
+      <div class="acc-header-actions acc-header-controls">
+        <!-- Language Switcher Button (Shows EN / AR) -->
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="acc-lang-switcher" aria-label="Switch to English" title="Switch Language">
+          <span class="lang-btn-text acc-lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="acc-theme-toggle" aria-label="Switch Theme" title="Toggle Light / Dark Mode">
+          <svg class="icon-moon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Employee Identity Card with Interactive Hover State -->
+        <div class="acc-employee-card" id="acc-employee-card" role="button" tabindex="0" aria-label="بيانات الموظف ومسؤول الحسابات" title="ملف موظف الحسابات | Accounts Officer Profile">
+          <div class="acc-employee-avatar" id="acc-employee-avatar">أ</div>
+          <div class="acc-employee-info acc-employee-details">
+            <span class="acc-employee-name" id="acc-employee-name" data-i18n="accounts_workspace.employee_name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" id="acc-employee-role" data-i18n="accounts_workspace.employee_role_badge">موظف حسابات مالية</span>
+          </div>
+        </div>
+
+        <!-- Safe Logout Button with Protective Confirmation Dialog -->
+        <button type="button" class="acc-logout-btn" id="acc-logout-btn" aria-label="تسجيل الخروج الآمن" data-i18n-aria="accounts_workspace.btn_logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="acc-logout-btn-text" data-i18n="accounts_workspace.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Layout Wrapper with Direction-Aware Sidebar -->
+  <div class="acc-layout-wrapper">
+    
+    <!-- Sidebar Drawer Backdrop (Mobile only) -->
+    <div class="acc-sidebar-backdrop acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <!-- 11-Item Shared Employee Sidebar -->
+    <aside class="acc-sidebar" id="acc-sidebar" role="navigation" aria-label="قائمة التنقل المحاسبية">
+      
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="accounts_workspace.nav_workspace_title">أقسام الحسابات المالية</span>
+        <button type="button" class="acc-drawer-close-btn acc-sidebar-close-btn" id="acc-drawer-close-btn" aria-label="إغلاق القائمة" data-i18n-aria="accounts_workspace.btn_close_menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="acc-sidebar-nav acc-nav-list" role="navigation">
+        <!-- 1. Dashboard -->
+        <a href="accounts-dashboard.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"></rect>
+              <rect x="14" y="3" width="7" height="5"></rect>
+              <rect x="14" y="12" width="7" height="9"></rect>
+              <rect x="3" y="16" width="7" height="5"></rect>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_dashboard">لوحة التحكم المالية</span>
+        </a>
+
+        <!-- 2. Customers Directory -->
+        <a href="accounts-customers.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 010 7.75"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customers">دليل العملاء والمعتمرين</span>
+        </a>
+
+        <!-- 3. Customer Profile -->
+        <a href="accounts-customer-details.html" class="acc-nav-item" id="acc-nav-customer-profile">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customer_profile">ملف العميل</span>
+        </a>
+
+        <!-- 4. Unified Bookings Register -->
+        <a href="accounts-bookings.html" class="acc-nav-item" id="acc-nav-bookings">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_bookings">سجل الحجوزات الموحد</span>
+        </a>
+
+        <!-- 5. Program & Itinerary Modifications -->
+        <a href="accounts-trip-changes.html" class="acc-nav-item" id="acc-nav-trip-changes">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_trip_changes">تعديلات البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Cancellations & Settlements Register -->
+        <a href="accounts-cancellations.html" class="acc-nav-item" id="acc-nav-cancellations">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_cancellations">سجل الإلغاءات والتسوية</span>
+        </a>
+
+        <!-- 7. Collections & Cash Deposits -->
+        <a href="accounts-collections.html" class="acc-nav-item" id="acc-nav-collections">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_collections">التحصيلات والإيداعات النقدية</span>
+        </a>
+
+        <!-- 8. ACTIVE: Refund Requests Management -->
+        <a href="accounts-refunds.html" class="acc-nav-item active is-active" id="acc-nav-refunds" aria-current="page">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_refunds">إدارة طلبات الاسترداد</span>
+        </a>
+
+        <!-- 9. Reports & Backups -->
+        <a href="#reports" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_reports">التقارير اليومية والنسخ الاحتياطي</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 10. Notifications -->
+        <a href="#notifications" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_notifications">الإشعارات والتنبيهات المالية</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 11. Profile -->
+        <a href="#profile" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_profile">الملف الشخصي والإعدادات</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="acc-main-content" id="main-content" role="main">
+      <div class="acc-content-container">
+        
+        <!-- Sticky Summary Header -->
+        <header class="ref-sticky-header" aria-label="ملخص بيانات طلب الاسترداد المالي">
+          <div class="ref-sticky-inner">
+            <div class="ref-sticky-left">
+              <a href="accounts-refunds.html" class="btn btn-secondary btn-sm" id="ref-btn-back" title="العودة لسجل طلبات الاسترداد">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span data-i18n="accounts_workspace.ref_btn_back_to_register">العودة للسجل</span>
+              </a>
+
+              <div class="ref-sticky-id" id="sticky-ref-id">REF-2026-001</div>
+
+              <div class="ref-sticky-meta-wrap">
+                <span class="ref-sticky-meta-item">
+                  <span data-i18n="accounts_workspace.ref_sticky_customer">العميل:</span>
+                  <strong id="sticky-customer-name">—</strong>
+                </span>
+                <span class="ref-sticky-meta-item">
+                  <span data-i18n="accounts_workspace.ref_sticky_booking">الحجز:</span>
+                  <strong id="sticky-booking-id" class="ref-mono">—</strong>
+                </span>
+                <span class="ref-sticky-meta-item">
+                  <span data-i18n="accounts_workspace.ref_sticky_company">الشركة:</span>
+                  <strong id="sticky-company-name">—</strong>
+                </span>
+                <span class="ref-sticky-meta-item">
+                  <span data-i18n="accounts_workspace.ref_sticky_source">المصدر:</span>
+                  <span id="sticky-source-badge">—</span>
+                </span>
+                <span id="sticky-status-badge">—</span>
+                <span class="ref-sticky-meta-item">
+                  <span data-i18n="accounts_workspace.ref_sticky_date">تاريخ الطلب:</span>
+                  <span id="sticky-created-date" class="ref-tabular">—</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Contextual Operational Action Buttons -->
+            <div class="ref-sticky-actions" id="ref-sticky-action-buttons">
+              <!-- Dynamically populated based on state and role -->
+            </div>
+          </div>
+        </header>
+
+        <!-- 6-Tabs Navigation -->
+        <div class="ref-details-tabs-wrap">
+          <nav class="ref-details-tabs" role="tablist" aria-label="أقسام تفاصيل طلب الاسترداد">
+            <button type="button" class="ref-tab-btn is-active" id="tab-btn-overview" role="tab" aria-selected="true" data-tab="overview">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="9"></rect>
+                <rect x="14" y="3" width="7" height="5"></rect>
+                <rect x="14" y="12" width="7" height="9"></rect>
+                <rect x="3" y="16" width="7" height="5"></rect>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_overview">نظرة عامة</span>
+            </button>
+
+            <button type="button" class="ref-tab-btn" id="tab-btn-booking" role="tab" aria-selected="false" data-tab="booking">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_booking">بيانات الحجز والعميل</span>
+            </button>
+
+            <button type="button" class="ref-tab-btn" id="tab-btn-cancellation" role="tab" aria-selected="false" data-tab="cancellation">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_cancellation">تفاصيل الإلغاء والمرفقات</span>
+              <span class="ref-tab-badge" id="badge-tab-attachments">2</span>
+            </button>
+
+            <button type="button" class="ref-tab-btn" id="tab-btn-financial" role="tab" aria-selected="false" data-tab="financial">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_financial">الملخص المالي والاحتساب</span>
+            </button>
+
+            <button type="button" class="ref-tab-btn" id="tab-btn-refund-ops" role="tab" aria-selected="false" data-tab="refund-ops">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_refund_ops">عمليات الاسترداد والتحويل</span>
+              <span class="ref-tab-badge" id="badge-tab-transfers">0</span>
+            </button>
+
+            <button type="button" class="ref-tab-btn" id="tab-btn-activity" role="tab" aria-selected="false" data-tab="activity">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <span data-i18n="accounts_workspace.ref_tab_activity">سجل النشاطات غير القابل للتعديل</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- TAB 1: OVERVIEW -->
+        <section class="ref-tab-content is-active" id="section-tab-overview">
+          
+          <!-- Strict Financial Formula & Rule Warning Box -->
+          <div class="ref-rule-alert-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ref-rule-icon">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div class="ref-rule-content">
+              <strong class="ref-rule-title" data-i18n="accounts_workspace.ref_rule_formula_title">قاعدة الاحتساب المالي الصارمة:</strong>
+              <p class="ref-rule-formula">
+                <code class="ref-formula-code" data-i18n="accounts_workspace.ref_formula_text">الحد الأقصى القابل للاسترداد = إجمالي المدفوعات المحصلة المعتمدة دفترياً - الاستردادات السابقة المكتملة - رسوم الإلغاء</code>
+              </p>
+              <p class="ref-rule-desc" data-i18n="accounts_workspace.ref_rule_notice">تنبيه رقابي: لا يتم احتساب أي مبالغ معلقة أو مرفوضة أو غير مؤكدة بنكياً ضمن الرصيد القابل للاسترداد. لا يجوز تجاوز الحد المالي المسموح بأي حال من الأحوال.</p>
+            </div>
+          </div>
+
+          <!-- Financial Summary KPI Row (6 Indicators) -->
+          <div class="ref-kpi-grid ref-detail-kpi-grid">
+            <div class="ref-kpi-card">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_program_total">إجمالي قيمة البرنامج</span>
+              <span class="ref-kpi-value" id="det-kpi-prog-total">—</span>
+              <span class="ref-kpi-sub" data-i18n="accounts_workspace.ref_kpi_full_cost">القيمة الإجمالية للعقد</span>
+            </div>
+
+            <div class="ref-kpi-card is-success">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_eligible_paid">المدفوعات المعتمدة (المؤهلة)</span>
+              <span class="ref-kpi-value" id="det-kpi-eligible-paid">—</span>
+              <span class="ref-kpi-sub" data-i18n="accounts_workspace.ref_kpi_eligible_sub">المحصلة دفترياً فقط</span>
+            </div>
+
+            <div class="ref-kpi-card">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_policy_fee">رسوم سياسة الإلغاء</span>
+              <span class="ref-kpi-value" id="det-kpi-policy-fee">—</span>
+              <span class="ref-kpi-sub" data-i18n="accounts_workspace.ref_kpi_deduction_sub">مستقطعة لصالح الشركة/ميقات</span>
+            </div>
+
+            <div class="ref-kpi-card is-accent">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_max_limit">الحد الأقصى القابل للاسترداد</span>
+              <span class="ref-kpi-value" id="det-kpi-max-limit">—</span>
+              <span class="ref-kpi-sub" data-i18n="accounts_workspace.ref_kpi_limit_sub">الحد الأقصى القانوني للمطالبة</span>
+            </div>
+
+            <div class="ref-kpi-card">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_approved_amt">المعتمد للاسترداد</span>
+              <span class="ref-kpi-value" id="det-kpi-approved-amt">—</span>
+              <span class="ref-kpi-sub" id="det-kpi-approved-sub">معتمد إدارياً للصرف</span>
+            </div>
+
+            <div class="ref-kpi-card">
+              <span class="ref-kpi-title" data-i18n="accounts_workspace.ref_kpi_remaining_transfer">المتبقي للتحويل المالي</span>
+              <span class="ref-kpi-value" id="det-kpi-remaining-transfer">—</span>
+              <span class="ref-kpi-sub" id="det-kpi-remaining-sub">بانتظار تنفيذ الحوالة</span>
+            </div>
+          </div>
+
+          <!-- 8-Stage Workflow Stepper Card -->
+          <div class="acc-card ref-card">
+            <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_stepper_heading">مراحل مسار اعتماد وتنفيذ الاسترداد المالي</h2>
+            <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_stepper_sub">تسلسل العمليات المعتمد من تقديم الطلب حتى تأكيد استلام العميل والتسوية النهائية</p>
+
+            <div class="ref-stepper-container" id="ref-stepper-container">
+              <!-- Dynamically populated 8-step sequence -->
+            </div>
+          </div>
+
+          <!-- Current Action Panel (Adaptive state-driven box) -->
+          <div class="acc-card ref-card ref-action-highlight-box" id="ref-current-action-box">
+            <!-- Dynamically populated based on state -->
+          </div>
+
+        </section>
+
+        <!-- TAB 2: BOOKING & CUSTOMER -->
+        <section class="ref-tab-content" id="section-tab-booking" style="display:none;">
+          <div class="ref-two-col-grid">
+            <!-- Customer Information Card -->
+            <div class="acc-card ref-card">
+              <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_customer_heading">بيانات العميل والمعتمر</h2>
+              <div class="ref-details-list">
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_cust_name">اسم العميل:</span>
+                  <strong class="ref-detail-val" id="det-cust-name">—</strong>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_cust_id">معرف العميل:</span>
+                  <span class="ref-detail-val ref-mono" id="det-cust-id">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_cust_phone">رقم الهاتف:</span>
+                  <span class="ref-detail-val ref-tabular" id="det-cust-phone">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_cust_email">البريد الإلكتروني:</span>
+                  <span class="ref-detail-val" id="det-cust-email">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_cust_national_id">الرقم القومي / جواز السفر:</span>
+                  <span class="ref-detail-val ref-tabular" id="det-cust-national-id">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Booking Information Card -->
+            <div class="acc-card ref-card">
+              <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_booking_heading">بيانات الحجز والرحلة</h2>
+              <div class="ref-details-list">
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_id">رقم الحجز:</span>
+                  <strong class="ref-detail-val ref-mono" id="det-bkg-id">—</strong>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_program">البرنامج المختار:</span>
+                  <span class="ref-detail-val" id="det-bkg-program">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_company">شركة السياحة الشريكة:</span>
+                  <strong class="ref-detail-val" id="det-bkg-company">—</strong>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_room">نوع الإقامة والغرفة:</span>
+                  <span class="ref-detail-val" id="det-bkg-room">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_travelers">عدد المسافرين:</span>
+                  <span class="ref-detail-val ref-tabular" id="det-bkg-travelers">—</span>
+                </div>
+                <div class="ref-detail-row">
+                  <span class="ref-detail-label" data-i18n="accounts_workspace.ref_bkg_dates">تاريخ الذهاب والعودة:</span>
+                  <span class="ref-detail-val ref-tabular" id="det-bkg-dates">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payments Audit Table Card -->
+          <div class="acc-card ref-card" style="margin-top: 20px;">
+            <div class="ref-card-header-flex">
+              <div>
+                <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_payments_audit_heading">سجل سداد الدفعات وتدقيق الأهلية المالية</h2>
+                <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_payments_audit_desc">فصل المدفوعات المعتمدة المؤهلة للاسترداد عن أي إيداعات معلقة أو غير مطابقة</p>
+              </div>
+              <span class="ref-status-pill status-pill-navy" id="badge-eligible-payments-summary">مؤهل للاسترداد</span>
+            </div>
+
+            <div class="acc-table-responsive ref-table-responsive" style="margin-top: 14px;">
+              <table class="acc-table ref-table" id="table-booking-payments" aria-label="جدول تدقيق مدفوعات الحجز">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_pay_id">رقم المعاملة</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_pay_date">تاريخ القيد</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_pay_method">طريقة السداد</th>
+                    <th scope="col" class="ref-col-num" data-i18n="accounts_workspace.ref_th_pay_amount">المبلغ</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_pay_status">حالة التدقيق</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_pay_eligibility">أهلية الاسترداد</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-booking-payments">
+                  <!-- Dynamically populated via accounts-refund-details.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: CANCELLATION DETAILS & ATTACHMENTS -->
+        <section class="ref-tab-content" id="section-tab-cancellation" style="display:none;">
+          <div class="acc-card ref-card">
+            <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_can_info_heading">تفاصيل طلب الإلغاء وسياسة الاسترداد</h2>
+            <div class="ref-details-list">
+              <div class="ref-detail-row">
+                <span class="ref-detail-label" data-i18n="accounts_workspace.ref_can_id">رقم طلب الإلغاء:</span>
+                <strong class="ref-detail-val ref-mono" id="det-can-id">—</strong>
+              </div>
+              <div class="ref-detail-row">
+                <span class="ref-detail-label" data-i18n="accounts_workspace.ref_can_date">تاريخ تقديم الإلغاء:</span>
+                <span class="ref-detail-val ref-tabular" id="det-can-date">—</span>
+              </div>
+              <div class="ref-detail-row">
+                <span class="ref-detail-label" data-i18n="accounts_workspace.ref_can_policy">السياسة المطبقة:</span>
+                <span class="ref-detail-val" id="det-can-policy">—</span>
+              </div>
+              <div class="ref-detail-row">
+                <span class="ref-detail-label" data-i18n="accounts_workspace.ref_can_fee">رسوم الإلغاء المستقطعة:</span>
+                <strong class="ref-detail-val ref-tabular" id="det-can-fee">—</strong>
+              </div>
+              <div class="ref-detail-row">
+                <span class="ref-detail-label" data-i18n="accounts_workspace.ref_can_reason">سبب الإلغاء المسجل:</span>
+                <span class="ref-detail-val" id="det-can-reason">—</span>
+              </div>
+            </div>
+
+            <!-- Uploaded Documents & Proofs -->
+            <h3 class="ref-sub-heading" style="margin-top: 24px;" data-i18n="accounts_workspace.ref_attachments_heading">المرفقات والمستندات الثبوتية المؤيدة</h3>
+            <div class="ref-attachments-grid" id="det-can-attachments">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: FINANCIAL SUMMARY & ADJUSTMENT WORKFLOW -->
+        <section class="ref-tab-content" id="section-tab-financial" style="display:none;">
+          <div class="acc-card ref-card">
+            <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_fin_summary_heading">الملخص المالي التفصيلي واحتساب الاسترداد</h2>
+            <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_fin_summary_desc">مقارنة المبالغ المحصلة دفترياً مقابل الحد المالي القابل للاسترداد والمبالغ المطلوبة</p>
+
+            <div class="ref-fin-ledger-table-wrap">
+              <table class="acc-table ref-ledger-table" aria-label="جدول المطابقة المالية للاسترداد">
+                <tbody>
+                  <tr>
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_booking_total">إجمالي قيمة برنامج الحجز:</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-prog-total">—</td>
+                  </tr>
+                  <tr>
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_eligible_payments">إجمالي المدفوعات المعتمدة دفترياً (المؤهلة):</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-eligible-payments">—</td>
+                  </tr>
+                  <tr>
+                    <td><span data-i18n="accounts_workspace.ref_ledger_pending_payments">مدفوعات معلقة / غير محققة (مستبعدة من الاسترداد):</span></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-pending-payments">—</td>
+                  </tr>
+                  <tr>
+                    <td><span data-i18n="accounts_workspace.ref_ledger_policy_fee">خصم رسوم سياسة الإلغاء:</span></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-policy-fee">—</td>
+                  </tr>
+                  <tr>
+                    <td><span data-i18n="accounts_workspace.ref_ledger_previous_refunds">استردادات سابقة مكتملة ومصروفة:</span></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-prev-refunds">—</td>
+                  </tr>
+                  <tr class="ref-ledger-highlight-row">
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_max_limit">الحد الأقصى القانوني القابل للاسترداد:</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-max-limit">—</td>
+                  </tr>
+                  <tr>
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_requested_amt">المبلغ المطلوب من قبل العميل:</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-requested-amt">—</td>
+                  </tr>
+                  <tr>
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_approved_amt">المبلغ المعتمد للاسترداد من الإدارة:</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-approved-amt">—</td>
+                  </tr>
+                  <tr>
+                    <td><span data-i18n="accounts_workspace.ref_ledger_actually_disbursed">المبلغ المصروف والمنفذ فعلياً:</span></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-actually-disbursed">—</td>
+                  </tr>
+                  <tr class="ref-ledger-remaining-row">
+                    <td><strong data-i18n="accounts_workspace.ref_ledger_remaining_to_refund">المبلغ المتبقي واجب الصرف:</strong></td>
+                    <td class="ref-col-num ref-tabular" id="ledger-remaining-to-refund">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Financial Adjustment Panel (Strict Business Rule) -->
+            <div class="ref-adjustment-panel" id="ref-adjustment-panel" style="margin-top: 24px;">
+              <!-- Dynamically populated adjustment form or log -->
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: REFUND OPERATIONS (SINGLE/MULTIPLE TRANSFERS & 2-STAGE CONFIRMATION) -->
+        <section class="ref-tab-content" id="section-tab-refund-ops" style="display:none;">
+          <!-- Execution Progress Card -->
+          <div class="acc-card ref-card">
+            <div class="ref-card-header-flex">
+              <div>
+                <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_ops_heading">عمليات التحويل والصرف المالي</h2>
+                <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_ops_desc">تسجيل الحوالات الفردية أو المجزأة، وإدارة تأكيدات الاستلام والنزاعات</p>
+              </div>
+              <button type="button" class="btn btn-primary" id="btn-open-record-transfer">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span data-i18n="accounts_workspace.ref_btn_record_transfer">تسجيل تحويل مالي جديد</span>
+              </button>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="ref-ops-progress-wrap" style="margin-top: 18px;">
+              <div class="ref-ops-metrics-row">
+                <span><span data-i18n="accounts_workspace.ref_metric_approved">المعتمد للصرف:</span> <strong id="ops-approved-amt" class="ref-tabular">—</strong></span>
+                <span><span data-i18n="accounts_workspace.ref_metric_disbursed">المصروف فعلياً:</span> <strong id="ops-disbursed-amt" class="ref-tabular">—</strong></span>
+                <span><span data-i18n="accounts_workspace.ref_metric_remaining">المتبقي:</span> <strong id="ops-remaining-amt" class="ref-tabular">—</strong></span>
+              </div>
+              <div class="ref-progress-bar-bg">
+                <div class="ref-progress-bar-fill" id="ops-progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Transfers History Table -->
+            <h3 class="ref-sub-heading" style="margin-top: 24px;" data-i18n="accounts_workspace.ref_transfers_history_heading">سجل أوامر التحويل المنفذة (سجل دائم غير قابل للمسح)</h3>
+            <div class="acc-table-responsive ref-table-responsive" style="margin-top: 12px;">
+              <table class="acc-table ref-table" id="table-transfers-history" aria-label="سجل الحوالات المالية المنفذة">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_id">رقم المعاملة</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_ref">الرقم المرجعي</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_date">التاريخ والوقت</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_method">طريقة التحويل</th>
+                    <th scope="col" class="ref-col-num" data-i18n="accounts_workspace.ref_th_trf_amount">المبلغ</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_recipient">بيانات المستلم</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_emp">الموظف المسؤول</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_proof">إيصال التحويل</th>
+                    <th scope="col" data-i18n="accounts_workspace.ref_th_trf_customer_conf">تأكيد العميل</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-transfers-history">
+                  <!-- Dynamically populated via accounts-refund-details.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Two-Stage Confirmation & Automated Reminders Section -->
+          <div class="ref-two-col-grid" style="margin-top: 20px;">
+            <!-- Two-Stage Confirmation Card -->
+            <div class="acc-card ref-card">
+              <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_twostage_heading">نظام التأكيد الثنائي الإلزامي للاسترداد</h2>
+              <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_twostage_desc">لا يتم إغلاق الطلب أو أرشفته إلا بعد استيفاء التأكيدين بشكل مستقل</p>
+
+              <div class="ref-twostage-steps">
+                <!-- Stage 1: Miqat Transfer Confirmation -->
+                <div class="ref-stage-box" id="ref-stage-1-box">
+                  <div class="ref-stage-header">
+                    <span class="ref-stage-number">1</span>
+                    <div>
+                      <strong class="ref-stage-title" data-i18n="accounts_workspace.ref_stage1_title">المرحلة الأولى: تأكيد تحويل ميقات</strong>
+                      <p class="ref-stage-desc" data-i18n="accounts_workspace.ref_stage1_desc">يقوم موظف الحسابات بتسجيل الحوالة وإرفاق إشعار الخصم ورقم العملية</p>
+                    </div>
+                  </div>
+                  <div class="ref-stage-status" id="ref-stage-1-status">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+
+                <!-- Stage 2: Customer Receipt Confirmation -->
+                <div class="ref-stage-box" id="ref-stage-2-box">
+                  <div class="ref-stage-header">
+                    <span class="ref-stage-number">2</span>
+                    <div>
+                      <strong class="ref-stage-title" data-i18n="accounts_workspace.ref_stage2_title">المرحلة الثانية: تأكيد استلام العميل</strong>
+                      <p class="ref-stage-desc" data-i18n="accounts_workspace.ref_stage2_desc">يؤكد العميل استلام المبلغ كاملاً في حسابه عبر التطبيق أو نموذج المتابعة</p>
+                    </div>
+                  </div>
+                  <div class="ref-stage-status" id="ref-stage-2-status">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Automated Reminders & Dispute Management Card -->
+            <div class="acc-card ref-card">
+              <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_reminders_disputes_heading">التذكيرات الآلية وإدارة النزاعات المالية</h2>
+              <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_reminders_disputes_desc">متابعة تأخير تأكيد الاستلام وتصعيد النزاعات المالية والتحقيق فيها</p>
+
+              <div class="ref-reminders-box" id="ref-reminders-panel">
+                <!-- Dynamically populated reminder settings & dispute actions -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: ACTIVITY LOG & INTERNAL NOTES -->
+        <section class="ref-tab-content" id="section-tab-activity" style="display:none;">
+          <div class="acc-card ref-card">
+            <h2 class="ref-card-title" data-i18n="accounts_workspace.ref_activity_log_heading">سجل العمليات والنشاطات غير القابل للتعديل (Audit Trail)</h2>
+            <p class="ref-card-subtitle" data-i18n="accounts_workspace.ref_activity_log_desc">توثيق زمني كامل ودقيق لكافة الإجراءات والتعديلات والاعتمادات والتحويلات المالية</p>
+
+            <div class="ref-timeline" id="ref-timeline-container">
+              <!-- Dynamically populated via accounts-refund-details.js -->
+            </div>
+
+            <!-- Internal Notes Composer -->
+            <div class="acc-notes-composer ref-notes-composer">
+              <h3 class="ref-sub-heading" data-i18n="accounts_workspace.ref_add_note_heading">إضافة ملاحظة إدارية داخلية (لفريق الحسابات والإدارة فقط)</h3>
+              <textarea class="acc-textarea" id="ref-note-input" rows="3" placeholder="أدخل تفاصيل الملاحظة الإدارية أو التعليمات المحاسبية..." data-i18n-placeholder="accounts_workspace.ref_note_placeholder"></textarea>
+              <button type="button" class="btn btn-secondary" id="btn-save-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                  <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                <span data-i18n="accounts_workspace.ref_btn_save_note">حفظ الملاحظة في السجل</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Reusable Confirmation/Prompt Dialog Backdrop -->
+  <div class="ref-modal-backdrop" id="ref-modal-backdrop" style="display:none;" aria-hidden="true"></div>
+
+  <!-- Modal 1: Record Transfer Modal -->
+  <div class="acc-modal-backdrop" id="modal-record-transfer" role="dialog" aria-modal="true" aria-labelledby="modal-transfer-title" style="display: none;">
+    <div class="acc-modal-card ref-modal-large">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-transfer-title" data-i18n="accounts_workspace.ref_modal_trf_title">تسجيل تحويل مالي لصالح العميل</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-trf-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <form id="form-record-transfer">
+        <div class="acc-modal-body">
+          <div class="ref-modal-form-grid">
+            <div class="ref-form-group">
+              <label for="trf-input-amount" class="ref-form-label" data-i18n="accounts_workspace.ref_trf_amount">مبلغ التحويل (ج.م):</label>
+              <input type="number" class="ref-form-input" id="trf-input-amount" required min="1" step="any">
+              <span class="ref-form-hint" id="trf-hint-remaining">الحد الأقصى المتاح للتحويل: — ج.م</span>
+            </div>
+
+            <div class="ref-form-group">
+              <label for="trf-select-method" class="ref-form-label" data-i18n="accounts_workspace.ref_trf_method">طريقة التحويل والصرف:</label>
+              <select class="ref-form-select" id="trf-select-method" required>
+                <option value="bank_transfer">تحويل بنكي رسمي (Bank Wire)</option>
+                <option value="instapay">شبكة المدفوعات اللحظية (InstaPay / IPN)</option>
+                <option value="vodafone_cash">محفظة فودافون كاش (Vodafone Cash)</option>
+                <option value="orange_cash">محفظة أورنج كاش (Orange Cash)</option>
+                <option value="etisalat_cash">محفظة اتصالات كاش (Etisalat Cash)</option>
+                <option value="we_pay">محفظة وي باي (WE Pay)</option>
+              </select>
+            </div>
+
+            <div class="ref-form-group">
+              <label for="trf-input-ref" class="ref-form-label" data-i18n="accounts_workspace.ref_trf_ref">الرقم المرجعي للعملية البنكية:</label>
+              <input type="text" class="ref-form-input" id="trf-input-ref" placeholder="مثال: CIB-REF-981203 أو كود إنستاباي" required>
+            </div>
+
+            <div class="ref-form-group">
+              <label for="trf-input-recipient" class="ref-form-label" data-i18n="accounts_workspace.ref_trf_recipient">بيانات المستلم (رقم الحساب / الآيبان / الهاتف):</label>
+              <input type="text" class="ref-form-input" id="trf-input-recipient" required>
+            </div>
+
+            <div class="ref-form-group ref-full-col">
+              <label for="trf-input-notes" class="ref-form-label" data-i18n="accounts_workspace.ref_trf_notes">ملاحظات التحويل والخصم من حساب ميقات:</label>
+              <input type="text" class="ref-form-input" id="trf-input-notes" placeholder="تم الخصم من حساب بنك CIB المعتمد">
+            </div>
+          </div>
+        </div>
+        <div class="acc-modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-trf-modal" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-trf" data-i18n="accounts_workspace.ref_btn_confirm_transfer">تأكيد وقيد التحويل المالي</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Financial Adjustment Modal -->
+  <div class="acc-modal-backdrop" id="modal-adjust-amount" role="dialog" aria-modal="true" aria-labelledby="modal-adjust-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-adjust-title" data-i18n="accounts_workspace.ref_modal_adjust_title">تعديل مبلغ الاسترداد وتوثيق السبب الإلزامي</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-adjust-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <form id="form-adjust-amount">
+        <div class="acc-modal-body">
+          <p class="ref-modal-desc" data-i18n="accounts_workspace.ref_modal_adjust_desc">وفقاً لقواعد الرقابة المالية، يجب توثيق السبب المحاسبي الإلزامي لأي تعديل على مبالغ الاسترداد مع حفظها في سجل التدقيق.</p>
+          
+          <div class="ref-form-group" style="margin-top: 14px;">
+            <label for="adjust-input-original" class="ref-form-label" data-i18n="accounts_workspace.ref_adj_orig">المبلغ المطلوب الأصلي:</label>
+            <input type="text" class="ref-form-input" id="adjust-input-original" readonly disabled>
+          </div>
+
+          <div class="ref-form-group" style="margin-top: 10px;">
+            <label for="adjust-input-limit" class="ref-form-label" data-i18n="accounts_workspace.ref_adj_limit">الحد الأقصى القابل للاسترداد (المسموح):</label>
+            <input type="text" class="ref-form-input" id="adjust-input-limit" readonly disabled>
+          </div>
+
+          <div class="ref-form-group" style="margin-top: 10px;">
+            <label for="adjust-input-new" class="ref-form-label" data-i18n="accounts_workspace.ref_adj_new">المبلغ المعدل الجديد (ج.م):</label>
+            <input type="number" class="ref-form-input" id="adjust-input-new" required min="1" step="any">
+          </div>
+
+          <div class="ref-form-group" style="margin-top: 10px;">
+            <label for="adjust-input-reason" class="ref-form-label" data-i18n="accounts_workspace.ref_adj_reason">السبب المحاسبي الإلزامي للتعديل:</label>
+            <textarea class="acc-textarea" id="adjust-input-reason" rows="3" required placeholder="مثال: خصم دفعات غير معتمدة بنكياً / تطبيق غرامة سياسة الطيران..." data-i18n-placeholder="accounts_workspace.ref_adj_reason_placeholder"></textarea>
+          </div>
+        </div>
+        <div class="acc-modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-adjust-modal" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-adjust" data-i18n="accounts_workspace.ref_btn_apply_adjustment">اعتماد التعديل المحاسبي</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Admin Return For Review Modal -->
+  <div class="acc-modal-backdrop" id="modal-admin-return" role="dialog" aria-modal="true" aria-labelledby="modal-return-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-return-title" data-i18n="accounts_workspace.ref_modal_return_title">إعادة طلب الاسترداد للمراجعة والتدقيق</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-return-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <form id="form-admin-return">
+        <div class="acc-modal-body">
+          <p class="ref-modal-desc" data-i18n="accounts_workspace.ref_modal_return_desc">أدخل الملاحظات والتعليمات المحاسبية الإلزامية التي تتطلب تدقيقاً إضافياً من موظف الحسابات قبل التصديق على أمر الصرف.</p>
+          
+          <div class="ref-form-group" style="margin-top: 14px;">
+            <label for="return-input-reason" class="ref-form-label" data-i18n="accounts_workspace.ref_return_reason">سبب إعادة الطلب (إلزامي):</label>
+            <textarea class="acc-textarea" id="return-input-reason" rows="3" required placeholder="أدخل أسباب إعادة الطلب بالتفصيل..." data-i18n-placeholder="accounts_workspace.ref_return_placeholder"></textarea>
+          </div>
+        </div>
+        <div class="acc-modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-return-modal" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-return" data-i18n="accounts_workspace.ref_btn_confirm_return">إعادة الطلب لموظف الحسابات</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Customer Confirmation Modal (Stage 2) -->
+  <div class="acc-modal-backdrop" id="modal-customer-confirm" role="dialog" aria-modal="true" aria-labelledby="modal-conf-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-conf-title" data-i18n="accounts_workspace.ref_modal_conf_title">تسجيل تأكيد استلام العميل (المرحلة الثانية)</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-conf-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <form id="form-customer-confirm">
+        <div class="acc-modal-body">
+          <p class="ref-modal-desc" data-i18n="accounts_workspace.ref_modal_conf_desc">بتأكيد استلام العميل لكامل المبالغ المستردة، سيتم إغلاق طلب الاسترداد وأرشفته وتسوية الحساب نهائياً.</p>
+          
+          <div class="ref-form-group" style="margin-top: 14px;">
+            <label for="conf-select-channel" class="ref-form-label" data-i18n="accounts_workspace.ref_conf_channel">قناة تأكيد الاستلام:</label>
+            <select class="ref-form-select" id="conf-select-channel" required>
+              <option value="miqat_app">تطبيق ميقات للمعتمرين (تأكيد إلكتروني مباشر)</option>
+              <option value="sms_receipt">إقرار برسالة نصية قصيرة SMS</option>
+              <option value="phone_call">مكالمة هاتفية موثقة من خدمة العملاء</option>
+              <option value="signed_receipt">إيصال استلام بنكي موقع من العميل</option>
+            </select>
+          </div>
+
+          <div class="ref-form-group" style="margin-top: 10px;">
+            <label for="conf-input-notes" class="ref-form-label" data-i18n="accounts_workspace.ref_conf_notes">ملاحظات التأكيد:</label>
+            <input type="text" class="ref-form-input" id="conf-input-notes" placeholder="أكد العميل وصول المبلغ كاملاً في حسابه">
+          </div>
+        </div>
+        <div class="acc-modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-conf-modal" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-conf" data-i18n="accounts_workspace.ref_btn_complete_settlement">تأكيد الاستلام واكتمال التسوية</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Open Refund Dispute Modal -->
+  <div class="acc-modal-backdrop" id="modal-open-dispute" role="dialog" aria-modal="true" aria-labelledby="modal-dispute-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-dispute-title" data-i18n="accounts_workspace.ref_modal_dispute_title">فتح نزاع مالي على طلب الاسترداد</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-dispute-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <form id="form-open-dispute">
+        <div class="acc-modal-body">
+          <p class="ref-modal-desc" data-i18n="accounts_workspace.ref_modal_dispute_desc">سيتم إيقاف إغلاق الطلب آلياً وحفظ كافة إيصالات التحويل السابقة، وإحالة الملف للتحقيق المالي مع البنك والعميل.</p>
+          
+          <div class="ref-form-group" style="margin-top: 14px;">
+            <label for="disp-input-reason" class="ref-form-label" data-i18n="accounts_workspace.ref_disp_reason">سبب النزاع المالي (إلزامي):</label>
+            <textarea class="acc-textarea" id="disp-input-reason" rows="3" required placeholder="أدخل ادعاء العميل أو تفاصيل التفاوت في المبلغ المستلم..."></textarea>
+          </div>
+
+          <div class="ref-form-group" style="margin-top: 10px;">
+            <label for="disp-input-diff" class="ref-form-label" data-i18n="accounts_workspace.ref_disp_diff">مبلغ التفاوت المتنازع عليه (ج.م):</label>
+            <input type="number" class="ref-form-input" id="disp-input-diff" min="0" step="any" placeholder="مثال: 5000">
+          </div>
+        </div>
+        <div class="acc-modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-dispute-modal" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-dispute" data-i18n="accounts_workspace.ref_btn_confirm_dispute">فتح ملف النزاع والتحقيق</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Receipt Slip Preview Modal -->
+  <div class="acc-modal-backdrop" id="modal-receipt-slip-preview" role="dialog" aria-modal="true" aria-labelledby="modal-slip-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="modal-slip-title" data-i18n="accounts_workspace.ref_slip_title">إشعار التحويل المالي المعتمد</h3>
+        <button type="button" class="acc-modal-close-btn" id="btn-close-slip-modal" aria-label="إغلاق">&times;</button>
+      </div>
+      <div class="acc-modal-body">
+        <div class="acc-receipt-container">
+          <div class="acc-receipt-slip" id="rendered-receipt-slip">
+            <!-- Dynamically populated receipt slip -->
+          </div>
+        </div>
+      </div>
+      <div class="acc-modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-close-slip-btn" data-i18n="accounts_workspace.dlg_btn_close">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Safe Logout Protective Dialog -->
+  <div class="acc-modal-backdrop" id="acc-logout-modal" role="dialog" aria-modal="true" aria-labelledby="acc-logout-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="acc-logout-title" data-i18n="accounts_workspace.logout_confirm_title">تأكيد تسجيل الخروج الآمن</h3>
+      </div>
+      <div class="acc-modal-body">
+        <p data-i18n="accounts_workspace.logout_confirm_msg">هل أنت متأكد من رغبتك في تسجيل الخروج من منصة الحسابات؟ سيتم حفظ كافة عمليات التدقيق المكتملة بأمان.</p>
+      </div>
+      <div class="acc-modal-footer">
+        <button type="button" class="btn btn-secondary" id="acc-logout-cancel-btn" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="acc-logout-confirm-btn" data-i18n="accounts_workspace.btn_logout">تأكيد تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Script Dependencies -->
+  <script src="./assets/xlsx.full.min.js"></script>
+  <script src="./accounts-mock-data.js"></script>
+  <script src="./accounts-workspace.js"></script>
+  <script src="./accounts-refund-details.js"></script>
+</body>
+</html>

@@ -146,8 +146,14 @@
     const isCollectionsPage = document.body && document.body.classList.contains('accounts-collections-page');
     const isCollectionDetailsPage = document.body && document.body.classList.contains('accounts-collection-details-page');
     const isSettlementDetailsPage = document.body && document.body.classList.contains('accounts-settlement-details-page');
+    const isRefundsPage = document.body && document.body.classList.contains('accounts-refunds-page');
+    const isRefundDetailsPage = document.body && document.body.classList.contains('accounts-refund-details-page');
 
-    if (isCollectionDetailsPage) {
+    if (isRefundDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل طلب الاسترداد المالي | منصة ميقات' : 'Refund Request Details | Miqat');
+    } else if (isRefundsPage) {
+      document.title = (currentLang === 'ar' ? 'إدارة طلبات الاسترداد | منصة ميقات' : 'Refund Requests Management | Miqat');
+    } else if (isCollectionDetailsPage) {
       document.title = (currentLang === 'ar' ? 'تفاصيل التحصيل الإلكتروني | ميقات' : 'Collection Details | Miqat');
     } else if (isSettlementDetailsPage) {
       document.title = (currentLang === 'ar' ? 'تفاصيل تسوية شركة السياحة | ميقات' : 'Company Settlement Details | Miqat');
@@ -169,6 +175,21 @@
       document.title = (currentLang === 'ar' ? 'السجل الكامل لنشاط الحجز | ميقات' : 'Full Booking Activity Log | Miqat');
     } else {
       document.title = (currentLang === 'ar' ? 'لوحة تحكم العمليات المالية والحسابات | ميقات' : 'Financial Operations & Accounts Dashboard | Miqat');
+    }
+
+    // Active navigation state enforcement for Refund Requests pages
+    if (isRefundsPage || isRefundDetailsPage) {
+      const refundsNav = document.getElementById('acc-nav-refunds');
+      if (refundsNav) {
+        document.querySelectorAll('.acc-nav-item').forEach(el => {
+          if (el !== refundsNav) {
+            el.classList.remove('is-active', 'active');
+            el.removeAttribute('aria-current');
+          }
+        });
+        refundsNav.classList.add('is-active', 'active');
+        refundsNav.setAttribute('aria-current', 'page');
+      }
     }
 
     // Helper to test if a resolved value is valid and not a raw key path

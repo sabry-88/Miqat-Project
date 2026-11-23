@@ -85,3 +85,28 @@ Before any new page, card, or modal is merged, it must be verified across this e
 - [ ] **RTL (Arabic) & LTR (English):** All text aligned logically; drawer opens from correct side.
 - [ ] **Light Mode & Dark Mode:** WCAG AAA contrast maintained on all buttons, badges, and cards.
 - [ ] **Keyboard & Accessibility:** Escape key closes open menus and modals; focus indicators remain clearly visible.
+
+---
+
+## 6. Zero Horizontal Overflow & Content Visibility Rule
+
+> **Mandatory Core Directive:**  
+> Every Miqat page must remain fully contained within the available viewport width at all supported responsive breakpoints.
+
+### Mandatory Requirements:
+
+1. **No Unintended Horizontal Overflow:** No page, workspace, or main content section may create unintended horizontal overflow or activate a viewport horizontal scrollbar (`document.documentElement.scrollWidth <= document.documentElement.clientWidth`).
+2. **Zero Clipping & Total Containment:** No text, card, button, badge, table control, or interactive element may be partially clipped, cut off at viewport edges, or extend outside its parent container.
+3. **Adaptive Card Reflow:** KPI cards and other repeated card groups must use responsive layouts (e.g. flexible grids or auto-wrapping flex rows) that reflow into additional rows when available width decreases, rather than forcing a single rigid horizontal row.
+4. **Header & Action Group Wrapping:** Page headers, toolbars, and action button groups must adapt their layout using flexible wrapping and responsive stacking instead of forcing a fixed horizontal row.
+5. **Complex Activity Row Wrapping:** Activity rows, notification feeds, and complex list items must wrap or stack appropriately on smaller screens, keeping descriptions, timestamps, and action buttons visible and accessible.
+6. **Flex & Grid Shrink Capability (`min-width: 0`):** Flex and grid children must be allowed to shrink when necessary. Explicitly specify `min-width: 0` on flex items and use `minmax(0, 1fr)` in CSS grids to prevent child intrinsic content size from expanding parents beyond the viewport.
+7. **Safe Text Wrapping & Controlled Widths:** Fixed pixel widths that exceed the available content area and unconstrained `white-space: nowrap` must never be used in ways that cause viewport overflow.
+8. **Bidirectional RTL and LTR Verification:** RTL (Arabic) and LTR (English) layouts must both be verified. Do not assume that a layout working in LTR will work correctly in RTL; directional padding, margins, flex alignment, and transforms must be tested in both modes.
+9. **Contained Horizontal Scroll for Tables:** Data tables may use a dedicated, intentionally contained horizontal scroll container (`.acc-table-responsive` with `overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 0; max-width: 100%;`) when their columns genuinely require it. This localized table scroll must never cause the entire page or main content wrapper to overflow.
+10. **Multi-Breakpoint Viewport Validation:** Responsive behavior must be verified across desktop (1440px, 1280px), tablet (1024px, 768px), and mobile (390px, 320px) widths, including intermediate widths where layout reflow occurs.
+11. **Direct Rendered DOM Inspection:** The developer must inspect the actual rendered page (evaluating element bounding rects and client widths) to confirm that no content is clipped, hidden behind sidebars, or inaccessible.
+12. **Universal Future Page Application:** This rule applies permanently to all current and future Miqat pages, components, and workspaces, not only the page currently being implemented.
+
+> [!IMPORTANT]
+> The goal is **never** simply to hide horizontal overflow using `overflow-x: hidden` on root containers. Doing so conceals broken sizing and clips interactive controls. You must fix the underlying sizing, flex shrinkage, and responsive behavior at its source.

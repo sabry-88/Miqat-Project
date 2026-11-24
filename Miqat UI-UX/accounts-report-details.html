@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="accounts_workspace.rep_details_page_title">تفاصيل ومعاينة التقرير | منصة ميقات</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Master Application Styles -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page accounts-report-details-page">
+  
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="accounts_workspace.skip_to_content">التخطي إلى المحتوى الرئيسي</a>
+
+  <!-- Top Global Header (Strictly Reused from Workspace Architecture) -->
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      
+      <!-- Brand & Mobile Toggle Area -->
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="فتح قائمة التنقل الجانبية" aria-expanded="false" data-i18n-aria="accounts_workspace.btn_open_menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="accounts-dashboard.html" class="acc-brand-link" aria-label="منصة ميقات للحسابات المالية">
+          <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="accounts_workspace.portal_brand">منصة ميقات للحسابات المالية</span>
+          </div>
+        </a>
+
+        <!-- Prominent Demo Data Badge -->
+        <div class="acc-demo-pill" role="status" aria-label="بيئة تجريبية توضيحية">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span data-i18n="accounts_workspace.demo_badge">بيانات توضيحية تجريبية</span>
+        </div>
+      </div>
+
+      <!-- Header Controls: Lang, Theme, Employee Card, Safe Logout -->
+      <div class="acc-header-actions acc-header-controls">
+        <!-- Language Switcher Button -->
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="acc-lang-switcher" aria-label="Switch to English" title="Switch Language">
+          <span class="lang-btn-text acc-lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="acc-theme-toggle" aria-label="Switch Theme" title="Toggle Light / Dark Mode">
+          <svg class="icon-moon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Employee Identity Card -->
+        <div class="acc-employee-card" id="acc-employee-card" role="button" tabindex="0" aria-label="بيانات الموظف ومسؤول الحسابات" title="ملف موظف الحسابات | Accounts Officer Profile">
+          <div class="acc-employee-avatar" id="acc-employee-avatar">أ</div>
+          <div class="acc-employee-info acc-employee-details">
+            <span class="acc-employee-name" id="acc-employee-name" data-i18n="accounts_workspace.employee_name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" id="acc-employee-role" data-i18n="accounts_workspace.employee_role_badge">موظف حسابات مالية</span>
+          </div>
+        </div>
+
+        <!-- Safe Logout Button -->
+        <button type="button" class="acc-logout-btn" id="acc-logout-btn" aria-label="تسجيل الخروج الآمن" data-i18n-aria="accounts_workspace.btn_logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="acc-logout-btn-text" data-i18n="accounts_workspace.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Layout Wrapper with Direction-Aware Sidebar -->
+  <div class="acc-layout-wrapper">
+    
+    <!-- Sidebar Drawer Backdrop (Mobile only) -->
+    <div class="acc-sidebar-backdrop acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <!-- 11-Item Shared Employee Sidebar -->
+    <aside class="acc-sidebar" id="acc-sidebar" role="navigation" aria-label="قائمة التنقل المحاسبية">
+      
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="accounts_workspace.nav_workspace_title">أقسام الحسابات المالية</span>
+        <button type="button" class="acc-drawer-close-btn acc-sidebar-close-btn" id="acc-drawer-close-btn" aria-label="إغلاق القائمة" data-i18n-aria="accounts_workspace.btn_close_menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="acc-sidebar-nav acc-nav-list" role="navigation">
+        <!-- 1. Dashboard -->
+        <a href="accounts-dashboard.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"></rect>
+              <rect x="14" y="3" width="7" height="5"></rect>
+              <rect x="14" y="12" width="7" height="9"></rect>
+              <rect x="3" y="16" width="7" height="5"></rect>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_dashboard">لوحة التحكم المالية</span>
+        </a>
+
+        <!-- 2. Customers Directory -->
+        <a href="accounts-customers.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 010 7.75"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customers">دليل العملاء والمعتمرين</span>
+        </a>
+
+        <!-- 3. Customer Profile -->
+        <a href="accounts-customer-details.html" class="acc-nav-item" id="acc-nav-customer-profile">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customer_profile">ملف العميل</span>
+        </a>
+
+        <!-- 4. Unified Bookings Register -->
+        <a href="accounts-bookings.html" class="acc-nav-item" id="acc-nav-bookings">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_bookings">سجل الحجوزات الموحد</span>
+        </a>
+
+        <!-- 5. Program & Itinerary Modifications -->
+        <a href="accounts-trip-changes.html" class="acc-nav-item" id="acc-nav-trip-changes">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_trip_changes">تعديلات البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Cancellations & Settlements Register -->
+        <a href="accounts-cancellations.html" class="acc-nav-item" id="acc-nav-cancellations">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_cancellations">سجل الإلغاءات والتسوية</span>
+        </a>
+
+        <!-- 7. Collections & Cash Deposits -->
+        <a href="accounts-collections.html" class="acc-nav-item" id="acc-nav-collections">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_collections">التحصيلات والإيداعات النقدية</span>
+        </a>
+
+        <!-- 8. Refund Requests Management -->
+        <a href="accounts-refunds.html" class="acc-nav-item" id="acc-nav-refunds">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_refunds">إدارة طلبات الاسترداد</span>
+        </a>
+
+        <!-- 9. ACTIVE: Reports & Backups -->
+        <a href="accounts-reports-backup.html" class="acc-nav-item active is-active" id="acc-nav-reports" aria-current="page">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_reports">التقارير اليومية والنسخ الاحتياطي</span>
+        </a>
+
+        <!-- 10. Notifications -->
+        <a href="#notifications" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_notifications">الإشعارات والتنبيهات المالية</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 11. Profile -->
+        <a href="#profile" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0 4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_profile">الملف الشخصي والإعدادات</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="acc-main-content" id="main-content" role="main">
+      <div class="acc-content-container">
+        
+        <!-- Breadcrumbs Navigation -->
+        <nav class="details-breadcrumbs" aria-label="مسار التنقل" style="margin-bottom: 1.25rem;">
+          <a href="accounts-dashboard.html" class="breadcrumb-link" data-i18n="accounts_workspace.rep_breadcrumb_root">أقسام الحسابات</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="accounts-reports-backup.html" class="breadcrumb-link" data-i18n="accounts_workspace.rep_breadcrumb_parent">التقارير اليومية والنسخ الاحتياطي</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current" id="rep-det-breadcrumb-id">REP-20261123-01</span>
+        </nav>
+
+        <!-- Sticky / Top Navigation & Report Control Header -->
+        <header class="acc-toolbar-card rep-det-header" aria-label="شريط التحكم في التقرير المنشأ">
+          <div class="rep-det-header-inner">
+            
+            <div class="rep-det-header-left">
+              <a href="accounts-reports-backup.html" class="btn btn-secondary btn-sm" id="rep-det-btn-back" title="العودة لمركز التقارير والنسخ الاحتياطي">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_det_btn_back">العودة للتقارير والنسخ</span>
+              </a>
+
+              <div class="rep-det-id-badge">
+                <span class="rep-table-mono" id="rep-det-id" dir="ltr">REP-20261123-01</span>
+              </div>
+
+              <div class="rep-det-badges-row">
+                <span class="acc-status-pill status-pill-navy" id="rep-det-scope-badge">تقرير داخلي</span>
+                <span class="acc-status-pill status-pill-slate" id="rep-det-period-badge">الفترة: نوفمبر 2026</span>
+              </div>
+            </div>
+
+            <!-- Export Actions -->
+            <div class="rep-det-header-actions">
+              <button type="button" class="btn btn-outline btn-sm" id="rep-det-export-csv" data-i18n="accounts_workspace.rep_export_csv">تصدير CSV</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="rep-det-export-pdf" data-i18n="accounts_workspace.rep_export_pdf">طباعة / PDF</button>
+              <button type="button" class="btn btn-primary btn-sm" id="rep-det-export-xlsx" data-i18n="accounts_workspace.rep_export_xlsx">تصدير مصنف إكسل (.xlsx)</button>
+            </div>
+
+          </div>
+        </header>
+
+        <!-- Dedicated Institutional Invalid-Company State (Zero Red/Green) -->
+        <section class="acc-card rep-det-invalid-state" id="rep-det-invalid-state" style="display:none;" role="alert" aria-live="assertive">
+          <div class="rep-invalid-icon-wrap">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="rep-invalid-content">
+            <div class="rep-invalid-badge-row">
+              <span class="acc-status-pill status-pill-amber">عزل الحسابات &bull; رمز غير صالح</span>
+              <span class="acc-status-pill status-pill-slate" id="rep-det-invalid-code-pill" dir="ltr">CODE: UNKNOWN</span>
+            </div>
+            <h2 class="rep-invalid-title">تعذر تحميل كشف الحساب المالي للشركة</h2>
+            <p class="rep-invalid-message">تعذر تحميل كشف الحساب: رمز شركة السياحة غير محدد أو غير مسجل في النظام المالي المعزول. تم حظر عرض أي بيانات مالية لحماية سرية الحسابات.</p>
+            <div class="rep-invalid-action-row">
+              <a href="accounts-reports-backup.html" class="btn btn-primary" id="rep-det-invalid-btn-return">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>العودة إلى مركز التقارير والنسخ الاحتياطي</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Main Report Title & Metadata Card -->
+        <section class="acc-card rep-det-meta-card">
+          <div class="rep-det-meta-main">
+            <h1 class="rep-det-title" id="rep-det-title">تقرير المطابقة والعمليات المالية اليومي</h1>
+            <p class="rep-det-desc" id="rep-det-desc">بيانات مفصلة ومعتمدة للتدقيق المالي والتشغيلي ومطابقة القيود المحاسبية</p>
+          </div>
+          <div class="rep-det-meta-pills">
+            <div class="rep-det-meta-pill">
+              <span class="pill-label" data-i18n="accounts_workspace.rep_det_lbl_gen_date">تاريخ التوليد:</span>
+              <strong class="pill-val rep-table-mono" id="rep-det-generated-date" dir="ltr">2026-11-23 09:30</strong>
+            </div>
+            <div class="rep-det-meta-pill">
+              <span class="pill-label" data-i18n="accounts_workspace.rep_det_lbl_operator">المسؤول المنفذ:</span>
+              <strong class="pill-val" id="rep-det-operator" data-i18n="accounts_workspace.rep_det_default_operator">موظف الحسابات</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- Strict Data Isolation Alert (Active when viewing tourism company report) -->
+        <div class="acc-alert-card rep-det-isolation-alert" id="rep-det-isolation-alert" style="display:none;">
+          <div class="acc-alert-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="acc-alert-content">
+            <strong data-i18n="accounts_workspace.rep_det_isolation_title">عزل بيانات الشركة الصارم (Strict Data Isolation):</strong>
+            <span data-i18n="accounts_workspace.rep_preview_isolation_notice">بيانات معزولة بالكامل خاصة بشركة السياحة المحددة، ولا تتضمن أي عمولات أو ملاحظات لميقات أو بيانات شركات أخرى.</span>
+          </div>
+        </div>
+
+        <!-- Executive Summary & Financial KPIs Section -->
+        <section class="acc-card rep-det-kpis-card">
+          <div class="acc-card-header">
+            <h2 class="acc-card-title" data-i18n="accounts_workspace.rep_preview_summary_title">الملخص التنفيذي والمؤشرات المالية</h2>
+          </div>
+          <div class="acc-card-body">
+            <div class="rep-det-kpi-grid" id="rep-det-kpi-grid">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Approved Accounting Policy Box -->
+            <div class="rep-det-accounting-rule">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_fin_accounting_rule">تنبيه محاسبي معتمد: المبالغ المعلقة والاستردادات قيد الإجراء لا تُدرج ضمن السيولة المتاحة حتى إتمام قيدها النهائي.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Worksheet-Style Section Selector (Logical XLSX Workbook Tabs) -->
+        <div class="rep-worksheet-nav-wrap">
+          <div class="rep-worksheet-header">
+            <span class="rep-worksheet-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_det_worksheets_title">أوراق العمل التفصيلية:</span>
+            </span>
+          </div>
+          <div class="rep-worksheet-tabs" id="rep-worksheet-tabs" role="tablist" aria-label="أوراق العمل التفصيلية للتقرير">
+            <!-- Dynamically populated via accounts-report-details.js -->
+          </div>
+        </div>
+
+        <!-- Detailed Operational Records Table Section -->
+        <section class="acc-card acc-table-card rep-det-table-card">
+          <div class="acc-table-card-header">
+            <div>
+              <h2 class="acc-card-title" id="rep-det-sheet-title">تفاصيل سجلات العمليات والقيود المشمولة بالتقرير</h2>
+              <p class="acc-table-subtitle" id="rep-det-sheet-subtitle" style="margin: 4px 0 0; font-size: 0.8rem; color: var(--color-text-muted);">كافة القيود والتحويلات المسجلة ضمن ورقة العمل المحددة</p>
+            </div>
+            <span class="acc-status-pill status-pill-slate" id="rep-det-record-count-badge">5 بنود معتمدة</span>
+          </div>
+          <div class="acc-card-body p-0">
+            <div class="acc-table-responsive">
+              <table class="acc-table" id="rep-det-table">
+                <!-- Dynamically populated via JS -->
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- SIMULATED EXPORT MODAL DIALOG (Strict Mock Simulation)    -->
+  <!-- ======================================================== -->
+  <div class="acc-modal-backdrop" id="rep-det-export-modal" style="display:none;" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rep-det-exp-modal-title">
+    <div class="acc-modal-card rep-export-modal-card">
+      <div class="acc-modal-header">
+        <div class="rep-export-modal-title-wrap">
+          <h3 class="acc-modal-title" id="rep-det-exp-modal-title">معاينة ومحاكاة تصدير التقرير</h3>
+          <span class="acc-status-pill status-pill-slate">محاكاة تجريبية توضيحية</span>
+        </div>
+      </div>
+
+      <!-- Explicit Mock Simulation Notice Banner -->
+      <div class="rep-export-notice-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>بيئة محاكاة تجريبية — لا يتم تنزيل أو حفظ أي ملف فعلي على جهازك (Mock Simulation Only — No Real File Generated).</span>
+      </div>
+
+      <div class="acc-modal-body" id="rep-det-export-modal-body">
+        <!-- Step 1: Configuration & Structure Preview View -->
+        <div id="rep-det-export-config-view">
+          <div class="rep-export-meta-box">
+            <div class="rep-export-meta-row">
+              <span class="meta-label">التقرير المطلوب:</span>
+              <strong class="meta-val" id="rep-det-exp-report-title">تقرير المطابقة والعمليات المالية اليومي</strong>
+            </div>
+            <div class="rep-export-meta-row">
+              <span class="meta-label">الرقم المرجعي والنطاق:</span>
+              <span class="meta-val" id="rep-det-exp-report-scope"><bdi dir="ltr">REP-20261123-01</bdi> &bull; تقرير داخلي معتمد</span>
+            </div>
+            <div class="rep-export-meta-row">
+              <span class="meta-label">فترة التقرير:</span>
+              <span class="meta-val" id="rep-det-exp-report-period">اليوم (23 نوفمبر 2026)</span>
+            </div>
+          </div>
+
+          <!-- Format Selector Chips -->
+          <div class="rep-export-format-group">
+            <label class="acc-field-label">صيغة التصدير المطلوبة:</label>
+            <div class="acc-filter-chips rep-export-format-chips">
+              <button type="button" class="acc-chip-btn is-active" data-format="xlsx" id="rep-det-exp-fmt-xlsx">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                <span>مصنف Excel (.xlsx)</span>
+              </button>
+              <button type="button" class="acc-chip-btn" data-format="pdf" id="rep-det-exp-fmt-pdf">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>وثيقة رسمية (PDF)</span>
+              </button>
+              <button type="button" class="acc-chip-btn" data-format="csv" id="rep-det-exp-fmt-csv">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="4" y1="9" x2="20" y2="9"></line>
+                  <line x1="4" y1="15" x2="20" y2="15"></line>
+                  <line x1="10" y1="3" x2="8" y2="21"></line>
+                  <line x1="16" y1="3" x2="14" y2="21"></line>
+                </svg>
+                <span>بيانات مجدولة (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Format Structure Preview Box -->
+          <div class="rep-export-structure-preview">
+            <label class="acc-field-label">معاينة بنية ومحتوى التصدير:</label>
+            <div class="rep-export-preview-box" id="rep-det-exp-preview-content">
+              <!-- Populated via JS based on selected format -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Simulated Result Completion View (Hidden initially) -->
+        <div id="rep-det-export-result-view" style="display:none;">
+          <div class="rep-export-success-card">
+            <div class="rep-export-success-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="acc-status-pill status-pill-navy">تمت محاكاة التصدير بنجاح</span>
+            <h4 class="rep-export-result-title">اكتملت محاكاة التصدير التجريبي</h4>
+            <p class="rep-export-result-desc">تمت معالجة بنية التقرير وتجهيز خلايا البيانات المحددة بنجاح ضمن بيئة العرض التوضيحية.</p>
+
+            <div class="rep-export-result-details">
+              <div class="result-row">
+                <span>اسم الملف المحاكى:</span>
+                <strong class="rep-table-mono" id="rep-det-exp-result-filename" dir="ltr">REP-20261123-01_Audit_Export.xlsx</strong>
+              </div>
+              <div class="result-row">
+                <span>الصيغة المختارة:</span>
+                <strong id="rep-det-exp-result-format">Microsoft Excel Worksheet (.xlsx)</strong>
+              </div>
+              <div class="result-row">
+                <span>الحجم التقديري:</span>
+                <span class="rep-table-mono" id="rep-det-exp-result-size"><bdi dir="ltr">48.2 KB (Simulated)</bdi></span>
+              </div>
+              <div class="result-row">
+                <span>توقيت العملية:</span>
+                <span class="rep-table-mono" id="rep-det-exp-result-timestamp"><bdi dir="ltr">2026-11-24 11:35:00</bdi></span>
+              </div>
+            </div>
+
+            <div class="rep-export-result-notice">
+              <span>ملاحظة فنية: هذا الإجراء توضيحي يحاكي عملية التصدير دون استدعاء محرك التنزيل الفعلي أو استهلاك موارد النظام.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-modal-footer">
+        <div id="rep-det-export-footer-actions">
+          <button type="button" class="btn btn-secondary" id="rep-det-exp-btn-cancel">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="rep-det-exp-btn-confirm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>بدء التصدير التجريبي (Simulate Export)</span>
+          </button>
+        </div>
+        <div id="rep-det-export-footer-done" style="display:none;">
+          <button type="button" class="btn btn-primary" id="rep-det-exp-btn-close-done">إغلاق نافذة المحاكاة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Safe Logout Protective Dialog -->
+  <div class="acc-modal-backdrop" id="acc-logout-modal" role="dialog" aria-modal="true" aria-labelledby="acc-logout-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="acc-logout-title" data-i18n="accounts_workspace.logout_confirm_title">تأكيد تسجيل الخروج الآمن</h3>
+      </div>
+      <div class="acc-modal-body">
+        <p data-i18n="accounts_workspace.logout_confirm_msg">هل أنت متأكد من رغبتك في تسجيل الخروج من منصة الحسابات؟ سيتم حفظ كافة عمليات التدقيق المكتملة بأمان.</p>
+      </div>
+      <div class="acc-modal-footer">
+        <button type="button" class="btn btn-secondary" id="acc-logout-cancel-btn" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="acc-logout-confirm-btn" data-i18n="accounts_workspace.btn_logout">تأكيد تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Script Dependencies -->
+  <script src="./assets/xlsx.full.min.js"></script>
+  <script src="./accounts-mock-data.js"></script>
+  <script src="./accounts-workspace.js"></script>
+  <script src="./accounts-report-details.js"></script>
+</body>
+</html>

@@ -148,8 +148,14 @@
     const isSettlementDetailsPage = document.body && document.body.classList.contains('accounts-settlement-details-page');
     const isRefundsPage = document.body && document.body.classList.contains('accounts-refunds-page');
     const isRefundDetailsPage = document.body && document.body.classList.contains('accounts-refund-details-page');
+    const isReportsBackupPage = document.body && document.body.classList.contains('accounts-reports-backup-page');
+    const isReportDetailsPage = document.body && document.body.classList.contains('accounts-report-details-page');
 
-    if (isRefundDetailsPage) {
+    if (isReportDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل ومعاينة التقرير | منصة ميقات' : 'Report Details & Preview | Miqat Platform');
+    } else if (isReportsBackupPage) {
+      document.title = (currentLang === 'ar' ? 'التقارير اليومية والنسخ الاحتياطي | منصة ميقات' : 'Daily Reports & Backup | Miqat Platform');
+    } else if (isRefundDetailsPage) {
       document.title = (currentLang === 'ar' ? 'تفاصيل طلب الاسترداد المالي | منصة ميقات' : 'Refund Request Details | Miqat');
     } else if (isRefundsPage) {
       document.title = (currentLang === 'ar' ? 'إدارة طلبات الاسترداد | منصة ميقات' : 'Refund Requests Management | Miqat');
@@ -189,6 +195,21 @@
         });
         refundsNav.classList.add('is-active', 'active');
         refundsNav.setAttribute('aria-current', 'page');
+      }
+    }
+
+    // Active navigation state enforcement for Daily Reports & Backup page and details view
+    if (isReportsBackupPage || isReportDetailsPage) {
+      const reportsNav = document.getElementById('acc-nav-reports');
+      if (reportsNav) {
+        document.querySelectorAll('.acc-nav-item').forEach(el => {
+          if (el !== reportsNav) {
+            el.classList.remove('is-active', 'active');
+            el.removeAttribute('aria-current');
+          }
+        });
+        reportsNav.classList.add('is-active', 'active');
+        reportsNav.setAttribute('aria-current', 'page');
       }
     }
 

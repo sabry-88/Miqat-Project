@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="accounts_workspace.rep_page_title">التقارير اليومية والنسخ الاحتياطي | منصة ميقات</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Master Application Styles -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page accounts-reports-backup-page">
+  
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link" data-i18n="accounts_workspace.skip_to_content">التخطي إلى المحتوى الرئيسي</a>
+
+  <!-- Top Global Header (Strictly Reused from Workspace Architecture) -->
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      
+      <!-- Brand & Mobile Toggle Area -->
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="فتح قائمة التنقل الجانبية" aria-expanded="false" data-i18n-aria="accounts_workspace.btn_open_menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="accounts-dashboard.html" class="acc-brand-link" aria-label="منصة ميقات للحسابات المالية">
+          <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="accounts_workspace.portal_brand">منصة ميقات للحسابات المالية</span>
+          </div>
+        </a>
+
+        <!-- Prominent Demo Data Badge -->
+        <div class="acc-demo-pill" role="status" aria-label="بيئة تجريبية توضيحية">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span data-i18n="accounts_workspace.demo_badge">بيانات توضيحية تجريبية</span>
+        </div>
+      </div>
+
+      <!-- Header Controls: Lang, Theme, Employee Card, Safe Logout -->
+      <div class="acc-header-actions acc-header-controls">
+        <!-- Language Switcher Button -->
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="acc-lang-switcher" aria-label="Switch to English" title="Switch Language">
+          <span class="lang-btn-text acc-lang-label">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="acc-theme-toggle" aria-label="Switch Theme" title="Toggle Light / Dark Mode">
+          <svg class="icon-moon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Employee Identity Card -->
+        <div class="acc-employee-card" id="acc-employee-card" role="button" tabindex="0" aria-label="بيانات الموظف ومسؤول الحسابات" title="ملف موظف الحسابات | Accounts Officer Profile">
+          <div class="acc-employee-avatar" id="acc-employee-avatar">أ</div>
+          <div class="acc-employee-info acc-employee-details">
+            <span class="acc-employee-name" id="acc-employee-name" data-i18n="accounts_workspace.employee_name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" id="acc-employee-role" data-i18n="accounts_workspace.employee_role_badge">موظف حسابات مالية</span>
+          </div>
+        </div>
+
+        <!-- Safe Logout Button -->
+        <button type="button" class="acc-logout-btn" id="acc-logout-btn" aria-label="تسجيل الخروج الآمن" data-i18n-aria="accounts_workspace.btn_logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="acc-logout-btn-text" data-i18n="accounts_workspace.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Layout Wrapper with Direction-Aware Sidebar -->
+  <div class="acc-layout-wrapper">
+    
+    <!-- Sidebar Drawer Backdrop (Mobile only) -->
+    <div class="acc-sidebar-backdrop acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <!-- 11-Item Shared Employee Sidebar -->
+    <aside class="acc-sidebar" id="acc-sidebar" role="navigation" aria-label="قائمة التنقل المحاسبية">
+      
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="accounts_workspace.nav_workspace_title">أقسام الحسابات المالية</span>
+        <button type="button" class="acc-drawer-close-btn acc-sidebar-close-btn" id="acc-drawer-close-btn" aria-label="إغلاق القائمة" data-i18n-aria="accounts_workspace.btn_close_menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="acc-sidebar-nav acc-nav-list" role="navigation">
+        <!-- 1. Dashboard -->
+        <a href="accounts-dashboard.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"></rect>
+              <rect x="14" y="3" width="7" height="5"></rect>
+              <rect x="14" y="12" width="7" height="9"></rect>
+              <rect x="3" y="16" width="7" height="5"></rect>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_dashboard">لوحة التحكم المالية</span>
+        </a>
+
+        <!-- 2. Customers Directory -->
+        <a href="accounts-customers.html" class="acc-nav-item">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 010 7.75"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customers">دليل العملاء والمعتمرين</span>
+        </a>
+
+        <!-- 3. Customer Profile -->
+        <a href="accounts-customer-details.html" class="acc-nav-item" id="acc-nav-customer-profile">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customer_profile">ملف العميل</span>
+        </a>
+
+        <!-- 4. Unified Bookings Register -->
+        <a href="accounts-bookings.html" class="acc-nav-item" id="acc-nav-bookings">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_bookings">سجل الحجوزات الموحد</span>
+        </a>
+
+        <!-- 5. Program & Itinerary Modifications -->
+        <a href="accounts-trip-changes.html" class="acc-nav-item" id="acc-nav-trip-changes">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_trip_changes">تعديلات البرامج والرحلات</span>
+        </a>
+
+        <!-- 6. Cancellations & Settlements Register -->
+        <a href="accounts-cancellations.html" class="acc-nav-item" id="acc-nav-cancellations">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_cancellations">سجل الإلغاءات والتسوية</span>
+        </a>
+
+        <!-- 7. Collections & Cash Deposits -->
+        <a href="accounts-collections.html" class="acc-nav-item" id="acc-nav-collections">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_collections">التحصيلات والإيداعات النقدية</span>
+        </a>
+
+        <!-- 8. Refund Requests Management -->
+        <a href="accounts-refunds.html" class="acc-nav-item" id="acc-nav-refunds">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_refunds">إدارة طلبات الاسترداد</span>
+        </a>
+
+        <!-- 9. ACTIVE: Reports & Backups -->
+        <a href="accounts-reports-backup.html" class="acc-nav-item active is-active" id="acc-nav-reports" aria-current="page">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_reports">التقارير اليومية والنسخ الاحتياطي</span>
+        </a>
+
+        <!-- 10. Notifications -->
+        <a href="#notifications" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_notifications">الإشعارات والتنبيهات المالية</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+
+        <!-- 11. Profile -->
+        <a href="#profile" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_profile">الملف الشخصي والإعدادات</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+      </nav>
+
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="acc-main-content" id="main-content" role="main">
+      <div class="acc-content-container">
+        
+        <!-- Standard Workspace Page Header -->
+        <div class="acc-page-header">
+          <div class="acc-page-title-wrap">
+            <div class="acc-badge-wrap" style="margin-bottom: 6px;">
+              <span class="acc-status-pill status-pill-amber" data-i18n="accounts_workspace.rep_badge">التقارير والنسخ الاحتياطي | الحسابات المالية</span>
+            </div>
+            <h1 class="acc-page-title" data-i18n="accounts_workspace.rep_header_title">التقارير اليومية والنسخ الاحتياطي</h1>
+            <p class="acc-page-subtitle" data-i18n="accounts_workspace.rep_header_desc">إدارة وتوليد التقارير المالية والتشغيلية، وجدولة النسخ الاحتياطي وسجلات الأرشفة وسعة التخزين</p>
+          </div>
+          
+          <div class="acc-page-header-actions">
+            <button type="button" class="btn btn-secondary" id="rep-btn-inventory-report">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_btn_inventory_report">تقرير جرد النسخ (إكسل)</span>
+            </button>
+
+            <a href="accounts-manual-backup.html" class="btn btn-primary" id="rep-btn-quick-backup">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_btn_quick_backup">بدء نسخ احتياطي فوري</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 3-Section Master Tabs Navigation (Canonical Workspace Tabs) -->
+        <div class="acc-tabs-nav-bar">
+          <div class="acc-tabs-list" role="tablist" aria-label="أقسام التقارير والنسخ الاحتياطي">
+            <button type="button" class="acc-tab-btn is-active" id="tab-btn-reports" role="tab" aria-selected="true" data-tab="reports-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_tab_reports">مركز التقارير المالية والتشغيلية</span>
+            </button>
+
+            <button type="button" class="acc-tab-btn" id="tab-btn-backup" role="tab" aria-selected="false" data-tab="backup-archive">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                <rect x="1" y="3" width="22" height="5"></rect>
+                <line x1="10" y1="12" x2="14" y2="12"></line>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_tab_backup">النسخ الاحتياطي والأرشيف</span>
+            </button>
+
+            <button type="button" class="acc-tab-btn" id="tab-btn-storage" role="tab" aria-selected="false" data-tab="storage-inventory">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+              <span data-i18n="accounts_workspace.rep_tab_storage">المساحة التخزينية وسجل السعة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SECTION 1: REPORTS CENTER (مركز التقارير)                 -->
+        <!-- ======================================================== -->
+        <section class="acc-tab-panel is-active" id="pane-reports-center" role="tabpanel" aria-labelledby="tab-btn-reports" style="display:block;">
+          
+          <!-- Reports Dashboard KPIs (Canonical 5-Column Grid) -->
+          <div class="acc-kpi-grid">
+            <div class="acc-kpi-card">
+              <div class="acc-kpi-header">
+                <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_kpi_generated">إجمالي التقارير المنشأة</span>
+                <div class="acc-kpi-icon icon-blue">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="acc-kpi-val"><bdi dir="ltr">142</bdi></div>
+              <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_kpi_sub_certified">تقرير صادر معتمد</div>
+            </div>
+
+            <div class="acc-kpi-card">
+              <div class="acc-kpi-header">
+                <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_kpi_scheduled">التقارير المجدولة دورياً</span>
+                <div class="acc-kpi-icon icon-gold">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="acc-kpi-val"><bdi dir="ltr">18</bdi></div>
+              <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_kpi_sub_cadence">يومي، أسبوعي، وشهري</div>
+            </div>
+
+            <div class="acc-kpi-card">
+              <div class="acc-kpi-header">
+                <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_kpi_awaiting">بانتظار التوليد / التسليم</span>
+                <div class="acc-kpi-icon icon-amber">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="acc-kpi-val"><bdi dir="ltr">4</bdi></div>
+              <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_kpi_sub_awaiting">تسويات شركات نهاية الأسبوع</div>
+            </div>
+
+            <div class="acc-kpi-card">
+              <div class="acc-kpi-header">
+                <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_kpi_last_generated">آخر تقرير تم توليده</span>
+                <div class="acc-kpi-icon icon-teal">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="acc-kpi-val" style="font-size: 1.05rem;" data-i18n="accounts_workspace.rep_kpi_last_gen_title">المطابقة والعمليات</div>
+              <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_kpi_last_gen_time">اليوم في 09:30 ص (منذ ساعتين)</div>
+            </div>
+
+            <div class="acc-kpi-card">
+              <div class="acc-kpi-header">
+                <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_kpi_engine_status">حالة محرك التقارير</span>
+                <div class="acc-kpi-icon icon-navy">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="acc-kpi-val rep-text-brand" data-i18n="accounts_workspace.rep_kpi_status_active" style="font-size: 1.05rem;">نشط ومتاح للعمليات</div>
+              <div class="acc-kpi-sub"><span data-i18n="accounts_workspace.rep_kpi_export_readiness">جاهزية التصدير:</span> <bdi dir="ltr">XLSX / PDF / CSV</bdi></div>
+            </div>
+          </div>
+
+          <!-- Report Generator Form Card (Canonical .acc-filter-card) -->
+          <div class="acc-filter-card rep-generator-card">
+            <div class="acc-filter-header">
+              <h2 class="acc-filter-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_filter_title">تخصيص وتوليد التقارير المالية والتشغيلية</span>
+              </h2>
+            </div>
+
+            <form class="rep-form" id="rep-generator-form" onsubmit="return false;">
+              
+              <!-- Selection Chips Row (Scope & Frequency) -->
+              <div class="rep-form-options-row">
+                <!-- Scope Selection -->
+                <div class="acc-field-group">
+                  <label class="acc-field-label" data-i18n="accounts_workspace.rep_filter_scope">نطاق التقرير</label>
+                  <div class="acc-filter-chips">
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_scope" value="internal" checked class="visually-hidden">
+                      <span class="acc-chip-btn is-active" data-i18n="accounts_workspace.rep_scope_internal">تقارير ميقات الداخلية (مالية وتفصيلية)</span>
+                    </label>
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_scope" value="company" class="visually-hidden">
+                      <span class="acc-chip-btn" data-i18n="accounts_workspace.rep_scope_company">تقارير شركات السياحة (بيانات معزولة)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Frequency Selection -->
+                <div class="acc-field-group">
+                  <label class="acc-field-label" data-i18n="accounts_workspace.rep_filter_frequency">دورية التقرير</label>
+                  <div class="acc-filter-chips">
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_frequency" value="daily" checked class="visually-hidden">
+                      <span class="acc-chip-btn is-active" data-i18n="accounts_workspace.rep_freq_daily">تقرير يومي</span>
+                    </label>
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_frequency" value="weekly" class="visually-hidden">
+                      <span class="acc-chip-btn" data-i18n="accounts_workspace.rep_freq_weekly">تقرير أسبوعي</span>
+                    </label>
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_frequency" value="monthly" class="visually-hidden">
+                      <span class="acc-chip-btn" data-i18n="accounts_workspace.rep_freq_monthly">تقرير شهري</span>
+                    </label>
+                    <label class="acc-chip-label">
+                      <input type="radio" name="rep_frequency" value="custom" class="visually-hidden">
+                      <span class="acc-chip-btn" data-i18n="accounts_workspace.rep_freq_custom">نطاق زمني مخصص</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Controls Grid -->
+              <div class="acc-filter-grid">
+                <!-- Category Select (Internal scope) -->
+                <div class="acc-field-group" id="rep-category-group">
+                  <label class="acc-field-label" for="rep-filter-category" data-i18n="accounts_workspace.rep_filter_category">تصنيف التقرير</label>
+                  <select class="acc-filter-select" id="rep-filter-category">
+                    <option value="all" data-i18n="accounts_workspace.rep_cat_all">الملخص المالي والتشغيلي المتكامل</option>
+                    <option value="bookings" data-i18n="accounts_workspace.rep_cat_bookings">سجل الحجوزات والتعاقدات</option>
+                    <option value="collections" data-i18n="accounts_workspace.rep_cat_collections">التحصيلات والمدفوعات الإلكترونية</option>
+                    <option value="refunds" data-i18n="accounts_workspace.rep_cat_refunds">طلبات الاسترداد المالي</option>
+                    <option value="cancellations" data-i18n="accounts_workspace.rep_cat_cancellations">الإلغاءات والتسويات المالية</option>
+                    <option value="settlements" data-i18n="accounts_workspace.rep_cat_settlements">تسويات شركات السياحة</option>
+                    <option value="trip_changes" data-i18n="accounts_workspace.rep_cat_trip_changes">تعديلات البرامج والرحلات</option>
+                    <option value="cash_receipts" data-i18n="accounts_workspace.rep_cat_cash_receipts">سندات القبض والإيداعات النقدية</option>
+                  </select>
+                </div>
+
+                <!-- Company Select (Company scope - Strict Isolation) -->
+                <div class="acc-field-group" id="rep-company-group" style="display:none;">
+                  <label class="acc-field-label" for="rep-filter-company" data-i18n="accounts_workspace.rep_filter_company">شركة السياحة المتعاقدة</label>
+                  <select class="acc-filter-select" id="rep-filter-company">
+                    <!-- Populated via JS -->
+                  </select>
+                </div>
+
+                <!-- Date Range (From / To) -->
+                <div class="acc-field-group" id="rep-from-date-group">
+                  <label class="acc-field-label" for="rep-from-date" data-i18n="accounts_workspace.rep_filter_from_date">من تاريخ</label>
+                  <input type="date" class="acc-filter-input" id="rep-from-date" value="2026-11-01">
+                </div>
+
+                <div class="acc-field-group" id="rep-to-date-group">
+                  <label class="acc-field-label" for="rep-to-date" data-i18n="accounts_workspace.rep_filter_to_date">إلى تاريخ</label>
+                  <input type="date" class="acc-filter-input" id="rep-to-date" value="2026-11-23">
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="acc-filter-actions">
+                  <button type="button" class="btn btn-secondary" id="rep-btn-reset-filters" data-i18n="accounts_workspace.rep_btn_reset">إعادة ضبط الفلاتر</button>
+                  <button type="button" class="btn btn-primary" id="rep-btn-generate">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span data-i18n="accounts_workspace.rep_btn_generate">توليد ومعاينة التقرير</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Dynamic Live Summary & Validation Bar -->
+              <div class="rep-form-summary-bar" id="rep-generator-summary-bar">
+                <div class="rep-summary-item">
+                  <span class="rep-summary-label" data-i18n="accounts_workspace.rep_summary_scope_label">نطاق التقرير:</span>
+                  <strong class="rep-summary-val" id="rep-summary-scope-val">تقارير ميقات الداخلية (مالية وتفصيلية)</strong>
+                </div>
+                <div class="rep-summary-sep">|</div>
+                <div class="rep-summary-item">
+                  <span class="rep-summary-label" data-i18n="accounts_workspace.rep_summary_period_label">دورية التقرير:</span>
+                  <strong class="rep-summary-val" id="rep-summary-period-val">تقرير يومي (2026-11-23 إلى 2026-11-23)</strong>
+                </div>
+                <div class="rep-summary-sep">|</div>
+                <div class="rep-summary-item">
+                  <span class="rep-summary-label" data-i18n="accounts_workspace.rep_summary_status_label">حالة التوليد:</span>
+                  <span class="acc-status-pill status-pill-navy" id="rep-summary-status-pill">جاهز للمعاينة والتصدير</span>
+                </div>
+              </div>
+              <div class="rep-form-validation-msg" id="rep-company-validation-msg" style="display:none;" role="alert">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_company_val_msg">يرجى اختيار شركة السياحة المتعاقدة لتوليد التقرير المعزول.</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Recently Generated Reports Table Card (Canonical .acc-table-card) -->
+          <div class="acc-table-card rep-table-card">
+            <div class="acc-table-card-header">
+              <div>
+                <h2 class="acc-table-title" data-i18n="accounts_workspace.rep_recent_reports_title">سجل التقارير المنشأة والمجدولة حديثاً</h2>
+                <p class="acc-table-subtitle" data-i18n="accounts_workspace.rep_recent_reports_sub">أحدث التقارير الجاهزة للمعاينة التفصيلية والتصدير المباشر</p>
+              </div>
+              <span class="acc-status-pill status-pill-slate" id="rep-history-badge">6 تقارير جاهزة للتصدير</span>
+            </div>
+
+            <!-- Report History Search & Filter Toolbar -->
+            <div class="rep-history-toolbar">
+              <div class="rep-history-search-wrap">
+                <input type="text" class="acc-filter-input" id="rep-history-search" placeholder="بحث باسم التقرير أو الرقم المرجعي أو الشركة..." aria-label="بحث في سجل التقارير" data-i18n="accounts_workspace.rep_history_search_placeholder">
+              </div>
+              <div class="rep-history-filters-wrap">
+                <select class="acc-filter-select" id="rep-history-scope-select" aria-label="تصفية حسب النطاق">
+                  <option value="all" data-i18n="accounts_workspace.rep_scope_all_desc">كافة النطاقات (داخلي ومعزول)</option>
+                  <option value="internal" data-i18n="accounts_workspace.rep_scope_internal_simple">تقارير ميقات الداخلية</option>
+                  <option value="company" data-i18n="accounts_workspace.rep_scope_company_simple">تقارير شركات السياحة</option>
+                </select>
+                <select class="acc-filter-select" id="rep-history-status-select" aria-label="تصفية حسب الحالة">
+                  <option value="all" data-i18n="accounts_workspace.rep_status_filter_all">كافة الحالات</option>
+                  <option value="ready" data-i18n="accounts_workspace.rep_status_filter_certified">معتمد وجاهز</option>
+                  <option value="scheduled" data-i18n="accounts_workspace.rep_status_filter_scheduled">مجدول دورياً</option>
+                </select>
+                <button type="button" class="btn btn-sm btn-secondary" id="rep-history-reset-btn" title="إعادة الضبط" data-i18n="accounts_workspace.rep_history_reset">إعادة ضبط</button>
+              </div>
+              <div class="rep-history-count-wrap">
+                <span class="acc-status-pill status-pill-slate" id="rep-history-count-badge">عرض 6 من 6 تقارير</span>
+              </div>
+            </div>
+
+            <div class="acc-table-responsive">
+              <table class="acc-table" id="rep-reports-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="accounts_workspace.rep_col_report_name">اسم التقرير والمحتوى</th>
+                    <th data-i18n="accounts_workspace.rep_col_report_type">النوع والدورية</th>
+                    <th data-i18n="accounts_workspace.rep_col_scope">النطاق والجهة</th>
+                    <th data-i18n="accounts_workspace.rep_col_gen_date">تاريخ وتوقيت التوليد</th>
+                    <th data-i18n="accounts_workspace.rep_col_size">الحجم التقديري</th>
+                    <th data-i18n="accounts_workspace.rep_col_status">الحالة</th>
+                    <th data-i18n="accounts_workspace.rep_col_action">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="rep-reports-table-body">
+                  <!-- Populated via accounts-reports-backup.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- SECTION 2: BACKUP & ARCHIVE (النسخ الاحتياطي والأرشيف)    -->
+        <!-- ======================================================== -->
+        <section class="acc-tab-panel" id="pane-backup-archive" role="tabpanel" aria-labelledby="tab-btn-backup" style="display:none;">
+          
+          <!-- 12-Hour Automatic Schedule Overview Banner -->
+          <div class="acc-card rep-auto-banner" id="rep-auto-schedule-banner">
+            <div class="rep-auto-banner-content">
+              <div class="rep-auto-badge-row">
+                <span class="acc-status-pill status-pill-navy" data-i18n="accounts_workspace.rep_bk_schedule_12h">الجدول الآلي المعتمد: كل 12 ساعة</span>
+                <span class="acc-status-pill status-pill-blue" data-i18n="accounts_workspace.rep_bk_verified_sha">مكتمل ومتحقق SHA-256</span>
+              </div>
+              <h2 class="rep-auto-title" data-i18n="accounts_workspace.rep_bk_auto_title">الجدول الدوري الآلي للنسخ الاحتياطي</h2>
+              
+              <div class="rep-auto-stats-grid">
+                <div class="rep-auto-stat-item">
+                  <span class="rep-auto-stat-label" data-i18n="accounts_workspace.rep_bk_last_backup">آخر نسخة احتياطية مكتملة</span>
+                  <strong class="rep-auto-stat-val" id="rep-auto-last-backup-val"><bdi dir="ltr">2026-11-23 04:00 (2.84 GB)</bdi></strong>
+                </div>
+
+                <div class="rep-auto-stat-item">
+                  <span class="rep-auto-stat-label" data-i18n="accounts_workspace.rep_bk_next_backup">النسخة القادمة المجدولة</span>
+                  <strong class="rep-auto-stat-val text-accent" id="rep-auto-next-backup-val" data-i18n="accounts_workspace.rep_bk_next_backup_time">اليوم في 04:00 م</strong>
+                </div>
+
+                <div class="rep-auto-stat-item">
+                  <span class="rep-auto-stat-label" data-i18n="accounts_workspace.rep_bk_integrity_status">فحص سلامة وتطابق البيانات</span>
+                  <strong class="rep-auto-stat-val text-accent" id="rep-auto-integrity-val" data-i18n="accounts_workspace.rep_bk_integrity_verified_val">متحقق ومطابق 100% (SHA-256)</strong>
+                </div>
+              </div>
+
+              <!-- Permanent Archive Notice (Zero Auto-Deletion) -->
+              <div class="rep-permanent-notice">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_bk_archive_notice">أرشيف دائم غير قابل للحذف التلقائي: يتم الاحتفاظ بكافة ملفات النسخ الاحتياطي دون تطبيق سياسة انتهاء صلاحية أو حذف دوري.</span>
+              </div>
+            </div>
+
+            <div class="rep-auto-banner-action">
+              <a href="accounts-manual-backup.html" class="btn btn-primary" id="rep-btn-manual-backup">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_bk_manual_btn">بدء نسخ احتياطي يدوي</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Active Failed Backup Warning Banner (Traceable Retry) -->
+          <div class="acc-alert-card rep-failed-alert" id="rep-failed-alert-banner" style="display:none;">
+            <div class="acc-alert-icon text-warning">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="acc-alert-content">
+              <h3 class="acc-alert-title" data-i18n="accounts_workspace.rep_bk_failed_alert_title">تنبيه تشغيلي: توجد عملية نسخ احتياطي فاشلة تحتاج إلى تدقيق</h3>
+              <p class="acc-alert-desc" id="rep-failed-reason-text" data-i18n="accounts_workspace.rep_bk_failed_reason">انقطاع مؤقت في الاتصال بوحدة التخزين السحابية الثانوية (S3 Replica Connection Timeout)</p>
+            </div>
+            <div class="acc-alert-actions">
+              <button type="button" class="btn btn-secondary" id="rep-btn-retry-failed-banner" data-i18n="accounts_workspace.rep_bk_btn_retry">إعادة المحاولة (Retry)</button>
+            </div>
+          </div>
+
+          <!-- Advanced Combined Filters Card (Canonical .acc-filter-card) -->
+          <div class="acc-filter-card rep-bk-filters-card">
+            <div class="acc-filter-header">
+              <h2 class="acc-filter-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_bk_filter_title">أرشيف النسخ الاحتياطي وفلاتر البحث المتقدمة</span>
+              </h2>
+              <span class="acc-status-pill status-pill-slate" id="rep-bk-active-filter-badge" style="display:none;">0 فلاتر نشطة</span>
+            </div>
+
+            <div class="acc-filter-grid">
+              
+              <!-- Search by Backup ID or Reference -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-search-input" data-i18n="accounts_workspace.rep_bk_lbl_search">البحث برقم النسخة أو البصمة</label>
+                <input type="text" class="acc-filter-input" id="rep-bk-search-input" placeholder="بحث برقم النسخة (BK-...) أو المرجع..." data-i18n="accounts_workspace.rep_bk_search_placeholder">
+              </div>
+
+              <!-- Backup Type -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-type" data-i18n="accounts_workspace.rep_bk_lbl_type">نوع النسخ</label>
+                <select class="acc-filter-select" id="rep-bk-filter-type">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_type_all">كافة أنواع النسخ</option>
+                  <option value="auto" data-i18n="accounts_workspace.rep_bk_type_auto">تلقائي (كل 12 س)</option>
+                  <option value="manual" data-i18n="accounts_workspace.rep_bk_type_manual">يدوي (موظف حسابات)</option>
+                  <option value="pre" data-i18n="accounts_workspace.rep_bk_type_pre">ما قبل التحديث (Pre-deployment)</option>
+                </select>
+              </div>
+
+              <!-- Status -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-status" data-i18n="accounts_workspace.rep_bk_lbl_status">الحالة التشغيلية</label>
+                <select class="acc-filter-select" id="rep-bk-filter-status">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_status_all">كافة الحالات</option>
+                  <option value="success" data-i18n="accounts_workspace.rep_bk_status_success">ناجح ومكتمل</option>
+                  <option value="failed" data-i18n="accounts_workspace.rep_bk_status_failed">فاشل</option>
+                  <option value="progress" data-i18n="accounts_workspace.rep_bk_status_progress">قيد التنفيذ</option>
+                </select>
+              </div>
+
+              <!-- Initiator -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-initiator" data-i18n="accounts_workspace.rep_bk_lbl_initiator">المنفذ / المحرك</label>
+                <select class="acc-filter-select" id="rep-bk-filter-initiator">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_init_all">كافة المنفذين</option>
+                  <option value="system" data-i18n="accounts_workspace.rep_bk_init_system">مجدول النظام الآلي (System)</option>
+                  <option value="ahmed" data-i18n="accounts_workspace.rep_bk_init_operator">موظف الحسابات</option>
+                  <option value="devops" data-i18n="accounts_workspace.rep_bk_init_devops">فريق DevOps (ما قبل التحديث)</option>
+                </select>
+              </div>
+
+              <!-- Scope -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-scope" data-i18n="accounts_workspace.rep_bk_lbl_scope">نطاق النسخة</label>
+                <select class="acc-filter-select" id="rep-bk-filter-scope">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_scope_all">كافة النطاقات</option>
+                  <option value="full" data-i18n="accounts_workspace.rep_bk_scope_full">النظام المتكامل وقاعدة البيانات</option>
+                  <option value="trans" data-i18n="accounts_workspace.rep_bk_scope_trans">سجل المعاملات والعمليات</option>
+                  <option value="docs" data-i18n="accounts_workspace.rep_bk_scope_docs">المستندات والإيصالات الرقمية</option>
+                </select>
+              </div>
+
+              <!-- Integrity -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-integrity" data-i18n="accounts_workspace.rep_bk_lbl_integrity">مطابقة السلامة</label>
+                <select class="acc-filter-select" id="rep-bk-filter-integrity">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_integ_all">كافة حالات المطابقة</option>
+                  <option value="verified" data-i18n="accounts_workspace.rep_bk_integ_verified">متحقق ومطابق 100%</option>
+                  <option value="compromised" data-i18n="accounts_workspace.rep_bk_integ_compromised">غير مكتمل / خطأ فحص</option>
+                </select>
+              </div>
+
+              <!-- Restore Status -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-filter-restore" data-i18n="accounts_workspace.rep_bk_lbl_restore">حالة الاسترجاع</label>
+                <select class="acc-filter-select" id="rep-bk-filter-restore">
+                  <option value="all" data-i18n="accounts_workspace.rep_bk_restore_status_all">كافة حالات الاسترجاع</option>
+                  <option value="never" data-i18n="accounts_workspace.rep_bk_restore_never">لم تُسترجع من قبل</option>
+                  <option value="used" data-i18n="accounts_workspace.rep_bk_restore_used">تم استرجاعها سابقاً</option>
+                </select>
+              </div>
+
+              <!-- Date Range From / To -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-from-date" data-i18n="accounts_workspace.rep_filter_from_date">من تاريخ</label>
+                <input type="date" class="acc-filter-input" id="rep-bk-from-date">
+              </div>
+
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-to-date" data-i18n="accounts_workspace.rep_filter_to_date">إلى تاريخ</label>
+                <input type="date" class="acc-filter-input" id="rep-bk-to-date">
+              </div>
+
+              <!-- Sort -->
+              <div class="acc-field-group">
+                <label class="acc-field-label" for="rep-bk-sort-select" data-i18n="accounts_workspace.rep_bk_lbl_sort">الترتيب</label>
+                <select class="acc-filter-select" id="rep-bk-sort-select">
+                  <option value="date_desc" data-i18n="accounts_workspace.rep_bk_sort_date_desc">التاريخ (من الأحدث للأقدم)</option>
+                  <option value="date_asc" data-i18n="accounts_workspace.rep_bk_sort_date_asc">التاريخ (من الأقدم للأحدث)</option>
+                  <option value="size_desc" data-i18n="accounts_workspace.rep_bk_sort_size_desc">الحجم (من الأكبر للأصغر)</option>
+                  <option value="size_asc" data-i18n="accounts_workspace.rep_bk_sort_size_asc">الحجم (من الأصغر للأكبر)</option>
+                </select>
+              </div>
+
+              <!-- Reset Action -->
+              <div class="acc-filter-actions">
+                <button type="button" class="btn btn-secondary" id="rep-btn-reset-bk-filters" data-i18n="accounts_workspace.rep_bk_btn_reset">إعادة ضبط فلاتر الأرشيف</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Backup History Table Card (Canonical .acc-table-card) -->
+          <div class="acc-table-card rep-bk-table-card">
+            <div class="acc-table-card-header">
+              <div>
+                <h2 class="acc-table-title" data-i18n="accounts_workspace.rep_bk_table_title">سجل عمليات النسخ الاحتياطي (التاريخ والأرشيف)</h2>
+                <p class="acc-table-subtitle" data-i18n="accounts_workspace.rep_bk_table_subtitle">سجل كامل ودائم لكافة العمليات المنفذة آلياً ويدوياً</p>
+              </div>
+              <span class="acc-table-count-text" id="rep-bk-result-count-text">عرض 6 من أصل 12 نسخة احتياطية</span>
+            </div>
+
+            <div class="acc-table-responsive">
+              <table class="acc-table" id="rep-backup-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="accounts_workspace.rep_bk_col_id">رقم النسخة المعياري</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_date">التاريخ والتوقيت</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_type">النوع</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_initiator">المنفذ / المحرك</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_scope">نطاق النسخة</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_size">الحجم الفعلي</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_status">الحالة التشغيلية</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_integrity">مطابقة السلامة</th>
+                    <th data-i18n="accounts_workspace.rep_bk_col_actions">الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="rep-backup-table-body">
+                  <!-- Populated via accounts-reports-backup.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Controls (Canonical) -->
+            <div class="acc-pagination-wrap" id="rep-bk-pagination-wrap">
+              <button type="button" class="btn btn-sm btn-secondary" id="rep-bk-btn-prev" data-i18n="accounts_workspace.pagination_prev">السابق</button>
+              <span class="acc-page-info" id="rep-bk-page-info">1 / 2</span>
+              <button type="button" class="btn btn-sm btn-secondary" id="rep-bk-btn-next" data-i18n="accounts_workspace.pagination_next">التالي</button>
+            </div>
+          </div>
+
+          <!-- Restore History Table Card (STRICTLY READ-ONLY) -->
+          <div class="acc-table-card rep-rst-table-card">
+            <div class="acc-table-card-header">
+              <div class="rep-card-title-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 4v6h6"></path>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <h2 class="acc-table-title" data-i18n="accounts_workspace.rep_rst_title">سجل عمليات الاسترجاع السابقة (للقراءة والتدقيق فقط)</h2>
+              </div>
+              <span class="acc-status-pill status-pill-amber" data-i18n="accounts_workspace.rep_rst_badge_readonly">سجل للعرض والتدقيق فقط (Read-Only)</span>
+            </div>
+
+            <!-- Explanatory Security Note: Accounts employees CANNOT execute Restore -->
+            <div class="rep-restore-security-note">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <div class="rep-restore-security-text">
+                <strong data-i18n="accounts_workspace.rep_rst_security_note">حدود الصلاحيات المعتمدة: تقتصر صلاحيات موظف الحسابات المالية على الاطلاع الكامل على سجل وتاريخ عمليات الاسترجاع لأغراض الرقابة والتدقيق المالي. تنفيذ عمليات الاسترجاع الفعلية (Restore) مقيد حصرياً بمسؤولي النظام العام (Admin) ولا يتوفر له زر تنفيذ في واجهة الحسابات.</strong>
+              </div>
+            </div>
+
+            <div class="acc-table-responsive">
+              <table class="acc-table" id="rep-restore-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="accounts_workspace.rep_rst_col_id">رقم عملية الاسترجاع</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_source_bk">النسخة المصدر</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_executed_by">الجهة المنفذة</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_target_env">البيئة المستهدفة</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_date">تاريخ التنفيذ</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_status">الحالة</th>
+                    <th data-i18n="accounts_workspace.rep_rst_col_notes">ملاحظات الاعتماد والتدقيق</th>
+                  </tr>
+                </thead>
+                <tbody id="rep-restore-table-body">
+                  <!-- Populated via accounts-reports-backup.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- SECTION 3: STORAGE & INVENTORY (المساحة التخزينية وسجل السعة) -->
+        <!-- ======================================================== -->
+        <section class="acc-tab-panel" id="pane-storage-inventory" role="tabpanel" aria-labelledby="tab-btn-storage" style="display:none;">
+          
+          <!-- Storage Capacity High-Density Numeric Data Panel (NO PROGRESS BARS) -->
+          <div class="acc-card rep-st-overview-card">
+            <div class="acc-card-header">
+              <div class="rep-card-title-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+                <h2 class="acc-card-title" data-i18n="accounts_workspace.rep_st_overview_title">نظرة عامة على السعة التخزينية المتاحة والمستهلكة</h2>
+              </div>
+              <span class="acc-status-pill status-pill-amber" data-i18n="accounts_workspace.rep_st_current_level_pill">المستوى الحالي: 73.4% (تحذير مبكر)</span>
+            </div>
+
+            <div class="acc-card-body">
+              <div class="acc-kpi-grid rep-st-kpi-grid">
+                
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_total">إجمالي السعة التخزينية</span>
+                    <div class="acc-kpi-icon icon-blue">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val" id="rep-st-total-val"><bdi dir="ltr">10.00 TB (10,240 GB)</bdi></div>
+                  <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_st_sub_total">الحجم الكلي المخصص لوحدة التخزين</div>
+                </div>
+
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_used">المساحة المستهلكة حالياً</span>
+                    <div class="acc-kpi-icon icon-amber">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val text-warning" id="rep-st-used-val"><bdi dir="ltr">7.34 TB (7,516 GB)</bdi></div>
+                  <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_st_sub_used">المستهلك الفعلي لكافة النسخ والسجلات</div>
+                </div>
+
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_remaining">المساحة المتبقية الشاغرة</span>
+                    <div class="acc-kpi-icon icon-navy">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val rep-text-brand" id="rep-st-remaining-val"><bdi dir="ltr">2.66 TB (2,724 GB)</bdi></div>
+                  <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_st_sub_remaining">المساحة الشاغرة القابلة للاستيعاب</div>
+                </div>
+
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_percentage">نسبة الاستهلاك الإجمالية</span>
+                    <div class="acc-kpi-icon icon-gold">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val text-warning" id="rep-st-percent-val"><bdi dir="ltr">73.4%</bdi></div>
+                  <div class="acc-kpi-sub" data-i18n="accounts_workspace.rep_st_sub_percent">تجاوزت عتبة التحذير المبكر (70%)</div>
+                </div>
+
+              </div>
+
+              <!-- Active Warning Banner (Usage 73.4% > 70%) -->
+              <div class="acc-alert-card rep-st-alert-banner" id="rep-st-alert-banner">
+                <div class="acc-alert-icon text-warning">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <div class="acc-alert-content">
+                  <strong data-i18n="accounts_workspace.rep_st_alert_banner_70">تنبيه مستوى السعة (تحذير مبكر): بلغت نسبة استخدام السعة التخزينية 73.4% متجاوزة عتبة التحذير المبكر (70%). يُوصى بالتنسيق مع الدعم الفني للتخطيط لترقية السعة قبل ملامسة عتبة الاستخدام المرتفع (85%).</strong>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Storage Growth & Estimated Time to Full Card -->
+          <div class="acc-card rep-st-growth-card">
+            <div class="acc-card-header">
+              <div class="rep-card-title-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+                <h2 class="acc-card-title" data-i18n="accounts_workspace.rep_st_growth_title">معدل النمو الزمني وتوقعات استنفاد السعة</h2>
+              </div>
+            </div>
+
+            <div class="acc-card-body">
+              <div class="acc-kpi-grid rep-st-kpi-grid rep-st-kpi-grid--growth">
+                
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_avg_backup_size">متوسط استهلاك النسخة (كل 12 ساعة)</span>
+                    <div class="acc-kpi-icon icon-blue">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val" id="rep-st-avg-bk-val"><bdi dir="ltr">~2.82 GB</bdi> / نسخة</div>
+                  <div class="acc-kpi-sub">المعدل الحسابي لآخر 12 نسخة</div>
+                </div>
+
+                <div class="acc-kpi-card">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_monthly_growth">معدل النمو الشهري التقديري</span>
+                    <div class="acc-kpi-icon icon-teal">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val" id="rep-st-monthly-rate-val"><bdi dir="ltr">~169.2 GB</bdi> / شهرياً</div>
+                  <div class="acc-kpi-sub">بافتراض وتيرة 60 نسخة شهرياً</div>
+                </div>
+
+                <div class="acc-kpi-card" style="border-color: var(--color-accent);">
+                  <div class="acc-kpi-header">
+                    <span class="acc-kpi-title" data-i18n="accounts_workspace.rep_st_est_time_to_full">الوقت المقدر لبلوغ السعة القصوى</span>
+                    <div class="acc-kpi-icon icon-gold">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="acc-kpi-val text-accent" id="rep-st-est-time-val"><bdi dir="ltr">~16.1</bdi> شهراً (483 يوماً تقريباً)</div>
+                  <div class="acc-kpi-sub">المتبقي حتى الوصول إلى سعة 100%</div>
+                </div>
+
+              </div>
+
+              <!-- Prominent Estimate Disclaimer Badge -->
+              <div class="rep-st-disclaimer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span data-i18n="accounts_workspace.rep_st_est_disclaimer">ملاحظة هامة: هذا التقدير تقريبي مبني على معدل الاستهلاك التاريخي في مجموعة البيانات المتاحة، وليس موعداً نهائياً ملزماً.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Storage Inventory Breakdown Cards -->
+          <div class="rep-st-breakdowns-layout">
+            
+            <!-- Breakdown by Category (Interactive Cards with Tabindex and Tooltips) -->
+            <div class="acc-card rep-st-breakdown-box">
+              <div class="acc-card-header">
+                <h3 class="acc-card-title" data-i18n="accounts_workspace.rep_st_cat_breakdown_title">توزيع استهلاك المساحة التخزينية حسب نوع البيانات</h3>
+              </div>
+              <div class="acc-card-body" id="rep-st-cat-breakdown-grid">
+                <!-- Populated via accounts-reports-backup.js with interactive tooltips -->
+              </div>
+            </div>
+
+            <!-- Breakdown by Time Period -->
+            <div class="acc-card rep-st-breakdown-box">
+              <div class="acc-card-header">
+                <h3 class="acc-card-title" data-i18n="accounts_workspace.rep_st_period_breakdown_title">توزيع استهلاك المساحة التخزينية حسب الفترات الزمنية</h3>
+              </div>
+              <div class="acc-card-body" id="rep-st-period-breakdown-grid">
+                <!-- Populated via accounts-reports-backup.js -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Shared Safe Logout Protective Dialog -->
+  <div class="acc-modal-backdrop" id="acc-logout-modal" role="dialog" aria-modal="true" aria-labelledby="acc-logout-title" style="display: none;">
+    <div class="acc-modal-card">
+      <div class="acc-modal-header">
+        <h3 class="acc-modal-title" id="acc-logout-title" data-i18n="accounts_workspace.logout_confirm_title">تأكيد تسجيل الخروج الآمن</h3>
+      </div>
+      <div class="acc-modal-body">
+        <p data-i18n="accounts_workspace.logout_confirm_msg">هل أنت متأكد من رغبتك في تسجيل الخروج من منصة الحسابات؟ سيتم حفظ كافة عمليات التدقيق المكتملة بأمان.</p>
+      </div>
+      <div class="acc-modal-footer">
+        <button type="button" class="btn btn-secondary" id="acc-logout-cancel-btn" data-i18n="accounts_workspace.dlg_btn_cancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="acc-logout-confirm-btn" data-i18n="accounts_workspace.btn_logout">تأكيد تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Script Dependencies -->
+  <script src="./assets/xlsx.full.min.js"></script>
+  <script src="./accounts-mock-data.js"></script>
+  <script src="./accounts-workspace.js"></script>
+  <script src="./accounts-reports-backup.js"></script>
+</body>
+</html>

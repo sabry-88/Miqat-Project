@@ -35484,3 +35484,2960 @@ html[dir="ltr"] .acc-timeline-marker {
   color: var(--color-accent) !important;
   border-color: var(--color-accent) !important;
 }
+
+
+/* ==========================================================================
+   PAGE 9: DAILY REPORTS & BACKUP WORKSPACE STYLES (.accounts-reports-backup-page)
+   Reconstructed Canonical Design System Architecture (Rule 6 Zero Overflow)
+   ========================================================================== */
+
+/* Canonical Content Containers */
+.accounts-reports-backup-page .acc-content-container,
+.accounts-report-details-page .acc-content-container,
+.accounts-manual-backup-page .acc-content-container,
+.accounts-report-export-page .acc-content-container {
+  width: 100%;
+  max-width: var(--container-max, 1320px);
+  min-width: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Canonical Card Architecture */
+.accounts-reports-backup-page .acc-card,
+.accounts-report-details-page .acc-card,
+.accounts-manual-backup-page .acc-card,
+.accounts-report-export-page .acc-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 12px);
+  color: var(--color-text);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-reports-backup-page .acc-card-header,
+.accounts-report-details-page .acc-card-header,
+.accounts-manual-backup-page .acc-card-header,
+.accounts-report-export-page .acc-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .acc-card-title,
+.accounts-report-details-page .acc-card-title,
+.accounts-manual-backup-page .acc-card-title,
+.accounts-report-export-page .acc-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-text);
+  margin: 0;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .acc-card-body,
+.accounts-report-details-page .acc-card-body,
+.accounts-manual-backup-page .acc-card-body,
+.accounts-report-export-page .acc-card-body {
+  min-width: 0;
+}
+
+/* Canonical KPI Typography & Proportions */
+.accounts-reports-backup-page .acc-kpi-val {
+  font-size: 1.30rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  color: var(--color-text);
+}
+
+.accounts-reports-backup-page .acc-kpi-title {
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .acc-kpi-sub {
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+/* Canonical Table Architecture & Typography */
+.accounts-reports-backup-page .acc-table,
+.accounts-report-details-page .acc-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+
+.accounts-reports-backup-page .acc-table thead,
+.accounts-report-details-page .acc-table thead {
+  background-color: var(--color-surface-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-table tbody tr,
+.accounts-report-details-page .acc-table tbody tr {
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+.accounts-reports-backup-page .acc-table tbody tr:last-child,
+.accounts-report-details-page .acc-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.accounts-reports-backup-page .acc-table tbody tr:hover,
+.accounts-report-details-page .acc-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.accounts-reports-backup-page .acc-table th,
+.accounts-report-details-page .acc-table th {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-text-muted);
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.accounts-reports-backup-page .acc-table td,
+.accounts-report-details-page .acc-table td {
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text);
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+
+/* Canonical Table Action Buttons */
+.accounts-reports-backup-page .acc-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.accounts-reports-backup-page .acc-table-actions .btn {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  gap: 4px;
+}
+
+.accounts-reports-backup-page .acc-table-actions .btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Canonical Institutional Status Pills (Zero-Red / Zero-Green Compliant) */
+.accounts-reports-backup-page .acc-status-pill,
+.accounts-report-details-page .acc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.accounts-reports-backup-page .acc-status-pill.status-pill-navy,
+.accounts-report-details-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-status-pill.status-pill-amber,
+.accounts-report-details-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-status-pill.status-pill-blue,
+.accounts-report-details-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-status-pill.status-pill-indigo,
+.accounts-report-details-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-status-pill.status-pill-slate,
+.accounts-report-details-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-status-pill.status-pill-navy,
+[data-theme="dark"] .accounts-report-details-page .acc-status-pill.status-pill-navy {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-status-pill.status-pill-amber,
+[data-theme="dark"] .accounts-report-details-page .acc-status-pill.status-pill-amber {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-status-pill.status-pill-blue,
+[data-theme="dark"] .accounts-report-details-page .acc-status-pill.status-pill-blue {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-link);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-status-pill.status-pill-indigo,
+[data-theme="dark"] .accounts-report-details-page .acc-status-pill.status-pill-indigo {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-status-pill.status-pill-slate,
+[data-theme="dark"] .accounts-report-details-page .acc-status-pill.status-pill-slate {
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* Report Generator Form Specifics (Complements .acc-filter-card) */
+.accounts-reports-backup-page .rep-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.accounts-reports-backup-page .rep-form-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accounts-reports-backup-page .acc-chip-label {
+  cursor: pointer;
+  margin: 0;
+  display: inline-flex;
+}
+
+.accounts-reports-backup-page .acc-chip-label input:checked + .acc-chip-btn {
+  background-color: var(--color-accent-soft);
+  color: var(--color-primary);
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-chip-label input:checked + .acc-chip-btn {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.accounts-reports-backup-page .acc-filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+/* Tables & Metadata Typography */
+.accounts-reports-backup-page .rep-table-title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-table-subtext {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .rep-table-mono,
+.accounts-report-details-page .rep-table-mono,
+.accounts-manual-backup-page .rep-table-mono,
+.accounts-report-export-page .rep-table-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.accounts-reports-backup-page .rep-scope-tag {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.accounts-reports-backup-page .rep-initiator-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* SECTION 2: Auto Backup Schedule Banner */
+.accounts-reports-backup-page .rep-auto-banner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-auto-banner-content {
+  flex: 1 1 400px;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-auto-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.accounts-reports-backup-page .rep-auto-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 1rem 0;
+}
+
+.accounts-reports-backup-page .rep-auto-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accounts-reports-backup-page .rep-auto-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.accounts-reports-backup-page .rep-auto-stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .rep-auto-stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-reports-backup-page .rep-permanent-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-secondary);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  margin-top: 0.75rem;
+}
+
+.accounts-reports-backup-page .rep-permanent-notice svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-permanent-notice svg {
+  color: var(--color-link);
+}
+
+.accounts-reports-backup-page .rep-auto-banner-action {
+  flex-shrink: 0;
+}
+
+/* Failed Alert Banner (Brand-Aligned Warning Tokens, Zero-Red) */
+.accounts-reports-backup-page .rep-failed-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-failed-alert .acc-alert-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-failed-alert .acc-alert-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.accounts-reports-backup-page .rep-failed-alert .acc-alert-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Restore Security Note (Read-Only) */
+.accounts-reports-backup-page .rep-restore-security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--color-accent-soft);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.85rem 1.25rem;
+}
+
+.accounts-reports-backup-page .rep-restore-security-note svg {
+  color: var(--color-warning);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.accounts-reports-backup-page .rep-restore-security-text {
+  font-size: 0.84rem;
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+.accounts-reports-backup-page .rep-notes-text {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 300px;
+  word-break: break-word;
+  padding-bottom: 0; 
+}
+
+/* SECTION 3: Storage & Capacity (ZERO PROGRESS BARS) */
+.accounts-reports-backup-page .rep-st-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  color: var(--color-text);
+  margin-top: 0.75rem;
+}
+
+.accounts-reports-backup-page .rep-st-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+}
+
+/* Storage Breakdowns Layout */
+.accounts-reports-backup-page .rep-st-breakdowns-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-st-breakdown-box {
+  margin-bottom: 0;
+}
+
+/* Interactive Category Cards (ZERO PROGRESS BARS) */
+.accounts-reports-backup-page .rep-st-cat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.15rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.accounts-reports-backup-page .rep-st-cat-card:hover,
+.accounts-reports-backup-page .rep-st-cat-card:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-st-cat-card:hover,
+[data-theme="dark"] .accounts-reports-backup-page .rep-st-cat-card:focus-visible {
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface-secondary);
+}
+
+.accounts-reports-backup-page .rep-st-cat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-reports-backup-page .rep-st-cat-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.accounts-reports-backup-page .rep-st-cat-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.accounts-reports-backup-page .rep-st-cat-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accounts-reports-backup-page .rep-st-cat-pct-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-secondary);
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.accounts-reports-backup-page .rep-st-cat-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+}
+
+.accounts-reports-backup-page .rep-st-stat-size {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.accounts-reports-backup-page .rep-st-cat-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Tooltip on hover/focus */
+.accounts-reports-backup-page .rep-st-cat-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(90vw, 300px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  z-index: 50;
+  flex-direction: column;
+  gap: 0.4rem;
+  pointer-events: none;
+  font-size: 0.8rem;
+}
+
+html[dir="rtl"] .accounts-reports-backup-page .rep-st-cat-tooltip {
+  transform: translateX(50%);
+}
+
+.accounts-reports-backup-page .rep-st-cat-card:hover .rep-st-cat-tooltip,
+.accounts-reports-backup-page .rep-st-cat-card:focus-visible .rep-st-cat-tooltip {
+  display: flex;
+}
+
+.accounts-reports-backup-page .rep-st-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.accounts-reports-backup-page .rep-st-tooltip-row span {
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .rep-st-tooltip-row strong {
+  color: var(--color-text);
+}
+
+.accounts-reports-backup-page .rep-st-period-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.accounts-reports-backup-page .rep-st-period-card:last-child {
+  border-bottom: none;
+}
+
+.accounts-reports-backup-page .rep-st-period-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+}
+
+.accounts-reports-backup-page .rep-st-period-size {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+
+
+/* Responsive Breakpoints & Sizing Guarantees (Rule 6 Compliance) */
+@media (max-width: 768px) {
+  .accounts-reports-backup-page .rep-auto-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-reports-backup-page .rep-auto-banner-action {
+    width: 100%;
+  }
+
+  .accounts-reports-backup-page .rep-auto-banner-action .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-reports-backup-page .rep-form-options-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .accounts-reports-backup-page .acc-filter-actions {
+    flex-direction: column-reverse;
+  }
+
+  .accounts-reports-backup-page .acc-filter-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   ACCOUNTS REPORT DETAILS PAGE (.accounts-report-details-page)
+   Zero Horizontal Overflow Compliant (Rule 6)
+   ========================================================================== */
+.accounts-report-details-page .rep-det-header {
+  margin-bottom: 1.5rem;
+  min-width: 0;
+  padding: 14px 20px;
+}
+
+.accounts-report-details-page .rep-det-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.accounts-report-details-page .rep-det-header-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.accounts-report-details-page .rep-det-id-badge {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-surface-secondary);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-report-details-page .rep-det-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.accounts-report-details-page .rep-det-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.accounts-report-details-page .rep-det-header-actions .btn {
+  height: 38px;
+  padding: 0 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-md, 8px);
+}
+
+.accounts-report-details-page .rep-det-meta-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.accounts-report-details-page .rep-det-meta-main {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.accounts-report-details-page .rep-det-title {
+  font-size: clamp(1.2rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.35rem 0;
+  line-height: 1.35;
+}
+
+.accounts-report-details-page .rep-det-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.accounts-report-details-page .rep-det-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.accounts-report-details-page .rep-det-meta-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.accounts-report-details-page .rep-det-meta-pill .pill-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-report-details-page .rep-det-meta-pill .pill-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-report-details-page .rep-det-isolation-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+
+.accounts-report-details-page .rep-det-isolation-alert svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.accounts-report-details-page .rep-det-kpis-card {
+  margin-bottom: 1.5rem;
+}
+
+.accounts-report-details-page .rep-det-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.accounts-report-details-page .rep-det-kpi-card {
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.accounts-report-details-page .rep-det-kpi-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-report-details-page .rep-det-kpi-val {
+  font-size: 1.30rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.accounts-report-details-page .rep-det-kpi-card.kpi-success .rep-det-kpi-val { color: var(--color-primary); }
+.accounts-report-details-page .rep-det-kpi-card.kpi-warning .rep-det-kpi-val { color: var(--color-warning); }
+.accounts-report-details-page .rep-det-kpi-card.kpi-primary .rep-det-kpi-val { color: var(--color-primary); }
+.accounts-report-details-page .rep-det-kpi-card.kpi-info .rep-det-kpi-val { color: var(--color-secondary-blue); }
+.accounts-report-details-page .rep-det-kpi-card.kpi-blue .rep-det-kpi-val { color: var(--color-secondary-blue); }
+.accounts-report-details-page .rep-det-kpi-card.kpi-secondary .rep-det-kpi-val { color: var(--color-text); }
+
+[data-theme="dark"] .accounts-report-details-page .rep-det-kpi-card.kpi-success .rep-det-kpi-val,
+[data-theme="dark"] .accounts-report-details-page .rep-det-kpi-card.kpi-primary .rep-det-kpi-val {
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .accounts-report-details-page .rep-det-kpi-card.kpi-info .rep-det-kpi-val,
+[data-theme="dark"] .accounts-report-details-page .rep-det-kpi-card.kpi-blue .rep-det-kpi-val {
+  color: var(--color-link);
+}
+
+.accounts-report-details-page .rep-det-accounting-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-inline-start: 3px solid var(--color-secondary-blue);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.accounts-report-details-page .rep-det-accounting-rule svg {
+  color: var(--color-secondary-blue);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.accounts-report-details-page .rep-det-table-card {
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .accounts-report-details-page .rep-det-header-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .accounts-report-details-page .rep-det-header-actions {
+    width: 100%;
+  }
+
+  .accounts-report-details-page .rep-det-header-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .accounts-report-details-page .rep-det-meta-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-details-page .rep-det-meta-pills {
+    flex-direction: column;
+  }
+}
+
+/* ======================================================== */
+/* PHASE 5: SCOPED STYLES — REPORT EXPERIENCE & EXPORT FLOWS */
+/* ======================================================== */
+
+/* 1. Generator Live Summary Bar & Validation Message */
+.accounts-reports-backup-page .rep-form-summary-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.accounts-reports-backup-page .rep-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.accounts-reports-backup-page .rep-summary-label {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.accounts-reports-backup-page .rep-summary-val {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.accounts-reports-backup-page .rep-summary-sep {
+  color: var(--color-border);
+  font-weight: 300;
+}
+
+.accounts-reports-backup-page .rep-form-validation-msg {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-warning);
+  border-radius: var(--radius-md, 8px);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.accounts-reports-backup-page .rep-form-validation-msg svg {
+  color: var(--color-warning);
+  flex-shrink: 0;
+}
+
+/* 2. Report History Toolbar */
+.accounts-reports-backup-page .rep-history-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+}
+
+.accounts-reports-backup-page .rep-history-search-wrap {
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+
+.accounts-reports-backup-page .rep-history-search-wrap .acc-filter-input {
+  width: 100%;
+  height: 34px;
+  font-size: 0.8rem;
+}
+
+.accounts-reports-backup-page .rep-history-filters-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.accounts-reports-backup-page .rep-history-filters-wrap .acc-filter-select {
+  height: 34px;
+  font-size: 0.8rem;
+  padding: 0 0.75rem;
+}
+
+.accounts-reports-backup-page .rep-history-count-wrap {
+  display: flex;
+  align-items: center;
+}
+
+/* 3. Worksheet-Style Tabs Bar (Report Details) */
+.accounts-report-details-page .rep-worksheet-nav-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.accounts-report-details-page .rep-worksheet-header {
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-report-details-page .rep-worksheet-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.accounts-report-details-page .rep-worksheet-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+}
+
+.accounts-report-details-page .rep-worksheet-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 34px;
+  padding: 0 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.accounts-report-details-page .rep-worksheet-tab:hover {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.accounts-report-details-page .rep-worksheet-tab.is-active {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs, 0 1px 2px rgba(0,0,0,0.05));
+}
+
+[data-theme="dark"] .accounts-report-details-page .rep-worksheet-tab.is-active {
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.accounts-report-details-page .rep-worksheet-tab-count {
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  background-color: var(--color-surface-tertiary);
+  color: var(--color-text-muted);
+}
+
+.accounts-report-details-page .rep-worksheet-tab.is-active .rep-worksheet-tab-count {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+}
+
+/* 4. Simulated Export Modal Dialog */
+.accounts-reports-backup-page .rep-export-modal-card,
+.accounts-report-details-page .rep-export-modal-card {
+  max-width: 600px;
+  width: 92%;
+}
+
+.accounts-reports-backup-page .rep-export-modal-title-wrap,
+.accounts-report-details-page .rep-export-modal-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.accounts-reports-backup-page .rep-export-notice-banner,
+.accounts-report-details-page .rep-export-notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface-secondary);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .rep-export-notice-banner svg,
+.accounts-report-details-page .rep-export-notice-banner svg {
+  color: var(--color-warning);
+  flex-shrink: 0;
+}
+
+.accounts-reports-backup-page .rep-export-meta-box,
+.accounts-report-details-page .rep-export-meta-box {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.accounts-reports-backup-page .rep-export-meta-row,
+.accounts-report-details-page .rep-export-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.accounts-reports-backup-page .rep-export-meta-row .meta-label,
+.accounts-report-details-page .rep-export-meta-row .meta-label {
+  color: var(--color-text-muted);
+}
+
+.accounts-reports-backup-page .rep-export-meta-row .meta-val,
+.accounts-report-details-page .rep-export-meta-row .meta-val {
+  color: var(--color-text);
+}
+
+.accounts-reports-backup-page .rep-export-format-group,
+.accounts-report-details-page .rep-export-format-group {
+  margin-bottom: 1rem;
+}
+
+.accounts-reports-backup-page .rep-export-format-chips,
+.accounts-report-details-page .rep-export-format-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.accounts-reports-backup-page .rep-export-format-chips .acc-chip-btn,
+.accounts-report-details-page .rep-export-format-chips .acc-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 36px;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.accounts-reports-backup-page .rep-export-format-chips .acc-chip-btn.is-active,
+.accounts-report-details-page .rep-export-format-chips .acc-chip-btn.is-active {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-export-format-chips .acc-chip-btn.is-active,
+[data-theme="dark"] .accounts-report-details-page .rep-export-format-chips .acc-chip-btn.is-active {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.accounts-reports-backup-page .rep-export-preview-box,
+.accounts-report-details-page .rep-export-preview-box {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.85rem 1rem;
+  font-size: 0.78rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.accounts-reports-backup-page .rep-exp-sheet-item,
+.accounts-report-details-page .rep-exp-sheet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.accounts-reports-backup-page .rep-exp-sheet-item:last-child,
+.accounts-report-details-page .rep-exp-sheet-item:last-child {
+  border-bottom: none;
+}
+
+.accounts-reports-backup-page .rep-export-success-card,
+.accounts-report-details-page .rep-export-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  gap: 0.65rem;
+}
+
+.accounts-reports-backup-page .rep-export-success-icon,
+.accounts-report-details-page .rep-export-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+  border: 2px solid var(--color-border);
+  margin-bottom: 0.25rem;
+}
+
+.accounts-reports-backup-page .rep-export-result-title,
+.accounts-report-details-page .rep-export-result-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.accounts-reports-backup-page .rep-export-result-desc,
+.accounts-report-details-page .rep-export-result-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  max-width: 440px;
+  margin: 0;
+}
+
+.accounts-reports-backup-page .rep-export-result-details,
+.accounts-report-details-page .rep-export-result-details {
+  width: 100%;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  text-align: initial;
+  margin: 0.5rem 0;
+}
+
+.accounts-reports-backup-page .rep-export-result-details .result-row,
+.accounts-report-details-page .rep-export-result-details .result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.accounts-reports-backup-page .rep-export-result-notice,
+.accounts-report-details-page .rep-export-result-notice {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .accounts-reports-backup-page .rep-history-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-reports-backup-page .rep-history-filters-wrap {
+    width: 100%;
+  }
+
+  .accounts-reports-backup-page .rep-history-filters-wrap .acc-filter-select {
+    flex: 1 1 100%;
+  }
+
+  .accounts-report-details-page .rep-worksheet-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-details-page .rep-worksheet-tab {
+    justify-content: space-between;
+  }
+}
+
+/* 5. Institutional Invalid Company State (Strictly Scoped — Zero Red/Green) */
+.accounts-report-details-page .rep-det-invalid-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2.25rem 2rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-warning);
+  border-radius: var(--radius-lg, 12px);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.accounts-report-details-page .rep-invalid-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md, 8px);
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-warning);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.accounts-report-details-page .rep-invalid-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.accounts-report-details-page .rep-invalid-badge-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.accounts-report-details-page .rep-invalid-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.accounts-report-details-page .rep-invalid-message {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0 0 1.25rem 0;
+  max-width: 720px;
+}
+
+.accounts-report-details-page .rep-invalid-action-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .accounts-report-details-page .rep-det-invalid-state {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .accounts-report-details-page .rep-invalid-action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-details-page .rep-invalid-action-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+/* ==========================================================================
+   MIQAT PAGE 9 - PHASE 6: DEDICATED MANUAL BACKUP FLOW (SCOPED STYLES)
+   ========================================================================== */
+
+.accounts-manual-backup-page .rep-mb-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Card Base */
+.accounts-manual-backup-page .rep-mb-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-mb-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.accounts-manual-backup-page .rep-mb-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.accounts-manual-backup-page .rep-mb-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.accounts-manual-backup-page .rep-mb-card-subtitle {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+/* Header Action Banner */
+.accounts-manual-backup-page .rep-mb-header-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Scope Selection Grid */
+.accounts-manual-backup-page .rep-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-manual-backup-page .rep-scope-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-scope-card:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-secondary);
+}
+
+.accounts-manual-backup-page .rep-scope-card:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.accounts-manual-backup-page .rep-scope-card.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-surface-secondary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.accounts-manual-backup-page .rep-scope-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-manual-backup-page .rep-scope-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.accounts-manual-backup-page .rep-scope-native-radio {
+  accent-color: var(--color-primary);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.accounts-manual-backup-page .rep-scope-card-desc {
+  font-size: 0.83rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+/* Scope Summary Meta Box */
+.accounts-manual-backup-page .rep-mb-summary-box {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-mb-summary-heading {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.accounts-manual-backup-page .rep-mb-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.accounts-manual-backup-page .rep-mb-summary-val {
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Pre-Backup Checklist */
+.accounts-manual-backup-page .rep-checklist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accounts-manual-backup-page .rep-checklist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-checklist-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text);
+  font-weight: 500;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.accounts-manual-backup-page .rep-checklist-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Step 2 Actions & Notice */
+.accounts-manual-backup-page .rep-mb-disclaimer-box {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.15rem;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-disclaimer-text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.accounts-manual-backup-page .rep-mb-step2-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Progress Simulation View */
+.accounts-manual-backup-page .rep-sim-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 0;
+}
+
+.accounts-manual-backup-page .rep-sim-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  gap: 0.5rem;
+}
+
+.accounts-manual-backup-page .rep-sim-progress-pct {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-mono, monospace);
+  flex-shrink: 0;
+}
+
+.accounts-manual-backup-page .rep-sim-progress-track {
+  width: 100%;
+  height: 12px;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.accounts-manual-backup-page .rep-sim-progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.35s ease-out;
+}
+
+/* Runtime Receipt Grid */
+.accounts-manual-backup-page .rep-receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-receipt-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.accounts-manual-backup-page .rep-receipt-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-manual-backup-page .rep-receipt-value {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.accounts-manual-backup-page .rep-receipt-value.rep-mono {
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.03em;
+  word-break: break-all;
+}
+
+.accounts-manual-backup-page .rep-mb-receipt-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (0px Horizontal Overflow Guarantee)
+   ========================================================================== */
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+  .accounts-manual-backup-page .rep-scope-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .accounts-manual-backup-page .rep-mb-header-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-manual-backup-page .rep-mb-header-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .accounts-manual-backup-page .rep-receipt-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .accounts-manual-backup-page .rep-mb-step2-actions,
+  .accounts-manual-backup-page .rep-mb-receipt-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-manual-backup-page .rep-mb-step2-actions .btn,
+  .accounts-manual-backup-page .rep-mb-receipt-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .accounts-manual-backup-page .rep-mb-card {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .accounts-manual-backup-page .rep-checklist-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .accounts-manual-backup-page .rep-checklist-item .acc-status-pill {
+    align-self: flex-start;
+  }
+
+  .accounts-manual-backup-page .rep-mb-summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+}
+
+/* Small Mobile (320px - 375px) Constraint Validation */
+@media (max-width: 375px) {
+  .accounts-manual-backup-page .rep-mb-card {
+    padding: 0.85rem;
+  }
+
+  .accounts-manual-backup-page .rep-mb-card-title {
+    font-size: 1.05rem;
+  }
+
+  .accounts-manual-backup-page .rep-scope-card {
+    padding: 0.85rem;
+  }
+}
+
+/* ======================================================== */
+/* PHASE 6 EXTENSION: DEDICATED REPORT EXPORT DETAILS PAGE  */
+/* ======================================================== */
+
+/* 1. Header Toolbar Card */
+.accounts-report-export-page .rep-exp-header {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+}
+
+.accounts-report-export-page .rep-exp-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.accounts-report-export-page .rep-exp-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-report-export-page .rep-exp-id-badge {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm, 6px);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.accounts-report-export-page .rep-exp-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* 2. Metadata Card */
+.accounts-report-export-page .rep-exp-meta-card {
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-sizing: border-box;
+}
+
+.accounts-report-export-page .rep-exp-meta-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.25rem;
+}
+
+.accounts-report-export-page .rep-exp-meta-title-wrap {
+  flex: 1 1 300px;
+}
+
+.accounts-report-export-page .rep-exp-title {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.accounts-report-export-page .rep-exp-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.accounts-report-export-page .rep-exp-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-meta-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-report-export-page .rep-exp-meta-val {
+  font-size: 0.88rem;
+  color: var(--color-text);
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+/* 3. Strict Isolation Card */
+.accounts-report-export-page .rep-exp-isolation-card {
+  margin-bottom: 1.25rem;
+}
+
+/* 4. Financial KPIs Card */
+.accounts-report-export-page .rep-exp-kpis-card {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+}
+
+.accounts-report-export-page .rep-exp-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-kpi-card {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.accounts-report-export-page .rep-exp-kpi-lbl {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-report-export-page .rep-exp-kpi-val {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.accounts-report-export-page .rep-exp-accounting-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-inline-start: 3px solid var(--color-secondary-blue);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.accounts-report-export-page .rep-exp-accounting-rule svg {
+  color: var(--color-secondary-blue);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* 5. Format Selection Cards */
+.accounts-report-export-page .rep-exp-config-card {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+}
+
+.accounts-report-export-page .rep-exp-format-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-fmt-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-fmt-card:hover {
+  border-color: var(--color-secondary-blue);
+  background: var(--color-surface-secondary);
+}
+
+.accounts-report-export-page .rep-exp-fmt-card.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-surface-secondary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.accounts-report-export-page .rep-exp-fmt-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.accounts-report-export-page .rep-exp-fmt-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.accounts-report-export-page .rep-exp-fmt-card.is-active .rep-exp-fmt-icon {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .accounts-report-export-page .rep-exp-fmt-icon {
+  color: var(--color-link);
+}
+
+[data-theme="dark"] .accounts-report-export-page .rep-exp-fmt-card.is-active .rep-exp-fmt-icon {
+  background: var(--color-primary);
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.accounts-report-export-page .rep-exp-fmt-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-fmt-name {
+  font-size: 0.92rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.accounts-report-export-page .rep-exp-fmt-badge {
+  font-size: 0.72rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .accounts-report-export-page .rep-exp-fmt-badge {
+  color: var(--color-accent);
+}
+
+.accounts-report-export-page .rep-exp-fmt-badge-secondary {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-report-export-page .rep-exp-fmt-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  flex-grow: 1;
+}
+
+.accounts-report-export-page .rep-exp-fmt-features {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.5rem;
+}
+
+/* 6. Worksheets Structure Grid */
+.accounts-report-export-page .rep-exp-structure-card {
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+}
+
+.accounts-report-export-page .rep-exp-sheets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.accounts-report-export-page .rep-exp-sheet-card {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.85rem 1rem;
+}
+
+.accounts-report-export-page .rep-exp-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.accounts-report-export-page .rep-exp-sheet-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.accounts-report-export-page .rep-exp-sheet-name {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.accounts-report-export-page .rep-exp-sheet-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.accounts-report-export-page .rep-exp-sheet-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.accounts-report-export-page .col-pill {
+  font-size: 0.72rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm, 4px);
+  color: var(--color-text);
+  font-family: var(--font-mono, monospace);
+}
+
+/* 7. Action & Simulation Section */
+.accounts-report-export-page .rep-exp-action-card {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.accounts-report-export-page .rep-export-notice-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-primary);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.85rem 1.15rem;
+  font-size: 0.82rem;
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+.accounts-report-export-page .rep-export-notice-banner svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.accounts-report-export-page .rep-export-notice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.accounts-report-export-page .rep-exp-trigger-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.accounts-report-export-page .rep-exp-trigger-info {
+  flex: 1 1 300px;
+}
+
+.accounts-report-export-page .rep-exp-trigger-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.accounts-report-export-page .rep-exp-trigger-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-report-export-page .rep-exp-btn-execute {
+  padding-inline: 1.5rem;
+  height: 42px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Post-Execution Result Card */
+.accounts-report-export-page .rep-exp-result-card {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.85rem;
+}
+
+.accounts-report-export-page .rep-exp-result-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.accounts-report-export-page .rep-exp-result-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-result-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-report-export-page .rep-exp-result-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.accounts-report-export-page .rep-exp-result-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 6px);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accounts-report-export-page .rep-exp-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.accounts-report-export-page .rep-exp-result-lbl {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-report-export-page .rep-exp-result-val {
+  font-size: 0.88rem;
+  color: var(--color-text);
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.accounts-report-export-page .rep-exp-result-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* 8. Invalid State Card */
+.accounts-report-export-page .rep-exp-invalid-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 2rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-secondary-blue);
+  border-radius: var(--radius-lg, 10px);
+  margin-bottom: 2rem;
+}
+
+.accounts-report-export-page .rep-exp-invalid-state .rep-invalid-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary-blue);
+  flex-shrink: 0;
+}
+
+.accounts-report-export-page .rep-exp-invalid-state .rep-invalid-content {
+  flex: 1;
+}
+
+.accounts-report-export-page .rep-exp-invalid-state .rep-invalid-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.accounts-report-export-page .rep-exp-invalid-state .rep-invalid-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.accounts-report-export-page .rep-exp-invalid-state .rep-invalid-message {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (.accounts-report-export-page)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .accounts-report-export-page .rep-exp-format-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-report-export-page .rep-exp-header-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-export-page .rep-exp-header-left,
+  .accounts-report-export-page .rep-exp-header-right {
+    width: 100%;
+  }
+
+  .accounts-report-export-page .rep-exp-meta-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-export-page .rep-exp-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-report-export-page .rep-exp-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-report-export-page .rep-exp-trigger-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-export-page .rep-exp-btn-execute {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .accounts-report-export-page .rep-exp-result-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-report-export-page .rep-exp-result-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .accounts-report-export-page .rep-exp-invalid-state {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-report-export-page .rep-exp-meta-card,
+  .accounts-report-export-page .rep-exp-kpis-card,
+  .accounts-report-export-page .rep-exp-config-card,
+  .accounts-report-export-page .rep-exp-structure-card,
+  .accounts-report-export-page .rep-exp-action-card {
+    padding: 1rem;
+  }
+
+  .accounts-report-export-page .rep-exp-title {
+    font-size: 1.15rem;
+  }
+
+  .accounts-report-export-page .rep-exp-fmt-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .accounts-report-export-page .rep-exp-meta-card,
+  .accounts-report-export-page .rep-exp-kpis-card,
+  .accounts-report-export-page .rep-exp-config-card,
+  .accounts-report-export-page .rep-exp-structure-card,
+  .accounts-report-export-page .rep-exp-action-card {
+    padding: 0.85rem;
+  }
+
+  .accounts-report-export-page .rep-exp-fmt-card {
+    padding: 0.85rem;
+  }
+}
+
+
+
+/* ==========================================================================
+   MIQAT ACCOUNTS WORKSPACE — PAGE 9: PHASE 7 & PHASE 8 POLISH
+   RTL/LTR DIRECTIONALITY, LIGHT/DARK THEME PARITY & ZERO-CLIPPING RESPONSIVENESS
+   ========================================================================== */
+
+/* 1. Global Tabular Figures & Numerals Consistency across Page 9 */
+.accounts-reports-backup-page,
+.accounts-manual-backup-page,
+.accounts-report-details-page,
+.accounts-report-export-page {
+  font-feature-settings: "tnum" 1, "cv01" 1;
+}
+
+.accounts-reports-backup-page .rep-table-mono,
+.accounts-reports-backup-page .acc-kpi-val,
+.accounts-reports-backup-page .rep-auto-stat-val,
+.accounts-reports-backup-page .rep-summary-val,
+.accounts-report-details-page .rep-det-kpi-val,
+.accounts-report-details-page .pill-val,
+.accounts-report-details-page .rep-table-mono,
+.accounts-manual-backup-page .rep-mb-receipt-val,
+.accounts-manual-backup-page .rep-mb-timer-val,
+.accounts-report-export-page .rep-exp-kpi-val,
+.accounts-report-export-page .rep-exp-meta-val,
+.accounts-report-export-page .rep-exp-res-val,
+.accounts-report-export-page .rep-table-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 2. Theme-Safe Brand Value Classes & Storage Grids (Replaces Inline Styles) */
+.accounts-reports-backup-page .rep-text-brand,
+.accounts-report-details-page .rep-val-primary,
+.accounts-report-details-page .rep-exp-preview-heading {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.accounts-report-details-page .rep-val-primary.is-bold {
+  font-weight: 700;
+}
+
+.accounts-report-details-page .rep-exp-preview-heading {
+  margin-bottom: 0.4rem;
+}
+
+.accounts-report-details-page .rep-exp-preview-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.73rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  line-height: 1.45;
+  overflow-x: auto;
+}
+
+.accounts-reports-backup-page .rep-st-kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  margin-bottom: 16px;
+}
+
+.accounts-reports-backup-page .rep-st-kpi-grid--growth {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+/* 3. Standardized Card Spacing, Table Header Wrapping & Shrinkable Grids */
+.accounts-reports-backup-page .acc-card,
+.accounts-reports-backup-page .acc-filter-card,
+.accounts-reports-backup-page .acc-table-card,
+.accounts-report-details-page .acc-card,
+.accounts-report-details-page .acc-table-card,
+.accounts-manual-backup-page .rep-mb-config-card,
+.accounts-manual-backup-page .rep-mb-progress-card,
+.accounts-manual-backup-page .rep-mb-receipt-card,
+.accounts-report-export-page .acc-card {
+  margin-bottom: 1.25rem;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-reports-backup-page .acc-table-card-header,
+.accounts-report-details-page .acc-table-card-header {
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.accounts-reports-backup-page .acc-filter-grid,
+.accounts-reports-backup-page .acc-field-group,
+.accounts-reports-backup-page .acc-filter-select,
+.accounts-reports-backup-page .acc-filter-input,
+.accounts-reports-backup-page .acc-page-header,
+.accounts-reports-backup-page .acc-page-title-wrap,
+.accounts-reports-backup-page .acc-page-header-actions,
+.accounts-reports-backup-page .rep-history-search-wrap,
+.accounts-reports-backup-page .rep-history-filters-wrap,
+.accounts-report-details-page .rep-det-meta-main,
+.accounts-report-details-page .rep-det-header-left,
+.accounts-report-details-page .rep-det-header-actions,
+.accounts-report-export-page .rep-exp-meta-title-wrap,
+.accounts-report-export-page .rep-exp-header-left,
+.accounts-report-export-page .rep-exp-header-right,
+.accounts-report-export-page .rep-exp-trigger-info {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Arabic Line-Height Guard to Prevent Diacritic Clipping */
+html[dir="rtl"] .accounts-reports-backup-page p,
+html[dir="rtl"] .accounts-reports-backup-page .acc-page-subtitle,
+html[dir="rtl"] .accounts-reports-backup-page .acc-table-subtitle,
+html[dir="rtl"] .accounts-report-details-page p,
+html[dir="rtl"] .accounts-report-details-page .rep-det-desc,
+html[dir="rtl"] .accounts-manual-backup-page p,
+html[dir="rtl"] .accounts-manual-backup-page .rep-mb-hero-desc,
+html[dir="rtl"] .accounts-report-export-page p,
+html[dir="rtl"] .accounts-report-export-page .rep-exp-desc {
+  line-height: 1.55;
+}
+
+html[dir="ltr"] .accounts-reports-backup-page p,
+html[dir="ltr"] .accounts-reports-backup-page .acc-page-subtitle,
+html[dir="ltr"] .accounts-reports-backup-page .acc-table-subtitle,
+html[dir="ltr"] .accounts-report-details-page p,
+html[dir="ltr"] .accounts-report-details-page .rep-det-desc,
+html[dir="ltr"] .accounts-manual-backup-page p,
+html[dir="ltr"] .accounts-manual-backup-page .rep-mb-hero-desc,
+html[dir="ltr"] .accounts-report-export-page p,
+html[dir="ltr"] .accounts-report-export-page .rep-exp-desc {
+  line-height: 1.45;
+}
+
+/* 4. Logical Inline Icon & Element Spacing */
+.accounts-reports-backup-page .btn svg,
+.accounts-report-details-page .btn svg,
+.accounts-manual-backup-page .btn svg,
+.accounts-report-export-page .btn svg {
+  margin-inline-end: 0.5rem;
+  flex-shrink: 0;
+}
+
+.accounts-reports-backup-page .acc-status-pill,
+.accounts-report-details-page .acc-status-pill,
+.accounts-manual-backup-page .acc-status-pill,
+.accounts-report-export-page .acc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* 5. Dark Mode Surface Elevation, Input & Contrast Parity (Scoped Strictly to Page 9) */
+[data-theme="dark"] .accounts-reports-backup-page,
+[data-theme="dark"] .accounts-report-details-page,
+[data-theme="dark"] .accounts-manual-backup-page,
+[data-theme="dark"] .accounts-report-export-page {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-filter-card,
+[data-theme="dark"] .accounts-reports-backup-page .acc-table-card,
+[data-theme="dark"] .accounts-report-details-page .acc-table-card,
+[data-theme="dark"] .accounts-reports-backup-page .acc-modal-dialog,
+[data-theme="dark"] .accounts-report-details-page .acc-modal-dialog,
+[data-theme="dark"] .accounts-manual-backup-page .acc-modal-dialog,
+[data-theme="dark"] .accounts-report-export-page .acc-modal-dialog {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .acc-filter-select,
+[data-theme="dark"] .accounts-reports-backup-page .acc-filter-input {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-input-border);
+  color: var(--color-input-text);
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-history-toolbar {
+  background-color: var(--color-surface-secondary);
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-text-brand,
+[data-theme="dark"] .accounts-report-details-page .rep-val-primary,
+[data-theme="dark"] .accounts-report-details-page .rep-exp-preview-heading,
+[data-theme="dark"] .accounts-manual-backup-page .rep-sim-progress-pct,
+[data-theme="dark"] .accounts-manual-backup-page .rep-checklist-icon,
+[data-theme="dark"] .accounts-report-details-page .rep-det-isolation-alert svg,
+[data-theme="dark"] .accounts-report-details-page .rep-det-accounting-rule svg,
+[data-theme="dark"] .accounts-report-details-page .rep-export-success-icon,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-accounting-rule svg,
+[data-theme="dark"] .accounts-report-export-page .rep-export-notice-banner svg,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-result-icon,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-invalid-state .rep-invalid-icon-wrap {
+  color: var(--color-link);
+}
+
+[data-theme="dark"] .accounts-reports-backup-page .rep-auto-banner {
+  border-inline-start-color: var(--color-accent);
+}
+
+[data-theme="dark"] .accounts-manual-backup-page .rep-scope-card.is-selected,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-fmt-card.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+[data-theme="dark"] .accounts-manual-backup-page .rep-scope-native-radio {
+  accent-color: var(--color-accent);
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .accounts-manual-backup-page .rep-mb-disclaimer-box,
+[data-theme="dark"] .accounts-report-export-page .rep-export-notice-banner,
+[data-theme="dark"] .accounts-report-details-page .rep-det-isolation-alert,
+[data-theme="dark"] .accounts-report-details-page .rep-det-accounting-rule,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-accounting-rule,
+[data-theme="dark"] .accounts-report-export-page .rep-exp-invalid-state {
+  border-inline-start-color: var(--color-accent);
+}
+
+[data-theme="dark"] .accounts-manual-backup-page .rep-sim-progress-fill {
+  background: var(--color-link);
+}
+
+/* Manual Backup Breadcrumbs Parity */
+.accounts-manual-backup-page .acc-breadcrumb-nav {
+  margin-bottom: 1.25rem;
+}
+
+.accounts-manual-backup-page .acc-breadcrumb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+}
+
+.accounts-manual-backup-page .acc-breadcrumb-link {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.accounts-manual-backup-page .acc-breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.accounts-manual-backup-page .acc-breadcrumb-separator {
+  color: var(--color-text-muted);
+}
+
+.accounts-manual-backup-page .acc-breadcrumb-item.active {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Reports Hub Tabs: Eliminate Micro-Scrollbar & Clean Mobile Stack */
+.accounts-reports-backup-page .acc-tabs-list {
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.accounts-reports-backup-page .acc-tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .accounts-reports-backup-page .acc-tabs-list {
+    flex-wrap: wrap;
+    overflow: visible;
+    border-bottom: none;
+    gap: 8px;
+  }
+
+  .accounts-reports-backup-page .acc-tab-btn {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: flex-start;
+    white-space: normal;
+    text-align: start;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 0;
+    padding: 10px 14px;
+    line-height: 1.35;
+  }
+
+  .accounts-reports-backup-page .acc-tab-btn.is-active {
+    border: 1px solid var(--color-accent) !important;
+    border-bottom-width: 2px !important;
+  }
+}
+
+/* 6. Multi-Breakpoint Responsive Visual Polish (True Zero-Clipping — No Masking) */
+@media (max-width: 768px) {
+  /* Reset flex-basis on vertical column transitions to prevent empty vertical height voids */
+  .accounts-reports-backup-page .rep-auto-banner-content,
+  .accounts-reports-backup-page .rep-history-search-wrap,
+  .accounts-report-details-page .rep-det-meta-main,
+  .accounts-report-export-page .rep-exp-meta-title-wrap,
+  .accounts-report-export-page .rep-exp-trigger-info {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  .accounts-reports-backup-page .acc-content-container,
+  .accounts-report-details-page .acc-content-container,
+  .accounts-manual-backup-page .acc-content-container,
+  .accounts-report-export-page .acc-content-container {
+    padding: 1rem 0.75rem;
+    max-width: 100%;
+  }
+
+  .accounts-reports-backup-page .acc-card,
+  .accounts-reports-backup-page .acc-filter-card,
+  .accounts-reports-backup-page .acc-table-card,
+  .accounts-report-details-page .acc-card,
+  .accounts-manual-backup-page .rep-mb-card,
+  .accounts-manual-backup-page .rep-mb-config-card,
+  .accounts-manual-backup-page .rep-mb-receipt-card,
+  .accounts-report-export-page .acc-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .accounts-reports-backup-page .acc-page-header-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .accounts-reports-backup-page .rep-history-search-wrap {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-reports-backup-page .acc-content-container,
+  .accounts-report-details-page .acc-content-container,
+  .accounts-manual-backup-page .acc-content-container,
+  .accounts-report-export-page .acc-content-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .accounts-reports-backup-page .acc-card,
+  .accounts-reports-backup-page .acc-filter-card,
+  .accounts-reports-backup-page .acc-table-card,
+  .accounts-report-details-page .acc-card,
+  .accounts-manual-backup-page .rep-mb-card,
+  .accounts-manual-backup-page .rep-mb-config-card,
+  .accounts-manual-backup-page .rep-mb-receipt-card,
+  .accounts-report-export-page .acc-card {
+    padding: 0.85rem;
+  }
+
+  .accounts-reports-backup-page .acc-filter-grid,
+  .accounts-reports-backup-page .rep-st-kpi-grid,
+  .accounts-reports-backup-page .rep-st-kpi-grid--growth,
+  .accounts-reports-backup-page .rep-st-breakdowns-layout,
+  .accounts-reports-backup-page .rep-auto-stats-grid,
+  .accounts-report-details-page .rep-det-kpi-grid,
+  .accounts-report-export-page .rep-exp-kpi-grid,
+  .accounts-report-export-page .rep-exp-meta-grid,
+  .accounts-report-export-page .rep-exp-result-meta-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Graceful button & pill wrapping on narrow screens (320px - 480px) */
+  .accounts-reports-backup-page .acc-page-header-actions .btn,
+  .accounts-reports-backup-page .acc-filter-actions .btn,
+  .accounts-reports-backup-page .rep-failed-alert .btn,
+  .accounts-report-details-page .rep-det-header-left .btn,
+  .accounts-report-details-page .rep-det-header-actions .btn,
+  .accounts-report-details-page .rep-invalid-action-row .btn,
+  .accounts-manual-backup-page .rep-mb-header-card .btn,
+  .accounts-manual-backup-page .rep-mb-step2-actions .btn,
+  .accounts-manual-backup-page .rep-mb-receipt-actions .btn,
+  .accounts-report-export-page .rep-exp-header-left .btn,
+  .accounts-report-export-page .rep-exp-btn-execute,
+  .accounts-report-export-page .rep-exp-result-actions .btn,
+  .accounts-report-export-page .rep-exp-invalid-state .btn {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    height: auto;
+    min-height: 38px;
+    padding-block: 8px;
+    padding-inline: 12px;
+    line-height: 1.35;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .accounts-reports-backup-page .rep-failed-alert {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .accounts-reports-backup-page .acc-status-pill,
+  .accounts-report-details-page .acc-status-pill,
+  .accounts-manual-backup-page .acc-status-pill,
+  .accounts-report-export-page .acc-status-pill {
+    white-space: normal;
+    max-width: 100%;
+    text-align: start;
+    overflow-wrap: break-word;
+    line-height: 1.35;
+  }
+
+  .accounts-reports-backup-page .acc-chip-btn {
+    white-space: normal;
+    text-align: start;
+    max-width: 100%;
+    height: auto;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 320px) {
+  .accounts-reports-backup-page .acc-main-content,
+  .accounts-report-details-page .acc-main-content,
+  .accounts-manual-backup-page .acc-main-content,
+  .accounts-report-export-page .acc-main-content {
+    padding: 14px 10px 32px;
+  }
+
+  .accounts-reports-backup-page .acc-content-container,
+  .accounts-report-details-page .acc-content-container,
+  .accounts-manual-backup-page .acc-content-container,
+  .accounts-report-export-page .acc-content-container {
+    padding: 0.35rem 0.25rem;
+  }
+
+  .accounts-reports-backup-page .acc-card,
+  .accounts-reports-backup-page .acc-filter-card,
+  .accounts-reports-backup-page .acc-table-card,
+  .accounts-report-details-page .acc-card,
+  .accounts-manual-backup-page .rep-mb-card,
+  .accounts-manual-backup-page .rep-mb-config-card,
+  .accounts-manual-backup-page .rep-mb-receipt-card,
+  .accounts-report-export-page .acc-card {
+    padding: 0.75rem;
+  }
+}

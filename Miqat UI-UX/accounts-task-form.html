@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج المهمة | ميقات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page accounts-task-form-page">
+
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="فتح قائمة التنقل الجانبية" aria-expanded="false" data-i18n-aria="accounts_workspace.btn_open_menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <a href="accounts-dashboard.html" class="acc-brand-link" aria-label="منصة ميقات للحسابات المالية">
+          <img src="./assets/Miqat Logo Transparent.png" alt="شعار ميقات" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="شعار ميقات" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="accounts_workspace.portal_brand">منصة ميقات للحسابات المالية</span>
+          </div>
+        </a>
+
+        <div class="acc-demo-pill" role="status" aria-label="بيئة تجريبية توضيحية">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span data-i18n="accounts_workspace.demo_badge">بيانات توضيحية تجريبية</span>
+        </div>
+      </div>
+
+      <div class="acc-header-actions">
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="acc-lang-switcher" aria-label="Switch to English" title="Switch Language">
+          <span class="lang-btn-text">EN</span>
+        </button>
+
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="acc-theme-toggle" aria-label="Switch Theme" title="Toggle Light / Dark Mode">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <div class="acc-employee-card" id="acc-employee-card" role="button" tabindex="0" aria-label="بيانات الموظف ومسؤول الحسابات" title="ملف موظف الحسابات | Accounts Officer Profile">
+          <div class="acc-employee-avatar" id="acc-employee-avatar">أ</div>
+          <div class="acc-employee-info">
+            <span class="acc-employee-name" id="acc-employee-name" data-i18n="accounts_workspace.employee_name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" id="acc-employee-role" data-i18n="accounts_workspace.employee_role_badge">موظف حسابات مالية</span>
+          </div>
+        </div>
+
+        <button type="button" class="acc-logout-btn" id="acc-logout-btn" aria-label="تسجيل الخروج" data-i18n-aria="accounts_workspace.btn_logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="acc-logout-btn-text" data-i18n="accounts_workspace.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="accounts_workspace.nav_workspace_title">أقسام الحسابات المالية</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="إغلاق القائمة" data-i18n-aria="accounts_workspace.btn_close_menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="acc-sidebar-nav" aria-label="قائمة التنقل الجانبية لمساحة الحسابات">
+        <a href="accounts-dashboard.html" class="acc-nav-item">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_dashboard">لوحة التحكم المالية</span>
+        </a>
+        <a href="accounts-customers.html" class="acc-nav-item">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customers">دليل العملاء والمعتمرين</span>
+        </a>
+        <a href="accounts-customer-details.html" class="acc-nav-item" id="acc-nav-customer-profile">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_customer_profile">ملف العميل</span>
+        </a>
+        <a href="accounts-bookings.html" class="acc-nav-item" id="acc-nav-bookings">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_bookings">سجل الحجوزات الموحد</span>
+        </a>
+        <a href="accounts-trip-changes.html" class="acc-nav-item" id="acc-nav-trip-changes">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_trip_changes">تعديلات البرامج والرحلات</span>
+        </a>
+        <a href="accounts-cancellations.html" class="acc-nav-item" id="acc-nav-cancellations">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_cancellations">سجل الإلغاءات والتسوية</span>
+        </a>
+        <a href="accounts-collections.html" class="acc-nav-item" id="acc-nav-collections">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_collections">التحصيلات والإيداعات النقدية</span>
+        </a>
+        <a href="accounts-refunds.html" class="acc-nav-item" id="acc-nav-refunds">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_refunds">إدارة طلبات الاسترداد</span>
+        </a>
+        <a href="accounts-reports-backup.html" class="acc-nav-item" id="acc-nav-reports">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_reports">التقارير اليومية والنسخ الاحتياطي</span>
+        </a>
+        <a href="accounts-notifications.html" class="acc-nav-item is-active" id="acc-nav-notifications" aria-current="page">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_notifications">الإشعارات وقائمة المهام</span>
+        </a>
+        <a href="#profile" class="acc-nav-item is-coming-soon" aria-disabled="true">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+          <span class="acc-nav-label" data-i18n="accounts_workspace.nav_profile">الملف الشخصي وإعدادات الحساب</span>
+          <span class="acc-coming-soon-pill" data-i18n="accounts_workspace.badge_coming_soon">قريباً</span>
+        </a>
+      </nav>
+
+      <div class="acc-sidebar-footer">
+        <div class="acc-sidebar-status">
+          <span class="acc-status-dot"></span>
+          <span class="acc-status-text">النظام متصل وآمن</span>
+        </div>
+        <span class="acc-sidebar-version">Miqat Core v2.4 (Phase 2A)</span>
+      </div>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <nav class="acc-breadcrumb-nav p10-breadcrumb" aria-label="Breadcrumb">
+        <ol class="p10-breadcrumb-list">
+          <li><a href="accounts-notifications.html#tasks" data-i18n="accounts_workspace.tsk_form_back">العودة إلى قائمة المهام</a></li>
+          <li><a href="accounts-task-form.html" id="tsk-form-breadcrumb-current" aria-current="page" data-i18n="accounts_workspace.tsk_modal_create_title">إنشاء مهمة جديدة</a></li>
+        </ol>
+      </nav>
+
+      <!-- Invalid / Missing Task ID State -->
+      <section id="tsk-form-not-found" class="acc-card p10-empty-card" hidden>
+        <h1 class="acc-page-title" data-i18n="accounts_workspace.tsk_details_not_found_title">المهمة غير موجودة</h1>
+        <p class="acc-page-subtitle" data-i18n="accounts_workspace.tsk_details_not_found_desc">تعذر العثور على المهمة المطلوبة. ربما تم حذفها أو أن الرابط غير صحيح.</p>
+        <div class="p10-empty-actions">
+          <a href="accounts-notifications.html#tasks" class="acc-btn acc-btn-primary" data-i18n="accounts_workspace.tsk_form_back">العودة إلى قائمة المهام</a>
+        </div>
+      </section>
+
+      <!-- Task Form View -->
+      <div id="tsk-form-container">
+        <section class="acc-page-header p10-page-header">
+          <div class="acc-page-header-text">
+            <div class="p10-badge-row">
+              <span class="status-pill status-pill-blue" id="tsk-form-mode-pill" data-i18n="accounts_workspace.tsk_form_mode_create">إنشاء مهمة جديدة</span>
+              <span class="ntf-record-chip" id="tsk-form-id-chip" hidden></span>
+            </div>
+            <h1 class="acc-page-title" id="tsk-form-heading" data-i18n="accounts_workspace.tsk_modal_create_title">إنشاء مهمة جديدة</h1>
+            <p class="acc-page-subtitle" id="tsk-form-subtitle" data-i18n="accounts_workspace.tsk_form_create_subtitle">أدخل تفاصيل المهمة وحدد موعد المهمة ووقت المهمة والأولوية</p>
+          </div>
+          <div class="p10-header-actions">
+            <a href="accounts-notifications.html#tasks" id="tsk-form-back-btn" class="acc-btn acc-btn-secondary" data-i18n="accounts_workspace.tsk_form_back">العودة إلى قائمة المهام</a>
+          </div>
+        </section>
+
+        <form id="tsk-dedicated-form" class="p10-form-stack" aria-labelledby="tsk-form-heading" novalidate>
+          <div id="tsk-form-error" class="p10-form-error" role="alert" aria-live="polite" hidden></div>
+
+          <section class="acc-card p10-form-card">
+            <fieldset class="p10-fieldset">
+              <legend class="p10-legend" data-i18n="accounts_workspace.tsk_form_section_basic">البيانات الأساسية للمهمة</legend>
+
+              <div class="p10-form-field">
+                <label for="tsk-f-title" class="p10-form-label">
+                  <span data-i18n="accounts_workspace.tsk_label_title">عنوان المهمة</span>
+                  <span aria-hidden="true">*</span>
+                </label>
+                <input type="text" id="tsk-f-title" name="title" class="acc-filter-input" required aria-describedby="tsk-form-error">
+              </div>
+
+              <div class="p10-form-field">
+                <label for="tsk-f-desc" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_description">وصف المهمة</label>
+                <textarea id="tsk-f-desc" name="description" class="acc-filter-input p10-textarea" rows="3"></textarea>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="acc-card p10-form-card">
+            <fieldset class="p10-fieldset">
+              <legend class="p10-legend" data-i18n="accounts_workspace.tsk_form_section_schedule">الجدولة والأولوية والمسؤول</legend>
+
+              <div class="p10-form-grid-2">
+                <div class="p10-form-field">
+                  <label for="tsk-f-date" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_date">موعد المهمة</label>
+                  <input type="date" id="tsk-f-date" name="taskDate" class="acc-filter-input">
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-time" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_time">وقت المهمة</label>
+                  <input type="time" id="tsk-f-time" name="taskTime" class="acc-filter-input">
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-priority" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_priority">الأولوية</label>
+                  <select id="tsk-f-priority" name="priority" class="acc-filter-select">
+                    <option value="urgent" data-i18n="accounts_workspace.ntf_prio_urgent">عاجل</option>
+                    <option value="important" data-i18n="accounts_workspace.ntf_prio_high">مرتفعة</option>
+                    <option value="normal" selected data-i18n="accounts_workspace.ntf_prio_medium">متوسطة</option>
+                    <option value="low" data-i18n="accounts_workspace.ntf_prio_low">منخفضة</option>
+                  </select>
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-status" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_status">الحالة</label>
+                  <select id="tsk-f-status" name="status" class="acc-filter-select">
+                    <option value="pending" data-i18n="accounts_workspace.tsk_status_pending">قيد الانتظار</option>
+                    <option value="in_progress" data-i18n="accounts_workspace.tsk_status_in_progress">قيد التنفيذ</option>
+                    <option value="completed" data-i18n="accounts_workspace.tsk_status_completed">مكتملة</option>
+                    <option value="cancelled" data-i18n="accounts_workspace.tsk_status_cancelled">ملغاة</option>
+                  </select>
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-assignee" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_assignee">المسؤول</label>
+                  <input type="text" id="tsk-f-assignee" name="assignee" class="acc-filter-input" value="أحمد صبري">
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-created" class="p10-form-label" data-i18n="accounts_workspace.tsk_details_created_at">تاريخ الإنشاء</label>
+                  <input type="text" id="tsk-f-created" name="createdAt" class="acc-filter-input" readonly>
+                </div>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="acc-card p10-form-card">
+            <fieldset class="p10-fieldset">
+              <legend class="p10-legend" data-i18n="accounts_workspace.tsk_form_section_linking">الربط والملاحظات الداخلية</legend>
+
+              <div class="p10-form-grid-2">
+                <div class="p10-form-field">
+                  <label for="tsk-f-linked-type" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_linked_type">نوع السجل المرتبط</label>
+                  <select id="tsk-f-linked-type" name="linkedType" class="acc-filter-select">
+                    <option value="none" data-i18n="accounts_workspace.tsk_linked_none">بدون سجل مرتبط</option>
+                    <option value="refund" data-i18n="accounts_workspace.ntf_type_refund">استرداد</option>
+                    <option value="cancellation" data-i18n="accounts_workspace.ntf_type_cancellation">إلغاء</option>
+                    <option value="trip_change" data-i18n="accounts_workspace.ntf_type_modification">تعديل برنامج</option>
+                    <option value="booking" data-i18n="accounts_workspace.ntf_type_booking">حجز</option>
+                    <option value="collection" data-i18n="accounts_workspace.ntf_type_collection">تحصيل</option>
+                    <option value="settlement" data-i18n="accounts_workspace.ntf_type_settlement">تسوية</option>
+                  </select>
+                </div>
+
+                <div class="p10-form-field">
+                  <label for="tsk-f-linked-id" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_linked_id">رقم السجل المرتبط</label>
+                  <input type="text" id="tsk-f-linked-id" name="linkedId" class="acc-filter-input" placeholder="REF-2026-001" autocorrect="off" autocapitalize="none" spellcheck="false">
+                </div>
+              </div>
+
+              <div class="p10-form-field">
+                <label for="tsk-f-notes" class="p10-form-label" data-i18n="accounts_workspace.tsk_label_notes">ملاحظات داخلية</label>
+                <textarea id="tsk-f-notes" name="notes" class="acc-filter-input p10-textarea" rows="3"></textarea>
+              </div>
+            </fieldset>
+          </section>
+
+          <div class="acc-card p10-form-actions-bar">
+            <a href="accounts-notifications.html#tasks" id="tsk-form-cancel-btn" class="acc-btn acc-btn-secondary" data-i18n="accounts_workspace.tsk_modal_cancel">إلغاء</a>
+            <button type="submit" class="acc-btn acc-btn-primary" id="tsk-form-save-btn" data-i18n="accounts_workspace.tsk_modal_save">حفظ المهمة</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="./accounts-mock-data.js"></script>
+  <script src="./accounts-notifications-data.js"></script>
+  <script src="./accounts-workspace.js"></script>
+  <script src="./accounts-task-form.js"></script>
+</body>
+</html>

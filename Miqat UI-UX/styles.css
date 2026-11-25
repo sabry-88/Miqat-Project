@@ -38441,3 +38441,920 @@ html[dir="ltr"] .accounts-report-export-page .rep-exp-desc {
     padding: 0.75rem;
   }
 }
+
+/* ==========================================================================
+   PAGE 10 — NOTIFICATIONS, TASK LIST & DEDICATED SUB-PAGES
+   ========================================================================== */
+
+.acc-header-notif-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.acc-header-notif-badge {
+  position: absolute;
+  top: -4px;
+  inset-inline-end: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding-inline: 5px;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+  color: #12202D;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  border: 2px solid var(--color-surface);
+}
+
+.acc-header-notif-badge[hidden] {
+  display: none;
+}
+
+/* Shared Page 10 Card Base */
+.accounts-notifications-page .acc-card,
+.accounts-task-details-page .acc-card,
+.accounts-task-form-page .acc-card,
+.accounts-notification-preferences-page .acc-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+/* Shared Page 10 Headers */
+.accounts-notifications-page .ntf-page-header,
+.accounts-task-details-page .tsk-detail-header,
+.accounts-task-form-page .p10-page-header,
+.accounts-notification-preferences-page .p10-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.accounts-notifications-page .ntf-header-actions,
+.accounts-task-details-page .tsk-detail-actions,
+.accounts-task-form-page .p10-header-actions,
+.accounts-notification-preferences-page .p10-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+/* Unified Breadcrumbs */
+.accounts-task-details-page .p10-breadcrumb-list,
+.accounts-task-form-page .p10-breadcrumb-list,
+.accounts-notification-preferences-page .p10-breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.accounts-task-details-page .p10-breadcrumb-list > li + li::before,
+.accounts-task-form-page .p10-breadcrumb-list > li + li::before,
+.accounts-notification-preferences-page .p10-breadcrumb-list > li + li::before {
+  content: "/" / "";
+  margin-inline-end: 0.5rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-task-details-page .p10-breadcrumb-list a,
+.accounts-task-form-page .p10-breadcrumb-list a,
+.accounts-notification-preferences-page .p10-breadcrumb-list a {
+  color: var(--color-link);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.accounts-task-details-page .p10-breadcrumb-list a[aria-current="page"],
+.accounts-task-form-page .p10-breadcrumb-list a[aria-current="page"],
+.accounts-notification-preferences-page .p10-breadcrumb-list a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Unified Miqat Inputs & Selects Across All Page 10 Pages */
+.accounts-notifications-page .acc-filter-select,
+.accounts-notifications-page .acc-filter-input,
+.accounts-task-details-page .acc-filter-select,
+.accounts-task-details-page .acc-filter-input,
+.accounts-task-form-page .acc-filter-select,
+.accounts-task-form-page .acc-filter-input,
+.accounts-notification-preferences-page .acc-filter-select,
+.accounts-notification-preferences-page .acc-filter-input {
+  height: 40px;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-notifications-page .acc-filter-select,
+.accounts-task-details-page .acc-filter-select,
+.accounts-task-form-page .acc-filter-select,
+.accounts-notification-preferences-page .acc-filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-start: 0.75rem;
+  padding-inline-end: 2.25rem;
+  text-align: start;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23526579' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: right 0.75rem center;
+}
+
+[dir="rtl"] .accounts-notifications-page .acc-filter-select,
+[dir="rtl"] .accounts-task-details-page .acc-filter-select,
+[dir="rtl"] .accounts-task-form-page .acc-filter-select,
+[dir="rtl"] .accounts-notification-preferences-page .acc-filter-select {
+  background-position: left 0.75rem center;
+}
+
+[data-theme="dark"] .accounts-notifications-page .acc-filter-select,
+[data-theme="dark"] .accounts-task-details-page .acc-filter-select,
+[data-theme="dark"] .accounts-task-form-page .acc-filter-select,
+[data-theme="dark"] .accounts-notification-preferences-page .acc-filter-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D0D9E2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+.accounts-notifications-page .acc-filter-select:hover,
+.accounts-notifications-page .acc-filter-input:hover,
+.accounts-task-form-page .acc-filter-select:hover,
+.accounts-task-form-page .acc-filter-input:hover,
+.accounts-notification-preferences-page .acc-filter-select:hover {
+  border-color: var(--color-input-border-hover);
+}
+
+.accounts-notifications-page .acc-filter-select:focus-visible,
+.accounts-notifications-page .acc-filter-input:focus-visible,
+.accounts-task-details-page .acc-filter-input:focus-visible,
+.accounts-task-form-page .acc-filter-select:focus-visible,
+.accounts-task-form-page .acc-filter-input:focus-visible,
+.accounts-notification-preferences-page .acc-filter-select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .accounts-notifications-page .acc-filter-select,
+[data-theme="dark"] .accounts-notifications-page .acc-filter-input,
+[data-theme="dark"] .accounts-task-details-page .acc-filter-input,
+[data-theme="dark"] .accounts-task-form-page .acc-filter-select,
+[data-theme="dark"] .accounts-task-form-page .acc-filter-input,
+[data-theme="dark"] .accounts-notification-preferences-page .acc-filter-select {
+  color-scheme: dark;
+}
+
+.accounts-task-details-page .p10-textarea,
+.accounts-task-form-page .p10-textarea {
+  height: auto;
+  min-height: 88px;
+  padding: 0.65rem 0.75rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Search & Tabs Toolbar */
+.accounts-notifications-page .ntf-toolbar-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block-end: 1.25rem;
+}
+
+.accounts-notifications-page .ntf-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.accounts-notifications-page .ntf-search-icon {
+  position: absolute;
+  inset-inline-start: 0.875rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.accounts-notifications-page .ntf-search-input {
+  padding-inline-start: 2.5rem;
+  padding-inline-end: 3rem;
+}
+
+.accounts-notifications-page .ntf-search-clear {
+  position: absolute;
+  inset-inline-end: 0.375rem;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.accounts-notifications-page .ntf-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-block-end: 1px solid var(--color-border-subtle);
+  padding-block-end: 0.25rem;
+}
+
+.accounts-notifications-page .ntf-tab-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+}
+
+.accounts-notifications-page .ntf-tab-btn:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-secondary);
+}
+
+.accounts-notifications-page .ntf-tab-btn.is-active {
+  color: var(--color-link);
+}
+
+.accounts-notifications-page .ntf-tab-btn.is-active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0.5rem;
+  inset-block-end: -0.25rem;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background-color: var(--color-accent);
+}
+
+/* KPI Grid & Overview */
+.accounts-notifications-page .ntf-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block-end: 1.25rem;
+}
+
+.accounts-notifications-page .ntf-kpi-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 112px;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.accounts-notifications-page .ntf-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.accounts-notifications-page .ntf-kpi-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.accounts-notifications-page .ntf-kpi-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.accounts-notifications-page .ntf-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.accounts-notifications-page .ntf-overview-activity-card {
+  grid-column: 1 / -1;
+}
+
+.accounts-notifications-page .ntf-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block-end: 0.875rem;
+}
+
+.accounts-notifications-page .ntf-section-title,
+.accounts-task-details-page .ntf-section-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-notifications-page .ntf-preview-list,
+.accounts-notifications-page .ntf-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.accounts-notifications-page .ntf-mini-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-surface);
+  min-width: 0;
+}
+
+.accounts-notifications-page .ntf-mini-item.is-unread {
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.accounts-notifications-page .ntf-mini-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.accounts-notifications-page .ntf-mini-heading {
+  margin: 0;
+  font-size: 0.925rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.accounts-notifications-page .ntf-mini-badges,
+.accounts-notifications-page .ntf-item-badges,
+.accounts-task-details-page .ntf-item-badges,
+.accounts-task-form-page .p10-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.accounts-notifications-page .ntf-mini-title-link,
+.accounts-notifications-page .ntf-item-title-link,
+.accounts-notifications-page .ntf-record-link {
+  color: var(--color-link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.accounts-notifications-page .ntf-mini-title-link:hover,
+.accounts-notifications-page .ntf-item-title-link:hover,
+.accounts-notifications-page .ntf-record-link:hover {
+  text-decoration: underline;
+}
+
+.accounts-notifications-page .ntf-mini-meta,
+.accounts-notifications-page .p10-card-meta,
+.accounts-notifications-page .ntf-muted-text {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* Filters Bar (Proportionate & RTL/LTR Aligned) */
+.accounts-notifications-page .acc-filter-card.ntf-filters-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-block-end: 1.25rem;
+}
+
+.accounts-notifications-page .acc-filter-card.p10-filter-card-compact {
+  inline-size: fit-content;
+  min-inline-size: min(300px, 100%);
+  max-inline-size: 100%;
+}
+
+.accounts-notifications-page .ntf-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-inline-size: 175px;
+  flex: 0 1 220px;
+  max-inline-size: 100%;
+}
+
+.accounts-notifications-page .p10-filter-card-compact .ntf-filter-group {
+  flex: 1 1 240px;
+  min-inline-size: 220px;
+}
+
+.accounts-notifications-page .ntf-filter-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-notifications-page .ntf-order-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+/* Structured Card Layout (Notifications, Tasks, Activity) */
+.accounts-notifications-page .p10-item-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+  min-width: 0;
+}
+
+.accounts-notifications-page .p10-item-card.is-unread {
+  border-inline-start: 4px solid var(--color-accent);
+}
+
+.accounts-notifications-page .p10-task-card {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.accounts-notifications-page .p10-task-card.is-dragging {
+  opacity: 0.55;
+  outline: 2px dashed var(--color-accent);
+}
+
+.accounts-notifications-page .p10-task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.accounts-notifications-page .p10-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.accounts-notifications-page .p10-card-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.accounts-notifications-page .p10-card-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+.accounts-notifications-page .p10-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block-start: 0.75rem;
+  margin-block-start: 0.25rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.accounts-notifications-page .ntf-unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  display: inline-block;
+}
+
+.accounts-notifications-page .ntf-record-chip,
+.accounts-task-details-page .ntf-record-chip,
+.accounts-task-form-page .ntf-record-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.accounts-notifications-page .ntf-reorder-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.accounts-notifications-page .ntf-drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-muted);
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.accounts-notifications-page .ntf-drag-handle:active {
+  cursor: grabbing;
+}
+
+.accounts-notifications-page .ntf-move-btn {
+  width: 32px;
+  height: 28px;
+  font-size: 0.7rem;
+  padding: 0;
+}
+
+.accounts-notifications-page .ntf-empty-state,
+.accounts-task-details-page .ntf-empty-state,
+.accounts-task-form-page .p10-empty-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.accounts-notifications-page .ntf-empty-state[hidden],
+.accounts-task-details-page .ntf-empty-state[hidden],
+.accounts-task-form-page .p10-empty-card[hidden],
+.accounts-task-form-page #tsk-form-container[hidden],
+.accounts-task-details-page #tsk-detail-view[hidden],
+.accounts-task-details-page #tsk-linked-card[hidden],
+.accounts-notification-preferences-page .p10-status-banner[hidden],
+.accounts-task-form-page .p10-form-error[hidden] {
+  display: none;
+}
+
+/* Dedicated Forms (Task Form & Preferences Pages) */
+.accounts-task-form-page .p10-form-stack,
+.accounts-notification-preferences-page .p10-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.accounts-task-form-page .p10-form-card,
+.accounts-notification-preferences-page .p10-form-card {
+  padding: 1.25rem 1.5rem;
+}
+
+.accounts-task-form-page .p10-fieldset,
+.accounts-notification-preferences-page .p10-fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.accounts-task-form-page .p10-legend,
+.accounts-notification-preferences-page .p10-legend {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-block-end: 0.5rem;
+  padding: 0;
+}
+
+.accounts-task-form-page .p10-form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.accounts-task-form-page .p10-form-field,
+.accounts-notification-preferences-page .p10-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.accounts-notification-preferences-page .p10-field-narrow {
+  max-inline-size: 320px;
+}
+
+.accounts-task-form-page .p10-form-label,
+.accounts-notification-preferences-page .p10-form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.accounts-notification-preferences-page .p10-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.accounts-notification-preferences-page .p10-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.accounts-notification-preferences-page .p10-check-item input[type="checkbox"],
+.accounts-notification-preferences-page .p10-check-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-block-start: 2px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.accounts-notification-preferences-page .p10-check-item label,
+.accounts-notification-preferences-page .p10-check-card label {
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.accounts-notification-preferences-page .p10-field-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-notification-preferences-page .p10-prefs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.75rem;
+}
+
+.accounts-notification-preferences-page .p10-check-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-surface-secondary);
+}
+
+.accounts-task-form-page .p10-form-actions-bar,
+.accounts-notification-preferences-page .p10-form-actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+}
+
+.accounts-task-form-page .p10-form-error {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-validation-border);
+  background-color: var(--color-validation-bg);
+  color: var(--color-validation-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.accounts-notification-preferences-page .p10-status-banner {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Popover Toast Region */
+.accounts-notifications-page .ntf-toast-region {
+  position: fixed;
+  inset: auto;
+  inset-block-end: 1.25rem;
+  inset-inline-end: 1.25rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: min(380px, calc(100vw - 2rem));
+  z-index: 1200;
+}
+
+.accounts-notifications-page .ntf-toast-card {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 12px 30px rgba(15, 37, 59, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.accounts-notifications-page .ntf-toast-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-notifications-page .ntf-toast-title {
+  flex: 1 1 auto;
+  font-size: 0.9375rem;
+}
+
+.accounts-notifications-page .ntf-toast-close {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+
+.accounts-notifications-page .ntf-toast-body {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-notifications-page .ntf-toast-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Task Details Page */
+.accounts-task-details-page .tsk-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-block-start: 1.25rem;
+}
+
+.accounts-task-details-page .tsk-notes-card {
+  grid-column: 1 / -1;
+}
+
+.accounts-task-details-page .tsk-detail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.accounts-task-details-page .tsk-linked-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.accounts-task-details-page .tsk-linked-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-task-details-page .tsk-notes-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .accounts-notifications-page .ntf-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accounts-notifications-page .ntf-overview-grid,
+  .accounts-task-details-page .tsk-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .accounts-notifications-page .ntf-tablist {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accounts-notifications-page .ntf-tab-btn {
+    justify-content: center;
+    padding-inline: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .accounts-notifications-page .p10-task-card {
+    flex-direction: column;
+  }
+
+  .accounts-notifications-page .ntf-reorder-controls {
+    flex-direction: row;
+  }
+
+  .accounts-task-form-page .p10-form-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .accounts-notifications-page .acc-filter-card.p10-filter-card-compact {
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  .accounts-notifications-page .ntf-filter-group,
+  .accounts-notifications-page .p10-filter-card-compact .ntf-filter-group {
+    flex: 1 1 100%;
+    min-inline-size: 0;
+  }
+
+  .accounts-notifications-page .ntf-order-controls {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-notifications-page .ntf-kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .accounts-notifications-page .ntf-header-actions .acc-btn,
+  .accounts-task-details-page .tsk-detail-actions .acc-btn,
+  .accounts-task-form-page .p10-form-actions-bar .acc-btn,
+  .accounts-notification-preferences-page .p10-form-actions-bar .acc-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .accounts-notifications-page .p10-item-card,
+  .accounts-task-form-page .p10-form-card,
+  .accounts-notification-preferences-page .p10-form-card {
+    padding: 0.9rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .accounts-notifications-page .ntf-tablist {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

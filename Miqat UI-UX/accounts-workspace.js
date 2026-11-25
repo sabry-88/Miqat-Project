@@ -150,8 +150,20 @@
     const isRefundDetailsPage = document.body && document.body.classList.contains('accounts-refund-details-page');
     const isReportsBackupPage = document.body && document.body.classList.contains('accounts-reports-backup-page');
     const isReportDetailsPage = document.body && document.body.classList.contains('accounts-report-details-page');
+    const isNotificationsPage = document.body && document.body.classList.contains('accounts-notifications-page');
+    const isTaskDetailsPage = document.body && document.body.classList.contains('accounts-task-details-page');
+    const isTaskFormPage = document.body && document.body.classList.contains('accounts-task-form-page');
+    const isNotifPrefsPage = document.body && document.body.classList.contains('accounts-notification-preferences-page');
 
-    if (isReportDetailsPage) {
+    if (isTaskFormPage) {
+      document.title = (currentLang === 'ar' ? 'نموذج المهمة | ميقات' : 'Task Form | Miqat');
+    } else if (isNotifPrefsPage) {
+      document.title = (currentLang === 'ar' ? 'تفضيلات الإشعارات | ميقات' : 'Notification Preferences | Miqat');
+    } else if (isTaskDetailsPage) {
+      document.title = (currentLang === 'ar' ? 'تفاصيل المهمة | ميقات' : 'Task Details | Miqat');
+    } else if (isNotificationsPage) {
+      document.title = (currentLang === 'ar' ? 'الإشعارات وقائمة المهام | ميقات' : 'Notifications & Task List | Miqat');
+    } else if (isReportDetailsPage) {
       document.title = (currentLang === 'ar' ? 'تفاصيل ومعاينة التقرير | منصة ميقات' : 'Report Details & Preview | Miqat Platform');
     } else if (isReportsBackupPage) {
       document.title = (currentLang === 'ar' ? 'التقارير اليومية والنسخ الاحتياطي | منصة ميقات' : 'Daily Reports & Backup | Miqat Platform');
@@ -212,6 +224,23 @@
         reportsNav.setAttribute('aria-current', 'page');
       }
     }
+
+    // Active navigation state enforcement for Notifications & Task List + dedicated sub-pages
+    if (isNotificationsPage || isTaskDetailsPage || isTaskFormPage || isNotifPrefsPage) {
+      const notifNav = document.getElementById('acc-nav-notifications');
+      if (notifNav) {
+        document.querySelectorAll('.acc-nav-item').forEach(el => {
+          if (el !== notifNav) {
+            el.classList.remove('is-active', 'active');
+            el.removeAttribute('aria-current');
+          }
+        });
+        notifNav.classList.add('is-active', 'active');
+        notifNav.setAttribute('aria-current', 'page');
+      }
+    }
+
+    syncHeaderNotificationBadge();
 
     // Helper to test if a resolved value is valid and not a raw key path
     function isValidTranslation(val, key) {
@@ -1861,12 +1890,69 @@
     closeReceiptModal
   };
 
+  function getDerivedUnreadNotificationsCount() {
+    if (window.AccountsNotificationsData && typeof window.AccountsNotificationsData.getUnreadCount === 'function') {
+      return window.AccountsNotificationsData.getUnreadCount();
+    }
+    try {
+      const raw = localStorage.getItem('miqat_notifications_state');
+      if (!raw) return 5;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(n => n && !n.deleted && n.status === 'unread').length;
+      }
+    } catch (_) {}
+    return 0;
+  }
+
+  function syncHeaderNotificationBadge() {
+    const actionsEl = document.querySelector('.acc-header-actions');
+    if (!actionsEl) return;
+
+    let btn = document.getElementById('acc-header-notif-btn');
+    if (!btn) {
+      btn = document.createElement('a');
+      btn.id = 'acc-header-notif-btn';
+      btn.href = 'accounts-notifications.html';
+      btn.className = 'acc-icon-btn acc-header-notif-btn';
+      btn.innerHTML =
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+          '<path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>' +
+          '<path d="M13.73 21a2 2 0 01-3.46 0"></path>' +
+        '</svg>' +
+        '<span class="acc-header-notif-badge" id="acc-header-notif-badge" hidden>0</span>';
+      const langAnchor = document.getElementById('acc-lang-switcher') || document.getElementById('acc-lang-btn');
+      if (langAnchor && langAnchor.parentNode === actionsEl) {
+        actionsEl.insertBefore(btn, langAnchor);
+      } else {
+        actionsEl.prepend(btn);
+      }
+    }
+
+    const count = getDerivedUnreadNotificationsCount();
+    const badge = document.getElementById('acc-header-notif-badge');
+    if (badge) {
+      badge.textContent = formatNumber(count);
+      badge.hidden = count <= 0;
+    }
+    const baseLabel = currentLang === 'ar' ? 'الإشعارات وقائمة المهام' : 'Notifications & Task List';
+    const unreadLabel = currentLang === 'ar' ? 'إشعارات غير مقروءة' : 'unread notifications';
+    btn.setAttribute('aria-label', count > 0 ? `${baseLabel} (${formatNumber(count)} ${unreadLabel})` : baseLabel);
+    btn.title = baseLabel;
+  }
+
   // --- 13. Initialization on DOMContentLoaded ---
   document.addEventListener('DOMContentLoaded', async function () {
     html.setAttribute('data-theme', currentTheme);
     initUserSession();
+    syncHeaderNotificationBadge();
     currentDict = await loadTranslations(currentLang);
     applyTranslations();
+    syncHeaderNotificationBadge();
+    window.addEventListener('miqat:notifications-updated', syncHeaderNotificationBadge);
+    window.addEventListener('storage', function (e) {
+      if (!e || e.key === 'miqat_notifications_state') syncHeaderNotificationBadge();
+    });
     initDrawer();
     initLogoutModal();
     initCalendarDatePicker();

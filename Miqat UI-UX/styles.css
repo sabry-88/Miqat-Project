@@ -39358,3 +39358,488 @@ html[dir="ltr"] .accounts-report-export-page .rep-exp-desc {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+
+/* ==========================================================================
+   PAGE 11 — PROFILE & ACCOUNT SETTINGS + PERMISSION CHANGE REQUEST
+   ========================================================================== */
+
+/* Workspace Display Preferences Hooks */
+html[data-acc-font-size="small"] body.accounts-workspace-page {
+  font-size: 14px;
+}
+
+html[data-acc-font-size="large"] body.accounts-workspace-page {
+  font-size: 16.5px;
+}
+
+html[data-acc-density="compact"] body.accounts-workspace-page .acc-main-content {
+  gap: 16px;
+}
+
+html[data-acc-density="compact"] body.accounts-workspace-page .acc-card {
+  padding: 0.9rem 1.15rem;
+}
+
+/* Shared Card Base for Page 11 & Permission Request */
+.accounts-profile-page .acc-card,
+.accounts-permission-request-page .acc-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.accounts-profile-page .prf-page-header,
+.accounts-permission-request-page .prf-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Unified Controls for Page 11 */
+.accounts-profile-page .acc-filter-select,
+.accounts-profile-page .acc-filter-input,
+.accounts-permission-request-page .acc-filter-select,
+.accounts-permission-request-page .acc-filter-input {
+  height: 40px;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.accounts-profile-page .acc-filter-input[readonly],
+.accounts-permission-request-page .acc-filter-input[readonly] {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.accounts-profile-page .acc-filter-select,
+.accounts-permission-request-page .acc-filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-start: 0.75rem;
+  padding-inline-end: 2.25rem;
+  text-align: start;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23526579' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: right 0.75rem center;
+}
+
+[dir="rtl"] .accounts-profile-page .acc-filter-select,
+[dir="rtl"] .accounts-permission-request-page .acc-filter-select {
+  background-position: left 0.75rem center;
+}
+
+[data-theme="dark"] .accounts-profile-page .acc-filter-select,
+[data-theme="dark"] .accounts-permission-request-page .acc-filter-select {
+  color-scheme: dark;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D0D9E2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+.accounts-profile-page .acc-filter-select:focus-visible,
+.accounts-profile-page .acc-filter-input:focus-visible,
+.accounts-permission-request-page .acc-filter-select:focus-visible,
+.accounts-permission-request-page .acc-filter-input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.accounts-permission-request-page .prf-textarea {
+  height: auto;
+  min-height: 110px;
+  padding: 0.65rem 0.75rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Breadcrumbs */
+.accounts-permission-request-page .prf-breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.accounts-permission-request-page .prf-breadcrumb-list > li + li::before {
+  content: "/" / "";
+  margin-inline-end: 0.5rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-permission-request-page .prf-breadcrumb-list a {
+  color: var(--color-link);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.accounts-permission-request-page .prf-breadcrumb-list a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Page 11 Card Grid */
+.accounts-profile-page .prf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.accounts-profile-page .prf-card-wide {
+  grid-column: 1 / -1;
+}
+
+.accounts-profile-page .prf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.accounts-profile-page .prf-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-block-end: 1px solid var(--color-border-subtle);
+  padding-block-end: 0.75rem;
+}
+
+.accounts-profile-page .prf-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-profile-page .prf-card-desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Profile Identity Header */
+.accounts-profile-page .prf-identity-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.accounts-profile-page .prf-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .accounts-profile-page .prf-avatar {
+  background-color: var(--color-accent);
+  color: #12202D;
+}
+
+.accounts-profile-page .prf-identity-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.accounts-profile-page .prf-identity-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-profile-page .prf-identity-sub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-profile-page .prf-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.875rem;
+}
+
+.accounts-profile-page .prf-fields-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+}
+
+.accounts-profile-page .prf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.accounts-profile-page .prf-label,
+.accounts-permission-request-page .prf-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.accounts-profile-page .prf-readonly-val {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  overflow-wrap: anywhere;
+}
+
+.accounts-profile-page .prf-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.accounts-profile-page .prf-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accounts-profile-page .prf-status-msg,
+.accounts-permission-request-page .prf-status-msg {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+}
+
+.accounts-profile-page .prf-status-msg.is-error,
+.accounts-permission-request-page .prf-status-msg.is-error {
+  border-color: var(--color-validation-border);
+  background-color: var(--color-validation-bg);
+  color: var(--color-validation-text);
+}
+
+.accounts-profile-page .prf-status-msg[hidden],
+.accounts-permission-request-page .prf-status-msg[hidden] {
+  display: none;
+}
+
+/* Info Box & Toggles */
+.accounts-profile-page .prf-info-box {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-surface-secondary);
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.accounts-profile-page .prf-toggle-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+}
+
+.accounts-profile-page .prf-toggle-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-block-start: 2px;
+}
+
+.accounts-profile-page .prf-hint {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+/* Lists (Sessions, Activity, Permissions, Requests) */
+.accounts-profile-page .prf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.accounts-profile-page .prf-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-surface);
+  min-width: 0;
+}
+
+.accounts-profile-page .prf-list-item.is-current {
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.accounts-profile-page .prf-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+.accounts-profile-page .prf-item-title {
+  font-size: 0.925rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.accounts-profile-page .prf-item-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.accounts-profile-page .prf-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: 10px;
+}
+
+/* Native Confirmation <dialog> (modern-web-guidance: scroll containment + open state) */
+dialog.prf-dialog:modal {
+  overscroll-behavior: contain;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 1.5rem;
+  max-width: min(440px, calc(100vw - 2rem));
+  box-shadow: 0 18px 40px rgba(15, 37, 59, 0.25);
+}
+
+dialog.prf-dialog::backdrop {
+  background-color: rgba(15, 37, 59, 0.55);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+dialog.prf-dialog h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+dialog.prf-dialog p {
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+dialog.prf-dialog .prf-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Dedicated Permission Request Page */
+.accounts-permission-request-page .prf-req-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-inline-size: 720px;
+}
+
+.accounts-permission-request-page .prf-req-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-block-start: 0.5rem;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .accounts-profile-page .prf-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .accounts-profile-page .prf-fields-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .accounts-profile-page .prf-fields-grid,
+  .accounts-profile-page .prf-fields-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .accounts-profile-page .acc-card,
+  .accounts-permission-request-page .acc-card {
+    padding: 0.95rem 1rem;
+  }
+
+  .accounts-profile-page .prf-btn-group,
+  .accounts-permission-request-page .prf-req-actions {
+    width: 100%;
+  }
+
+  .accounts-profile-page .prf-btn-group .acc-btn,
+  .accounts-permission-request-page .prf-req-actions .acc-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

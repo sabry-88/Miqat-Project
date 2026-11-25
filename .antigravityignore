@@ -1,0 +1,50 @@
+# Version Control & Tooling Caches
+.git/
+.modern-web-guidance/
+__pycache__/
+*.pyc
+.cache/
+
+# Dependencies & Lockfiles
+node_modules/
+venv/
+.venv/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+*.lock
+
+# Build Outputs, Logs & Scratch
+dist/
+build/
+.next/
+*.log
+scratch/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+Miqat UI-UX.zip
+
+# Large Media, PDF & Font Assets
+Images For Miqat/
+Miqat PDFs/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.ico
+*.pdf
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.eot
+
+# Minified Bundles & Source Maps
+*.min.js
+*.min.css
+*.map

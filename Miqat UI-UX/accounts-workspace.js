@@ -154,8 +154,14 @@
     const isTaskDetailsPage = document.body && document.body.classList.contains('accounts-task-details-page');
     const isTaskFormPage = document.body && document.body.classList.contains('accounts-task-form-page');
     const isNotifPrefsPage = document.body && document.body.classList.contains('accounts-notification-preferences-page');
+    const isProfileSettingsPage = document.body && document.body.classList.contains('accounts-profile-page');
+    const isPermRequestPage = document.body && document.body.classList.contains('accounts-permission-request-page');
 
-    if (isTaskFormPage) {
+    if (isPermRequestPage) {
+      document.title = (currentLang === 'ar' ? 'طلب تعديل صلاحية | ميقات' : 'Permission Change Request | Miqat');
+    } else if (isProfileSettingsPage) {
+      document.title = (currentLang === 'ar' ? 'الملف الشخصي وإعدادات الحساب | ميقات' : 'Profile & Account Settings | Miqat');
+    } else if (isTaskFormPage) {
       document.title = (currentLang === 'ar' ? 'نموذج المهمة | ميقات' : 'Task Form | Miqat');
     } else if (isNotifPrefsPage) {
       document.title = (currentLang === 'ar' ? 'تفضيلات الإشعارات | ميقات' : 'Notification Preferences | Miqat');
@@ -240,6 +246,21 @@
       }
     }
 
+    // Active navigation state enforcement for Profile & Account Settings + Permission Request
+    if (isProfileSettingsPage || isPermRequestPage) {
+      const profNav = document.getElementById('acc-nav-profile');
+      if (profNav) {
+        document.querySelectorAll('.acc-nav-item').forEach(el => {
+          if (el !== profNav) {
+            el.classList.remove('is-active', 'active');
+            el.removeAttribute('aria-current');
+          }
+        });
+        profNav.classList.add('is-active', 'active');
+        profNav.setAttribute('aria-current', 'page');
+      }
+    }
+
     syncHeaderNotificationBadge();
 
     // Helper to test if a resolved value is valid and not a raw key path
@@ -297,11 +318,18 @@
       empCard.setAttribute('title', isAr ? 'ملف موظف الحسابات | Accounts Officer Profile' : 'Accounts Officer Profile');
     }
     const empRole = document.getElementById('acc-employee-role');
-    if (empRole) empRole.textContent = isAr ? 'موظف حسابات مالية' : 'Financial Accounts Officer';
+    if (empRole) {
+      empRole.textContent = isAr
+        ? ((currentUser && (currentUser.title || currentUser.role_title_ar)) || 'موظف حسابات مالية')
+        : ((currentUser && (currentUser.title_en || currentUser.role_title_en)) || 'Financial Accounts Officer');
+    }
     const empName = document.getElementById('acc-employee-name');
+    const resolvedName = isAr
+      ? ((currentUser && (currentUser.name_ar || currentUser.name)) || 'أحمد صبري')
+      : ((currentUser && (currentUser.name_en || currentUser.name)) || 'Ahmed Sabry');
     const userAvatars = document.querySelectorAll('.acc-user-avatar, .acc-employee-avatar');
-    userAvatars.forEach(av => { av.textContent = isAr ? 'أ' : 'A'; });
-    if (empName) empName.textContent = isAr ? 'أحمد صبري' : 'Ahmed Sabry';
+    userAvatars.forEach(av => { av.textContent = resolvedName.trim().charAt(0).toUpperCase(); });
+    if (empName) empName.textContent = resolvedName;
 
     // 2. Brand Link
     const brandLinks = document.querySelectorAll('.acc-brand-link, #btn-portal-brand');
@@ -1941,11 +1969,44 @@
     btn.title = baseLabel;
   }
 
+  function applyEmployeeDisplayPrefsFromStorage() {
+    if (window.AccountsProfileData && typeof window.AccountsProfileData.applyDisplayPreferencesToDocument === 'function') {
+      window.AccountsProfileData.applyDisplayPreferencesToDocument();
+      return;
+    }
+    try {
+      const rawUser = localStorage.getItem(STORAGE_USER);
+      const user = rawUser ? JSON.parse(rawUser) : null;
+      const empId = (user && user.id) ? String(user.id) : 'EMP-2026-088';
+      const rawPrefs = localStorage.getItem('miqat_emp_display_prefs_' + empId);
+      if (rawPrefs) {
+        const p = JSON.parse(rawPrefs);
+        html.setAttribute('data-acc-font-size', p.fontSize || 'medium');
+        html.setAttribute('data-acc-density', p.density || 'comfortable');
+        html.setAttribute('data-acc-table-style', p.tableDisplay || 'standard');
+        html.setAttribute('data-acc-date-format', p.dateFormat || 'iso');
+        html.setAttribute('data-acc-number-format', p.numberFormat || 'locale');
+      }
+    } catch (_) {}
+  }
+
   // --- 13. Initialization on DOMContentLoaded ---
   document.addEventListener('DOMContentLoaded', async function () {
     html.setAttribute('data-theme', currentTheme);
     initUserSession();
+    applyEmployeeDisplayPrefsFromStorage();
     syncHeaderNotificationBadge();
+    const empCardNav = document.getElementById('acc-employee-card');
+    if (empCardNav && !document.body.classList.contains('accounts-profile-page')) {
+      empCardNav.style.cursor = 'pointer';
+      empCardNav.addEventListener('click', function () { window.location.href = 'accounts-profile.html'; });
+      empCardNav.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = 'accounts-profile.html';
+        }
+      });
+    }
     currentDict = await loadTranslations(currentLang);
     applyTranslations();
     syncHeaderNotificationBadge();

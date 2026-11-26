@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل العميل | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-customers.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg></a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card"><div class="acc-employee-avatar" id="sls-emp-avatar">أ</div><div class="acc-employee-info"><span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span></div></div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg><span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header"><span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span><button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item is-active" aria-current="page"><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item"><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item"><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <section class="sls-card" style="flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <div>
+          <a href="sales-customers.html" class="sls-item-meta" data-i18n="sales_crm.back_to_customers">← العودة إلى العملاء</a>
+          <h1 class="acc-page-title" id="cd-name">...</h1>
+          <span class="status-pill status-pill-navy" id="cd-status-pill"></span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem;" id="cd-top-actions"></div>
+      </section>
+
+      <!-- Tabbed Navigation -->
+      <section class="sls-card">
+        <div class="sls-period-pills" id="cd-tabs" role="tablist">
+          <button type="button" class="acc-chip-btn is-active" role="tab" data-tab="overview" data-i18n="sales_crm.tab_overview">نظرة عامة والتواصل</button>
+          <button type="button" class="acc-chip-btn" role="tab" data-tab="calls" data-i18n="sales_crm.tab_calls">سجل المكالمات</button>
+          <button type="button" class="acc-chip-btn" role="tab" data-tab="followups" data-i18n="sales_crm.tab_followups">المتابعات</button>
+          <button type="button" class="acc-chip-btn" role="tab" data-tab="timeline" data-i18n="sales_crm.tab_timeline">السجل الزمني</button>
+          <button type="button" class="acc-chip-btn" role="tab" data-tab="comments" data-i18n="sales_crm.tab_comments">التعليقات والملاحظات</button>
+          <button type="button" class="acc-chip-btn" role="tab" data-tab="bookings" data-i18n="sales_crm.tab_bookings">الحجوزات والعقود</button>
+        </div>
+        <div id="cd-tab-body" style="margin-block-start:0.5rem;"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script>
+    (function () {
+      var WS = window.SalesWorkspace;
+      var custId = new URLSearchParams(window.location.search).get('id') || 'CUS-D-101';
+      var detailData = null;
+      var activeTab = 'overview';
+      function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]; }); }
+      function loc(o, ar, en) { return o ? (WS.getLang() === 'en' ? (o[en] || o[ar] || '') : (o[ar] || o[en] || '')) : ''; }
+      function fmtTs(iso) { return iso ? new Date(iso).toLocaleString(WS.getLang() === 'ar' ? 'ar-EG' : 'en-US') : '—'; }
+
+      function renderHeader() {
+        var c = detailData.customer;
+        document.getElementById('cd-name').textContent = loc(c, 'name_ar', 'name_en');
+        document.getElementById('cd-status-pill').textContent = c.customer_group;
+        document.getElementById('cd-top-actions').innerHTML =
+          '<a href="sales-call-log.html?dir=outbound&customerId=' + encodeURIComponent(c.id) + '" class="acc-btn acc-btn-primary acc-btn-sm">' + esc(WS.t('qa_record_outbound')) + '</a>' +
+          '<a href="sales-followup-form.html?customerId=' + encodeURIComponent(c.id) + '" class="acc-btn acc-btn-secondary acc-btn-sm">' + esc(WS.t('qa_schedule_followup')) + '</a>' +
+          '<a href="sales-customer-edit.html?id=' + encodeURIComponent(c.id) + '" class="acc-btn acc-btn-secondary acc-btn-sm">' + esc(WS.t('btn_edit', 'Edit Info')) + '</a>' +
+          '<a href="sales-customer-cancel.html?id=' + encodeURIComponent(c.id) + '" class="acc-btn acc-btn-secondary acc-btn-sm">' + esc(WS.t('btn_cancel_cust', 'Cancel')) + '</a>';
+      }
+
+      function renderTab() {
+        if (!detailData) return;
+        var c = detailData.customer;
+        var body = document.getElementById('cd-tab-body');
+        if (activeTab === 'overview') {
+          body.innerHTML =
+            '<div class="sls-grid-2">' +
+              '<div class="sls-sub-card"><strong>' + esc(WS.t('cd_contact_info', 'Contact Information')) + '</strong>' +
+                '<div>' + esc(WS.t('lbl_phone', 'Phone')) + ': <bdi dir="ltr">' + esc(c.phone) + '</bdi></div>' +
+                '<div>WhatsApp: <bdi dir="ltr">' + esc(c.whatsapp || c.phone) + '</bdi></div>' +
+                '<div>' + esc(WS.t('lbl_gov', 'Governorate')) + ': ' + esc(WS.t('geo_' + c.governorate, c.governorate)) + '</div>' +
+              '</div>' +
+              '<div class="sls-sub-card"><strong>' + esc(WS.t('cd_overview', 'Overview')) + '</strong>' +
+                '<div>' + esc(WS.t('lbl_source', 'Source')) + ': ' + esc(WS.t('src_' + c.source, c.source)) + (c.referrer_name ? (' (' + esc(c.referrer_name) + ')') : '') + '</div>' +
+                '<div>' + esc(WS.t('tbl_program')) + ': ' + esc(loc(c, 'program_title_ar', 'program_title_en')) + '</div>' +
+                '<div>' + esc(WS.t('lbl_updated', 'Updated')) + ': <bdi dir="ltr">' + esc(fmtTs(c.updated_at)) + '</bdi></div>' +
+              '</div>' +
+            '</div>';
+        } else if (activeTab === 'calls') {
+          var calls = detailData.calls || [];
+          body.innerHTML = calls.length ? '<div class="sls-list">' + calls.map(function (cl) {
+            return '<div class="sls-list-item"><div class="sls-item-main">' +
+              '<span class="sls-item-title">' + esc(cl.direction) + ' — ' + esc(cl.outcome) + ' (<bdi dir="ltr">' + esc(WS.formatDuration(cl.duration_seconds)) + '</bdi>)</span>' +
+              '<span class="sls-item-meta">' + esc(cl.notes) + ' • <bdi dir="ltr">' + esc(fmtTs(cl.started_at || cl.created_at)) + '</bdi></span>' +
+            '</div></div>';
+          }).join('') + '</div>' : '<p class="sls-item-meta">—</p>';
+        } else if (activeTab === 'followups') {
+          var fups = detailData.followups || [];
+          body.innerHTML = fups.length ? '<div class="sls-list">' + fups.map(function (f) {
+            return '<div class="sls-list-item"><div class="sls-item-main">' +
+              '<span class="sls-item-title">' + esc(f.status) + ' • ' + esc(f.priority) + '</span>' +
+              '<span class="sls-item-meta">' + esc(f.notes || '') + ' • <bdi dir="ltr">' + esc(f.due_at ? fmtTs(f.due_at) : 'Undated') + '</bdi>' + (f.delay_reason ? (' • Delay: ' + esc(f.delay_reason)) : '') + '</span>' +
+            '</div><div style="display:flex; gap:0.35rem;">' +
+              '<a href="sales-followup-form.html?customerId=' + encodeURIComponent(c.id) + '&rescheduleId=' + encodeURIComponent(f.id) + '" class="acc-btn acc-btn-secondary acc-btn-sm">' + esc(WS.t('btn_reschedule', 'Reschedule')) + '</a>' +
+              (f.status === 'overdue' ? '<a href="sales-followup-form.html?customerId=' + encodeURIComponent(c.id) + '&overdueId=' + encodeURIComponent(f.id) + '" class="acc-btn acc-btn-primary acc-btn-sm">' + esc(WS.t('btn_process_overdue', 'Process Overdue')) + '</a>' : '') +
+            '</div></div>';
+          }).join('') + '</div>' : '<p class="sls-item-meta">—</p>';
+        } else if (activeTab === 'timeline') {
+          var hist = detailData.history || [];
+          body.innerHTML = hist.length ? '<div class="sls-list">' + hist.map(function (h) {
+            return '<div class="sls-list-item"><div class="sls-item-main">' +
+              '<span class="sls-item-title">' + esc(h.event_type) + (h.prev_status ? (' (' + esc(h.prev_status) + ' → ' + esc(h.new_status) + ')') : '') + '</span>' +
+              '<span class="sls-item-meta">' + esc(h.reason || '') + ' ' + esc(h.note || '') + ' • <bdi dir="ltr">' + esc(fmtTs(h.created_at)) + '</bdi></span>' +
+            '</div></div>';
+          }).join('') + '</div>' : '<p class="sls-item-meta">—</p>';
+        } else if (activeTab === 'comments') {
+          var cmts = detailData.comments || [];
+          body.innerHTML =
+            '<form id="cd-comment-form" style="display:flex; gap:0.5rem; margin-block-end:0.85rem;">' +
+              '<input type="text" id="cd-comment-input" class="acc-filter-input" required placeholder="' + esc(WS.t('cd_add_comment_ph', 'Add note or comment...')) + '">' +
+              '<button type="submit" class="acc-btn acc-btn-primary acc-btn-sm">' + esc(WS.t('cd_add_comment_btn', 'Save Note')) + '</button>' +
+            '</form>' +
+            '<div class="sls-list">' + (cmts.length ? cmts.map(function (cm) {
+              return '<div class="sls-list-item"><div class="sls-item-main"><span class="sls-item-title">' + esc(cm.comment) + '</span><span class="sls-item-meta">' + esc(loc(cm, 'author_name_ar', 'author_name_en')) + ' • <bdi dir="ltr">' + esc(fmtTs(cm.created_at)) + '</bdi></span></div></div>';
+            }).join('') : '<p class="sls-item-meta">—</p>') + '</div>';
+          document.getElementById('cd-comment-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            var val = document.getElementById('cd-comment-input').value.trim();
+            if (!val) return;
+            await WS.apiFetch('/api/sales/customers/' + encodeURIComponent(c.id) + '/comments', { method: 'POST', body: JSON.stringify({ comment: val }) });
+            await loadDetails();
+          });
+        } else if (activeTab === 'bookings') {
+          body.innerHTML =
+            '<div class="sls-sub-card">' +
+              '<span class="sls-item-meta">' + esc(WS.t('cd_booking_readonly', 'Read-only view (controlled by Accounts & Partner Companies)')) + '</span>' +
+              '<div><strong>' + esc(WS.t('tbl_program')) + ':</strong> ' + esc(loc(c, 'program_title_ar', 'program_title_en')) + ' (' + esc(loc(c, 'company_name_ar', 'company_name_en')) + ')</div>' +
+              '<div><strong>' + esc(WS.t('lbl_payment_progress')) + ':</strong> ' + esc(WS.formatNumber(c.paid_amount_egp || 0)) + ' / ' + esc(WS.formatNumber(c.total_amount_egp || 0)) + ' EGP</div>' +
+              '<progress class="sls-progress" value="' + esc(c.paid_amount_egp || 0) + '" max="' + esc(Math.max(1, c.total_amount_egp || 1)) + '"></progress>' +
+            '</div>';
+        }
+      }
+
+      async function loadDetails() {
+        detailData = await WS.apiFetch('/api/sales/customers/' + encodeURIComponent(custId), { method: 'GET' });
+        renderHeader();
+        renderTab();
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        await WS.init();
+        await loadDetails();
+        document.getElementById('cd-tabs').addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-tab]');
+          if (!btn) return;
+          activeTab = btn.getAttribute('data-tab');
+          document.querySelectorAll('#cd-tabs .acc-chip-btn').forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          renderTab();
+        });
+        WS.onRefresh(function () { renderHeader(); renderTab(); });
+      });
+    })();
+  </script>
+</body>
+</html>

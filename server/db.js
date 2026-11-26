@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { DatabaseSync } = require('node:sqlite');
+const { createSalesRepository } = require('./salesCrmRepo');
 
 const DATA_DIR = path.resolve(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
@@ -1910,3 +1911,19 @@ module.exports = {
   seedNewCompanyTestAccount,
   seedAccountsEmployeeTestAccount
 };
+
+const salesRepo = createSalesRepository({ db, normalizePhone, hashPassword });
+if (process.env.MIQAT_SALES_EMAIL && process.env.MIQAT_SALES_PHONE && process.env.MIQAT_SALES_PASSWORD) {
+  try {
+    salesRepo.provisionSalesEmployee({
+      email: process.env.MIQAT_SALES_EMAIL,
+      phone: process.env.MIQAT_SALES_PHONE,
+      password: process.env.MIQAT_SALES_PASSWORD,
+      nameAr: process.env.MIQAT_SALES_NAME_AR || 'أحمد صبري',
+      nameEn: process.env.MIQAT_SALES_NAME_EN || 'Ahmed Sabry'
+    });
+  } catch (err) {
+    console.error('[Security] Failed to provision sales employee:', err.message);
+  }
+}
+module.exports.salesRepo = salesRepo;

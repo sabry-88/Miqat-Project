@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المكالمات | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <a href="sales-customers.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info"><span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper" style="display:block;">
+    <main class="acc-main-content" id="main-content" role="main" style="max-width:740px; margin-inline:auto;">
+      <div class="sls-card" style="flex-direction:row; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div>
+          <h1 class="acc-page-title" data-i18n="sales_crm.call_page_title">تسجيل وإدارة مكالمة عميل</h1>
+          <p class="sls-card-desc" data-i18n="sales_crm.call_sim_notice">محاكاة اتصال تجريبية (لا يبدأ المؤقت قبل حدث الاتصال الفعلي؛ جاهز للربط مستقبلاً بـ VoIP/PBX).</p>
+        </div>
+        <a href="sales-customers.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.back_to_customers">العودة</a>
+      </div>
+
+      <!-- Mode Switcher: Live Simulated Call vs External Timestamps -->
+      <section class="sls-card">
+        <div class="sls-period-pills" id="call-mode-tabs">
+          <button type="button" class="acc-chip-btn is-active" data-mode="live" data-i18n="sales_crm.call_mode_live">مكالمة مباشرة (محاكاة الاتصال)</button>
+          <button type="button" class="acc-chip-btn" data-mode="external" data-i18n="sales_crm.call_mode_external">تسجيل مكالمة خارجية (بأوقات البدء والانتهاء)</button>
+        </div>
+
+        <div id="live-call-panel" style="display:flex; flex-direction:column; gap:0.75rem; padding:0.9rem; border-radius:12px; background:var(--color-surface-secondary); border:1px solid var(--color-border-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+            <span class="status-pill status-pill-slate" id="live-call-state-pill">Ready / جاهز</span>
+            <strong class="sls-timer-readout" id="live-call-timer" style="font-size:1.35rem;"><bdi dir="ltr">00:00:00</bdi></strong>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <button type="button" id="btn-call-start" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.call_btn_start">بدء الاتصال</button>
+            <button type="button" id="btn-call-connect" class="acc-btn acc-btn-primary acc-btn-sm" hidden data-i18n="sales_crm.call_btn_connect">تم الرد (بدء المؤقت)</button>
+            <button type="button" id="btn-call-end" class="acc-btn acc-btn-secondary acc-btn-sm" hidden data-i18n="sales_crm.call_btn_end">إنهاء المكالمة</button>
+          </div>
+        </div>
+
+        <div id="external-call-panel" hidden style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.75rem;">
+          <div><label for="ext-start" class="sls-kpi-label" data-i18n="sales_crm.call_ext_start">وقت بدء المكالمة</label><input type="datetime-local" id="ext-start" class="acc-filter-input"></div>
+          <div><label for="ext-end" class="sls-kpi-label" data-i18n="sales_crm.call_ext_end">وقت انتهاء المكالمة</label><input type="datetime-local" id="ext-end" class="acc-filter-input"></div>
+          <div class="sls-item-meta" id="ext-calc-dur" style="grid-column:1 / -1;"></div>
+        </div>
+      </section>
+
+      <section class="sls-card">
+        <div id="call-status" class="sls-item-meta" role="status" hidden></div>
+        <form id="call-form" style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div>
+            <label for="call-customer" class="sls-kpi-label" data-i18n="sales_crm.call_lbl_customer">العميل</label>
+            <select id="call-customer" class="acc-filter-select" style="margin-block-start:0.35rem;"></select>
+          </div>
+          <div>
+            <label for="call-dir" class="sls-kpi-label" data-i18n="sales_crm.call_lbl_direction">نوع المكالمة</label>
+            <select id="call-dir" class="acc-filter-select" style="margin-block-start:0.35rem;">
+              <option value="outbound" data-i18n="sales_crm.kpi_outbound">مكالمات صادرة</option>
+              <option value="inbound" data-i18n="sales_crm.kpi_inbound">مكالمات واردة</option>
+            </select>
+          </div>
+          <div>
+            <label for="call-outcome" class="sls-kpi-label" data-i18n="sales_crm.tbl_outcome">نتيجة المكالمة (إلزامي)</label>
+            <select id="call-outcome" class="acc-filter-select" required style="margin-block-start:0.35rem;">
+              <option value="answered">Answered / تم الرد</option>
+              <option value="no_answer">No Answer / لا يرد</option>
+              <option value="busy">Busy / مشغول</option>
+              <option value="switched_off">Switched Off / مغلق</option>
+              <option value="invalid_number">Invalid Number / رقم غير صحيح</option>
+              <option value="callback_requested">Call Back Requested / طلب معاودة الاتصال</option>
+              <option value="cancelled">Cancelled / ملغي</option>
+              <option value="other">Other / أخرى</option>
+            </select>
+          </div>
+          <div id="outcome-other-wrap" hidden>
+            <label for="outcome-other-note" class="sls-kpi-label" data-i18n="sales_crm.cancel_other_explain">توضيح النتيجة</label>
+            <input type="text" id="outcome-other-note" class="acc-filter-input">
+          </div>
+          <div>
+            <label for="call-next-status" class="sls-kpi-label" data-i18n="sales_crm.call_next_status">تحديث حالة العميل بعد المكالمة</label>
+            <select id="call-next-status" class="acc-filter-select" style="margin-block-start:0.35rem;">
+              <option value="">Keep Current / الإبقاء على الحالية</option>
+              <option value="follow_up">Follow-up / متابعة</option>
+              <option value="contacted">Contacted / تم التواصل</option>
+            </select>
+          </div>
+          <div>
+            <label for="call-notes" class="sls-kpi-label" data-i18n="sales_crm.call_lbl_notes">ملخص وتعليق الموظف (إلزامي)</label>
+            <textarea id="call-notes" class="acc-filter-input sls-textarea" rows="3" required style="margin-block-start:0.35rem;"></textarea>
+          </div>
+          <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+            <button type="submit" id="btn-save-call" class="acc-btn acc-btn-primary" data-i18n="sales_crm.call_submit">حفظ المكالمة</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="./sales-workspace.js"></script>
+  <script>
+    (function () {
+      var WS = window.SalesWorkspace;
+      var callMode = 'live';
+      var callState = 'idle'; // idle -> ringing -> connected -> ended
+      var callStartIso = '';
+      var callEndIso = '';
+      var callTimer = null;
+
+      function updateExtDuration() {
+        var s = document.getElementById('ext-start').value;
+        var e = document.getElementById('ext-end').value;
+        var lbl = document.getElementById('ext-calc-dur');
+        if (s && e) {
+          var sec = Math.max(0, Math.round((Date.parse(e) - Date.parse(s)) / 1000));
+          lbl.textContent = WS.t('call_auto_dur', 'Calculated Duration') + ': ' + WS.formatDuration(sec);
+        } else {
+          lbl.textContent = '';
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        await WS.init();
+        var params = new URLSearchParams(window.location.search);
+        var dir = params.get('dir');
+        if (dir === 'inbound' || dir === 'outbound') document.getElementById('call-dir').value = dir;
+        var dash = await WS.apiFetch('/api/sales/dashboard?period=month', { method: 'GET' });
+        var sel = document.getElementById('call-customer');
+        sel.innerHTML = (dash.customersOptions || []).map(function (c) {
+          var name = WS.getLang() === 'en' ? c.name_en : c.name_ar;
+          return '<option value="' + c.id + '">' + name + '</option>';
+        }).join('');
+        var custParam = params.get('customerId');
+        if (custParam) sel.value = custParam;
+
+        var now = new Date();
+        document.getElementById('ext-end').value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        document.getElementById('ext-start').value = new Date(now.getTime() - 180000 - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        updateExtDuration();
+
+        document.getElementById('call-mode-tabs').addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-mode]');
+          if (!btn) return;
+          callMode = btn.getAttribute('data-mode');
+          document.querySelectorAll('#call-mode-tabs .acc-chip-btn').forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          document.getElementById('live-call-panel').hidden = callMode !== 'live';
+          document.getElementById('external-call-panel').hidden = callMode !== 'external';
+        });
+
+        document.getElementById('ext-start').addEventListener('change', updateExtDuration);
+        document.getElementById('ext-end').addEventListener('change', updateExtDuration);
+
+        var pill = document.getElementById('live-call-state-pill');
+        var timerEl = document.getElementById('live-call-timer');
+        var bStart = document.getElementById('btn-call-start');
+        var bConn = document.getElementById('btn-call-connect');
+        var bEnd = document.getElementById('btn-call-end');
+
+        bStart.addEventListener('click', function () {
+          callState = 'ringing';
+          pill.textContent = 'Ringing / جاري الاتصال...';
+          pill.className = 'status-pill status-pill-amber';
+          bStart.hidden = true;
+          bConn.hidden = false;
+          bEnd.hidden = false;
+          timerEl.textContent = '00:00:00';
+        });
+
+        bConn.addEventListener('click', function () {
+          callState = 'connected';
+          callStartIso = new Date().toISOString();
+          pill.textContent = 'Connected / متصل الآن';
+          pill.className = 'status-pill status-pill-navy';
+          bConn.hidden = true;
+          if (callTimer) clearInterval(callTimer);
+          callTimer = setInterval(function () {
+            var sec = Math.max(0, Math.floor((Date.now() - Date.parse(callStartIso)) / 1000));
+            timerEl.textContent = WS.formatDuration(sec);
+          }, 1000);
+        });
+
+        bEnd.addEventListener('click', function () {
+          if (callTimer) { clearInterval(callTimer); callTimer = null; }
+          callEndIso = new Date().toISOString();
+          if (!callStartIso) callStartIso = callEndIso;
+          callState = 'ended';
+          pill.textContent = 'Ended / انتهت المكالمة';
+          pill.className = 'status-pill status-pill-slate';
+          bEnd.hidden = true;
+          bConn.hidden = true;
+          bStart.hidden = false;
+        });
+
+        document.getElementById('call-outcome').addEventListener('change', function () {
+          var isOther = this.value === 'other';
+          document.getElementById('outcome-other-wrap').hidden = !isOther;
+          document.getElementById('outcome-other-note').required = isOther;
+        });
+
+        document.getElementById('call-form').addEventListener('submit', async function (e) {
+          e.preventDefault();
+          var notes = document.getElementById('call-notes').value.trim();
+          if (!notes) return;
+          var sIso = callStartIso;
+          var eIso = callEndIso;
+          if (callMode === 'external') {
+            sIso = new Date(document.getElementById('ext-start').value).toISOString();
+            eIso = new Date(document.getElementById('ext-end').value).toISOString();
+          } else if (callState === 'connected' && callStartIso && !callEndIso) {
+            eIso = new Date().toISOString();
+          }
+          await WS.apiFetch('/api/sales/calls', {
+            method: 'POST',
+            body: JSON.stringify({
+              customerId: sel.value,
+              direction: document.getElementById('call-dir').value,
+              startedAt: sIso || new Date().toISOString(),
+              endedAt: eIso || new Date().toISOString(),
+              outcome: document.getElementById('call-outcome').value,
+              outcomeOtherNote: document.getElementById('outcome-other-note').value.trim(),
+              nextStatus: document.getElementById('call-next-status').value,
+              notes: notes
+            })
+          });
+          var st = document.getElementById('call-status');
+          st.textContent = WS.t('call_saved');
+          st.hidden = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

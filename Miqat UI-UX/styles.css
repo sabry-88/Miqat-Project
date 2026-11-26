@@ -39843,3 +39843,2111 @@ dialog.prf-dialog .prf-dialog-actions {
     justify-content: center;
   }
 }
+
+
+/* ==========================================================================
+   MIQAT SALES & CALL CENTER CRM — SHARED SHELL & PAGE 1 DASHBOARD
+   ========================================================================== */
+
+.sales-workspace-page .sls-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.sales-workspace-page .sls-welcome-card {
+  border-inline-start: 4px solid var(--color-accent);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-accent-subtle) 100%);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-welcome-card {
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(209, 177, 108, 0.12) 100%);
+}
+
+.sales-workspace-page .sls-welcome-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sales-workspace-page .sls-welcome-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sales-workspace-page .sls-motivational {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-warning);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-motivational {
+  color: var(--color-accent);
+}
+
+/* Sidebar Work Status & Timer Panel */
+.sales-workspace-page .sls-work-panel {
+  margin: 0.75rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sales-workspace-page .sls-work-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.sales-workspace-page .sls-work-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.sales-workspace-page .sls-timer-readout {
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-timer-readout {
+  color: var(--color-accent);
+}
+
+.sales-workspace-page progress.sls-progress {
+  appearance: none;
+  border: 0 solid;
+  overflow: clip;
+  inline-size: 100%;
+  block-size: 10px;
+  border-radius: 999px;
+  background-color: var(--color-surface-tertiary);
+}
+
+.sales-workspace-page progress.sls-progress::-webkit-progress-bar {
+  background: transparent;
+}
+
+.sales-workspace-page progress.sls-progress::-webkit-progress-value {
+  background-color: var(--color-accent);
+  border-radius: 999px;
+  transition: inline-size 0.3s ease;
+}
+
+.sales-workspace-page progress.sls-progress::-moz-progress-bar {
+  background-color: var(--color-accent);
+  border-radius: 999px;
+  transition: inline-size 0.3s ease;
+}
+
+.sales-workspace-page .sls-work-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.sales-workspace-page .sls-work-actions .acc-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.sales-workspace-page .sls-break-alert {
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-validation-border);
+  background-color: var(--color-validation-bg);
+  color: var(--color-validation-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sales-workspace-page .sls-break-alert[hidden] {
+  display: none;
+}
+
+/* Period Selector & Controls */
+.sales-workspace-page .sls-period-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.875rem;
+}
+
+.sales-workspace-page .sls-period-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sales-workspace-page .sls-custom-dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.sales-workspace-page .sls-custom-dates[hidden] {
+  display: none;
+}
+
+/* Unified Form Controls */
+.sales-workspace-page .acc-filter-select,
+.sales-workspace-page .acc-filter-input {
+  height: 40px;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sales-workspace-page .acc-filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-end: 2.25rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23526579' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: right 0.75rem center;
+}
+
+[dir="rtl"] .sales-workspace-page .acc-filter-select {
+  background-position: left 0.75rem center;
+}
+
+[data-theme="dark"] .sales-workspace-page .acc-filter-select {
+  color-scheme: dark;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D0D9E2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+.sales-workspace-page .sls-textarea {
+  height: auto;
+  min-height: 92px;
+  padding: 0.65rem 0.75rem;
+  resize: vertical;
+}
+
+/* KPI Grid (11 Metrics in Clean Responsive Cards) */
+.sales-workspace-page .sls-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 0.875rem;
+}
+
+.sales-workspace-page .sls-kpi-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.45rem;
+  min-height: 102px;
+  min-width: 0;
+}
+
+.sales-workspace-page .sls-kpi-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.sales-workspace-page .sls-kpi-val {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+/* Dashboard 2-Column Grids */
+.sales-workspace-page .sls-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.sales-workspace-page .sls-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  border-block-end: 1px solid var(--color-border-subtle);
+  padding-block-end: 0.65rem;
+}
+
+.sales-workspace-page .sls-card-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.sales-workspace-page .sls-card-desc {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+/* Bar Charts & Metric Rows */
+.sales-workspace-page .sls-chart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.sales-workspace-page .sls-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sales-workspace-page .sls-bar-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.sales-workspace-page .sls-bar-track {
+  inline-size: 100%;
+  block-size: 8px;
+  border-radius: 999px;
+  background-color: var(--color-surface-secondary);
+  overflow: clip;
+}
+
+.sales-workspace-page .sls-bar-fill {
+  block-size: 100%;
+  border-radius: 999px;
+  background-color: var(--color-primary);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-bar-fill {
+  background-color: var(--color-accent);
+}
+
+/* Quick Actions Grid */
+.sales-workspace-page .sls-qa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 0.65rem;
+}
+
+.sales-workspace-page .sls-qa-grid .acc-btn {
+  justify-content: flex-start;
+  text-align: start;
+}
+
+/* List Items */
+.sales-workspace-page .sls-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sales-workspace-page .sls-list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background-color: var(--color-surface-secondary);
+  min-width: 0;
+}
+
+.sales-workspace-page .sls-list-item.is-highlight {
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+.sales-workspace-page .sls-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.sales-workspace-page .sls-item-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.sales-workspace-page .sls-item-meta {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.sales-workspace-page .sls-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.65rem;
+}
+
+.sales-workspace-page .sls-badge-tile {
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sales-workspace-page .sls-badge-tile.is-earned {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+}
+
+/* Native Dialog & Reminder Popover */
+dialog.sls-dialog:modal {
+  overscroll-behavior: contain;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 1.5rem;
+  max-width: min(440px, calc(100vw - 2rem));
+  box-shadow: 0 18px 40px rgba(15, 37, 59, 0.25);
+}
+
+dialog.sls-dialog::backdrop {
+  background-color: rgba(15, 37, 59, 0.55);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.sales-workspace-page .sls-reminder-popover {
+  position: fixed;
+  inset: auto;
+  inset-block-end: 1.25rem;
+  inset-inline-end: 1.25rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  max-width: min(360px, calc(100vw - 2rem));
+  box-shadow: 0 12px 30px rgba(15, 37, 59, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .sales-workspace-page .sls-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-workspace-page .sls-card {
+    padding: 0.95rem 1rem;
+  }
+
+  .sales-workspace-page .sls-kpi-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.sales-workspace-page [hidden] {
+  display: none !important;
+}
+
+.sales-workspace-page .sls-kpi-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.sales-workspace-page .sls-kpi-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+}
+
+.sales-workspace-page .sls-search-form {
+  display: flex;
+  flex: 0 0 auto;
+  width: 100%;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sales-workspace-page .sls-search-form .acc-filter-input {
+  flex: 1 1 220px;
+}
+
+.sales-workspace-page .sls-filter-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sales-workspace-page .sls-script-box {
+  margin-block-start: 0.85rem;
+  padding-block-start: 0.85rem;
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sales-workspace-page .sls-script-box .acc-filter-select {
+  flex: 1 1 200px;
+}
+
+.sales-workspace-page .sls-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.9rem;
+}
+
+.sales-workspace-page .sls-sub-card {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* SaaS Dashboard Redesign Layouts & Charts */
+.sales-workspace-page .sls-kpi-summary-7 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 0.85rem;
+}
+
+.sales-workspace-page .sls-kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sales-workspace-page .sls-kpi-trend {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.sales-workspace-page .sls-kpi-spark {
+  width: 64px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.sales-workspace-page .sls-grid-asymmetric {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.sales-workspace-page .sls-chart-box {
+  width: 100%;
+  overflow: hidden;
+}
+
+.sales-workspace-page .sls-svg-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sales-workspace-page .sls-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.sales-workspace-page .sls-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-inline-end: 0.35rem;
+}
+
+.sales-workspace-page .sls-donut-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.sales-workspace-page .sls-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sales-workspace-page .sls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.sales-workspace-page .sls-table th,
+.sales-workspace-page .sls-table td {
+  padding: 0.6rem 0.55rem;
+  text-align: start;
+  border-block-end: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+
+.sales-workspace-page .sls-table th {
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.sales-workspace-page .sls-geo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.sales-workspace-page .sls-geo-tile {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: var(--color-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sales-workspace-page .sls-fun-card {
+  border-inline-start: 4px solid var(--color-secondary-blue);
+}
+
+.sales-workspace-page .sls-fun-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sales-workspace-page .sls-fun-box {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: var(--color-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sales-workspace-page .sls-fun-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sales-workspace-page .sls-fun-opt {
+  text-align: start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.sales-workspace-page .sls-celebrate-banner {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-subtle);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .sales-workspace-page .sls-grid-asymmetric,
+  .sales-workspace-page .sls-fun-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-workspace-page .sls-geo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Dashboard Refinement: Reference-Style 7 KPI Cards, Interactive Feedback & Advanced Filters */
+.sales-workspace-page .sls-kpi-summary-7 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 0.95rem;
+}
+
+.sales-workspace-page .sls-kpi-ref-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.sales-workspace-page .sls-kpi-ref-card:hover,
+.sales-workspace-page .sls-kpi-ref-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 24px rgba(15, 37, 59, 0.1);
+  outline: none;
+}
+
+.sales-workspace-page .sls-kpi-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.sales-workspace-page .sls-kpi-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.sales-workspace-page .sls-kpi-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-kpi-icon-badge {
+  color: var(--color-accent);
+}
+
+.sales-workspace-page .sls-kpi-ref-card:hover .sls-kpi-icon-badge {
+  transform: scale(1.06);
+  background: var(--color-accent-subtle);
+}
+
+.sales-workspace-page .sls-kpi-trend-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+
+.sales-workspace-page .sls-kpi-main-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.sales-workspace-page .sls-kpi-val-lg {
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+/* Interactive Polish Across Cards, Rows, Tiles & Fun Corner */
+.sales-workspace-page .sls-card,
+.sales-workspace-page .sls-list-item,
+.sales-workspace-page .sls-badge-tile,
+.sales-workspace-page .sls-geo-tile,
+.sales-workspace-page .sls-fun-box,
+.sales-workspace-page .sls-table tbody tr {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.sales-workspace-page .sls-list-item:hover,
+.sales-workspace-page .sls-badge-tile:hover,
+.sales-workspace-page .sls-geo-tile:hover,
+.sales-workspace-page .sls-fun-box:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-subtle);
+  transform: translateY(-1px);
+}
+
+.sales-workspace-page .sls-table tbody tr[data-href] {
+  cursor: pointer;
+}
+
+.sales-workspace-page .sls-table tbody tr:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.sales-workspace-page .sls-geo-tile[data-geo] {
+  cursor: pointer;
+  text-align: start;
+}
+
+.sales-workspace-page .sls-geo-tile.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}
+
+.sales-workspace-page [data-tip] {
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.sales-workspace-page [data-tip]:hover {
+  opacity: 0.85;
+}
+
+.sales-workspace-page .sls-chart-tooltip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(15, 37, 59, 0.25);
+  white-space: nowrap;
+}
+
+/* Advanced Filtration Panel & Chips */
+.sales-workspace-page .sls-filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  width: 100%;
+}
+
+.sales-workspace-page .sls-adv-panel {
+  width: 100%;
+  border-top: 1px solid var(--color-border-subtle);
+  padding-block-start: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+}
+
+.sales-workspace-page .sls-adv-group {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: var(--color-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sales-workspace-page .sls-ms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 120px;
+  overflow-y: auto;
+  padding-inline-end: 0.2rem;
+}
+
+.sales-workspace-page .sls-ms-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.sales-workspace-page .sls-active-chips {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.sales-workspace-page .sls-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sales-workspace-page .sls-empty-state {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border: 1px dashed var(--color-border);
+  border-radius: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sales-workspace-page * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Page 2 Customers: Status Group Cards, Cancellation Groups, Bulk Bar & View Switcher */
+.sales-workspace-page .sls-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.sales-workspace-page .sls-cancel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.sales-workspace-page .sls-group-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 0.95rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: start;
+  cursor: pointer;
+  color: inherit;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.sales-workspace-page .sls-group-card:hover,
+.sales-workspace-page .sls-group-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 18px rgba(15, 37, 59, 0.08);
+  outline: none;
+}
+
+.sales-workspace-page .sls-group-card.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}
+
+.sales-workspace-page .sls-bulk-bar,
+.sales-workspace-page .sls-pagination-bar {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.15rem;
+}
+
+.sales-workspace-page .sls-view-toggle {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.sales-workspace-page .sls-cust-card {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .sales-workspace-page .sls-group-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Page 3 Follow-ups: Interactive KPIs, Status Groups, Clickable Cards/Rows, Calendar & Toast */
+.sales-workspace-page button.sls-kpi-ref-card {
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+}
+
+.sales-workspace-page .sls-kpi-ref-card:active,
+.sales-workspace-page .sls-status-group-card:active,
+.sales-workspace-page .sls-sub-card.is-clickable:active,
+.sales-workspace-page .sls-cal-cell:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.sales-workspace-page .sls-kpi-ref-card.is-active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(15, 37, 59, 0.16), 0 8px 20px rgba(15, 37, 59, 0.08);
+  background: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-kpi-ref-card.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(209, 177, 108, 0.25), 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.sales-workspace-page .sls-kpi-mini-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+}
+
+.sales-workspace-page .sls-kpi-mini-bar {
+  width: 6px;
+  border-radius: 3px 3px 0 0;
+  background: var(--color-primary);
+  transition: height 0.25s ease, opacity 0.2s ease;
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-kpi-mini-bar {
+  background: var(--color-accent);
+}
+
+.sales-workspace-page .sls-status-groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 0.75rem;
+}
+
+.sales-workspace-page .sls-status-group-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.sales-workspace-page .sls-status-group-card:hover,
+.sales-workspace-page .sls-status-group-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 6px 16px rgba(15, 37, 59, 0.08);
+  outline: none;
+}
+
+.sales-workspace-page .sls-status-group-card.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-surface-secondary);
+  box-shadow: 0 0 0 2px rgba(15, 37, 59, 0.14);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-status-group-card.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(209, 177, 108, 0.22);
+}
+
+.sales-workspace-page .sls-sub-card.is-clickable {
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.sales-workspace-page .sls-sub-card.is-clickable:hover,
+.sales-workspace-page .sls-sub-card.is-clickable:focus-within {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 20px rgba(15, 37, 59, 0.09);
+}
+
+.sales-workspace-page .sls-table tbody tr.is-clickable {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.sales-workspace-page .sls-table tbody tr.is-clickable:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.sales-workspace-page .sls-cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-block-end: 0.9rem;
+}
+
+.sales-workspace-page .sls-cal-grid-7 {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.sales-workspace-page .sls-cal-weekday {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  padding: 0.3rem 0.2rem;
+}
+
+.sales-workspace-page .sls-cal-cell {
+  min-height: 76px;
+  padding: 0.45rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.sales-workspace-page .sls-cal-cell:hover,
+.sales-workspace-page .sls-cal-cell:focus-visible {
+  border-color: var(--color-accent);
+  background: var(--color-surface-secondary);
+  outline: none;
+}
+
+.sales-workspace-page .sls-cal-cell.is-selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(15, 37, 59, 0.16);
+  background: var(--color-surface-secondary);
+}
+
+[data-theme="dark"] .sales-workspace-page .sls-cal-cell.is-selected {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(209, 177, 108, 0.22);
+}
+
+.sales-workspace-page .sls-cal-cell.is-muted {
+  opacity: 0.45;
+}
+
+.sales-workspace-page .sls-cal-pill {
+  display: block;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-link);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sales-workspace-page .sls-cal-pill:hover {
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 640px) {
+  .sales-workspace-page .sls-cal-grid-7 {
+    gap: 0.2rem;
+  }
+  .sales-workspace-page .sls-cal-cell {
+    min-height: 54px;
+    padding: 0.25rem;
+  }
+}
+
+.sales-workspace-page .sls-toast-banner {
+  position: fixed;
+  bottom: 1.25rem;
+  inset-inline-end: 1.25rem;
+  z-index: 950;
+  padding: 0.75rem 1.1rem;
+  border-radius: 10px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 10px 26px rgba(15, 37, 59, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sales-workspace-page .sls-kpi-ref-card,
+  .sales-workspace-page .sls-status-group-card,
+  .sales-workspace-page .sls-sub-card.is-clickable,
+  .sales-workspace-page .sls-cal-cell,
+  .sales-workspace-page .sls-kpi-icon-badge,
+  .sales-workspace-page .sls-kpi-mini-bar {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Page 4 — Companies & Programs (.sales-companies-page)
+   ========================================================================== */
+
+.sales-companies-page .sls-header-nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.sales-companies-page .sls-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.sales-companies-page .sls-breadcrumb a {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sales-companies-page .sls-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* Single-row scrollable accessible tabs */
+.sales-companies-page .sls-tabs-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 0.25rem;
+  border-block-end: 1px solid var(--color-border);
+  padding-block-end: 0.15rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.sales-companies-page .sls-tab-btn {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 38px;
+  padding-inline: 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 6px 6px 0 0;
+}
+
+.sales-companies-page .sls-tab-btn:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-secondary);
+}
+
+.sales-companies-page .sls-tab-btn[aria-selected="true"] {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .sales-companies-page .sls-tab-btn[aria-selected="true"] {
+  color: var(--color-accent);
+}
+
+.sales-companies-page .sls-tab-btn[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  border-block-end: 3px solid var(--color-primary);
+}
+
+[data-theme="dark"] .sales-companies-page .sls-tab-btn[aria-selected="true"]::after {
+  border-block-end-color: var(--color-accent);
+}
+
+.sales-companies-page .sls-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 0.35rem;
+  border-radius: 999px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sales-companies-page .sls-tab-panel {
+  min-width: 0;
+}
+
+.sales-companies-page .sls-search-field-wrap {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.sales-companies-page .sls-filter-inline-group {
+  flex: 0 1 190px;
+  min-width: 140px;
+}
+
+/* Company & Program Cards */
+.sales-companies-page .sls-prog-card {
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.sales-companies-page .sls-prog-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.sales-companies-page .sls-prog-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.sales-companies-page .sls-prog-price {
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .sales-companies-page .sls-prog-price {
+  color: var(--color-link);
+}
+
+.sales-companies-page .sls-prog-title-link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.sales-companies-page .sls-prog-title-link:hover {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.sales-companies-page .sls-prog-meta-grid,
+.sales-companies-page .sls-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 0.75rem;
+  margin: 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: 8px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.sales-companies-page .sls-prog-meta-grid > div,
+.sales-companies-page .sls-detail-grid > div {
+  min-width: 0;
+}
+
+.sales-companies-page .sls-prog-meta-grid dt,
+.sales-companies-page .sls-detail-grid dt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.sales-companies-page .sls-prog-meta-grid dd,
+.sales-companies-page .sls-detail-grid dd {
+  margin: 0.1rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.sales-companies-page .sls-perf-row,
+.sales-companies-page .sls-prog-source-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.sales-companies-page .sls-prog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin-block-start: auto;
+  padding-block-start: 0.4rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.sales-companies-page .sls-missing-val {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .sales-companies-page .sls-missing-val {
+  color: var(--color-accent);
+}
+
+/* Smart Search Panel */
+.sales-companies-page .sls-smart-search-panel {
+  border-block-start: 1px solid var(--color-border);
+  padding-block-start: 1rem;
+}
+
+.sales-companies-page .sls-smart-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.sales-companies-page .sls-smart-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.sales-companies-page .sls-smart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.75rem;
+}
+
+.sales-companies-page .sls-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.sales-companies-page .sls-field label,
+.sales-companies-page .sls-field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.sales-companies-page .sls-services-fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  background-color: var(--color-surface-secondary);
+}
+
+.sales-companies-page .sls-services-fieldset legend {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  padding-inline: 0.35rem;
+}
+
+.sales-companies-page .sls-smart-submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sales-companies-page .sls-match-box {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-accent-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sales-companies-page .sls-match-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+}
+
+/* Compare Tray & Table */
+.sales-companies-page .sls-compare-tray {
+  border-inline-start: 4px solid var(--color-accent);
+}
+
+.sales-companies-page .sls-compare-tray-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.sales-companies-page .sls-compare-tray-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.sales-companies-page .sls-compare-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sales-companies-page .sls-compare-tray-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sales-companies-page .sls-cmp-table th,
+.sales-companies-page .sls-cmp-table td {
+  white-space: normal;
+  min-width: 170px;
+  vertical-align: top;
+}
+
+.sales-companies-page .sls-cmp-sticky-col {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background-color: var(--color-surface-secondary);
+  min-width: 165px;
+  font-weight: 700;
+}
+
+.sales-companies-page .sls-cmp-col-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.sales-companies-page .sls-cmp-list {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sales-companies-page .sls-cmp-best {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .sales-companies-page .sls-cmp-best {
+  color: var(--color-link);
+}
+
+/* Notices, Assistant & WhatsApp Dialog */
+.sales-companies-page .sls-notice-banner {
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-validation-border);
+  background-color: var(--color-validation-bg);
+  color: var(--color-validation-text);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.sales-companies-page .sls-recommend-box,
+.sales-companies-page .sls-assistant-section,
+.sales-companies-page .sls-assistant-output,
+.sales-companies-page .sls-assistant-saved {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.sales-companies-page .sls-itinerary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sales-companies-page .sls-recent-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sales-companies-page .sls-recent-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.sales-companies-page .sls-wa-dialog {
+  max-width: min(560px, calc(100vw - 2rem));
+  width: 100%;
+}
+
+.sales-companies-page .sls-wa-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.5rem;
+}
+
+.sales-companies-page .sls-wa-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-block-start: 0.75rem;
+}
+
+.sales-companies-page .is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .sales-companies-page .sls-prog-meta-grid,
+  .sales-companies-page .sls-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sales-companies-page .sls-filter-inline-group {
+    flex: 1 1 100%;
+  }
+
+  .sales-companies-page .sls-cmp-sticky-col {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-companies-page .sls-cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Page 5 — My Profile (.sales-profile-page)
+   ========================================================================== */
+
+.sales-profile-page .sls-card {
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-card {
+  border-color: var(--color-border);
+  box-shadow: none;
+}
+
+.sales-profile-page .sls-sub-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.05rem 1.15rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.sales-profile-page .sls-sub-card:hover {
+  border-color: var(--color-input-border-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-sub-card {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-input-border-hover);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .sales-profile-page .sls-sub-card:hover {
+  border-color: var(--color-accent);
+}
+
+/* Canonical Status Pills & Buttons */
+.sales-profile-page .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.24rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.sales-profile-page .status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+}
+
+.sales-profile-page .status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-warning);
+  border-color: var(--color-accent);
+}
+
+.sales-profile-page .status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-secondary-blue);
+}
+
+.sales-profile-page .status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+}
+
+[data-theme="dark"] .sales-profile-page .status-pill-navy {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border-color: var(--color-input-border-hover);
+}
+
+[data-theme="dark"] .sales-profile-page .status-pill-amber {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .sales-profile-page .status-pill-blue {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-link);
+  border-color: var(--color-input-border-hover);
+}
+
+[data-theme="dark"] .sales-profile-page .status-pill-slate {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text-muted);
+}
+
+.sales-profile-page .acc-btn-secondary {
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-input-border-hover);
+  color: var(--color-text);
+  box-shadow: none;
+}
+
+.sales-profile-page .acc-btn-secondary:hover {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .sales-profile-page .acc-btn-secondary {
+  background-color: var(--color-surface-secondary);
+  border-color: var(--color-input-border-hover);
+  color: var(--color-text);
+}
+
+[data-theme="dark"] .sales-profile-page .acc-btn-secondary:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Profile Hero & Celebration */
+.sales-profile-page .sls-prof-hero {
+  border-inline-start: 4px solid var(--color-accent);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-accent-subtle) 100%);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-prof-hero {
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(209, 177, 108, 0.12) 100%);
+}
+
+.sales-profile-page .sls-prof-hero-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.sales-profile-page .sls-prof-identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.sales-profile-page .sls-prof-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  border: 2px solid var(--color-accent);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-prof-avatar {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-accent);
+}
+
+.sales-profile-page .sls-prof-id-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.sales-profile-page .sls-prof-hero-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.sales-profile-page .sls-prof-mini-card {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+[data-theme="dark"] .sales-profile-page .sls-prof-mini-card {
+  background-color: var(--color-surface-tertiary);
+  border-color: var(--color-input-border-hover);
+}
+
+.sales-profile-page .sls-celebrate-card {
+  border-inline-start: 4px solid var(--color-accent);
+  background-color: var(--color-accent-soft);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-celebrate-card {
+  background-color: var(--color-accent-subtle);
+}
+
+.sales-profile-page .sls-celebrate-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* Tabs & Shared Structural Helpers */
+.sales-profile-page .sls-tabs-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 0.25rem;
+  border-block-end: 1px solid var(--color-border);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.sales-profile-page .sls-tab-btn {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding-inline: 0.95rem;
+  border: 1px solid transparent;
+  border-block-end: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 8px 8px 0 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sales-profile-page .sls-tab-btn:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-secondary);
+}
+
+.sales-profile-page .sls-tab-btn[aria-selected="true"] {
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .sales-profile-page .sls-tab-btn[aria-selected="true"] {
+  color: var(--color-accent);
+}
+
+.sales-profile-page .sls-tab-btn[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  border-block-end: 3px solid var(--color-primary);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-tab-btn[aria-selected="true"]::after {
+  border-block-end-color: var(--color-accent);
+}
+
+.sales-profile-page .sls-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  min-width: 0;
+}
+
+.sales-profile-page .sls-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem 0.85rem;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: 10px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.sales-profile-page .sls-detail-grid dt {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.sales-profile-page .sls-detail-grid dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.sales-profile-page .sls-ach-card {
+  text-align: start;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  width: 100%;
+}
+
+.sales-profile-page .sls-highlight-val {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .sales-profile-page .sls-highlight-val {
+  color: var(--color-link);
+}
+
+.sales-profile-page .sls-journey-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 1rem;
+  border-inline-start: 2px solid var(--color-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sales-profile-page .sls-prog-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sales-profile-page .sls-prog-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.sales-profile-page .sls-prog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-block-start: 0.65rem;
+  border-block-start: 1px solid var(--color-border);
+}
+
+.sales-profile-page .sls-smart-form,
+.sales-profile-page .sls-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sales-profile-page .sls-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.sales-profile-page .sls-cmp-list {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sales-profile-page .sls-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.sales-profile-page .sls-breadcrumb a {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Purposeful Motion & Staggered Entrance (respects prefers-reduced-motion) */
+@keyframes slsProfFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sales-profile-page .sls-stagger-list > .sls-stagger-item {
+    --stagger-time: 0.06s;
+    animation: slsProfFadeUp 0.35s ease-out both;
+    animation-delay: calc(var(--sibling-index, 1) * var(--stagger-time));
+  }
+
+  @supports (animation-delay: calc(sibling-index() * 0.1s)) {
+    .sales-profile-page .sls-stagger-list > .sls-stagger-item {
+      animation-delay: calc(sibling-index() * var(--stagger-time));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sales-profile-page .acc-btn-sm {
+    min-height: 40px;
+    padding-inline: 0.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .sales-profile-page .sls-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-profile-page .sls-cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+

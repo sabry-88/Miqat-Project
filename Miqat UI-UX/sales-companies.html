@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الشركات والبرامج | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page sales-companies-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+        </a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info">
+            <span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span>
+          </div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <!-- Page Header -->
+      <section class="sls-card sls-page-header-card">
+        <div class="sls-welcome-top">
+          <div>
+            <h1 class="acc-page-title" data-i18n="sales_crm.comp_page_title">الشركات والبرامج المتاحة</h1>
+            <p class="sls-card-desc" id="comp-page-subtitle" data-i18n="sales_crm.comp_page_subtitle">استعراض الشركات السياحية المعتمدة، البحث الذكي حسب احتياج العميل، المقارنة، والمفضلة الشخصية.</p>
+          </div>
+          <div class="sls-header-nav-actions">
+            <a href="sales-program-compare.html" class="acc-btn acc-btn-secondary acc-btn-sm" id="comp-header-compare-link">
+              <span data-i18n="sales_crm.comp_nav_compare">مقارنة البرامج</span>
+              <span class="status-pill status-pill-navy" id="comp-header-compare-count">0/4</span>
+            </a>
+            <a href="sales-program-changelog.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.comp_nav_changelog">سجل التغييرات</a>
+            <a href="sales-company-sync.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.comp_nav_sync">سجل التزامن</a>
+            <a href="sales-program-report.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.comp_nav_report">إبلاغ عن خطأ بيانات</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Compare Tray (visible when >= 1 selected) -->
+      <section class="sls-card sls-compare-tray" id="sls-compare-tray" hidden aria-label="Program Comparison Selection">
+        <div class="sls-compare-tray-inner">
+          <div class="sls-compare-tray-info">
+            <strong id="sls-compare-tray-title"></strong>
+            <div class="sls-compare-chips" id="sls-compare-chips"></div>
+          </div>
+          <div class="sls-compare-tray-actions">
+            <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="sls-compare-clear-btn" data-i18n="sales_crm.comp_clear_compare">مسح المقارنة</button>
+            <a href="sales-program-compare.html" class="acc-btn acc-btn-primary acc-btn-sm" id="sls-compare-go-btn" data-i18n="sales_crm.comp_go_compare">فتح صفحة المقارنة</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primary Workspace Tabs -->
+      <div class="sls-tabs-bar" role="tablist" aria-label="Companies and Programs Sections">
+        <button type="button" role="tab" id="tab-btn-companies" class="sls-tab-btn" aria-selected="true" data-tab="companies" data-i18n="sales_crm.comp_tab_directory">دليل الشركات</button>
+        <button type="button" role="tab" id="tab-btn-programs" class="sls-tab-btn" aria-selected="false" data-tab="programs" data-i18n="sales_crm.comp_tab_programs">البرامج والبحث الذكي</button>
+        <button type="button" role="tab" id="tab-btn-favorites" class="sls-tab-btn" aria-selected="false" data-tab="favorites">
+          <span data-i18n="sales_crm.comp_tab_favorites">مفضلتي</span>
+          <span class="sls-tab-count" id="fav-tab-count">0</span>
+        </button>
+        <button type="button" role="tab" id="tab-btn-recent" class="sls-tab-btn" aria-selected="false" data-tab="recent" data-i18n="sales_crm.comp_tab_recent">شوهد أو رُشح مؤخراً</button>
+      </div>
+
+      <!-- TAB 1: Companies Directory -->
+      <section role="tabpanel" id="tab-panel-companies" aria-labelledby="tab-btn-companies" class="sls-tab-panel">
+        <div class="sls-card">
+          <div class="sls-filter-toolbar">
+            <div class="sls-search-field-wrap">
+              <label for="dir-company-search" class="visually-hidden" data-i18n="sales_crm.comp_search_companies_label">بحث في دليل الشركات</label>
+              <input type="search" id="dir-company-search" class="acc-filter-input" data-i18n-placeholder="sales_crm.comp_search_companies_ph" placeholder="ابحث باسم الشركة، المدينة، التخصص، أو رقم الترخيص...">
+            </div>
+            <span class="sls-item-meta" id="dir-companies-count"></span>
+          </div>
+          <p class="sls-item-meta" id="dir-perf-transparency"></p>
+          <div id="comp-cards-grid" class="sls-cards-grid"></div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Programs & Smart Search -->
+      <section role="tabpanel" id="tab-panel-programs" aria-labelledby="tab-btn-programs" class="sls-tab-panel" hidden>
+        <div class="sls-card">
+          <div class="sls-filter-toolbar">
+            <div class="sls-search-field-wrap">
+              <label for="comp-search" class="visually-hidden" data-i18n="sales_crm.comp_search_programs_label">بحث في البرامج</label>
+              <input type="search" id="comp-search" class="acc-filter-input" data-i18n-placeholder="sales_crm.comp_search_programs_ph" placeholder="ابحث باسم البرنامج أو الفندق أو الشركة...">
+            </div>
+            <div class="sls-filter-inline-group">
+              <label for="comp-category" class="visually-hidden" data-i18n="sales_crm.comp_cat_label">الفئة</label>
+              <select id="comp-category" class="acc-filter-select">
+                <option value="all" data-i18n="sales_crm.comp_cat_all">كل الفئات</option>
+                <option value="umrah" data-i18n="sales_crm.comp_cat_umrah">عمرة</option>
+                <option value="hajj" data-i18n="sales_crm.comp_cat_hajj">حج</option>
+                <option value="vip" data-i18n="sales_crm.comp_cat_vip">كبار الشخصيات (VIP)</option>
+              </select>
+            </div>
+            <div class="sls-filter-inline-group">
+              <label for="comp-filter-company" class="visually-hidden" data-i18n="sales_crm.comp_company_label">الشركة</label>
+              <select id="comp-filter-company" class="acc-filter-select">
+                <option value="all" data-i18n="sales_crm.comp_all_companies">كل الشركات</option>
+              </select>
+            </div>
+            <div class="sls-filter-inline-group">
+              <label for="comp-sort" class="visually-hidden" data-i18n="sales_crm.comp_sort_label">الترتيب</label>
+              <select id="comp-sort" class="acc-filter-select">
+                <option value="conversion" data-i18n="sales_crm.comp_sort_conversion">الأعلى تحويل عقود</option>
+                <option value="bookings" data-i18n="sales_crm.comp_sort_bookings">الأكثر حجوزات</option>
+                <option value="contracts" data-i18n="sales_crm.comp_sort_contracts">الأكثر عقوداً مكتملة</option>
+                <option value="price_asc" data-i18n="sales_crm.comp_sort_price_asc">الأقل سعراً</option>
+                <option value="price_desc" data-i18n="sales_crm.comp_sort_price_desc">الأعلى سعراً</option>
+                <option value="updated" data-i18n="sales_crm.comp_sort_updated">الأحدث تحديثاً</option>
+              </select>
+            </div>
+            <button type="button" id="toggle-smart-search-btn" class="acc-btn acc-btn-secondary acc-btn-sm" aria-expanded="false" aria-controls="smart-search-panel" data-i18n="sales_crm.comp_smart_search_btn">البحث الذكي والتوصيات</button>
+          </div>
+
+          <!-- Smart Program Search & Recommendations Form -->
+          <search id="smart-search-panel" class="sls-smart-search-panel" hidden>
+            <form id="smart-search-form" class="sls-smart-form">
+              <div class="sls-smart-head">
+                <div>
+                  <h2 class="sls-card-title" data-i18n="sales_crm.comp_smart_title">محرك البحث الذكي وترشيح البرامج للعميل</h2>
+                  <p class="sls-item-meta" data-i18n="sales_crm.comp_smart_desc">أدخل متطلبات العميل ليتم ترتيب البرامج حسب درجة التوافق مع توضيح أسباب الترشيح والبيانات الناقصة بشفافية.</p>
+                </div>
+                <button type="button" id="smart-reset-btn" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.comp_smart_reset">إعادة ضبط</button>
+              </div>
+
+              <div class="sls-smart-grid">
+                <div class="sls-field">
+                  <label for="ss-budget" data-i18n="sales_crm.ss_budget">ميزانية العميل (ج.م)</label>
+                  <input type="number" id="ss-budget" name="budget" class="acc-filter-input" min="0" step="500" placeholder="50000">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-flex" data-i18n="sales_crm.ss_flex">مرونة الميزانية (%)</label>
+                  <input type="number" id="ss-flex" name="budgetFlexibilityPct" class="acc-filter-input" min="0" max="100" value="10">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-type" data-i18n="sales_crm.ss_type">نوع الرحلة</label>
+                  <select id="ss-type" name="programType" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="umrah" data-i18n="sales_crm.comp_cat_umrah">عمرة</option>
+                    <option value="hajj" data-i18n="sales_crm.comp_cat_hajj">حج</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-travel-date" data-i18n="sales_crm.ss_travel_date">تاريخ السفر المفضل</label>
+                  <input type="date" id="ss-travel-date" name="travelDate" class="acc-filter-input">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-dep-period" data-i18n="sales_crm.ss_dep_period">وقت إقلاع الطيران</label>
+                  <select id="ss-dep-period" name="departurePeriod" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="morning" data-i18n="sales_crm.ss_morning">صباحاً</option>
+                    <option value="afternoon" data-i18n="sales_crm.ss_afternoon">ظهراً</option>
+                    <option value="evening" data-i18n="sales_crm.ss_evening">مساءً</option>
+                    <option value="night" data-i18n="sales_crm.ss_night">ليلاً</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-arr-period" data-i18n="sales_crm.ss_arr_period">وقت وصول الطيران</label>
+                  <select id="ss-arr-period" name="arrivalPeriod" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="morning" data-i18n="sales_crm.ss_morning">صباحاً</option>
+                    <option value="afternoon" data-i18n="sales_crm.ss_afternoon">ظهراً</option>
+                    <option value="evening" data-i18n="sales_crm.ss_evening">مساءً</option>
+                    <option value="night" data-i18n="sales_crm.ss_night">ليلاً</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-makkah-dist" data-i18n="sales_crm.ss_makkah_dist">أقصى مسافة للحرم المكي (متر)</label>
+                  <input type="number" id="ss-makkah-dist" name="maxMakkahDistance" class="acc-filter-input" min="0" step="50" placeholder="300">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-madinah-dist" data-i18n="sales_crm.ss_madinah_dist">أقصى مسافة للمسجد النبوي (متر)</label>
+                  <input type="number" id="ss-madinah-dist" name="maxMadinahDistance" class="acc-filter-input" min="0" step="50" placeholder="300">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-accomm" data-i18n="sales_crm.ss_accomm">مستوى الإقامة</label>
+                  <select id="ss-accomm" name="accommodationType" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="luxury" data-i18n="sales_crm.ss_accomm_luxury">فاخر (VIP)</option>
+                    <option value="five_star" data-i18n="sales_crm.ss_accomm_5star">٥ نجوم</option>
+                    <option value="four_star" data-i18n="sales_crm.ss_accomm_4star">٤ نجوم</option>
+                    <option value="economy" data-i18n="sales_crm.ss_accomm_eco">اقتصادي</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-min-dur" data-i18n="sales_crm.ss_min_dur">المدة من (أيام)</label>
+                  <input type="number" id="ss-min-dur" name="minDuration" class="acc-filter-input" min="1" max="45" placeholder="7">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-max-dur" data-i18n="sales_crm.ss_max_dur">المدة إلى (أيام)</label>
+                  <input type="number" id="ss-max-dur" name="maxDuration" class="acc-filter-input" min="1" max="45" placeholder="14">
+                </div>
+                <div class="sls-field">
+                  <label for="ss-stars" data-i18n="sales_crm.ss_stars">تصنيف الفندق (الحد الأدنى)</label>
+                  <select id="ss-stars" name="hotelStars" class="acc-filter-select">
+                    <option value="0" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="5">5 ★</option>
+                    <option value="4">4+ ★</option>
+                    <option value="3">3+ ★</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-room" data-i18n="sales_crm.ss_room">نوع الغرفة / التسكين</label>
+                  <select id="ss-room" name="roomType" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="quad" data-i18n="sales_crm.ss_room_quad">رباعية</option>
+                    <option value="triple" data-i18n="sales_crm.ss_room_triple">ثلاثية</option>
+                    <option value="double" data-i18n="sales_crm.ss_room_double">ثنائية</option>
+                    <option value="suite" data-i18n="sales_crm.ss_room_suite">جناح خاص</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-meals" data-i18n="sales_crm.ss_meals">الوجبات المشمولة</label>
+                  <select id="ss-meals" name="mealsCode" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="full_board" data-i18n="sales_crm.ss_meals_full">إقامة كاملة (٣ وجبات)</option>
+                    <option value="half_board" data-i18n="sales_crm.ss_meals_half">نصف إقامة</option>
+                    <option value="breakfast" data-i18n="sales_crm.ss_meals_bf">إفطار فقط</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-cancel" data-i18n="sales_crm.ss_cancel">سياسة الإلغاء</label>
+                  <select id="ss-cancel" name="cancellationCode" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="flexible" data-i18n="sales_crm.ss_cancel_flex">مرنة</option>
+                    <option value="moderate" data-i18n="sales_crm.ss_cancel_mod">متوسطة</option>
+                    <option value="strict" data-i18n="sales_crm.ss_cancel_strict">مقيدة</option>
+                  </select>
+                </div>
+                <div class="sls-field">
+                  <label for="ss-avail" data-i18n="sales_crm.ss_avail">توافر البرنامج</label>
+                  <select id="ss-avail" name="availabilityStatus" class="acc-filter-select">
+                    <option value="all" data-i18n="sales_crm.ss_any">الكل</option>
+                    <option value="available" data-i18n="sales_crm.ss_avail_open">متاح للحجز</option>
+                    <option value="limited" data-i18n="sales_crm.ss_avail_limited">مقاعد محدودة</option>
+                  </select>
+                </div>
+              </div>
+
+              <fieldset class="sls-services-fieldset">
+                <legend data-i18n="sales_crm.ss_services_legend">الخدمات المطلوبة</legend>
+                <label class="sls-ms-item"><input type="checkbox" name="ss_service" value="visa"> <span data-i18n="sales_crm.ss_srv_visa">تأشيرة إلكترونية</span></label>
+                <label class="sls-ms-item"><input type="checkbox" name="ss_service" value="rawdah"> <span data-i18n="sales_crm.ss_srv_rawdah">تنسيق الروضة الشريفة</span></label>
+                <label class="sls-ms-item"><input type="checkbox" name="ss_service" value="vip"> <span data-i18n="sales_crm.ss_srv_vip">استقبال VIP / سيارة خاصة</span></label>
+                <label class="sls-ms-item"><input type="checkbox" name="ss_service" value="shuttle"> <span data-i18n="sales_crm.ss_srv_shuttle">باصات ترددية</span></label>
+              </fieldset>
+
+              <div class="sls-smart-submit-row">
+                <button type="submit" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.ss_apply">تطبيق البحث الذكي وترتيب التوصيات</button>
+                <span class="sls-item-meta" id="smart-scoring-note"></span>
+              </div>
+            </form>
+          </search>
+
+          <div class="sls-results-meta-row">
+            <span class="sls-item-meta" id="prog-results-count"></span>
+          </div>
+          <div id="prog-cards-grid" class="sls-cards-grid"></div>
+        </div>
+      </section>
+
+      <!-- TAB 3: My Personal Favorites -->
+      <section role="tabpanel" id="tab-panel-favorites" aria-labelledby="tab-btn-favorites" class="sls-tab-panel" hidden>
+        <div class="sls-card">
+          <div class="sls-filter-toolbar">
+            <div class="sls-search-field-wrap">
+              <label for="fav-search" class="visually-hidden" data-i18n="sales_crm.comp_fav_search_label">بحث في مفضلتي</label>
+              <input type="search" id="fav-search" class="acc-filter-input" data-i18n-placeholder="sales_crm.comp_fav_search_ph" placeholder="ابحث في برامجك المفضلة...">
+            </div>
+            <span class="sls-item-meta" id="fav-personal-note" data-i18n="sales_crm.comp_fav_personal_note">قائمة المفضلة خاصة بك وحدك ولا يشاركها موظف آخر.</span>
+          </div>
+          <div id="fav-cards-grid" class="sls-cards-grid"></div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Recently Viewed / Recommended -->
+      <section role="tabpanel" id="tab-panel-recent" aria-labelledby="tab-btn-recent" class="sls-tab-panel" hidden>
+        <div class="sls-card">
+          <header class="sls-card-head">
+            <div>
+              <h2 class="sls-card-title" data-i18n="sales_crm.comp_recent_title">البرامج المشاهدة أو المرشحة مؤخراً</h2>
+              <p class="sls-card-desc" data-i18n="sales_crm.comp_recent_desc">سجل نشاطك الشخصي للبرامج التي استعرضتها أو رشحتها للعملاء (منفصل عن المفضلة).</p>
+            </div>
+          </header>
+          <div id="recent-cards-grid" class="sls-cards-grid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script src="./sales-companies-shared.js"></script>
+  <script src="./sales-companies.js"></script>
+</body>
+</html>

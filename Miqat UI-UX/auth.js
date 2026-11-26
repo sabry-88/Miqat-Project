@@ -878,6 +878,15 @@
       return { valid: true, target: 'accounts-dashboard.html' };
     }
 
+    // 4b. Sales & Call Center Employee
+    if (role === 'sales_employee' || role === 'sales_agent') {
+      let target = 'sales-dashboard.html';
+      if (decoded && decoded.startsWith('sales-') && decoded.endsWith('.html')) {
+        target = decoded;
+      }
+      return { valid: true, target };
+    }
+
     // 5. Admin
     if (role === 'admin') {
       let target = 'admin-transactions.html';

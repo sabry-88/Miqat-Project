@@ -77,7 +77,7 @@ function getCorsHeaders(req) {
   );
 
   const headers = {
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   };
 
@@ -165,6 +165,11 @@ function resolveUserDestination(user) {
   // 4. Accounts Employee
   if (user.role === 'accounts_employee' || user.role === 'accountant') {
     return { valid: true, target: 'accounts-dashboard.html' };
+  }
+
+  // 4b. Sales & Call Center Employee
+  if (user.role === 'sales_employee' || user.role === 'sales_agent') {
+    return { valid: true, target: 'sales-dashboard.html' };
   }
 
   // 5. Admin
@@ -1469,6 +1474,593 @@ const server = http.createServer(async (req, res) => {
     }
 
     return sendJson(res, 200, { success: true, payment });
+  }
+
+  // ==================== SALES & CALL CENTER CRM APIS ====================
+  function requireSalesContext(req, res) {
+    const user = getSessionUser(req);
+    if (!user) {
+      sendJson(res, 401, { success: false, error: 'AUTH_REQUIRED' });
+      return null;
+    }
+    if (user.role !== 'sales_employee' && user.role !== 'sales_agent') {
+      sendJson(res, 403, { success: false, error: 'FORBIDDEN_ROLE' });
+      return null;
+    }
+    const employee = db.salesRepo.getEmployeeByUserId(user.id);
+    if (!employee) {
+      sendJson(res, 403, { success: false, error: 'EMPLOYEE_PROFILE_NOT_FOUND' });
+      return null;
+    }
+    return { user, employee };
+  }
+
+  if (pathname === '/api/sales/dashboard' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const filters = {};
+    for (const [k, v] of searchParams.entries()) {
+      filters[k] = v;
+    }
+    const data = db.salesRepo.getDashboardData(ctx.employee, filters);
+    return sendJson(res, 200, { success: true, ...data });
+  }
+
+  if (pathname === '/api/sales/work-session' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, workSession: db.salesRepo.getActiveWorkSession(ctx.employee.id) });
+  }
+
+  if (pathname === '/api/sales/work-session/start' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const session = db.salesRepo.startWorkSession(ctx.employee.id, body.shiftType);
+      return sendJson(res, 200, { success: true, workSession: session });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/work-session/offline' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const session = db.salesRepo.goOffline(ctx.employee.id);
+    return sendJson(res, 200, { success: true, workSession: session });
+  }
+
+  if (pathname === '/api/sales/work-session/resume' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const result = db.salesRepo.resumeWorkSession(ctx.employee.id);
+    return sendJson(res, 200, { success: true, ...result });
+  }
+
+  if (pathname === '/api/sales/work-session/heartbeat' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const session = db.salesRepo.heartbeatWorkSession(ctx.employee.id);
+    return sendJson(res, 200, { success: true, workSession: session });
+  }
+
+  if (pathname === '/api/sales/work-session/stop' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const result = db.salesRepo.stopWorkSession(ctx.employee.id, {
+        emergency: Boolean(body.emergency),
+        reason: body.reason || ''
+      });
+      if (!result.ok) {
+        return sendJson(res, 400, { success: false, error: result.error });
+      }
+      return sendJson(res, 200, { success: true, workSession: result.session });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/work-session/break/start' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const result = db.salesRepo.startBreak(ctx.employee.id);
+    if (!result.ok) return sendJson(res, 400, { success: false, error: result.error });
+    return sendJson(res, 200, { success: true, workSession: result.session });
+  }
+
+  if (pathname === '/api/sales/work-session/break/end' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const result = db.salesRepo.endBreak(ctx.employee.id);
+    if (!result.ok) return sendJson(res, 400, { success: false, error: result.error });
+    return sendJson(res, 200, { success: true, workSession: result.session });
+  }
+
+  if (pathname === '/api/sales/calls' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const call = db.salesRepo.recordCall(ctx.employee.id, body);
+      return sendJson(res, 201, { success: true, call });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/followups' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      if (!body.dueAt && !body.undated) return sendJson(res, 400, { success: false, error: 'DUE_AT_REQUIRED' });
+      const followup = db.salesRepo.scheduleFollowup(ctx.employee.id, body);
+      return sendJson(res, 201, { success: true, followup });
+    } catch (err) {
+      return sendJson(res, err.statusCode || 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/followups' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const filters = {};
+    for (const [k, v] of searchParams.entries()) filters[k] = v;
+    const data = db.salesRepo.getFollowups(ctx.employee.id, filters);
+    return sendJson(res, 200, { success: true, ...data });
+  }
+
+  if (pathname === '/api/sales/followups/bulk' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const resBulk = db.salesRepo.bulkFollowups(ctx.employee.id, body);
+      return sendJson(res, 200, { success: true, ...resBulk });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesFupDetailMatch = pathname.match(/^\/api\/sales\/followups\/([^/]+)$/);
+  if (salesFupDetailMatch && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const data = db.salesRepo.getFollowupDetails(ctx.employee.id, decodeURIComponent(salesFupDetailMatch[1]));
+      return sendJson(res, 200, { success: true, ...data });
+    } catch (err) {
+      return sendJson(res, 404, { success: false, error: err.message });
+    }
+  }
+
+  if (salesFupDetailMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const followup = db.salesRepo.editFollowup(ctx.employee.id, decodeURIComponent(salesFupDetailMatch[1]), body);
+      return sendJson(res, 200, { success: true, followup });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesFupCancelMatch = pathname.match(/^\/api\/sales\/followups\/([^/]+)\/cancel$/);
+  if (salesFupCancelMatch && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const followup = db.salesRepo.cancelFollowup(ctx.employee.id, decodeURIComponent(salesFupCancelMatch[1]), body.reason);
+      return sendJson(res, 200, { success: true, followup });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesFupCompleteMatch = pathname.match(/^\/api\/sales\/followups\/([^/]+)\/complete$/);
+  if (salesFupCompleteMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req).catch(() => ({}));
+      const item = db.salesRepo.completeFollowup(ctx.employee.id, decodeURIComponent(salesFupCompleteMatch[1]), body);
+      return sendJson(res, 200, { success: true, followup: item });
+    } catch (err) {
+      return sendJson(res, 404, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/saved-filters' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const filter = db.salesRepo.saveFilter(ctx.employee.id, body);
+      return sendJson(res, 201, { success: true, filter });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesSavedFltDelMatch = pathname.match(/^\/api\/sales\/saved-filters\/([^/]+)$/);
+  if (salesSavedFltDelMatch && req.method === 'DELETE') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    db.salesRepo.deleteSavedFilter(ctx.employee.id, decodeURIComponent(salesSavedFltDelMatch[1]));
+    return sendJson(res, 200, { success: true });
+  }
+
+  const salesFupOverdueMatch = pathname.match(/^\/api\/sales\/followups\/([^/]+)\/overdue$/);
+  if (salesFupOverdueMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const item = db.salesRepo.processOverdueFollowup(ctx.employee.id, decodeURIComponent(salesFupOverdueMatch[1]), body.delayReason);
+      return sendJson(res, 200, { success: true, followup: item });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/customers' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const filters = {};
+    for (const [k, v] of searchParams.entries()) filters[k] = v;
+    const data = db.salesRepo.getCustomers(ctx.employee.id, filters);
+    return sendJson(res, 200, { success: true, ...data });
+  }
+
+  if (pathname === '/api/sales/customers/bulk' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const result = db.salesRepo.bulkUpdateCustomers(ctx.employee.id, body);
+      return sendJson(res, 200, { success: true, ...result });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesCustDetailMatch = pathname.match(/^\/api\/sales\/customers\/([^/]+)$/);
+  if (salesCustDetailMatch && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const data = db.salesRepo.getCustomerDetails(ctx.employee.id, decodeURIComponent(salesCustDetailMatch[1]));
+      return sendJson(res, 200, { success: true, ...data });
+    } catch (err) {
+      return sendJson(res, 404, { success: false, error: err.message });
+    }
+  }
+
+  const salesCustCommentMatch = pathname.match(/^\/api\/sales\/customers\/([^/]+)\/comments$/);
+  if (salesCustCommentMatch && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const comment = db.salesRepo.addCustomerComment(ctx.employee, decodeURIComponent(salesCustCommentMatch[1]), body.comment);
+      return sendJson(res, 201, { success: true, comment });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesCustEditMatch = pathname.match(/^\/api\/sales\/customers\/([^/]+)\/edit$/);
+  if (salesCustEditMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const customer = db.salesRepo.editCustomerInfo(ctx.employee.id, decodeURIComponent(salesCustEditMatch[1]), body);
+      return sendJson(res, 200, { success: true, customer });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesCustCancelMatch = pathname.match(/^\/api\/sales\/customers\/([^/]+)\/cancel$/);
+  if (salesCustCancelMatch && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const customer = db.salesRepo.cancelCustomer(ctx.employee.id, decodeURIComponent(salesCustCancelMatch[1]), body);
+      return sendJson(res, 200, { success: true, customer });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/lead-requests' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getLeadRequests(ctx.employee.id) });
+  }
+
+  if (pathname === '/api/sales/lead-requests' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const request = db.salesRepo.submitLeadRequest(ctx.employee, body);
+      return sendJson(res, 201, { success: true, request });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/customers' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const customer = db.salesRepo.createCustomer(ctx.employee.id, body);
+      return sendJson(res, 201, { success: true, customer });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesCustPatchMatch = pathname.match(/^\/api\/sales\/customers\/([^/]+)$/);
+  if (salesCustPatchMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const customer = db.salesRepo.updateCustomerStage(ctx.employee.id, decodeURIComponent(salesCustPatchMatch[1]), body.stage);
+      return sendJson(res, 200, { success: true, customer });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/companies' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const q = searchParams.get('q') || '';
+    const category = searchParams.get('category') || '';
+    const companyId = searchParams.get('companyId') || '';
+    const sort = searchParams.get('sort') || 'conversion';
+    const favoritesOnly = searchParams.get('favoritesOnly') === '1';
+    return sendJson(res, 200, {
+      success: true,
+      ...db.salesRepo.getCompaniesAndPrograms({ employeeId: ctx.employee.id, q, category, companyId, sort, favoritesOnly })
+    });
+  }
+
+  if (pathname === '/api/sales/companies/sync-history' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const companyId = searchParams.get('companyId') || '';
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getCompanySyncHistory(companyId) });
+  }
+
+  if (pathname === '/api/sales/programs/smart-search' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 200, { success: true, ...db.salesRepo.smartSearchPrograms(ctx.employee.id, body || {}) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/recent' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getRecentPrograms(ctx.employee.id) });
+  }
+
+  if (pathname === '/api/sales/programs/recent' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 200, { success: true, result: db.salesRepo.recordRecentProgram(ctx.employee.id, body.programId, body.contextType) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/favorites/toggle' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 200, { success: true, ...db.salesRepo.toggleFavorite(ctx.employee.id, body.programId) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/pin/toggle' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 200, { success: true, ...db.salesRepo.togglePin(ctx.employee.id, body.itemType, body.itemId) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/scripts' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 201, { success: true, script: db.salesRepo.saveSalesScript(ctx.employee.id, body) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesScriptDelMatch = pathname.match(/^\/api\/sales\/programs\/scripts\/([^/]+)$/);
+  if (salesScriptDelMatch && req.method === 'DELETE') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    db.salesRepo.deleteSalesScript(ctx.employee.id, decodeURIComponent(salesScriptDelMatch[1]));
+    return sendJson(res, 200, { success: true });
+  }
+
+  if (pathname === '/api/sales/programs/error-reports' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getErrorReports(ctx.employee.id) });
+  }
+
+  if (pathname === '/api/sales/programs/error-reports' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 201, { success: true, report: db.salesRepo.submitErrorReport(ctx.employee.id, body) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/recommend' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 201, { success: true, recommendation: db.salesRepo.recordRecommendation(ctx.employee.id, body) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/programs/changelog' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const programId = searchParams.get('programId') || '';
+    const companyId = searchParams.get('companyId') || '';
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getProgramChangelog({ programId, companyId }) });
+  }
+
+  if (pathname === '/api/sales/programs/changelog/simulate' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 201, { success: true, ...db.salesRepo.simulateProgramChangeImpact(ctx.employee.id, body) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  const salesProgMatch = pathname.match(/^\/api\/sales\/programs\/([^/]+)$/);
+  if (salesProgMatch && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const program = db.salesRepo.getProgramById(decodeURIComponent(salesProgMatch[1]), ctx.employee.id);
+    if (!program) return sendJson(res, 404, { success: false, error: 'PROGRAM_NOT_FOUND' });
+    return sendJson(res, 200, { success: true, program });
+  }
+
+  if (pathname === '/api/sales/profile' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    const highlightPeriod = searchParams.get('highlightPeriod') || 'this_month';
+    return sendJson(res, 200, { success: true, ...db.salesRepo.getProfileData(ctx.employee, { highlightPeriod }) });
+  }
+
+  if (pathname === '/api/sales/profile/contact' && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const employee = db.salesRepo.updateProfileContact(ctx.employee.id, body || {});
+      return sendJson(res, 200, { success: true, employee });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/profile/permission-requests' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const request = db.salesRepo.submitPermissionRequest(ctx.employee.id, body || {});
+      return sendJson(res, 201, { success: true, request });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/profile/celebrate' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      return sendJson(res, 200, { success: true, ...db.salesRepo.markCelebratedAchievements(ctx.employee.id, body.keys || []) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/profile/sessions/terminate-others' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const authHeader = req.headers['authorization'] || '';
+      const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7).trim() : '';
+      return sendJson(res, 200, { success: true, ...db.salesRepo.terminateOtherSessions(ctx.user.id, token, ctx.employee.id) });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/fun-corner/submit' && req.method === 'POST') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    try {
+      const body = await parseJsonBody(req);
+      const result = db.salesRepo.submitFunActivity(ctx.employee.id, body);
+      return sendJson(res, 200, { success: true, result });
+    } catch (err) {
+      return sendJson(res, 400, { success: false, error: err.message });
+    }
+  }
+
+  if (pathname === '/api/sales/notifications' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getNotifications(ctx.employee.id) });
+  }
+
+  const salesNotifReadMatch = pathname.match(/^\/api\/sales\/notifications\/([^/]+)\/read$/);
+  if (salesNotifReadMatch && req.method === 'PATCH') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    db.salesRepo.markNotificationRead(ctx.employee.id, decodeURIComponent(salesNotifReadMatch[1]));
+    return sendJson(res, 200, { success: true });
+  }
+
+  const salesNotifDelMatch = pathname.match(/^\/api\/sales\/notifications\/([^/]+)$/);
+  if (salesNotifDelMatch && req.method === 'DELETE') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    db.salesRepo.deleteNotification(ctx.employee.id, decodeURIComponent(salesNotifDelMatch[1]));
+    return sendJson(res, 200, { success: true });
+  }
+
+  if (pathname === '/api/sales/activity' && req.method === 'GET') {
+    const ctx = requireSalesContext(req, res);
+    if (!ctx) return;
+    return sendJson(res, 200, { success: true, items: db.salesRepo.getActivity(ctx.employee.id) });
   }
 
   // ==================== STATIC FILE SERVING ====================

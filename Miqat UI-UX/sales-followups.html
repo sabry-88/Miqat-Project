@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المتابعات | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" id="sls-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+          <span class="acc-header-notif-badge" id="sls-header-fup-badge" hidden>0</span>
+        </a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info"><span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span><span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span></div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <!-- 1. Page Header -->
+      <section class="sls-card" style="flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <div>
+          <h1 class="acc-page-title" data-i18n="sales_crm.fup_ws_title">مركز المتابعات والمواعيد</h1>
+          <p class="sls-card-desc" id="fup-header-date"></p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center;">
+          <a href="sales-followup-form.html" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.qa_schedule_followup">جدولة متابعة عميل</a>
+          <button type="button" id="fup-jump-calendar" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.view_calendar">التقويم</button>
+          <button type="button" id="fup-save-filter-btn" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.fup_save_filter">حفظ الفلتر</button>
+        </div>
+      </section>
+
+      <!-- 2. Advanced Analytics Overview -->
+      <section class="sls-kpi-summary-7" id="fup-analytics-kpis" aria-label="Follow-up Analytics KPIs"></section>
+      <div class="sls-grid-2">
+        <article class="sls-card">
+          <header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_chart_completed_overdue">المكتملة مقابل المتأخرة والمجدولة</h2></header>
+          <div class="sls-donut-wrap" id="fup-donut-chart"></div>
+        </article>
+        <article class="sls-card">
+          <header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_chart_outcomes">نتائج المتابعات والتحويل للحجوزات</h2></header>
+          <div class="sls-chart-box" id="fup-outcomes-chart"></div>
+        </article>
+      </div>
+
+      <!-- 3. Today Focus -->
+      <section class="sls-card sls-welcome-card" id="fup-today-focus" aria-label="Today Focus">
+        <header class="sls-card-head">
+          <div>
+            <h2 class="sls-card-title" data-i18n="sales_crm.fup_today_focus">تركيز اليوم (أهم المتابعات)</h2>
+            <p class="sls-card-desc" id="fup-suggested-next"></p>
+          </div>
+        </header>
+        <div class="sls-cards-grid" id="fup-today-grid"></div>
+      </section>
+
+      <!-- 4. Search, Advanced Filters, Saved Filters, Sorting & View Switcher -->
+      <section class="sls-card">
+        <div class="sls-filter-toolbar">
+          <input type="search" id="fup-search" class="acc-filter-input" style="flex:1 1 220px;" data-i18n-placeholder="sales_crm.fup_search_ph" placeholder="ابحث بالعميل أو الهاتف أو الشركة أو الملاحظات...">
+          <select id="fup-sort" class="acc-filter-select" aria-label="Sort Follow-ups" style="flex:0 1 190px;">
+            <option value="priority" data-i18n="sales_crm.fup_sort_priority">الأولوية الأعلى أولاً</option>
+            <option value="nearest_due" data-i18n="sales_crm.sort_nearest_fup">أقرب موعد متابعة</option>
+            <option value="most_overdue" data-i18n="sales_crm.fup_sort_overdue">الأكثر تأخيراً</option>
+            <option value="newest" data-i18n="sales_crm.fup_sort_newest">الأحدث</option>
+            <option value="oldest" data-i18n="sales_crm.fup_sort_oldest">الأقدم</option>
+            <option value="last_contact" data-i18n="sales_crm.sort_recent_contact">الأحدث تواصلاً</option>
+          </select>
+          <select id="fup-saved-select" class="acc-filter-select" aria-label="Saved Filters" style="flex:0 1 180px;">
+            <option value="" data-i18n="sales_crm.fup_saved_filters">الفلاتر المحفوظة</option>
+          </select>
+          <button type="button" id="fup-toggle-adv" class="acc-btn acc-btn-secondary acc-btn-sm" aria-expanded="false" data-i18n="sales_crm.flt_advanced_btn">فلاتر متقدمة</button>
+          <button type="button" id="fup-clear-all" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+          <div class="sls-view-toggle" role="group" aria-label="View Mode">
+            <button type="button" class="acc-chip-btn is-active" id="fup-view-cards" data-view="cards" data-i18n="sales_crm.view_cards">بطاقات</button>
+            <button type="button" class="acc-chip-btn" id="fup-view-table" data-view="table" data-i18n="sales_crm.view_table">جدول</button>
+            <button type="button" class="acc-chip-btn" id="fup-view-calendar" data-view="calendar" data-i18n="sales_crm.view_calendar">تقويم</button>
+          </div>
+        </div>
+
+        <div id="fup-adv-panel" class="sls-adv-panel" hidden>
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.lbl_status">الحالة والأولوية</strong>
+            <select id="fup-flt-status" class="acc-filter-select">
+              <option value="all" data-i18n="sales_crm.fup_status_all">الكل</option>
+              <option value="scheduled" data-i18n="sales_crm.fup_status_scheduled">مجدولة</option>
+              <option value="overdue" data-i18n="sales_crm.fup_status_overdue">متأخرة</option>
+              <option value="undated" data-i18n="sales_crm.fup_status_undated">غير مؤرخة</option>
+              <option value="completed" data-i18n="sales_crm.fup_status_completed">مكتملة</option>
+              <option value="cancelled" data-i18n="sales_crm.grp_cancelled">ملغاة</option>
+            </select>
+            <select id="fup-flt-priority" class="acc-filter-select">
+              <option value="" data-i18n="sales_crm.all_priorities">كل الأولويات</option>
+              <option value="urgent" data-i18n="sales_crm.prio_urgent">عاجل</option>
+              <option value="high" data-i18n="sales_crm.prio_high">مرتفع</option>
+              <option value="normal" data-i18n="sales_crm.prio_normal">عادي</option>
+            </select>
+            <select id="fup-flt-overdue-bucket" class="acc-filter-select">
+              <option value="" data-i18n="sales_crm.all_overdue_buckets">كل مدد التأخير</option>
+              <option value="lt_1h" data-i18n="sales_crm.overdue_lt_1h">أقل من ساعة</option>
+              <option value="1_24h" data-i18n="sales_crm.overdue_1_24h">١ إلى ٢٤ ساعة</option>
+              <option value="1_3d" data-i18n="sales_crm.overdue_1_3d">١ إلى ٣ أيام</option>
+              <option value="gt_3d" data-i18n="sales_crm.overdue_gt_3d">أكثر من ٣ أيام</option>
+            </select>
+          </div>
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_company">الشركة والبرنامج</strong>
+            <select id="fup-flt-company" class="acc-filter-select"></select>
+            <select id="fup-flt-program" class="acc-filter-select"></select>
+            <select id="fup-flt-gov" class="acc-filter-select">
+              <option value="" data-i18n="sales_crm.all_govs">كل المحافظات</option>
+              <option value="cairo" data-i18n="sales_crm.geo_cairo">القاهرة</option>
+              <option value="portsaid" data-i18n="sales_crm.geo_portsaid">بورسعيد</option>
+              <option value="other_gov" data-i18n="sales_crm.geo_other_gov">محافظات أخرى</option>
+              <option value="overseas" data-i18n="sales_crm.geo_overseas">عملاء بالخارج</option>
+            </select>
+          </div>
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_dates">الموعد والمصدر</strong>
+            <input type="date" id="fup-flt-due-exact" class="acc-filter-input" aria-label="Due Date">
+            <select id="fup-flt-source" class="acc-filter-select">
+              <option value="" data-i18n="sales_crm.all_sources">كل المصادر</option>
+              <option value="referral" data-i18n="sales_crm.src_referral">إحالة</option>
+              <option value="social_ads" data-i18n="sales_crm.src_social_ads">إعلانات</option>
+              <option value="website" data-i18n="sales_crm.src_website">الموقع</option>
+              <option value="call_center" data-i18n="sales_crm.src_call_center">مركز الاتصال</option>
+              <option value="whatsapp" data-i18n="sales_crm.src_whatsapp">واتساب</option>
+            </select>
+            <button type="button" id="fup-apply-adv" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.flt_apply">تطبيق الفلاتر</button>
+          </div>
+        </div>
+
+        <div class="sls-active-chips" id="fup-chips-bar">
+          <span class="sls-item-meta" id="fup-result-count"></span>
+          <div id="fup-chips-list" class="sls-active-chips"></div>
+        </div>
+      </section>
+
+      <!-- 5. Bulk Actions Bar (No Export) -->
+      <section class="sls-card sls-bulk-bar" aria-label="Bulk Follow-up Actions">
+        <label class="sls-ms-item" style="font-weight:700;">
+          <input type="checkbox" id="fup-select-all">
+          <span data-i18n="sales_crm.bulk_select_all">تحديد الكل</span> (<span id="fup-selected-count">0</span>)
+        </label>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center;">
+          <select id="fup-bulk-sel" class="acc-filter-select" style="width:auto;" disabled>
+            <option value="" data-i18n="sales_crm.bulk_choose">اختر إجراءً جماعياً...</option>
+            <option value="priority:urgent" data-i18n="sales_crm.bulk_prio_urgent">الأولوية ← عاجل</option>
+            <option value="priority:high" data-i18n="sales_crm.bulk_prio_high">الأولوية ← مرتفع</option>
+            <option value="priority:normal" data-i18n="sales_crm.bulk_prio_normal">الأولوية ← عادي</option>
+            <option value="reschedule_tom" data-i18n="sales_crm.bulk_reschedule_tom">إعادة جدولة ← غداً ١٠:٠٠ ص</option>
+            <option value="complete" data-i18n="sales_crm.fup_bulk_complete">إتمام المحدد</option>
+            <option value="cancel" data-i18n="sales_crm.fup_bulk_cancel">إلغاء المحدد</option>
+          </select>
+          <button type="button" id="fup-bulk-apply" class="acc-btn acc-btn-primary acc-btn-sm" disabled data-i18n="sales_crm.flt_apply">تنفيذ</button>
+        </div>
+      </section>
+
+      <!-- 5b. Interactive Status Group Cards -->
+      <section class="sls-card" id="fup-status-groups-section" aria-label="Status Groups">
+        <header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_groups_title">توزيع حالات المتابعة</h2></header>
+        <div class="sls-status-groups-grid" id="fup-status-groups-bar"></div>
+      </section>
+
+      <!-- 6. Calendar View Container -->
+      <section class="sls-card" id="fup-calendar-section" hidden>
+        <header class="sls-card-head">
+          <h2 class="sls-card-title" data-i18n="sales_crm.view_calendar">تقويم المتابعات</h2>
+          <div class="sls-period-pills" id="cal-mode-pills">
+            <button type="button" class="acc-chip-btn is-active" data-cal="month" data-i18n="sales_crm.cal_month">شهري</button>
+            <button type="button" class="acc-chip-btn" data-cal="week" data-i18n="sales_crm.cal_week">أسبوعي</button>
+            <button type="button" class="acc-chip-btn" data-cal="day" data-i18n="sales_crm.cal_day">يومي</button>
+            <button type="button" class="acc-chip-btn" data-cal="agenda" data-i18n="sales_crm.cal_agenda">جدول الأعمال</button>
+          </div>
+        </header>
+        <div id="fup-calendar-body"></div>
+      </section>
+
+      <!-- 7. Table View Container -->
+      <section class="sls-card sls-table-wrap" id="fup-table-section" hidden></section>
+
+      <!-- 8. Five Independent Follow-up Status Sections (Cards View) -->
+      <div id="fup-groups-container" style="display:flex; flex-direction:column; gap:1.15rem;">
+        <section class="sls-card" data-group-sec="overdue"><header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_sec_overdue">متابعات متأخرة (مصنفة حسب مدة التأخير)</h2><span class="status-pill status-pill-amber" id="cnt-overdue">0</span></header><div id="sec-overdue-body"></div></section>
+        <section class="sls-card" data-group-sec="scheduled"><header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.grp_follow_due">متابعة بموعد محدد</h2><span class="status-pill status-pill-navy" id="cnt-scheduled">0</span></header><div class="sls-cards-grid" id="sec-scheduled-body"></div></section>
+        <section class="sls-card" data-group-sec="undated"><header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.grp_follow_nodue">متابعة بدون موعد (مرتبة بالأولوية وآخر تواصل)</h2><span class="status-pill status-pill-blue" id="cnt-undated">0</span></header><div class="sls-cards-grid" id="sec-undated-body"></div></section>
+        <section class="sls-card" data-group-sec="completed"><header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_status_completed">المتابعات المكتملة (الأرشيف)</h2><span class="status-pill status-pill-slate" id="cnt-completed">0</span></header><div class="sls-cards-grid" id="sec-completed-body"></div></section>
+        <section class="sls-card" data-group-sec="cancelled"><header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.grp_cancelled">المتابعات الملغاة</h2><span class="status-pill status-pill-slate" id="cnt-cancelled">0</span></header><div class="sls-cards-grid" id="sec-cancelled-body"></div></section>
+      </div>
+
+      <!-- 9. Pagination Bar -->
+      <section class="sls-card sls-pagination-bar" id="fup-pagination-bar" hidden></section>
+    </main>
+  </div>
+
+  <!-- Quick Preview Dialog -->
+  <dialog id="fup-preview-dialog" class="sls-dialog" aria-labelledby="fup-prev-title">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:0.75rem;">
+      <h2 id="fup-prev-title" style="margin:0;"></h2>
+      <button type="button" id="fup-prev-close" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.logout_cancel_btn">إغلاق</button>
+    </div>
+    <div id="fup-prev-body" style="display:flex; flex-direction:column; gap:0.65rem;"></div>
+  </dialog>
+
+  <!-- Save Filter Dialog -->
+  <dialog id="fup-save-filter-dialog" class="sls-dialog" aria-labelledby="sf-title">
+    <h2 id="sf-title" data-i18n="sales_crm.fup_save_filter">حفظ الفلتر الحالي</h2>
+    <form method="dialog" style="display:flex; flex-direction:column; gap:0.75rem;">
+      <input type="text" id="sf-name" class="acc-filter-input" required data-i18n-placeholder="sales_crm.fup_filter_name_ph" placeholder="اسم الفلتر">
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" formnovalidate data-i18n="sales_crm.logout_cancel_btn">إلغاء</button>
+        <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.btn_save_changes">حفظ</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="fup-toast" class="sls-toast-banner" role="status" hidden></div>
+
+  <!-- Bulk Confirm Dialog -->
+  <dialog id="fup-bulk-dialog" class="sls-dialog" aria-labelledby="fb-title">
+    <h2 id="fb-title" data-i18n="sales_crm.bulk_confirm_title">تأكيد الإجراء الجماعي</h2>
+    <p id="fb-body"></p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">إلغاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.flt_apply">تأكيد</button>
+    </form>
+  </dialog>
+
+  <!-- Snooze / Reminder Toast Popover -->
+  <div id="sls-reminder-popover" class="sls-reminder-popover" popover="manual" role="region" aria-label="Follow-up Reminder"></div>
+
+  <!-- Logout Native Dialog -->
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script src="./sales-followups.js"></script>
+</body>
+</html>

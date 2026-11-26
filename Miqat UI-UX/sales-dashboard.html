@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap">
+            <span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+          </div>
+        </a>
+
+        <div class="acc-demo-pill" role="status">
+          <span data-i18n="sales_crm.demo_notice_badge">بيئة متصلة بقاعدة البيانات + سجلات تجريبية مبدئية</span>
+        </div>
+      </div>
+
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" id="sls-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 01-3.46 0"></path>
+          </svg>
+          <span class="acc-header-notif-badge" id="sls-header-notif-badge" hidden>0</span>
+        </a>
+
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language">
+          <span class="lang-btn-text">EN</span>
+        </button>
+
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info">
+            <span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span>
+          </div>
+        </div>
+
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Shared Work Status & Server-Authoritative Timer -->
+      <section class="sls-work-panel" id="sls-work-panel" aria-label="Work Status">
+        <div class="sls-work-head">
+          <span class="sls-work-title" data-i18n="sales_crm.work_panel_title">حالة العمل والوردية</span>
+          <span class="status-pill status-pill-slate" id="sls-work-status-pill" data-i18n="sales_crm.status_not_started">لم تبدأ الوردية</span>
+        </div>
+
+        <select id="sls-shift-select" class="acc-filter-select" aria-label="Shift Type">
+          <option value="full" data-i18n="sales_crm.shift_full">وردية كاملة (٨ ساعات)</option>
+          <option value="half" data-i18n="sales_crm.shift_half">نصف وردية (٤ ساعات)</option>
+        </select>
+
+        <div class="sls-timer-readout" id="sls-work-timer"><bdi dir="ltr">00:00:00</bdi></div>
+        <progress class="sls-progress" id="sls-work-progress" value="0" max="100" aria-label="Shift Progress"></progress>
+        <div class="sls-item-meta" id="sls-breaks-info"></div>
+        <div class="sls-break-alert" id="sls-break-alert" role="status" hidden></div>
+
+        <div class="sls-work-actions">
+          <button type="button" class="acc-btn acc-btn-primary acc-btn-sm" id="sls-btn-start-work" data-i18n="sales_crm.btn_start_work">بدء العمل</button>
+          <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="sls-btn-resume-work" hidden data-i18n="sales_crm.btn_resume_work">استئناف العمل</button>
+          <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="sls-btn-start-break" hidden data-i18n="sales_crm.btn_start_break">بدء استراحة (١٥ د)</button>
+          <button type="button" class="acc-btn acc-btn-primary acc-btn-sm" id="sls-btn-end-break" hidden data-i18n="sales_crm.btn_end_break">إنهاء الاستراحة</button>
+          <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="sls-btn-go-offline" hidden data-i18n="sales_crm.btn_go_offline">توقف مؤقت (Offline)</button>
+          <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="sls-btn-emergency-stop" hidden data-i18n="sales_crm.btn_emergency_stop">إيقاف طارئ</button>
+        </div>
+      </section>
+
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item is-active" id="sls-nav-dashboard" aria-current="page">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div>
+          <span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span>
+        </a>
+        <a href="sales-customers.html" class="acc-nav-item" id="sls-nav-customers">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+          <span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span>
+        </a>
+        <a href="sales-followups.html" class="acc-nav-item" id="sls-nav-followups">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+          <span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span>
+        </a>
+        <a href="sales-companies.html" class="acc-nav-item" id="sls-nav-companies">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div>
+          <span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span>
+        </a>
+        <a href="sales-profile.html" class="acc-nav-item" id="sls-nav-profile">
+          <div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+          <span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <!-- SECTION A: Welcome Header & Synchronized Work Session -->
+      <section class="sls-card sls-welcome-card">
+        <div class="sls-welcome-top">
+          <div>
+            <h1 class="acc-page-title" id="sls-welcome-heading"></h1>
+            <p class="acc-page-subtitle" id="sls-welcome-date"></p>
+            <p class="sls-motivational" id="sls-motivational-msg"></p>
+          </div>
+          <div class="sls-welcome-meta" id="sls-welcome-badges"></div>
+        </div>
+        <div class="sls-item-meta" id="sls-data-notice"></div>
+      </section>
+
+      <!-- Primary + Advanced Filtration System -->
+      <section class="sls-card sls-period-bar" aria-label="Dashboard Filtration">
+        <div class="sls-filter-toolbar">
+          <form id="sls-dash-search-form" class="sls-search-form" style="flex:1 1 220px; width:auto;">
+            <input type="search" id="sls-dash-search-input" class="acc-filter-input" data-i18n-placeholder="sales_crm.search_customer_ph" placeholder="ابحث عن عميل بالاسم أو الهاتف أو البرنامج...">
+            <button type="submit" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.btn_search">بحث</button>
+          </form>
+
+          <select id="sls-period-select" class="acc-filter-select" aria-label="Date Range" style="flex:0 1 165px;">
+            <option value="today" data-i18n="sales_crm.period_today">اليوم</option>
+            <option value="yesterday" data-i18n="sales_crm.period_yesterday">أمس</option>
+            <option value="last7" data-i18n="sales_crm.period_last7">آخر ٧ أيام</option>
+            <option value="last30" data-i18n="sales_crm.period_last30">آخر ٣٠ يوماً</option>
+            <option value="week" data-i18n="sales_crm.period_week">هذا الأسبوع</option>
+            <option value="prev_week" data-i18n="sales_crm.period_prev_week">الأسبوع السابق</option>
+            <option value="month" selected data-i18n="sales_crm.period_month">هذا الشهر</option>
+            <option value="prev_month" data-i18n="sales_crm.period_prev_month">الشهر السابق</option>
+            <option value="year" data-i18n="sales_crm.period_year">هذا العام</option>
+            <option value="custom" data-i18n="sales_crm.period_custom">نطاق مخصص</option>
+          </select>
+
+          <select id="sls-flt-company" class="acc-filter-select" aria-label="Company" style="flex:0 1 180px;"></select>
+          <select id="sls-flt-program" class="acc-filter-select" aria-label="Program" style="flex:0 1 190px;"></select>
+
+          <button type="button" id="sls-toggle-adv-filters" class="acc-btn acc-btn-secondary acc-btn-sm" aria-expanded="false" data-i18n="sales_crm.flt_advanced_btn">فلاتر متقدمة</button>
+          <button type="button" id="sls-clear-filters" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+        </div>
+
+        <div class="sls-custom-dates" id="sls-custom-dates" hidden style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+          <input type="date" id="sls-date-from" class="acc-filter-input" aria-label="From Date" style="width:auto;">
+          <input type="date" id="sls-date-to" class="acc-filter-input" aria-label="To Date" style="width:auto;">
+          <button type="button" id="sls-apply-custom" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.period_apply">تطبيق</button>
+        </div>
+
+        <!-- Collapsible Advanced Filter Panel -->
+        <div id="sls-adv-filter-panel" class="sls-adv-panel" hidden>
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_customer">العميل والمتابعة</strong>
+            <input type="search" id="sls-ms-stages-search" class="acc-filter-input" data-i18n-placeholder="sales_crm.flt_search_options" placeholder="ابحث داخل الخيارات...">
+            <div class="sls-ms-list" id="sls-ms-stages"></div>
+            <select id="sls-flt-contact" class="acc-filter-select" aria-label="Contact State">
+              <option value="all">Contact: All / الكل</option>
+              <option value="contacted">Contacted / تم التواصل</option>
+              <option value="not_contacted">Not Contacted / لم يتم التواصل</option>
+            </select>
+            <select id="sls-flt-followup" class="acc-filter-select" aria-label="Follow-up State">
+              <option value="all">Follow-up: All / الكل</option>
+              <option value="has_followup">Has Follow-up / لديه متابعة</option>
+              <option value="with_due_date">With Due Date / بموعد محدد</option>
+              <option value="without_due_date">Without Due Date / بدون موعد</option>
+              <option value="overdue">Overdue / متأخرة</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.card_geo">التحليل الجغرافي والمصادر</strong>
+            <div class="sls-ms-list" id="sls-ms-govs"></div>
+            <div class="sls-ms-list" id="sls-ms-sources"></div>
+            <select id="sls-flt-referrer" class="acc-filter-select" aria-label="Referrer Name">
+              <option value="">All Referrers / كل المرشحين</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_calls">المكالمات</strong>
+            <select id="sls-flt-call-dir" class="acc-filter-select" aria-label="Call Direction">
+              <option value="all">All Calls / كل المكالمات</option>
+              <option value="outbound">Outbound / صادرة</option>
+              <option value="inbound">Inbound / واردة</option>
+            </select>
+            <select id="sls-flt-call-outcome" class="acc-filter-select" aria-label="Call Outcome">
+              <option value="all">All Outcomes / كل النتائج</option>
+              <option value="answered">Answered / تم الرد</option>
+              <option value="no_answer">No Answer / لم يرد</option>
+              <option value="callback_requested">Callback / طلب معاودة</option>
+              <option value="interested">Interested / مهتم</option>
+              <option value="booked">Booked / تم الحجز</option>
+            </select>
+            <select id="sls-flt-call-duration" class="acc-filter-select" aria-label="Call Duration">
+              <option value="all">Any Duration / أي مدة</option>
+              <option value="short">&lt; 3 min</option>
+              <option value="medium">3 – 6 min</option>
+              <option value="long">&gt; 6 min</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_booking">الحجوزات والعقود والفئة</strong>
+            <select id="sls-flt-category" class="acc-filter-select" aria-label="Program Category">
+              <option value="all" data-i18n="sales_crm.comp_cat_all">كل الفئات</option>
+              <option value="umrah" data-i18n="sales_crm.comp_cat_umrah">عمرة</option>
+              <option value="hajj" data-i18n="sales_crm.comp_cat_hajj">حج</option>
+              <option value="vip" data-i18n="sales_crm.comp_cat_vip">كبار الشخصيات (VIP)</option>
+            </select>
+            <select id="sls-flt-booking" class="acc-filter-select" aria-label="Booking Status">
+              <option value="all">Bookings: All / كل الحجوزات</option>
+              <option value="completed">Completed Bookings / حجوزات مكتملة</option>
+              <option value="not_booked">Not Booked / غير محجوز</option>
+            </select>
+            <select id="sls-flt-contract" class="acc-filter-select" aria-label="Contract Status">
+              <option value="all">Contracts: All / كل العقود</option>
+              <option value="completed">Completed (Signed + Paid) / مكتمل</option>
+              <option value="pending_payment">Pending Payment / بانتظار السداد</option>
+              <option value="pending_contract">Pending Contract / بانتظار العقد</option>
+            </select>
+            <div style="display:flex; gap:0.45rem; margin-block-start:auto;">
+              <button type="button" id="sls-apply-adv-filters" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.flt_apply">تطبيق الفلاتر</button>
+              <button type="button" id="sls-clear-adv-filters" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Filter Chips & Summary -->
+        <div class="sls-active-chips" id="sls-active-filters-bar">
+          <span class="sls-item-meta" id="sls-filter-summary"></span>
+          <div id="sls-active-chips-list" class="sls-active-chips"></div>
+        </div>
+
+        <!-- Quick Actions Row -->
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center; border-top:1px solid var(--color-border-subtle); padding-block-start:0.65rem;">
+          <a href="sales-call-log.html?dir=outbound" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.qa_record_outbound">تسجيل مكالمة صادرة</a>
+          <a href="sales-call-log.html?dir=inbound" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.qa_record_inbound">تسجيل مكالمة واردة</a>
+          <a href="sales-followup-form.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.qa_schedule_followup">جدولة متابعة عميل</a>
+          <a href="sales-companies.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.qa_search_programs">البحث في البرامج والشركات</a>
+          <select id="sls-script-select" class="acc-filter-select" aria-label="Sales Script" style="width:auto; min-width:180px;"></select>
+          <button type="button" id="sls-copy-script-btn" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.qa_copy_script">نسخ سكربت المكالمة</button>
+          <span id="sls-script-status" class="sls-item-meta" role="status" hidden></span>
+        </div>
+      </section>
+
+      <!-- Empty Filtered State Banner -->
+      <section class="sls-card sls-empty-state" id="sls-empty-banner" hidden>
+        <strong data-i18n="sales_crm.flt_empty_title">لا توجد بيانات مطابقة</strong>
+        <p style="margin:0;" data-i18n="sales_crm.flt_empty_desc">لم يتم العثور على سجلات تطابق معايير التصفية المحددة.</p>
+        <button type="button" id="sls-empty-reset-btn" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+      </section>
+
+      <!-- SECTION B: Main KPI Summary (7 Reference-Style Analytical Cards) -->
+      <section class="sls-kpi-summary-7" id="sls-kpi-grid" aria-label="Main KPI Summary"></section>
+
+      <!-- SECTION C: Sales & Customer Analytics (Multi-Chart Asymmetric Grid) -->
+      <div class="sls-grid-asymmetric">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <div>
+              <h2 class="sls-card-title" data-i18n="sales_crm.sec_trends_title">اتجاهات العملاء والتواصل</h2>
+              <p class="sls-card-desc" data-i18n="sales_crm.sec_trends_desc">عملاء جدد، تم التواصل معهم، ومتابعات عبر الزمن</p>
+            </div>
+          </header>
+          <div class="sls-chart-box" id="sls-trends-svg-wrap"></div>
+          <div class="sls-chart-legend" id="sls-trends-legend"></div>
+        </article>
+
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_conversion_donut_title">توزيع مراحل تحويل العملاء</h2>
+          </header>
+          <div class="sls-donut-wrap" id="sls-conversion-donut"></div>
+        </article>
+      </div>
+
+      <div class="sls-grid-2">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_calls_bar_title">أداء المكالمات (واردة مقابل صادرة)</h2>
+          </header>
+          <div class="sls-chart-box" id="sls-calls-bar-svg"></div>
+        </article>
+
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_target_reality_title">المستهدف مقابل الإنجاز الفعلي</h2>
+            <span class="status-pill status-pill-amber" id="sls-target-pct-pill">0%</span>
+          </header>
+          <div id="sls-target-reality-body"></div>
+        </article>
+      </div>
+
+      <!-- SECTION D: Business Performance & Insights -->
+      <div class="sls-grid-asymmetric">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_top_programs_title">أفضل الشركات والبرامج أداءً</h2>
+            <a href="sales-companies.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.btn_view_all">عرض الكل</a>
+          </header>
+          <div class="sls-table-wrap" id="sls-top-programs-table"></div>
+        </article>
+
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_referral_title">تحليل مصادر الإحالة والترشيحات</h2>
+          </header>
+          <div id="sls-referral-body"></div>
+        </article>
+      </div>
+
+      <div class="sls-grid-2">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_geo_map_title">التوزيع الجغرافي للعملاء</h2>
+          </header>
+          <div id="sls-geo-map-body"></div>
+        </article>
+
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_booking_contract_title">أداء الحجوزات والعقود والتحصيل</h2>
+          </header>
+          <div id="sls-booking-contract-body"></div>
+        </article>
+      </div>
+
+      <!-- SECTION E: Recent Activity & Follow-ups -->
+      <div class="sls-grid-asymmetric">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.sec_interactions_title">جدول أحدث التفاعلات</h2>
+            <a href="sales-activity.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.btn_view_all">عرض الكل</a>
+          </header>
+          <div class="sls-table-wrap" id="sls-interactions-table"></div>
+        </article>
+
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <h2 class="sls-card-title" data-i18n="sales_crm.card_followups_title">معاينة المتابعات القادمة</h2>
+            <a href="sales-followups.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.btn_view_all">عرض الكل</a>
+          </header>
+          <div class="sls-list" id="sls-followups-list"></div>
+        </article>
+      </div>
+
+      <!-- SECTION F: Motivation, Notifications & Anonymous Leaderboard -->
+      <div class="sls-grid-2">
+        <article class="sls-card">
+          <header class="sls-card-head">
+            <div>
+              <h2 class="sls-card-title" data-i18n="sales_crm.card_leaderboard">لوحة المتصدرين المجهولة (أفضل ١٠)</h2>
+              <p class="sls-card-desc" data-i18n="sales_crm.card_leaderboard_desc">ترتيب مبني على العقود المكتملة والحجوزات وتحقيق المستهدف</p>
+            </div>
+            <span class="status-pill status-pill-navy" id="sls-my-rank-pill"></span>
+          </header>
+          <div class="sls-list" id="sls-leaderboard-list"></div>
+        </article>
+
+        <div style="display:flex; flex-direction:column; gap:1.25rem;">
+          <article class="sls-card">
+            <header class="sls-card-head">
+              <div>
+                <h2 class="sls-card-title" data-i18n="sales_crm.card_gamification">النقاط والأوسمة التحفيزية</h2>
+                <p class="sls-card-desc" data-i18n="sales_crm.card_gamification_desc">نقاط النشاط والأوسمة مكمّلة للأداء التجاري</p>
+              </div>
+              <span class="status-pill status-pill-amber" id="sls-points-pill">0</span>
+            </header>
+            <div id="sls-gamification-body"></div>
+          </article>
+
+          <article class="sls-card">
+            <header class="sls-card-head">
+              <h2 class="sls-card-title" data-i18n="sales_crm.card_notifications">معاينة الإشعارات</h2>
+              <a href="sales-notifications.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.btn_view_all">عرض الكل</a>
+            </header>
+            <div class="sls-list" id="sls-notifications-list"></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- SECTION G: Fun Corner / Daily Employee Engagement -->
+      <section class="sls-card sls-fun-card" id="sls-fun-corner" aria-label="Fun Corner">
+        <header class="sls-card-head">
+          <div>
+            <h2 class="sls-card-title" data-i18n="sales_crm.fun_title">ركن الترفيه والتفاعل اليومي</h2>
+            <p class="sls-card-desc" data-i18n="sales_crm.fun_desc">أنشطة ذهنية اختيارية ممتعة ومستقلة تماماً عن تقييم المبيعات</p>
+          </div>
+          <span class="status-pill status-pill-amber" id="sls-fun-streak-pill"></span>
+        </header>
+        <div id="sls-fun-celebrate" class="sls-celebrate-banner" hidden></div>
+        <div class="sls-fun-grid" id="sls-fun-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Interactive Chart Tooltip -->
+  <div id="sls-chart-tooltip" class="sls-chart-tooltip" role="tooltip" hidden></div>
+
+  <!-- 15-Minute Follow-up Reminder Popover -->
+  <div id="sls-reminder-popover" class="sls-reminder-popover" popover="manual" role="region" aria-label="Follow-up Reminder"></div>
+
+  <!-- Logout Native Dialog -->
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <!-- Emergency Stop Native Dialog -->
+  <dialog id="sls-emergency-dialog" class="sls-dialog" aria-labelledby="sls-emerg-title">
+    <h2 id="sls-emerg-title" data-i18n="sales_crm.emergency_dialog_title">إيقاف الوردية الطارئ</h2>
+    <p data-i18n="sales_crm.emergency_dialog_body">يُسمح بالإيقاف الطارئ بعد إتمام نصف مدة الوردية على الأقل مع ذكر السبب.</p>
+    <form method="dialog" style="display:flex; flex-direction:column; gap:0.75rem;">
+      <div>
+        <label for="sls-emergency-reason" style="font-size:0.85rem; font-weight:600;" data-i18n="sales_crm.emergency_reason_lbl">سبب الإيقاف الطارئ</label>
+        <textarea id="sls-emergency-reason" class="acc-filter-input sls-textarea" rows="3" required style="margin-block-start:0.35rem;"></textarea>
+      </div>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" formnovalidate data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+        <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.emergency_confirm_btn">تأكيد الإيقاف</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script src="./sales-dashboard.js"></script>
+</body>
+</html>

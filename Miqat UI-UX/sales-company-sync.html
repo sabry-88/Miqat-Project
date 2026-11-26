@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سجل تزامن الشركات | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page sales-companies-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+        </a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info">
+            <span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span>
+          </div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <nav aria-label="Breadcrumb" class="sls-breadcrumb">
+        <a href="sales-companies.html" data-i18n="sales_crm.nav_companies">الشركات والبرامج</a>
+        <span aria-hidden="true">/</span>
+        <span data-i18n="sales_crm.comp_nav_sync">سجل التزامن</span>
+      </nav>
+
+      <section class="sls-card">
+        <div class="sls-welcome-top">
+          <div>
+            <h1 class="acc-page-title" data-i18n="sales_crm.syn_page_title">سجل تزامن بيانات الشركات السياحية</h1>
+            <p class="sls-card-desc" data-i18n="sales_crm.syn_page_desc">متابعة حالة حداثة البيانات، نتائج المزامنة، الأخطاء المسجلة، والبرامج المتأثرة.</p>
+          </div>
+          <a href="sales-companies.html" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.cmp_back_catalog">العودة لدليل البرامج</a>
+        </div>
+
+        <div class="sls-notice-banner" data-i18n="sales_crm.syn_mock_notice">
+          بيانات تجريبية (Prototype Mock): لا توجد واجهات ربط API حية مع الشركات الشريكة حالياً. السجلات المعروضة توضح البنية الجاهزة للربط الفعلي وحالات التزامن المختلفة بأمانة تامة.
+        </div>
+
+        <div class="sls-filter-toolbar">
+          <div class="sls-filter-inline-group">
+            <label for="syn-filter-company" class="visually-hidden" data-i18n="sales_crm.comp_company_label">الشركة</label>
+            <select id="syn-filter-company" class="acc-filter-select"></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="sls-card">
+        <div id="syn-list" class="sls-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script src="./sales-companies-shared.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var WS = window.SalesWorkspace;
+      var SH = window.SalesCompaniesShared;
+      var companies = [], syncItems = [];
+
+      function populateFilter() {
+        var en = SH.isEn();
+        var sel = document.getElementById('syn-filter-company');
+        var val = sel.value || new URLSearchParams(window.location.search).get('companyId') || 'all';
+        sel.innerHTML = '<option value="all">' + SH.esc(en ? 'All Companies' : 'كل الشركات') + '</option>' +
+          companies.map(function (c) { return '<option value="' + SH.esc(c.id) + '">' + SH.esc(en ? c.name_en : c.name_ar) + '</option>'; }).join('');
+        sel.value = val;
+      }
+
+      function render() {
+        var en = SH.isEn();
+        var list = document.getElementById('syn-list');
+        if (!syncItems.length) {
+          list.innerHTML = '<div class="sls-empty-state"><p>' + SH.esc(en ? 'No sync records available.' : 'لا توجد سجلات تزامن.') + '</p></div>';
+          return;
+        }
+        list.innerHTML = syncItems.map(function (s) {
+          var fresh = SH.getFreshnessInfo(s.freshness_state);
+          var resCls = s.result === 'success' ? 'status-pill-navy' : 'status-pill-amber';
+          var resLabel = s.result === 'success'
+            ? (en ? 'Success (Mock)' : 'ناجح (تجريبي)')
+            : (s.result === 'partial' ? (en ? 'Partial (Mock)' : 'جزئي (تجريبي)') : (en ? 'Failed (Mock)' : 'فشل الاتصال (تجريبي)'));
+          var err = en ? s.error_en : s.error_ar;
+          var progs = (s.affected_programs || []).map(function (p) {
+            return '<a href="sales-program-details.html?id=' + encodeURIComponent(p.id) + '" class="sls-prog-title-link">' + SH.esc(en ? p.title_en : p.title_ar) + '</a>';
+          }).join(' • ');
+
+          return '<article class="sls-sub-card">' +
+            '<div class="sls-prog-card-top">' +
+              '<div class="sls-prog-badges">' +
+                '<span class="status-pill ' + resCls + '">' + SH.esc(resLabel) + '</span>' +
+                '<span class="status-pill ' + SH.esc(fresh.cls) + '">' + SH.esc(fresh.label) + '</span>' +
+              '</div>' +
+              '<span class="sls-item-meta"><bdi dir="ltr">' + SH.esc(SH.formatDateTime(s.synced_at)) + '</bdi></span>' +
+            '</div>' +
+            '<h2 class="sls-item-title">' + SH.esc(en ? s.company_name_en : s.company_name_ar) + '</h2>' +
+            '<div class="sls-item-meta">' + SH.esc(en ? 'Source:' : 'المصدر:') + ' ' + SH.esc(en ? s.data_source_en : s.data_source_ar) + '</div>' +
+            '<div class="sls-item-meta">' +
+              SH.esc(en ? 'Successful:' : 'ناجحة:') + ' <strong>' + SH.esc(WS.formatNumber(s.success_count)) + '</strong> • ' +
+              SH.esc(en ? 'Failed:' : 'فاشلة:') + ' <strong>' + SH.esc(WS.formatNumber(s.failed_count)) + '</strong>' +
+            '</div>' +
+            (err ? '<div class="sls-missing-val">' + SH.esc(err) + '</div>' : '') +
+            '<div class="sls-item-meta">' + SH.esc(en ? 'Affected Programs:' : 'البرامج المتأثرة:') + ' ' + (progs || '-') + '</div>' +
+          '</article>';
+        }).join('');
+      }
+
+      async function load() {
+        var cid = document.getElementById('syn-filter-company').value || 'all';
+        var [catRes, synRes] = await Promise.all([
+          WS.apiFetch('/api/sales/companies', { method: 'GET' }),
+          WS.apiFetch('/api/sales/companies/sync-history?companyId=' + encodeURIComponent(cid), { method: 'GET' })
+        ]);
+        companies = catRes.companies || [];
+        syncItems = synRes.items || [];
+        if (document.getElementById('syn-filter-company').options.length === 0) populateFilter();
+        render();
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        await WS.init();
+        await load();
+        document.getElementById('syn-filter-company').addEventListener('change', load);
+        WS.onRefresh(function () {
+          populateFilter();
+          render();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

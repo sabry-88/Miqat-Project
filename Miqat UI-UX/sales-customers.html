@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>العملاء | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+        </a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info">
+            <span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span>
+            <span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span>
+          </div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <!-- 1. Page Header -->
+      <section class="sls-card" style="flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <div>
+          <h1 class="acc-page-title" data-i18n="sales_crm.cust_page_title">إدارة العملاء والطلبات</h1>
+          <p class="sls-card-desc" id="cust-global-summary"></p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <a href="sales-call-log.html?dir=outbound" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.qa_record_outbound">تسجيل مكالمة صادرة</a>
+          <a href="sales-lead-request.html" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.cust_req_lead_btn">طلب إضافة عميل (للإدارة)</a>
+        </div>
+      </section>
+
+      <!-- 2. Independent Main Status Group Cards (3 Parallel Groups) -->
+      <section class="sls-group-grid" id="cust-main-groups" aria-label="Customer Status Groups"></section>
+
+      <!-- 3. Search, Advanced Filters, Sorting & View Switcher -->
+      <section class="sls-card">
+        <div class="sls-filter-toolbar">
+          <input type="search" id="cust-search" class="acc-filter-input" style="flex:1 1 220px;" data-i18n-placeholder="sales_crm.cust_search_ph" placeholder="ابحث بالاسم أو الهاتف أو الواتساب...">
+          <select id="cust-group-sel" class="acc-filter-select" aria-label="Customer Group" style="flex:0 1 180px;">
+            <option value="" data-i18n="sales_crm.cust_stage_all">كل المجموعات</option>
+            <option value="fresh_lead" data-i18n="sales_crm.grp_fresh">عملاء جدد (Fresh)</option>
+            <option value="follow_with_due" data-i18n="sales_crm.grp_follow_due">متابعة بموعد</option>
+            <option value="follow_without_due" data-i18n="sales_crm.grp_follow_nodue">متابعة بدون موعد</option>
+            <option value="cancelled" data-i18n="sales_crm.grp_cancelled">الملغون</option>
+          </select>
+          <select id="cust-sort" class="acc-filter-select" aria-label="Sort Customers" style="flex:0 1 190px;">
+            <option value="fresh_first" data-i18n="sales_crm.sort_fresh_first">العملاء الجدد أولاً</option>
+            <option value="newest" data-i18n="sales_crm.sort_newest">الأحدث إضافة</option>
+            <option value="oldest" data-i18n="sales_crm.sort_oldest">الأقدم إضافة</option>
+            <option value="nearest_fup" data-i18n="sales_crm.sort_nearest_fup">أقرب موعد متابعة</option>
+            <option value="overdue_first" data-i18n="sales_crm.sort_overdue_first">المتأخرون أولاً</option>
+            <option value="recent_contact" data-i18n="sales_crm.sort_recent_contact">الأحدث تواصلاً</option>
+            <option value="least_recent_contact" data-i18n="sales_crm.sort_least_contact">الأقدم تواصلاً</option>
+            <option value="recent_activity" data-i18n="sales_crm.sort_recent_activity">أحدث نشاط</option>
+          </select>
+          <button type="button" id="cust-toggle-adv" class="acc-btn acc-btn-secondary acc-btn-sm" aria-expanded="false" data-i18n="sales_crm.flt_advanced_btn">فلاتر متقدمة</button>
+          <button type="button" id="cust-clear-all" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+          <div class="sls-view-toggle" role="group" aria-label="View Mode">
+            <button type="button" class="acc-chip-btn is-active" id="view-btn-cards" data-view="cards" data-i18n="sales_crm.view_cards">بطاقات</button>
+            <button type="button" class="acc-chip-btn" id="view-btn-table" data-view="table" data-i18n="sales_crm.view_table">جدول</button>
+          </div>
+        </div>
+
+        <!-- Collapsible Advanced Filters -->
+        <div id="cust-adv-panel" class="sls-adv-panel" hidden>
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_customer">المتابعة والتواصل</strong>
+            <select id="cust-flt-followup" class="acc-filter-select" aria-label="Follow-up Filter">
+              <option value="">All Follow-ups / كل المتابعات</option>
+              <option value="with_due_date">With Due Date / بموعد</option>
+              <option value="without_due_date">Without Due Date / بدون موعد</option>
+              <option value="overdue">Overdue / متأخرة</option>
+            </select>
+            <select id="cust-flt-contact" class="acc-filter-select" aria-label="Contact State">
+              <option value="">All Contact States / كل حالات التواصل</option>
+              <option value="contacted">Contacted / تم التواصل</option>
+              <option value="not_contacted">Not Contacted / لم يتم التواصل</option>
+            </select>
+            <select id="cust-flt-call-outcome" class="acc-filter-select" aria-label="Call Outcome">
+              <option value="">All Call Outcomes / كل نتائج المكالمات</option>
+              <option value="answered">Answered / تم الرد</option>
+              <option value="no_answer">No Answer / لا يرد</option>
+              <option value="busy">Busy / مشغول</option>
+              <option value="callback_requested">Callback Requested / معاودة</option>
+              <option value="booked">Booked / تم الحجز</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.card_geo">المحافظة والمصدر</strong>
+            <select id="cust-flt-gov" class="acc-filter-select" aria-label="Governorate">
+              <option value="">All Governorates / كل المحافظات</option>
+              <option value="cairo" data-i18n="sales_crm.geo_cairo">القاهرة</option>
+              <option value="portsaid" data-i18n="sales_crm.geo_portsaid">بورسعيد</option>
+              <option value="other_gov" data-i18n="sales_crm.geo_other_gov">محافظات أخرى</option>
+              <option value="overseas" data-i18n="sales_crm.geo_overseas">عملاء بالخارج</option>
+            </select>
+            <select id="cust-flt-source" class="acc-filter-select" aria-label="Source">
+              <option value="">All Sources / كل المصادر</option>
+              <option value="referral" data-i18n="sales_crm.src_referral">إحالة / ترشيح</option>
+              <option value="social_ads" data-i18n="sales_crm.src_social_ads">إعلانات التواصل</option>
+              <option value="website" data-i18n="sales_crm.src_website">الموقع الإلكتروني</option>
+              <option value="call_center" data-i18n="sales_crm.src_call_center">مركز الاتصال</option>
+              <option value="whatsapp" data-i18n="sales_crm.src_whatsapp">واتساب</option>
+            </select>
+            <select id="cust-flt-referrer" class="acc-filter-select" aria-label="Referrer">
+              <option value="">All Referrers / كل المرشحين</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_grp_company">الشركة والبرنامج</strong>
+            <select id="cust-flt-company" class="acc-filter-select" aria-label="Company"></select>
+            <select id="cust-flt-program" class="acc-filter-select" aria-label="Program"></select>
+            <select id="cust-flt-cancel-reason" class="acc-filter-select" aria-label="Cancellation Reason">
+              <option value="">All Cancellation Reasons / كل أسباب الإلغاء</option>
+              <option value="low_budget" data-i18n="sales_crm.cancel_low_budget">الميزانية غير مناسبة</option>
+              <option value="not_interested" data-i18n="sales_crm.cancel_not_interested">غير مهتم</option>
+              <option value="not_registered_campaign" data-i18n="sales_crm.cancel_not_registered">لم يسجل عبر الحملة</option>
+              <option value="inappropriate_behavior" data-i18n="sales_crm.cancel_inappropriate">أسلوب غير لائق</option>
+              <option value="other" data-i18n="sales_crm.cancel_other">أسباب أخرى</option>
+            </select>
+          </div>
+
+          <div class="sls-adv-group">
+            <strong class="sls-item-title" data-i18n="sales_crm.flt_dates">تاريخ الإضافة</strong>
+            <input type="date" id="cust-flt-from" class="acc-filter-input" aria-label="Created From">
+            <input type="date" id="cust-flt-to" class="acc-filter-input" aria-label="Created To">
+            <button type="button" id="cust-apply-adv" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.flt_apply">تطبيق الفلاتر</button>
+          </div>
+        </div>
+
+        <div class="sls-active-chips" id="cust-active-chips-bar">
+          <span class="sls-item-meta" id="cust-match-summary"></span>
+          <div id="cust-chips-list" class="sls-active-chips"></div>
+        </div>
+      </section>
+
+      <!-- 4. Bulk Actions Bar -->
+      <section class="sls-card sls-bulk-bar" aria-label="Bulk Actions">
+        <label class="sls-ms-item" style="font-weight:700;">
+          <input type="checkbox" id="cust-select-all">
+          <span data-i18n="sales_crm.bulk_select_all">تحديد الكل</span>
+          (<span id="cust-selected-count">0</span>)
+        </label>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center;">
+          <select id="cust-bulk-action-sel" class="acc-filter-select" aria-label="Bulk Action" style="width:auto;" disabled>
+            <option value="" data-i18n="sales_crm.bulk_choose">اختر إجراءً جماعياً...</option>
+            <option value="stage:follow_up" data-i18n="sales_crm.bulk_move_follow">نقل إلى المتابعة بدون موعد</option>
+            <option value="stage:fresh_lead" data-i18n="sales_crm.bulk_move_fresh">إعادة إلى العملاء الجدد</option>
+            <option value="export" data-i18n="sales_crm.bulk_export">تصدير المحدد (CSV)</option>
+          </select>
+          <button type="button" id="cust-bulk-apply" class="acc-btn acc-btn-primary acc-btn-sm" disabled data-i18n="sales_crm.flt_apply">تنفيذ</button>
+        </div>
+      </section>
+
+      <!-- 5. Customer Results (Cards / Table + Empty State + Pagination) -->
+      <div id="cust-loading" class="sls-card" hidden><span class="sls-item-meta">Loading...</span></div>
+      <div id="cust-empty" class="sls-card sls-empty-state" hidden>
+        <strong data-i18n="sales_crm.flt_empty_title">لا توجد بيانات مطابقة</strong>
+        <p style="margin:0;" data-i18n="sales_crm.flt_empty_desc">لم يتم العثور على عملاء مطابقين.</p>
+        <button type="button" id="cust-empty-reset" class="acc-btn acc-btn-primary acc-btn-sm" data-i18n="sales_crm.flt_clear_all">مسح الكل</button>
+      </div>
+
+      <div id="cust-grid" class="sls-cards-grid"></div>
+      <div id="cust-table-wrap" class="sls-card sls-table-wrap" hidden></div>
+
+      <div class="sls-card sls-pagination-bar" id="cust-pagination" hidden>
+        <button type="button" id="cust-prev-page" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.pg_prev">السابق</button>
+        <span class="sls-item-meta" id="cust-page-info"></span>
+        <button type="button" id="cust-next-page" class="acc-btn acc-btn-secondary acc-btn-sm" data-i18n="sales_crm.pg_next">التالي</button>
+      </div>
+
+      <!-- 6. Cancellation Groups Section at Bottom -->
+      <section class="sls-card" aria-label="Cancellation Groups">
+        <header class="sls-card-head">
+          <div>
+            <h2 class="sls-card-title" data-i18n="sales_crm.cancel_section_title">مجموعات الإلغاء والأسباب المعتمدة</h2>
+            <p class="sls-card-desc" data-i18n="sales_crm.cancel_section_desc">اضغط على أي سبب إلغاء لعرض العملاء المصنفين تحته</p>
+          </div>
+        </header>
+        <div class="sls-cancel-grid" id="cust-cancel-groups"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Concise Quick Preview Dialog -->
+  <dialog id="cust-preview-dialog" class="sls-dialog" aria-labelledby="preview-title">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
+      <h2 id="preview-title" style="margin:0;"></h2>
+      <button type="button" id="preview-close-btn" class="acc-btn acc-btn-secondary acc-btn-sm">×</button>
+    </div>
+    <div id="preview-body" style="margin-block:0.85rem; display:flex; flex-direction:column; gap:0.5rem;"></div>
+    <div style="display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:flex-end;" id="preview-actions"></div>
+  </dialog>
+
+  <!-- Bulk Confirmation Dialog -->
+  <dialog id="cust-bulk-dialog" class="sls-dialog" aria-labelledby="bulk-dlg-title">
+    <h2 id="bulk-dlg-title" data-i18n="sales_crm.bulk_confirm_title">تأكيد الإجراء الجماعي</h2>
+    <p id="bulk-dlg-body"></p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">إلغاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.flt_apply">تأكيد</button>
+    </form>
+  </dialog>
+
+  <!-- Logout Native Dialog -->
+  <dialog id="sls-logout-dialog" class="sls-dialog" aria-labelledby="sls-logout-title">
+    <h2 id="sls-logout-title" data-i18n="sales_crm.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+    <p data-i18n="sales_crm.logout_confirm_body">هل تريد تسجيل الخروج من مساحة المبيعات؟</p>
+    <form method="dialog" style="display:flex; gap:0.5rem; justify-content:flex-end;">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="sales_crm.logout_cancel_btn">البقاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="sales_crm.logout_confirm_btn">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./sales-workspace.js"></script>
+  <script src="./sales-customers.js"></script>
+</body>
+</html>

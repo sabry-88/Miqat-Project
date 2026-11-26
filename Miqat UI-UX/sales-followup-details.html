@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل المتابعة | ميقات للمبيعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+  <style>
+    .fup-detail-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 1024px) {
+      .fup-detail-grid { grid-template-columns: 1.45fr 1fr; align-items: start; }
+    }
+    .fup-kv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem; }
+    .fup-kv { padding: 0.65rem 0.8rem; border-radius: 10px; background: var(--color-bg-subtle, rgba(0,0,0,0.03)); border: 1px solid var(--color-border); }
+    .fup-kv-label { font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 0.25rem; }
+    .fup-kv-val { font-weight: 600; font-size: 0.92rem; word-break: break-word; }
+    .fup-actions-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .fup-decision-banner {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;
+      padding: 0.9rem 1.1rem; border-radius: 12px; margin-bottom: 1rem;
+      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .fup-timeline { display: flex; flex-direction: column; gap: 0.65rem; }
+    .fup-tl-item {
+      padding: 0.65rem 0.9rem; border-radius: 10px; border: 1px solid var(--color-border);
+      border-inline-start: 3px solid var(--color-primary);
+      background: var(--color-surface);
+    }
+    .fup-tl-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.86rem; }
+    .fup-tl-meta { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+    .fup-inline-panel {
+      margin-top: 0.9rem; padding: 0.9rem; border-radius: 10px;
+      border: 1px solid var(--color-border); background: var(--color-bg-subtle, rgba(0,0,0,0.02));
+      display: none;
+    }
+    .fup-inline-panel.open { display: block; }
+    .fup-tabs { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; }
+    .fup-tab-btn {
+      padding: 0.45rem 0.85rem; border-radius: 8px; border: 1px solid var(--color-border);
+      background: var(--color-surface); color: var(--color-text); cursor: pointer; font-size: 0.85rem; font-weight: 600;
+    }
+    .fup-tab-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .fup-tab-pane { display: none; }
+    .fup-tab-pane.active { display: block; }
+  </style>
+</head>
+<body class="accounts-workspace-page sales-workspace-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="sales-dashboard.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="40" height="40">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="40" height="40">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <a href="sales-notifications.html" class="acc-icon-btn acc-header-notif-btn" id="sls-header-notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg>
+          <span class="acc-header-notif-badge" id="sls-header-fup-badge" hidden>0</span>
+        </a>
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="sls-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="sls-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="sls-emp-avatar">أ</div>
+          <div class="acc-employee-info"><span class="acc-employee-name" id="sls-emp-name">أحمد صبري</span><span class="acc-employee-role-badge" data-i18n="sales_crm.brand_title">ميقات للمبيعات</span></div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="sls-logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="acc-logout-btn-text" data-i18n="sales_crm.btn_logout">تسجيل الخروج</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="sales_crm.brand_title">ميقات للمبيعات ومركز الاتصال</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Sales CRM Navigation">
+        <a href="sales-dashboard.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_dashboard">لوحة التحكم</span></a>
+        <a href="sales-customers.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_customers">العملاء</span></a>
+        <a href="sales-followups.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_followups">المتابعات</span></a>
+        <a href="sales-companies.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_companies">الشركات والبرامج</span></a>
+        <a href="sales-profile.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="acc-nav-label" data-i18n="sales_crm.nav_profile">ملفي الشخصي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <section class="sls-card" style="flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <div>
+          <a href="sales-followups.html" class="acc-btn acc-btn-secondary acc-btn-sm" style="margin-bottom:0.4rem;" data-i18n="sales_crm.fup_back_to_list">العودة للمتابعات</a>
+          <h1 class="acc-page-title" style="margin:0;" data-i18n="sales_crm.fup_details_title">تفاصيل المتابعة</h1>
+        </div>
+        <div id="fup-header-badges" style="display:flex; gap:0.45rem; flex-wrap:wrap;"></div>
+      </section>
+
+      <div id="fup-loading" class="sls-card" style="padding:1.5rem; text-align:center;" data-i18n="common.loading">جاري التحميل...</div>
+      <div id="fup-error" class="sls-card" style="display:none; border-color:var(--color-warning); color:var(--color-warning);"></div>
+
+      <div id="fup-content" style="display:none;">
+        <div id="fup-booking-decision" class="fup-decision-banner" style="display:none;">
+          <div>
+            <strong data-i18n="sales_crm.fup_booking_decision_title">العميل لديه حجز أو عقد بالفعل</strong>
+            <p style="margin:4px 0 0; font-size:0.86rem; color:var(--color-text-muted);" data-i18n="sales_crm.fup_booking_decision_desc">يرجى تحديد مصير هذه المتابعة المفتوحة: إتمامها أو إلغاؤها مع ذكر السبب.</p>
+          </div>
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+            <button type="button" class="acc-btn acc-btn-primary acc-btn-sm" id="btn-decision-complete" data-i18n="sales_crm.fup_action_complete">إتمام المتابعة</button>
+            <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="btn-decision-cancel" data-i18n="sales_crm.fup_action_cancel">إلغاء المتابعة</button>
+          </div>
+        </div>
+
+        <div class="fup-detail-grid">
+          <div style="display:flex; flex-direction:column; gap:1rem;">
+            <section class="sls-card">
+              <header class="sls-card-head"><h2 class="sls-card-title" data-i18n="sales_crm.fup_current_info">بيانات المتابعة الحالية</h2></header>
+              <div class="fup-kv-grid" id="fup-kv-grid"></div>
+              <div style="margin-top:0.75rem;">
+                <div class="fup-kv-label" data-i18n="sales_crm.fup_lbl_notes">ملاحظات المتابعة</div>
+                <div id="fup-notes-box" class="fup-kv" style="min-height:48px;"></div>
+              </div>
+
+              <div style="margin-top:1rem;">
+                <div class="fup-kv-label" style="margin-bottom:0.45rem;" data-i18n="sales_crm.fup_actions_label">الإجراءات المتاحة</div>
+                <div class="fup-actions-row">
+                  <a id="act-call" class="acc-btn acc-btn-primary acc-btn-sm" href="tel:"><span data-i18n="sales_crm.action_call">اتصال</span></a>
+                  <a id="act-whatsapp" class="acc-btn acc-btn-secondary acc-btn-sm" target="_blank" rel="noopener"><span data-i18n="sales_crm.action_whatsapp">واتساب</span></a>
+                  <a id="act-log-call" class="acc-btn acc-btn-secondary acc-btn-sm"><span data-i18n="sales_crm.action_record_call">تسجيل مكالمة</span></a>
+                  <a id="act-reschedule" class="acc-btn acc-btn-secondary acc-btn-sm"><span data-i18n="sales_crm.fup_action_reschedule">إعادة جدولة</span></a>
+                  <a id="act-edit" class="acc-btn acc-btn-secondary acc-btn-sm"><span data-i18n="sales_crm.btn_edit_cust">تعديل</span></a>
+                  <button type="button" id="act-complete-toggle" class="acc-btn acc-btn-primary acc-btn-sm"><span data-i18n="sales_crm.fup_action_complete">إتمام</span></button>
+                  <button type="button" id="act-cancel-toggle" class="acc-btn acc-btn-secondary acc-btn-sm"><span data-i18n="sales_crm.fup_action_cancel">إلغاء</span></button>
+                </div>
+              </div>
+
+              <div id="panel-complete" class="fup-inline-panel">
+                <h3 style="margin:0 0 0.65rem; font-size:0.95rem;" data-i18n="sales_crm.fup_complete_title">تأكيد إتمام المتابعة</h3>
+                <div style="display:grid; gap:0.65rem;">
+                  <div>
+                    <label class="sls-kpi-label" for="complete-via" data-i18n="sales_crm.fup_complete_via">وسيلة الإتمام</label>
+                    <select id="complete-via" class="acc-filter-select" style="margin-block-start:0.3rem;">
+                      <option value="phone" data-i18n="sales_crm.fup_via_phone">مكالمة هاتفية</option>
+                      <option value="whatsapp" data-i18n="sales_crm.fup_via_whatsapp">واتساب</option>
+                      <option value="review" data-i18n="sales_crm.fup_via_review">مراجعة داخلية</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="sls-kpi-label" for="complete-note" data-i18n="sales_crm.fup_complete_note">ملاحظة الإتمام</label>
+                    <textarea id="complete-note" class="acc-filter-input sls-textarea" rows="2" style="margin-block-start:0.3rem;"></textarea>
+                  </div>
+                  <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+                    <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="btn-complete-close" data-i18n="common.cancel">إلغاء</button>
+                    <button type="button" class="acc-btn acc-btn-primary acc-btn-sm" id="btn-complete-submit" data-i18n="sales_crm.fup_confirm_complete">تأكيد الإتمام</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="panel-cancel" class="fup-inline-panel">
+                <h3 style="margin:0 0 0.65rem; font-size:0.95rem;" data-i18n="sales_crm.fup_cancel_title">إلغاء المتابعة (السبب إلزامي)</h3>
+                <div style="display:grid; gap:0.65rem;">
+                  <div>
+                    <label class="sls-kpi-label" for="cancel-reason" data-i18n="sales_crm.fup_cancel_reason">سبب الإلغاء</label>
+                    <textarea id="cancel-reason" class="acc-filter-input sls-textarea" rows="2" required style="margin-block-start:0.3rem;"></textarea>
+                  </div>
+                  <div id="cancel-err" style="font-size:0.84rem; color:var(--color-warning); display:none;"></div>
+                  <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+                    <button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" id="btn-cancel-close" data-i18n="common.cancel">رجوع</button>
+                    <button type="button" class="acc-btn acc-btn-primary acc-btn-sm" id="btn-cancel-submit" data-i18n="sales_crm.fup_confirm_cancel">تأكيد الإلغاء</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="sls-card">
+              <div class="fup-tabs" role="tablist">
+                <button type="button" class="fup-tab-btn active" data-tab="history" data-i18n="sales_crm.fup_tab_history">سجل التعديلات</button>
+                <button type="button" class="fup-tab-btn" data-tab="all" data-i18n="sales_crm.fup_tab_all_followups">كل متابعات العميل</button>
+                <button type="button" class="fup-tab-btn" data-tab="calls" data-i18n="sales_crm.fup_tab_calls">المكالمات السابقة</button>
+                <button type="button" class="fup-tab-btn" data-tab="activity" data-i18n="sales_crm.fup_tab_activity">النشاط الأخير</button>
+              </div>
+              <div id="tab-history" class="fup-tab-pane active"></div>
+              <div id="tab-all" class="fup-tab-pane"></div>
+              <div id="tab-calls" class="fup-tab-pane"></div>
+              <div id="tab-activity" class="fup-tab-pane"></div>
+            </section>
+          </div>
+
+          <aside class="sls-card">
+            <header class="sls-card-head" style="justify-content:space-between;">
+              <h2 class="sls-card-title" data-i18n="sales_crm.fup_customer_info">بيانات العميل</h2>
+              <a id="act-view-customer" class="acc-btn acc-btn-secondary acc-btn-sm" href="sales-customers.html" data-i18n="sales_crm.view_customer_details">ملف العميل</a>
+            </header>
+            <div class="fup-kv-grid" id="cust-kv-grid"></div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./sales-workspace.js"></script>
+  <script>
+    (function () {
+      var WS = window.SalesWorkspace;
+      var qs = new URLSearchParams(window.location.search);
+      var id = qs.get('id');
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return '—';
+        var d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return String(iso);
+        var lang = WS.getLang() === 'en' ? 'en-US' : 'ar-EG';
+        return d.toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' });
+      }
+
+      function statusLabel(st) {
+        var map = {
+          overdue: WS.t('fup_status_overdue', 'متأخرة'),
+          pending: WS.t('fup_status_due', 'بموعد'),
+          follow_without_due: WS.t('fup_status_undated', 'بدون موعد'),
+          completed: WS.t('fup_status_completed', 'مكتملة'),
+          cancelled: WS.t('fup_status_cancelled', 'ملغاة')
+        };
+        return map[st] || st || '—';
+      }
+
+      function priorityLabel(p) {
+        var map = {
+          urgent: WS.t('prio_urgent', 'عاجل'),
+          high: WS.t('prio_high', 'مرتفع'),
+          normal: WS.t('prio_normal', 'عادي'),
+          medium: WS.t('prio_medium', 'متوسط'),
+          low: WS.t('prio_low', 'منخفض')
+        };
+        return map[p] || p || '—';
+      }
+
+      function renderDetails(data) {
+        var f = data.followup;
+        var c = data.customer || {};
+
+        document.getElementById('fup-loading').style.display = 'none';
+        document.getElementById('fup-content').style.display = 'block';
+
+        document.getElementById('fup-header-badges').innerHTML =
+          '<span class="sls-badge">' + esc(statusLabel(f.status)) + '</span>' +
+          '<span class="sls-badge">' + esc(priorityLabel(f.priority)) + '</span>' +
+          (f.system_priority != null ? '<span class="sls-badge">Score: ' + esc(f.system_priority) + '</span>' : '');
+
+        var isActive = f.status === 'pending' || f.status === 'overdue' || f.status === 'follow_without_due';
+        document.getElementById('fup-booking-decision').style.display = (data.hasBookedOrContract && isActive) ? 'flex' : 'none';
+
+        var kvItems = [
+          { l: WS.t('fup_lbl_due', 'موعد المتابعة'), v: f.undated ? WS.t('fup_undated', 'بدون موعد محدد') : fmtDate(f.due_at) },
+          { l: WS.t('fup_lbl_purpose', 'الغرض'), v: f.purpose || '—' },
+          { l: WS.t('fup_status', 'الحالة'), v: statusLabel(f.status) },
+          { l: WS.t('fup_lbl_priority', 'الأولوية'), v: priorityLabel(f.priority) },
+          { l: WS.t('fup_recurrence', 'التكرار'), v: f.recurrence_rule || WS.t('fup_recurrence_none', 'لا يوجد') },
+          { l: WS.t('fup_created_at', 'تاريخ الإنشاء'), v: fmtDate(f.created_at) }
+        ];
+        if (f.completed_at) kvItems.push({ l: WS.t('fup_completed_at', 'تاريخ الإتمام'), v: fmtDate(f.completed_at) + (f.completed_via ? ' (' + f.completed_via + ')' : '') });
+        if (f.cancelled_at) kvItems.push({ l: WS.t('fup_cancelled_at', 'تاريخ الإلغاء'), v: fmtDate(f.cancelled_at) });
+        if (f.cancel_reason) kvItems.push({ l: WS.t('fup_cancel_reason', 'سبب الإلغاء'), v: f.cancel_reason });
+        if (f.overdue_reason) kvItems.push({ l: WS.t('fup_overdue_reason', 'سبب التأخير'), v: f.overdue_reason });
+
+        document.getElementById('fup-kv-grid').innerHTML = kvItems.map(function (item) {
+          return '<div class="fup-kv"><div class="fup-kv-label">' + esc(item.l) + '</div><div class="fup-kv-val">' + esc(item.v) + '</div></div>';
+        }).join('');
+
+        document.getElementById('fup-notes-box').textContent = f.notes || '—';
+
+        var phone = String(c.phone || '').replace(/\s+/g, '');
+        var waPhone = phone.replace(/^\+/, '').replace(/^0/, '20');
+        document.getElementById('act-call').href = phone ? ('tel:' + phone) : ('sales-call-log.html?customerId=' + encodeURIComponent(f.customer_id));
+        document.getElementById('act-whatsapp').href = waPhone ? ('https://wa.me/' + encodeURIComponent(waPhone)) : ('sales-customer-details.html?id=' + encodeURIComponent(f.customer_id));
+        document.getElementById('act-log-call').href = 'sales-call-log.html?customerId=' + encodeURIComponent(f.customer_id);
+        document.getElementById('act-reschedule').href = 'sales-followup-form.html?rescheduleId=' + encodeURIComponent(f.id) + '&customerId=' + encodeURIComponent(f.customer_id);
+        document.getElementById('act-edit').href = 'sales-followup-form.html?editId=' + encodeURIComponent(f.id) + '&customerId=' + encodeURIComponent(f.customer_id);
+        document.getElementById('act-view-customer').href = 'sales-customer-details.html?id=' + encodeURIComponent(f.customer_id);
+
+        document.getElementById('act-complete-toggle').style.display = isActive ? 'inline-flex' : 'none';
+        document.getElementById('act-cancel-toggle').style.display = isActive ? 'inline-flex' : 'none';
+
+        var custName = WS.getLang() === 'en' ? (c.name_en || c.name_ar || c.name) : (c.name_ar || c.name_en || c.name);
+        document.getElementById('cust-kv-grid').innerHTML = [
+          { l: WS.t('cust_name', 'الاسم'), v: custName || '—' },
+          { l: WS.t('cust_phone', 'الهاتف'), v: c.phone || '—' },
+          { l: WS.t('cust_email', 'البريد'), v: c.email || '—' },
+          { l: WS.t('cust_company', 'الشركة'), v: c.company_name || '—' },
+          { l: WS.t('cust_program', 'البرنامج'), v: c.program_name || '—' },
+          { l: WS.t('cust_status', 'حالة العميل'), v: c.status || '—' }
+        ].map(function (item) {
+          return '<div class="fup-kv"><div class="fup-kv-label">' + esc(item.l) + '</div><div class="fup-kv-val">' + esc(item.v) + '</div></div>';
+        }).join('');
+
+        var hist = data.history || [];
+        document.getElementById('tab-history').innerHTML = hist.length
+          ? '<div class="fup-timeline">' + hist.map(function (h) {
+              return '<div class="fup-tl-item">' +
+                '<div class="fup-tl-head"><strong>' + esc(h.action_type) + '</strong><span>' + esc(fmtDate(h.created_at)) + '</span></div>' +
+                (h.note ? '<div style="margin-top:4px;font-size:0.88rem;">' + esc(h.note) + '</div>' : '') +
+                (h.old_value || h.new_value ? '<div class="fup-tl-meta">' + esc(h.old_value || '') + (h.old_value && h.new_value ? ' → ' : '') + esc(h.new_value || '') + '</div>' : '') +
+                '</div>';
+            }).join('') + '</div>'
+          : '<p style="color:var(--color-text-muted);">' + esc(WS.t('fup_no_history', 'لا يوجد سجل تعديلات بعد.')) + '</p>';
+
+        var allF = data.allCustomerFollowups || [];
+        document.getElementById('tab-all').innerHTML = allF.length
+          ? '<div class="fup-timeline">' + allF.map(function (item) {
+              return '<div class="fup-tl-item">' +
+                '<div class="fup-tl-head"><a href="sales-followup-details.html?id=' + encodeURIComponent(item.id) + '" style="font-weight:600;color:var(--color-link);">' + esc(item.purpose || ('#' + item.id)) + '</a><span class="sls-badge">' + esc(statusLabel(item.status)) + '</span></div>' +
+                '<div class="fup-tl-meta">' + esc(item.undated ? WS.t('fup_undated', 'بدون موعد') : fmtDate(item.due_at)) + ' • ' + esc(priorityLabel(item.priority)) + '</div>' +
+                '</div>';
+            }).join('') + '</div>'
+          : '<p style="color:var(--color-text-muted);">' + esc(WS.t('fup_none', 'لا توجد متابعات.')) + '</p>';
+
+        var calls = data.calls || [];
+        document.getElementById('tab-calls').innerHTML = calls.length
+          ? '<div class="fup-timeline">' + calls.map(function (cl) {
+              return '<div class="fup-tl-item">' +
+                '<div class="fup-tl-head"><strong>' + esc(cl.outcome || cl.direction || 'Call') + '</strong><span>' + esc(fmtDate(cl.created_at)) + '</span></div>' +
+                (cl.summary ? '<div style="margin-top:4px;font-size:0.88rem;">' + esc(cl.summary) + '</div>' : '') +
+                '</div>';
+            }).join('') + '</div>'
+          : '<p style="color:var(--color-text-muted);">' + esc(WS.t('no_calls_recorded', 'لا توجد مكالمات مسجلة.')) + '</p>';
+
+        var act = data.activity || [];
+        document.getElementById('tab-activity').innerHTML = act.length
+          ? '<div class="fup-timeline">' + act.map(function (a) {
+              return '<div class="fup-tl-item">' +
+                '<div class="fup-tl-head"><strong>' + esc(a.action_type) + '</strong><span>' + esc(fmtDate(a.created_at)) + '</span></div>' +
+                (a.description ? '<div style="margin-top:4px;font-size:0.88rem;">' + esc(a.description) + '</div>' : '') +
+                '</div>';
+            }).join('') + '</div>'
+          : '<p style="color:var(--color-text-muted);">' + esc(WS.t('no_activity', 'لا يوجد نشاط مسجل.')) + '</p>';
+      }
+
+      async function loadDetails() {
+        if (!id) {
+          document.getElementById('fup-loading').style.display = 'none';
+          var err = document.getElementById('fup-error');
+          err.style.display = 'block';
+          err.textContent = WS.t('fup_missing_id', 'معرف المتابعة غير موجود.');
+          return;
+        }
+        try {
+          var res = await WS.apiFetch('/api/sales/followups/' + encodeURIComponent(id), { method: 'GET' });
+          if (!res || !res.followup) throw new Error('Not found');
+          renderDetails(res);
+        } catch (e) {
+          document.getElementById('fup-loading').style.display = 'none';
+          var err = document.getElementById('fup-error');
+          err.style.display = 'block';
+          err.textContent = e.message || 'Error loading follow-up';
+        }
+      }
+
+      function togglePanel(which) {
+        document.getElementById('panel-complete').classList.toggle('open', which === 'complete');
+        document.getElementById('panel-cancel').classList.toggle('open', which === 'cancel');
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        await WS.init();
+        await loadDetails();
+
+        document.getElementById('act-complete-toggle').addEventListener('click', function () { togglePanel('complete'); });
+        document.getElementById('btn-decision-complete').addEventListener('click', function () { togglePanel('complete'); });
+        document.getElementById('btn-complete-close').addEventListener('click', function () { togglePanel('none'); });
+
+        document.getElementById('act-cancel-toggle').addEventListener('click', function () { togglePanel('cancel'); });
+        document.getElementById('btn-decision-cancel').addEventListener('click', function () { togglePanel('cancel'); });
+        document.getElementById('btn-cancel-close').addEventListener('click', function () { togglePanel('none'); });
+
+        document.getElementById('btn-complete-submit').addEventListener('click', async function () {
+          var completedVia = document.getElementById('complete-via').value;
+          var note = document.getElementById('complete-note').value.trim();
+          await WS.apiFetch('/api/sales/followups/' + encodeURIComponent(id) + '/complete', {
+            method: 'PATCH',
+            body: JSON.stringify({ completedVia: completedVia, note: note })
+          });
+          togglePanel('none');
+          await loadDetails();
+        });
+
+        document.getElementById('btn-cancel-submit').addEventListener('click', async function () {
+          var reason = document.getElementById('cancel-reason').value.trim();
+          var errEl = document.getElementById('cancel-err');
+          if (!reason) {
+            errEl.style.display = 'block';
+            errEl.textContent = WS.t('fup_cancel_reason_required', 'يجب إدخال سبب الإلغاء.');
+            return;
+          }
+          errEl.style.display = 'none';
+          await WS.apiFetch('/api/sales/followups/' + encodeURIComponent(id) + '/cancel', {
+            method: 'POST',
+            body: JSON.stringify({ reason: reason })
+          });
+          togglePanel('none');
+          await loadDetails();
+        });
+
+        document.querySelectorAll('.fup-tab-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            document.querySelectorAll('.fup-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+            document.querySelectorAll('.fup-tab-pane').forEach(function (p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            var pane = document.getElementById('tab-' + btn.dataset.tab);
+            if (pane) pane.classList.add('active');
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

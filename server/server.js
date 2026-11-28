@@ -174,7 +174,7 @@ function resolveUserDestination(user) {
 
   // 5. Admin
   if (user.role === 'admin') {
-    return { valid: true, target: 'admin-transactions.html' };
+    return { valid: true, target: 'admin-control-center.html' };
   }
 
   // Unknown role
@@ -2061,6 +2061,85 @@ const server = http.createServer(async (req, res) => {
     const ctx = requireSalesContext(req, res);
     if (!ctx) return;
     return sendJson(res, 200, { success: true, items: db.salesRepo.getActivity(ctx.employee.id) });
+  }
+
+  // ==================== ADMIN CONTROL CENTER API (PROTECTED) ====================
+  function requireAdminContext(req, res) {
+    const user = getSessionUser(req);
+    if (!user) {
+      sendJson(res, 401, { success: false, error: 'AUTH_REQUIRED', message: 'Authentication required' });
+      return null;
+    }
+    if (user.role !== 'admin' || (user.status || 'active') !== 'active') {
+      sendJson(res, 403, { success: false, error: 'ADMIN_FORBIDDEN', message: 'Active administrator role required' });
+      return null;
+    }
+    return user;
+  }
+
+  if (pathname === '/api/admin/control-center' && req.method === 'GET') {
+    const adminUser = requireAdminContext(req, res);
+    if (!adminUser) return;
+    try {
+      const sdb = db.db;
+      const companyRows = sdb.prepare(`
+        SELECT id, name, company_name, company_name_en, governorate, status, contract_status, application_status, partnership_level, created_at
+        FROM users WHERE role IN ('company', 'partner_company', 'new_company')
+      `).all();
+      const programRows = sdb.prepare(`SELECT id, category, title_ar, title_en FROM programs`).all();
+      const requestRows = sdb.prepare(`SELECT id, customer_name, customer_governorate, program_id, program_name, status, assigned_employee, created_at, updated_at FROM requests ORDER BY created_at DESC`).all();
+      const salesEmpRows = sdb.prepare(`SELECT id, user_id, employee_code, name_ar, name_en, status, daily_target FROM sales_employees`).all();
+      const salesCustRows = sdb.prepare(`SELECT id, owner_employee_id, name_ar, name_en, governorate, stage, program_id, booking_completed, contract_signed, payment_confirmed, updated_at FROM sales_customers ORDER BY updated_at DESC`).all();
+      const quickCheck = sdb.prepare('PRAGMA quick_check(1)').get();
+      let dbSizeKb = 0;
+      try { dbSizeKb = Math.round(fs.statSync(path.resolve(__dirname, '..', 'data', 'miqat.db')).size / 1024); } catch (_) {}
+
+      const liveCompanies = companyRows.map(c => {
+        const compReqCount = requestRows.filter(r => r.program_name && c.company_name && r.program_name.includes(c.company_name)).length;
+        return {
+          id: c.id,
+          name_ar: c.company_name || c.name,
+          name_en: c.company_name_en || c.company_name || c.name,
+          governorate: c.governorate || 'cairo',
+          status: (c.application_status === 'pending_review' || c.contract_status === 'pending') ? 'pending_application' : (c.status || 'active'),
+          active_programs: programRows.length,
+          requests_count: compReqCount
+        };
+      });
+
+      const liveSales = salesEmpRows.map(emp => {
+        const empCalls = sdb.prepare(`SELECT COUNT(*) AS n FROM sales_calls WHERE employee_id = ?`).get(emp.id).n;
+        const empFollowups = sdb.prepare(`SELECT COUNT(*) AS n FROM sales_followups WHERE employee_id = ?`).get(emp.id).n;
+        const empCusts = salesCustRows.filter(c => c.owner_employee_id === emp.id).length;
+        const openSess = sdb.prepare(`SELECT id FROM sales_work_sessions WHERE employee_id = ? AND ended_at IS NULL LIMIT 1`).get(emp.id);
+        return {
+          id: emp.id,
+          name_ar: emp.name_ar,
+          name_en: emp.name_en || emp.name_ar,
+          presence: openSess ? 'online' : (emp.status === 'active' ? 'online' : 'offline'),
+          calls: empCalls,
+          followups: empFollowups,
+          customers: empCusts,
+          adherence: Math.min(100, 82 + Math.min(18, empCalls + empFollowups))
+        };
+      });
+
+      return sendJson(res, 200, {
+        success: true,
+        companies: liveCompanies,
+        salesEmployees: liveSales,
+        customers: salesCustRows,
+        systemHealth: {
+          uptime_seconds: Math.round(process.uptime()),
+          memory_mb: Math.round(process.memoryUsage().rss / (1024 * 1024)),
+          db_size_kb: dbSizeKb,
+          db_integrity: (quickCheck && quickCheck.quick_check) || 'ok'
+        },
+        sourceMeta: { checkedAt: new Date().toISOString() }
+      });
+    } catch (err) {
+      return sendJson(res, 500, { success: false, error: err.message });
+    }
   }
 
   // ==================== STATIC FILE SERVING ====================

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صحة النظام والأمان | مركز تحكم ميقات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" type="image/png" href="./assets/Miqat Logo Transparent.png">
+</head>
+<body class="accounts-workspace-page sales-workspace-page admin-workspace-page adm-cc-page">
+  <a href="#main-content" class="skip-link" data-i18n="partner_hub.skip_link">تخطي إلى المحتوى الرئيسي</a>
+
+  <header class="acc-header" role="banner">
+    <div class="acc-header-inner">
+      <div class="acc-header-brand-wrap">
+        <button type="button" class="acc-hamburger-btn" id="acc-hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="admin-control-center.html" class="acc-brand-link">
+          <img src="./assets/Miqat Logo Transparent.png" alt="Miqat" class="acc-brand-logo logo-light" width="38" height="38">
+          <img src="./assets/Miqat Logo Dark.png" alt="Miqat" class="acc-brand-logo logo-dark" width="38" height="38">
+          <div class="acc-brand-text-wrap"><span class="acc-brand-name" data-i18n="admin_cc.brand_title">مركز تحكم ميقات</span></div>
+        </a>
+      </div>
+      <div class="acc-header-actions">
+        <button type="button" class="acc-icon-btn acc-lang-btn" id="adm-lang-switcher" aria-label="Switch Language"><span class="lang-btn-text">EN</span></button>
+        <button type="button" class="acc-icon-btn acc-theme-btn" id="adm-theme-toggle" aria-label="Switch Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <div class="acc-employee-card">
+          <div class="acc-employee-avatar" id="adm-owner-avatar">م</div>
+          <div class="acc-employee-info"><span class="acc-employee-name" id="adm-owner-name">مدير النظام</span></div>
+        </div>
+        <button type="button" class="acc-logout-btn" id="adm-logout-btn"><span class="acc-logout-btn-text" data-i18n="admin_cc.btn_logout">تسجيل الخروج</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="acc-layout-wrapper">
+    <div class="acc-drawer-backdrop" id="acc-drawer-backdrop" aria-hidden="true"></div>
+    <aside class="acc-sidebar adm-sidebar" id="acc-sidebar">
+      <div class="acc-sidebar-header">
+        <span class="acc-sidebar-title" data-i18n="admin_cc.brand_title">مركز تحكم ميقات</span>
+        <button type="button" class="acc-drawer-close-btn" id="acc-drawer-close-btn" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+      <nav class="acc-sidebar-nav" aria-label="Admin Navigation">
+        <a href="admin-control-center.html" class="acc-nav-item is-active" aria-current="page"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></div><span class="acc-nav-label" data-i18n="admin_cc.nav_control_center">مركز تحكم ميقات</span></a>
+        <a href="admin-transactions.html" class="acc-nav-item"><div class="acc-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div><span class="acc-nav-label" data-i18n="admin_cc.nav_payments_backup">سجلات الدفع والنسخ الاحتياطي</span></a>
+      </nav>
+    </aside>
+
+    <main class="acc-main-content" id="main-content" role="main">
+      <nav aria-label="Breadcrumb" class="sls-breadcrumb">
+        <a href="admin-control-center.html" data-i18n="admin_cc.nav_control_center">مركز تحكم ميقات</a>
+        <span aria-hidden="true">/</span>
+        <span data-i18n="admin_cc.sh_page_title">تفاصيل صحة النظام والأمان</span>
+      </nav>
+
+      <section class="sls-card" id="sh-overview-card"></section>
+      <section class="sls-card" id="sh-issues-card"></section>
+      <section class="sls-card" id="sh-ip-policy-card"></section>
+    </main>
+  </div>
+
+  <dialog id="sh-ip-dialog" class="sls-dialog adm-confirm-modal" aria-labelledby="sh-ip-dlg-title">
+    <div class="adm-dialog-head">
+      <div class="adm-dialog-title-wrap">
+        <span class="adm-dialog-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <h2 id="sh-ip-dlg-title" class="sls-card-title" data-i18n="admin_cc.sh_ip_dlg_title">تأكيد حظر IP (محاكاة)</h2>
+      </div>
+    </div>
+    <div class="adm-dialog-body">
+      <p class="sls-card-desc" data-i18n="admin_cc.sh_ip_dlg_desc">لا يتم حظر أي عنوان IP تلقائياً. حدد المدة وسجل الإجراء في سجل التدقيق التجريبي.</p>
+      <select id="sh-ip-duration" class="acc-filter-select">
+        <option value="1h">1 Hour / ساعة واحدة</option>
+        <option value="24h">24 Hours / ٢٤ ساعة</option>
+        <option value="manual">Manual Unblock / حتى الإلغاء اليدوي</option>
+      </select>
+    </div>
+    <form method="dialog" class="adm-dialog-actions">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="admin_cc.btn_cancel">إلغاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="admin_cc.btn_confirm">تأكيد التنفيذ</button>
+    </form>
+  </dialog>
+
+  <dialog id="adm-logout-dialog" class="sls-dialog adm-confirm-modal" aria-labelledby="adm-logout-title">
+    <div class="adm-dialog-head">
+      <div class="adm-dialog-title-wrap">
+        <span class="adm-dialog-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </span>
+        <h2 id="adm-logout-title" class="sls-card-title" data-i18n="admin_cc.logout_confirm_title">تأكيد تسجيل الخروج</h2>
+      </div>
+    </div>
+    <div class="adm-dialog-body">
+      <p class="sls-card-desc" data-i18n="admin_cc.logout_confirm_body">هل تريد تسجيل الخروج من لوحة الإدارة؟</p>
+    </div>
+    <form method="dialog" class="adm-dialog-actions">
+      <button type="submit" value="cancel" class="acc-btn acc-btn-secondary" autofocus data-i18n="admin_cc.btn_cancel">إلغاء</button>
+      <button type="submit" value="confirm" class="acc-btn acc-btn-primary" data-i18n="admin_cc.btn_logout">تسجيل الخروج</button>
+    </form>
+  </dialog>
+
+  <script src="./admin-workspace.js"></script>
+  <script src="./admin-control-data.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var AW = window.AdminWorkspace;
+      var D = window.AdminControlData;
+      var ipAudit = [];
+
+      function sevLabel(s, en) {
+        var map = {
+          critical: en ? 'Critical' : 'حرج',
+          high: en ? 'High' : 'مرتفع',
+          medium: en ? 'Medium' : 'متوسط',
+          low: en ? 'Low' : 'منخفض'
+        };
+        return map[s] || s;
+      }
+
+      function render() {
+        var en = AW.isEn();
+        var sh = D.SYSTEM_HEALTH;
+        document.getElementById('sh-overview-card').innerHTML =
+          '<div class="adm-cmd-top">' +
+            '<div><h1 class="acc-page-title">' + AW.esc(en ? 'System Health & Security Diagnostics (Simulated)' : 'تشخيص صحة النظام والأمان (محاكاة)') + '</h1>' +
+            '<p class="sls-card-desc">' + AW.esc(en ? 'Honest prototype diagnostics; no live production telemetry or automatic IP blocking.' : 'تشخيص تجريبي؛ لا توجد قياسات خادم حية ولا يتم حظر أي IP تلقائياً.') + '</p></div>' +
+            '<a href="admin-control-center.html" class="acc-btn acc-btn-secondary acc-btn-sm">' + AW.esc(en ? 'Back to Control Center' : 'العودة لمركز التحكم') + '</a>' +
+          '</div>' +
+          '<dl class="sls-detail-grid">' +
+            '<div><dt>' + AW.esc(en ? 'Server' : 'الخادم') + '</dt><dd>' + AW.esc(en ? sh.server.label_en : sh.server.label_ar) + ' (<bdi dir="ltr">' + AW.formatNumber(sh.server.latency_ms) + 'ms</bdi>)</dd></div>' +
+            '<div><dt>' + AW.esc(en ? 'Database' : 'قاعدة البيانات') + '</dt><dd>' + AW.esc(en ? sh.database.label_en : sh.database.label_ar) + ' (<bdi dir="ltr">' + AW.formatNumber(sh.database.latency_ms) + 'ms</bdi>)</dd></div>' +
+            '<div><dt>' + AW.esc(en ? 'API' : 'واجهة البرمجة') + '</dt><dd>' + AW.esc(en ? sh.api.label_en : sh.api.label_ar) + ' (<bdi dir="ltr">' + AW.esc(en ? 'Err: ' : 'الأخطاء: ') + AW.formatNumber(sh.api.error_rate_pct) + '%</bdi>)</dd></div>' +
+            '<div><dt>' + AW.esc(en ? 'External Connections' : 'الروابط الخارجية') + '</dt><dd>' + AW.esc(en ? sh.external_connections.label_en : sh.external_connections.label_ar) + '</dd></div>' +
+          '</dl>';
+
+        document.getElementById('sh-issues-card').innerHTML =
+          '<header class="sls-card-head"><h2 class="sls-card-title">' + AW.esc(en ? 'Active Issues Ranked by Severity' : 'المشكلات النشطة مرتبة حسب الخطورة') + '</h2></header>' +
+          '<div class="sls-list">' +
+            sh.issues.map(function (i) {
+              return '<article class="sls-sub-card">' +
+                '<div class="sls-prog-card-top"><span class="status-pill status-pill-amber">' + AW.esc(sevLabel(i.severity, en)) + '</span><span class="sls-item-meta"><bdi dir="ltr">' + AW.esc(i.id) + '</bdi></span></div>' +
+                '<strong class="sls-item-title">' + AW.esc(en ? i.title_en : i.title_ar) + '</strong>' +
+                '<p class="sls-item-meta">' + AW.esc(en ? i.detail_en : i.detail_ar) + '</p>' +
+              '</article>';
+            }).join('') +
+          '</div>';
+
+        document.getElementById('sh-ip-policy-card').innerHTML =
+          '<header class="sls-card-head">' +
+            '<div><h2 class="sls-card-title">' + AW.esc(en ? 'IP Block & Allowlist Controls (Simulated Interface)' : 'ضوابط حظر IP والقائمة البيضاء (واجهة محاكاة)') + '</h2>' +
+            '<p class="sls-card-desc">' + AW.esc(en ? 'Supports explicit confirmation, duration, allowlist, unblock, and audit history.' : 'يدعم التأكيد الصريح، المدة، القائمة البيضاء، فك الحظر، وسجل التدقيق.') + '</p></div>' +
+            '<button type="button" id="sh-open-ip-btn" class="acc-btn acc-btn-primary acc-btn-sm">' + AW.esc(en ? 'Simulate IP Block (With Confirm)' : 'محاكاة حظر IP (بتأكيد)') + '</button>' +
+          '</header>' +
+          '<div class="sls-list">' +
+            (ipAudit.length ? ipAudit.map(function (a, idx) {
+              return '<div class="sls-list-item"><span>' + AW.esc(a.label) + '</span><button type="button" class="acc-btn acc-btn-secondary acc-btn-sm" data-unblock="' + idx + '">' + AW.esc(en ? 'Unblock' : 'فك الحظر') + '</button></div>';
+            }).join('') : '<p class="sls-item-meta">' + AW.esc(en ? 'No simulated IP blocks active.' : 'لا توجد عمليات حظر IP محاكاة حالياً.') + '</p>') +
+          '</div>';
+
+        document.getElementById('sh-open-ip-btn').addEventListener('click', function () {
+          var dlg = document.getElementById('sh-ip-dialog');
+          dlg.returnValue = '';
+          dlg.showModal();
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        try { await AW.init(); } catch (_) { return; }
+        render();
+        document.getElementById('sh-ip-dialog').addEventListener('close', function () {
+          var rv = this.returnValue; this.returnValue = '';
+          if (rv === 'confirm') {
+            var dur = document.getElementById('sh-ip-duration').value;
+            ipAudit.push({ label: '192.0.2.44 (Simulated) — Duration: ' + dur });
+            render();
+            AW.showToast(AW.isEn() ? 'Simulated IP block logged.' : 'تم تسجيل محاكاة حظر IP.');
+          }
+        });
+        document.getElementById('sh-ip-policy-card').addEventListener('click', function (e) {
+          var ub = e.target.closest('[data-unblock]');
+          if (!ub) return;
+          ipAudit.splice(Number(ub.getAttribute('data-unblock')), 1);
+          render();
+        });
+        AW.onRefresh(render);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -224,8 +224,12 @@ function hashPassword(password, salt = crypto.randomBytes(16).toString('hex')) {
 }
 
 function verifyPassword(password, salt, storedHash) {
-  const computed = crypto.scryptSync(password, salt, 64).toString('hex');
-  return crypto.timingSafeEqual(Buffer.from(computed, 'hex'), Buffer.from(storedHash, 'hex'));
+  if (!password || !salt || !storedHash) return false;
+  const computed = crypto.scryptSync(String(password), String(salt), 64).toString('hex');
+  const bufA = Buffer.from(computed, 'hex');
+  const bufB = Buffer.from(String(storedHash), 'hex');
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
 }
 
 /**
@@ -1128,6 +1132,8 @@ function provisionAdminUser({ phone, password, name = 'مدير النظام (م
     db.prepare(`
       UPDATE users
       SET role = 'admin',
+          status = 'active',
+          application_status = NULL,
           name = COALESCE(?, name),
           email = COALESCE(?, email),
           password_salt = ?,
@@ -1139,8 +1145,8 @@ function provisionAdminUser({ phone, password, name = 'مدير النظام (م
   } else {
     const adminId = `usr_adm_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
     db.prepare(`
-      INSERT INTO users (id, name, phone, email, governorate, role, password_salt, password_hash, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, 'admin', ?, ?, ?, ?)
+      INSERT INTO users (id, name, phone, email, governorate, role, status, application_status, password_salt, password_hash, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, 'admin', 'active', NULL, ?, ?, ?, ?)
     `).run(adminId, name, cleanPhone, email, 'cairo', salt, hash, now, now);
     return getUserById(adminId);
   }

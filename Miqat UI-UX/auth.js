@@ -157,8 +157,8 @@
       "auth.back_to_home": "Back to Home",
       "auth.login_heading": "Sign In",
       "auth.login_subheading": "Welcome back to Miqat. Sign in to manage your inquiries or explore verified Hajj & Umrah programs.",
-      "auth.identifier_label": "Email or Phone Number",
-      "auth.identifier_placeholder": "Enter your email or mobile number",
+      "auth.identifier_label": "Email Address or Phone Number",
+      "auth.identifier_placeholder": "Enter your email or phone number",
       "auth.identifier_hint": "Accepts email address or mobile numbers (Egyptian & International)",
       "auth.password_label": "Password",
       "auth.password_placeholder": "Enter your password",
@@ -238,7 +238,7 @@
   const html = document.documentElement;
   const langToggleBtn = document.getElementById('langToggleBtn');
   const themeToggleBtn = document.getElementById('themeToggleBtn');
-  
+
   // Login Elements
   const loginForm = document.getElementById('loginForm');
   const identifierInput = document.getElementById('loginIdentifier');
@@ -348,11 +348,11 @@
   function populateGovernorates(lang) {
     const selects = [customerGovernorateSelect, companyGovernorateSelect].filter(Boolean);
     if (!selects.length) return;
-    
+
     selects.forEach(selectEl => {
       const currentVal = selectEl.value;
       const placeholderText = lang === 'ar' ? 'اختار المحافظة' : 'Select your governorate';
-      
+
       let htmlContent = `<option value="" disabled ${!currentVal ? 'selected' : ''}>${placeholderText}</option>`;
       EGYPTIAN_GOVERNORATES.forEach(gov => {
         const name = lang === 'ar' ? gov.ar : gov.en;
@@ -389,7 +389,7 @@
 
     if (redirect === 'program' && programId) {
       const programInfo = PROGRAM_LABELS[programId];
-      const programTitle = programInfo 
+      const programTitle = programInfo
         ? (currentLang === 'ar' ? programInfo.ar : programInfo.en)
         : programId;
 
@@ -470,6 +470,20 @@
     // Update dynamic aria states
     updatePasswordToggleAria();
     updateThemeAria();
+
+    // Re-translate any currently visible field errors and status alerts
+    document.querySelectorAll('.field-error.is-visible[data-error-key]').forEach((el) => {
+      const span = el.querySelector('span');
+      if (span) span.textContent = getTranslation(el.dataset.errorKey, dict);
+    });
+    if (authStatusBox && authStatusBox.classList.contains('is-visible') && authStatusBox.dataset.titleKey) {
+      const titleEl = authStatusBox.querySelector('.auth-status-title');
+      const descEl = authStatusBox.children[1];
+      if (titleEl) titleEl.textContent = getTranslation(authStatusBox.dataset.titleKey, dict);
+      if (descEl && authStatusBox.dataset.descKey && authStatusBox.dataset.descKey.startsWith('auth.')) {
+        descEl.textContent = getTranslation(authStatusBox.dataset.descKey, dict);
+      }
+    }
   }
 
   function toggleLanguage() {
@@ -778,6 +792,7 @@
     if (!containerEl) return;
     const dict = translations[currentLang] || fallbackDict[currentLang];
     const text = getTranslation(errorKey, dict);
+    containerEl.dataset.errorKey = errorKey;
     containerEl.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="12" cy="12" r="10"></circle>
@@ -792,6 +807,7 @@
 
   function clearFieldError(containerEl, inputEl) {
     if (containerEl) {
+      delete containerEl.dataset.errorKey;
       containerEl.innerHTML = '';
       containerEl.classList.remove('is-visible');
     }
@@ -804,6 +820,9 @@
     const title = getTranslation(titleKey, dict);
     const desc = descKeyOrText.startsWith('auth.') ? getTranslation(descKeyOrText, dict) : descKeyOrText;
 
+    authStatusBox.dataset.statusType = type;
+    authStatusBox.dataset.titleKey = titleKey;
+    authStatusBox.dataset.descKey = descKeyOrText;
     authStatusBox.className = `auth-status-alert ${type} is-visible`;
     authStatusBox.innerHTML = `
       <div class="auth-status-title">${title}</div>
@@ -814,6 +833,9 @@
 
   function clearStatusAlert() {
     if (!authStatusBox) return;
+    delete authStatusBox.dataset.statusType;
+    delete authStatusBox.dataset.titleKey;
+    delete authStatusBox.dataset.descKey;
     authStatusBox.className = 'auth-status-alert';
     authStatusBox.innerHTML = '';
   }
@@ -889,609 +911,610 @@
 
     // 5. Admin
     if (role === 'admin') {
-      let target = 'admin-transactions.html';
+      let target = 'admin-control-center.html';
       if (decoded && decoded.startsWith('admin-') && decoded.endsWith('.html')) {
         target = decoded;
       }
       return { valid: true, target };
     }
 
+
     // Unknown or unauthorized role
     return { valid: false, target: null, errorKey: 'auth.val_unauthorized_role' };
   }
 
-  /**
-   * Extensible Backend Integration Hooks
-   */
-  async function performAuthentication(credentials) {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          identifier: credentials.value,
-          password: credentials.password
-        })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        return { success: true, user: data.user, token: data.token, redirect_url: data.redirect_url };
-      } else if (res.status === 403 || data.error === 'UNAUTHORIZED_ROLE') {
+    /**
+     * Extensible Backend Integration Hooks
+     */
+    async function performAuthentication(credentials) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            identifier: credentials.value,
+            password: credentials.password
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          return { success: true, user: data.user, token: data.token, redirect_url: data.redirect_url };
+        } else if (res.status === 403 || data.error === 'UNAUTHORIZED_ROLE') {
+          return {
+            success: false,
+            isUnauthorizedRole: true,
+            errorKey: 'auth.val_unauthorized_role',
+            noticeTitleKey: 'auth.val_unauthorized_role_title'
+          };
+        } else {
+          return { success: false, errorKey: 'auth.val_invalid_credentials' };
+        }
+      } catch (err) {
+        console.warn('Backend login request error, falling back:', err);
         return {
           success: false,
-          isUnauthorizedRole: true,
-          errorKey: 'auth.val_unauthorized_role',
-          noticeTitleKey: 'auth.val_unauthorized_role_title'
+          isBackendAwaiting: true,
+          noticeTitleKey: 'auth.val_backend_notice_title',
+          noticeDescKey: 'auth.val_backend_notice_desc'
         };
-      } else {
-        return { success: false, errorKey: 'auth.val_invalid_credentials' };
       }
-    } catch (err) {
-      console.warn('Backend login request error, falling back:', err);
+    }
+
+    async function performCustomerRegistration(customerData) {
+      await new Promise((resolve) => setTimeout(resolve, 600));
       return {
-        success: false,
+        success: true,
         isBackendAwaiting: true,
-        noticeTitleKey: 'auth.val_backend_notice_title',
-        noticeDescKey: 'auth.val_backend_notice_desc'
+        noticeTitleKey: 'auth.customer_reg_notice_title',
+        noticeDescKey: 'auth.customer_reg_notice_desc'
       };
     }
-  }
 
-  async function performCustomerRegistration(customerData) {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return {
-      success: true,
-      isBackendAwaiting: true,
-      noticeTitleKey: 'auth.customer_reg_notice_title',
-      noticeDescKey: 'auth.customer_reg_notice_desc'
-    };
-  }
-
-  async function performCompanyRegistration(companyData) {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return {
-      success: true,
-      isBackendAwaiting: true,
-      noticeTitleKey: 'auth.company_reg_notice_title',
-      noticeDescKey: 'auth.company_reg_notice_desc'
-    };
-  }
-
-  function validateCompanyName(name) {
-    if (!name || !name.trim()) {
-      return { isValid: false, errorKey: 'auth.val_company_name_empty' };
-    }
-    const clean = name.trim();
-    if (clean.length < 2) {
-      return { isValid: false, errorKey: 'auth.val_company_name_invalid' };
-    }
-    return { isValid: true, value: clean };
-  }
-
-  function validateResponsiblePerson(name) {
-    if (!name || !name.trim()) {
-      return { isValid: false, errorKey: 'auth.val_responsible_empty' };
-    }
-    const clean = name.trim();
-    if (clean.length < 2) {
-      return { isValid: false, errorKey: 'auth.val_responsible_invalid' };
-    }
-    return { isValid: true, value: clean };
-  }
-
-  function validateCompanyPhone(phone) {
-    if (!phone || !phone.trim()) {
-      return { isValid: false, errorKey: 'auth.val_company_phone_empty' };
-    }
-    const normalized = normalizeNumerals(phone.trim());
-    const digitsOnly = normalized.replace(/[\s\-\(\)\.]/g, '');
-    const phoneRegex = /^(\+20|0020|20)?0?(1[0125][0-9]{8}|[23][0-9]{7,8}|[4-9][0-9]{6,7})$|^(\+[1-9]{1}[0-9]{7,14})$/;
-    if (!phoneRegex.test(digitsOnly) && digitsOnly.length < 7) {
-      return { isValid: false, errorKey: 'auth.val_company_phone_invalid' };
-    }
-    return { isValid: true, value: digitsOnly };
-  }
-
-  async function handleCompanyRegisterSubmit(e) {
-    e.preventDefault();
-    clearStatusAlert();
-
-    const companyNameVal = companyNameInput ? companyNameInput.value : '';
-    const responsibleVal = responsiblePersonInput ? responsiblePersonInput.value : '';
-    const phoneVal = companyPhoneInput ? companyPhoneInput.value : '';
-    const govVal = companyGovernorateSelect ? companyGovernorateSelect.value : '';
-    const licenseVal = licenseNumberInput ? licenseNumberInput.value : '';
-    const emailVal = companyEmailInput ? companyEmailInput.value : '';
-    const notesVal = companyNotesInput ? companyNotesInput.value : '';
-    const passVal = companyPasswordInput ? companyPasswordInput.value : '';
-    const confirmVal = companyConfirmPasswordInput ? companyConfirmPasswordInput.value : '';
-
-    const nameCheck = validateCompanyName(companyNameVal);
-    const responsibleCheck = validateResponsiblePerson(responsibleVal);
-    const phoneCheck = validateCompanyPhone(phoneVal);
-    const govCheck = validateGovernorate(govVal);
-    const emailCheck = validateOptionalEmail(emailVal);
-    const passCriteria = checkPasswordCriteria(passVal);
-
-    let hasErrors = false;
-    let passValid = false;
-    let confirmValid = false;
-
-    if (!nameCheck.isValid) {
-      showFieldError(companyNameError, companyNameInput, nameCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(companyNameError, companyNameInput);
+    async function performCompanyRegistration(companyData) {
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      return {
+        success: true,
+        isBackendAwaiting: true,
+        noticeTitleKey: 'auth.company_reg_notice_title',
+        noticeDescKey: 'auth.company_reg_notice_desc'
+      };
     }
 
-    if (!responsibleCheck.isValid) {
-      showFieldError(responsiblePersonError, responsiblePersonInput, responsibleCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(responsiblePersonError, responsiblePersonInput);
-    }
-
-    if (!phoneCheck.isValid) {
-      showFieldError(companyPhoneError, companyPhoneInput, phoneCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(companyPhoneError, companyPhoneInput);
-    }
-
-    if (!govCheck.isValid) {
-      showFieldError(companyGovernorateError, companyGovernorateSelect, govCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(companyGovernorateError, companyGovernorateSelect);
-    }
-
-    if (!emailCheck.isValid) {
-      showFieldError(companyEmailError, companyEmailInput, emailCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(companyEmailError, companyEmailInput);
-    }
-
-    if (!passVal) {
-      showFieldError(companyPasswordError, companyPasswordInput, 'auth.val_password_empty');
-      hasErrors = true;
-    } else if (!isPasswordCriteriaSatisfied(passCriteria)) {
-      showFieldError(companyPasswordError, companyPasswordInput, 'auth.val_password_incomplete');
-      hasErrors = true;
-    } else {
-      clearFieldError(companyPasswordError, companyPasswordInput);
-      passValid = true;
-    }
-
-    if (!confirmVal) {
-      showFieldError(companyConfirmPasswordError, companyConfirmPasswordInput, 'auth.val_confirm_password_empty');
-      hasErrors = true;
-    } else if (confirmVal !== passVal) {
-      showFieldError(companyConfirmPasswordError, companyConfirmPasswordInput, 'auth.val_passwords_mismatch');
-      hasErrors = true;
-    } else {
-      clearFieldError(companyConfirmPasswordError, companyConfirmPasswordInput);
-      confirmValid = true;
-    }
-
-    if (hasErrors) {
-      if (!nameCheck.isValid && companyNameInput) companyNameInput.focus();
-      else if (!responsibleCheck.isValid && responsiblePersonInput) responsiblePersonInput.focus();
-      else if (!phoneCheck.isValid && companyPhoneInput) companyPhoneInput.focus();
-      else if (!govCheck.isValid && companyGovernorateSelect) companyGovernorateSelect.focus();
-      else if (!emailCheck.isValid && companyEmailInput) companyEmailInput.focus();
-      else if (!passValid && companyPasswordInput) companyPasswordInput.focus();
-      else if (!confirmValid && companyConfirmPasswordInput) companyConfirmPasswordInput.focus();
-      return;
-    }
-
-    // Submit Loading State
-    submitBtn.classList.add('is-loading');
-    submitBtn.setAttribute('disabled', 'true');
-    const submitTextEl = submitBtn.querySelector('.btn-text');
-    const dict = translations[currentLang] || fallbackDict[currentLang];
-    const prevText = submitTextEl ? submitTextEl.textContent : '';
-    if (submitTextEl) {
-      submitTextEl.textContent = getTranslation('auth.submitting_application_btn', dict);
-    }
-
-    try {
-      const result = await performCompanyRegistration({
-        companyName: nameCheck.value,
-        responsiblePerson: responsibleCheck.value,
-        phone: phoneCheck.value,
-        governorate: govCheck.value,
-        licenseNumber: licenseVal.trim() || null,
-        email: emailCheck.value || null,
-        notes: notesVal.trim() || null,
-        password: passVal
-      });
-
-      if (result.isBackendAwaiting) {
-        showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
-      } else if (result.success) {
-        showStatusAlert('success', 'auth.company_reg_heading', 'تم استلام طلب انضمام شركتكم بنجاح.');
+    function validateCompanyName(name) {
+      if (!name || !name.trim()) {
+        return { isValid: false, errorKey: 'auth.val_company_name_empty' };
       }
-    } catch (err) {
-      showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
-    } finally {
-      submitBtn.classList.remove('is-loading');
-      submitBtn.removeAttribute('disabled');
-      if (submitTextEl) {
-        submitTextEl.textContent = prevText || getTranslation('auth.submit_application_btn', dict);
+      const clean = name.trim();
+      if (clean.length < 2) {
+        return { isValid: false, errorKey: 'auth.val_company_name_invalid' };
       }
-    }
-  }
-
-  /**
-   * Handle Customer Registration Form Submit
-   */
-  async function handleCustomerRegisterSubmit(e) {
-    e.preventDefault();
-    clearStatusAlert();
-
-    const nameVal = customerNameInput ? customerNameInput.value : '';
-    const phoneVal = customerPhoneInput ? customerPhoneInput.value : '';
-    const govVal = customerGovernorateSelect ? customerGovernorateSelect.value : '';
-    const emailVal = customerEmailInput ? customerEmailInput.value : '';
-    const passVal = customerPasswordInput ? customerPasswordInput.value : '';
-    const confirmVal = customerConfirmPasswordInput ? customerConfirmPasswordInput.value : '';
-
-    const nameCheck = validateCustomerName(nameVal);
-    const phoneCheck = validatePhoneNumber(phoneVal);
-    const govCheck = validateGovernorate(govVal);
-    const emailCheck = validateOptionalEmail(emailVal);
-    const passCriteria = checkPasswordCriteria(passVal);
-
-    let hasErrors = false;
-    let passValid = false;
-    let confirmValid = false;
-
-    if (!nameCheck.isValid) {
-      showFieldError(nameError, customerNameInput, nameCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(nameError, customerNameInput);
+      return { isValid: true, value: clean };
     }
 
-    if (!phoneCheck.isValid) {
-      showFieldError(phoneError, customerPhoneInput, phoneCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(phoneError, customerPhoneInput);
-    }
-
-    if (!govCheck.isValid) {
-      showFieldError(governorateError, customerGovernorateSelect, govCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(governorateError, customerGovernorateSelect);
-    }
-
-    if (!emailCheck.isValid) {
-      showFieldError(emailError, customerEmailInput, emailCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(emailError, customerEmailInput);
-    }
-
-    if (!passVal) {
-      showFieldError(customerPasswordError, customerPasswordInput, 'auth.val_password_empty');
-      hasErrors = true;
-    } else if (!isPasswordCriteriaSatisfied(passCriteria)) {
-      showFieldError(customerPasswordError, customerPasswordInput, 'auth.val_password_incomplete');
-      hasErrors = true;
-    } else {
-      clearFieldError(customerPasswordError, customerPasswordInput);
-      passValid = true;
-    }
-
-    if (!confirmVal) {
-      showFieldError(customerConfirmPasswordError, customerConfirmPasswordInput, 'auth.val_confirm_password_empty');
-      hasErrors = true;
-    } else if (confirmVal !== passVal) {
-      showFieldError(customerConfirmPasswordError, customerConfirmPasswordInput, 'auth.val_passwords_mismatch');
-      hasErrors = true;
-    } else {
-      clearFieldError(customerConfirmPasswordError, customerConfirmPasswordInput);
-      confirmValid = true;
-    }
-
-    if (hasErrors) {
-      if (!nameCheck.isValid && customerNameInput) customerNameInput.focus();
-      else if (!phoneCheck.isValid && customerPhoneInput) customerPhoneInput.focus();
-      else if (!govCheck.isValid && customerGovernorateSelect) customerGovernorateSelect.focus();
-      else if (!emailCheck.isValid && customerEmailInput) customerEmailInput.focus();
-      else if (!passValid && customerPasswordInput) customerPasswordInput.focus();
-      else if (!confirmValid && customerConfirmPasswordInput) customerConfirmPasswordInput.focus();
-      return;
-    }
-
-    // Submit Loading State
-    submitBtn.classList.add('is-loading');
-    submitBtn.setAttribute('disabled', 'true');
-    const submitTextEl = submitBtn.querySelector('.btn-text');
-    const dict = translations[currentLang] || fallbackDict[currentLang];
-    const prevText = submitTextEl ? submitTextEl.textContent : '';
-    if (submitTextEl) {
-      submitTextEl.textContent = getTranslation('auth.continuing_btn', dict);
-    }
-
-    try {
-      const { redirect, trip, programId } = getUrlParams();
-      const result = await performCustomerRegistration({
-        name: nameCheck.value,
-        phone: phoneCheck.value,
-        governorate: govCheck.value,
-        email: emailCheck.value,
-        password: passVal,
-        programId: programId || null,
-        tripType: trip || null
-      });
-
-      if (result.isBackendAwaiting) {
-        showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
-      } else if (result.success) {
-        showStatusAlert('success', 'auth.register_heading', 'تم حفظ بياناتك بنجاح.');
+    function validateResponsiblePerson(name) {
+      if (!name || !name.trim()) {
+        return { isValid: false, errorKey: 'auth.val_responsible_empty' };
       }
-    } catch (err) {
-      showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
-    } finally {
-      submitBtn.classList.remove('is-loading');
-      submitBtn.removeAttribute('disabled');
-      if (submitTextEl) {
-        submitTextEl.textContent = prevText || getTranslation('auth.continue_btn', dict);
+      const clean = name.trim();
+      if (clean.length < 2) {
+        return { isValid: false, errorKey: 'auth.val_responsible_invalid' };
       }
-    }
-  }
-
-  /**
-   * Handle Login Form Submit
-   */
-  async function handleLoginSubmit(e) {
-    e.preventDefault();
-    clearStatusAlert();
-
-    const idVal = identifierInput ? identifierInput.value : '';
-    const passVal = passwordInput ? passwordInput.value : '';
-
-    const idCheck = validateIdentifier(idVal);
-    const passCheck = validatePassword(passVal);
-
-    let hasErrors = false;
-
-    if (!idCheck.isValid) {
-      showFieldError(identifierError, identifierInput, idCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(identifierError, identifierInput);
+      return { isValid: true, value: clean };
     }
 
-    if (!passCheck.isValid) {
-      showFieldError(passwordError, passwordInput, passCheck.errorKey);
-      hasErrors = true;
-    } else {
-      clearFieldError(passwordError, passwordInput);
+    function validateCompanyPhone(phone) {
+      if (!phone || !phone.trim()) {
+        return { isValid: false, errorKey: 'auth.val_company_phone_empty' };
+      }
+      const normalized = normalizeNumerals(phone.trim());
+      const digitsOnly = normalized.replace(/[\s\-\(\)\.]/g, '');
+      const phoneRegex = /^(\+20|0020|20)?0?(1[0125][0-9]{8}|[23][0-9]{7,8}|[4-9][0-9]{6,7})$|^(\+[1-9]{1}[0-9]{7,14})$/;
+      if (!phoneRegex.test(digitsOnly) && digitsOnly.length < 7) {
+        return { isValid: false, errorKey: 'auth.val_company_phone_invalid' };
+      }
+      return { isValid: true, value: digitsOnly };
     }
 
-    if (hasErrors) {
-      if (!idCheck.isValid && identifierInput) identifierInput.focus();
-      else if (!passCheck.isValid && passwordInput) passwordInput.focus();
-      return;
-    }
+    async function handleCompanyRegisterSubmit(e) {
+      e.preventDefault();
+      clearStatusAlert();
 
-    submitBtn.classList.add('is-loading');
-    submitBtn.setAttribute('disabled', 'true');
-    const submitTextEl = submitBtn.querySelector('.btn-text');
-    const dict = translations[currentLang] || fallbackDict[currentLang];
-    const prevText = submitTextEl ? submitTextEl.textContent : '';
-    if (submitTextEl) {
-      submitTextEl.textContent = getTranslation('auth.signing_in_btn', dict);
-    }
+      const companyNameVal = companyNameInput ? companyNameInput.value : '';
+      const responsibleVal = responsiblePersonInput ? responsiblePersonInput.value : '';
+      const phoneVal = companyPhoneInput ? companyPhoneInput.value : '';
+      const govVal = companyGovernorateSelect ? companyGovernorateSelect.value : '';
+      const licenseVal = licenseNumberInput ? licenseNumberInput.value : '';
+      const emailVal = companyEmailInput ? companyEmailInput.value : '';
+      const notesVal = companyNotesInput ? companyNotesInput.value : '';
+      const passVal = companyPasswordInput ? companyPasswordInput.value : '';
+      const confirmVal = companyConfirmPasswordInput ? companyConfirmPasswordInput.value : '';
 
-    let isRedirecting = false;
-    try {
-      const result = await performAuthentication({
-        value: idCheck.value,
-        type: idCheck.type,
-        password: passVal
-      });
+      const nameCheck = validateCompanyName(companyNameVal);
+      const responsibleCheck = validateResponsiblePerson(responsibleVal);
+      const phoneCheck = validateCompanyPhone(phoneVal);
+      const govCheck = validateGovernorate(govVal);
+      const emailCheck = validateOptionalEmail(emailVal);
+      const passCriteria = checkPasswordCriteria(passVal);
 
-      if (result.success) {
-        const params = new URLSearchParams(window.location.search);
-        const redirectParam = params.get('redirect');
-        const destination = resolveClientDestination(result.user, redirectParam);
+      let hasErrors = false;
+      let passValid = false;
+      let confirmValid = false;
 
-        if (!destination.valid) {
-          try {
-            localStorage.removeItem('miqat_user');
-            localStorage.removeItem('miqat_token');
-          } catch (e) {}
-          showStatusAlert('error', 'auth.val_unauthorized_role_title', destination.errorKey || 'auth.val_unauthorized_role');
-          return;
-        }
-
-        // Establish authenticated session
-        if (result.user) {
-          try {
-            localStorage.setItem('miqat_user', JSON.stringify(result.user));
-          } catch (e) {}
-        }
-        if (result.token) {
-          try {
-            localStorage.setItem('miqat_token', result.token);
-          } catch (e) {}
-        }
-
-        const target = destination.target;
-        isRedirecting = true;
-        if (window.location.replace) {
-          window.location.replace(target);
-        } else {
-          window.location.href = target;
-        }
-        return;
-      } else if (result.isUnauthorizedRole) {
-        showStatusAlert('error', result.noticeTitleKey || 'auth.val_unauthorized_role_title', result.errorKey || 'auth.val_unauthorized_role');
-      } else if (result.isBackendAwaiting) {
-        showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
+      if (!nameCheck.isValid) {
+        showFieldError(companyNameError, companyNameInput, nameCheck.errorKey);
+        hasErrors = true;
       } else {
-        showStatusAlert('error', 'auth.val_invalid_credentials', result.errorKey || 'auth.val_invalid_credentials');
+        clearFieldError(companyNameError, companyNameInput);
       }
-    } catch (err) {
-      showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
-    } finally {
-      if (!isRedirecting) {
+
+      if (!responsibleCheck.isValid) {
+        showFieldError(responsiblePersonError, responsiblePersonInput, responsibleCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(responsiblePersonError, responsiblePersonInput);
+      }
+
+      if (!phoneCheck.isValid) {
+        showFieldError(companyPhoneError, companyPhoneInput, phoneCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(companyPhoneError, companyPhoneInput);
+      }
+
+      if (!govCheck.isValid) {
+        showFieldError(companyGovernorateError, companyGovernorateSelect, govCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(companyGovernorateError, companyGovernorateSelect);
+      }
+
+      if (!emailCheck.isValid) {
+        showFieldError(companyEmailError, companyEmailInput, emailCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(companyEmailError, companyEmailInput);
+      }
+
+      if (!passVal) {
+        showFieldError(companyPasswordError, companyPasswordInput, 'auth.val_password_empty');
+        hasErrors = true;
+      } else if (!isPasswordCriteriaSatisfied(passCriteria)) {
+        showFieldError(companyPasswordError, companyPasswordInput, 'auth.val_password_incomplete');
+        hasErrors = true;
+      } else {
+        clearFieldError(companyPasswordError, companyPasswordInput);
+        passValid = true;
+      }
+
+      if (!confirmVal) {
+        showFieldError(companyConfirmPasswordError, companyConfirmPasswordInput, 'auth.val_confirm_password_empty');
+        hasErrors = true;
+      } else if (confirmVal !== passVal) {
+        showFieldError(companyConfirmPasswordError, companyConfirmPasswordInput, 'auth.val_passwords_mismatch');
+        hasErrors = true;
+      } else {
+        clearFieldError(companyConfirmPasswordError, companyConfirmPasswordInput);
+        confirmValid = true;
+      }
+
+      if (hasErrors) {
+        if (!nameCheck.isValid && companyNameInput) companyNameInput.focus();
+        else if (!responsibleCheck.isValid && responsiblePersonInput) responsiblePersonInput.focus();
+        else if (!phoneCheck.isValid && companyPhoneInput) companyPhoneInput.focus();
+        else if (!govCheck.isValid && companyGovernorateSelect) companyGovernorateSelect.focus();
+        else if (!emailCheck.isValid && companyEmailInput) companyEmailInput.focus();
+        else if (!passValid && companyPasswordInput) companyPasswordInput.focus();
+        else if (!confirmValid && companyConfirmPasswordInput) companyConfirmPasswordInput.focus();
+        return;
+      }
+
+      // Submit Loading State
+      submitBtn.classList.add('is-loading');
+      submitBtn.setAttribute('disabled', 'true');
+      const submitTextEl = submitBtn.querySelector('.btn-text');
+      const dict = translations[currentLang] || fallbackDict[currentLang];
+      const prevText = submitTextEl ? submitTextEl.textContent : '';
+      if (submitTextEl) {
+        submitTextEl.textContent = getTranslation('auth.submitting_application_btn', dict);
+      }
+
+      try {
+        const result = await performCompanyRegistration({
+          companyName: nameCheck.value,
+          responsiblePerson: responsibleCheck.value,
+          phone: phoneCheck.value,
+          governorate: govCheck.value,
+          licenseNumber: licenseVal.trim() || null,
+          email: emailCheck.value || null,
+          notes: notesVal.trim() || null,
+          password: passVal
+        });
+
+        if (result.isBackendAwaiting) {
+          showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
+        } else if (result.success) {
+          showStatusAlert('success', 'auth.company_reg_heading', 'تم استلام طلب انضمام شركتكم بنجاح.');
+        }
+      } catch (err) {
+        showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
+      } finally {
         submitBtn.classList.remove('is-loading');
         submitBtn.removeAttribute('disabled');
         if (submitTextEl) {
-          submitTextEl.textContent = prevText || getTranslation('auth.sign_in_btn', dict);
+          submitTextEl.textContent = prevText || getTranslation('auth.submit_application_btn', dict);
         }
       }
     }
-  }
 
-  // Realtime Input Listeners
-  function initInputListeners() {
-    if (identifierInput) {
-      identifierInput.addEventListener('input', () => {
-        if (identifierInput.classList.contains('has-error')) clearFieldError(identifierError, identifierInput);
-      });
-    }
-    if (passwordInput) {
-      passwordInput.addEventListener('input', () => {
-        if (passwordInput.classList.contains('has-error')) clearFieldError(passwordError, passwordInput);
-      });
-    }
-    if (customerNameInput) {
-      customerNameInput.addEventListener('input', () => {
-        if (customerNameInput.classList.contains('has-error')) clearFieldError(nameError, customerNameInput);
-      });
-    }
-    if (customerPhoneInput) {
-      customerPhoneInput.addEventListener('input', () => {
-        if (customerPhoneInput.classList.contains('has-error')) clearFieldError(phoneError, customerPhoneInput);
-      });
-    }
-    if (customerGovernorateSelect) {
-      customerGovernorateSelect.addEventListener('change', () => {
-        if (customerGovernorateSelect.classList.contains('has-error')) clearFieldError(governorateError, customerGovernorateSelect);
-      });
-    }
-    if (customerEmailInput) {
-      customerEmailInput.addEventListener('input', () => {
-        if (customerEmailInput.classList.contains('has-error')) clearFieldError(emailError, customerEmailInput);
-      });
+    /**
+     * Handle Customer Registration Form Submit
+     */
+    async function handleCustomerRegisterSubmit(e) {
+      e.preventDefault();
+      clearStatusAlert();
+
+      const nameVal = customerNameInput ? customerNameInput.value : '';
+      const phoneVal = customerPhoneInput ? customerPhoneInput.value : '';
+      const govVal = customerGovernorateSelect ? customerGovernorateSelect.value : '';
+      const emailVal = customerEmailInput ? customerEmailInput.value : '';
+      const passVal = customerPasswordInput ? customerPasswordInput.value : '';
+      const confirmVal = customerConfirmPasswordInput ? customerConfirmPasswordInput.value : '';
+
+      const nameCheck = validateCustomerName(nameVal);
+      const phoneCheck = validatePhoneNumber(phoneVal);
+      const govCheck = validateGovernorate(govVal);
+      const emailCheck = validateOptionalEmail(emailVal);
+      const passCriteria = checkPasswordCriteria(passVal);
+
+      let hasErrors = false;
+      let passValid = false;
+      let confirmValid = false;
+
+      if (!nameCheck.isValid) {
+        showFieldError(nameError, customerNameInput, nameCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(nameError, customerNameInput);
+      }
+
+      if (!phoneCheck.isValid) {
+        showFieldError(phoneError, customerPhoneInput, phoneCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(phoneError, customerPhoneInput);
+      }
+
+      if (!govCheck.isValid) {
+        showFieldError(governorateError, customerGovernorateSelect, govCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(governorateError, customerGovernorateSelect);
+      }
+
+      if (!emailCheck.isValid) {
+        showFieldError(emailError, customerEmailInput, emailCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(emailError, customerEmailInput);
+      }
+
+      if (!passVal) {
+        showFieldError(customerPasswordError, customerPasswordInput, 'auth.val_password_empty');
+        hasErrors = true;
+      } else if (!isPasswordCriteriaSatisfied(passCriteria)) {
+        showFieldError(customerPasswordError, customerPasswordInput, 'auth.val_password_incomplete');
+        hasErrors = true;
+      } else {
+        clearFieldError(customerPasswordError, customerPasswordInput);
+        passValid = true;
+      }
+
+      if (!confirmVal) {
+        showFieldError(customerConfirmPasswordError, customerConfirmPasswordInput, 'auth.val_confirm_password_empty');
+        hasErrors = true;
+      } else if (confirmVal !== passVal) {
+        showFieldError(customerConfirmPasswordError, customerConfirmPasswordInput, 'auth.val_passwords_mismatch');
+        hasErrors = true;
+      } else {
+        clearFieldError(customerConfirmPasswordError, customerConfirmPasswordInput);
+        confirmValid = true;
+      }
+
+      if (hasErrors) {
+        if (!nameCheck.isValid && customerNameInput) customerNameInput.focus();
+        else if (!phoneCheck.isValid && customerPhoneInput) customerPhoneInput.focus();
+        else if (!govCheck.isValid && customerGovernorateSelect) customerGovernorateSelect.focus();
+        else if (!emailCheck.isValid && customerEmailInput) customerEmailInput.focus();
+        else if (!passValid && customerPasswordInput) customerPasswordInput.focus();
+        else if (!confirmValid && customerConfirmPasswordInput) customerConfirmPasswordInput.focus();
+        return;
+      }
+
+      // Submit Loading State
+      submitBtn.classList.add('is-loading');
+      submitBtn.setAttribute('disabled', 'true');
+      const submitTextEl = submitBtn.querySelector('.btn-text');
+      const dict = translations[currentLang] || fallbackDict[currentLang];
+      const prevText = submitTextEl ? submitTextEl.textContent : '';
+      if (submitTextEl) {
+        submitTextEl.textContent = getTranslation('auth.continuing_btn', dict);
+      }
+
+      try {
+        const { redirect, trip, programId } = getUrlParams();
+        const result = await performCustomerRegistration({
+          name: nameCheck.value,
+          phone: phoneCheck.value,
+          governorate: govCheck.value,
+          email: emailCheck.value,
+          password: passVal,
+          programId: programId || null,
+          tripType: trip || null
+        });
+
+        if (result.isBackendAwaiting) {
+          showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
+        } else if (result.success) {
+          showStatusAlert('success', 'auth.register_heading', 'تم حفظ بياناتك بنجاح.');
+        }
+      } catch (err) {
+        showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
+      } finally {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.removeAttribute('disabled');
+        if (submitTextEl) {
+          submitTextEl.textContent = prevText || getTranslation('auth.continue_btn', dict);
+        }
+      }
     }
 
-    // Customer Registration Password Listeners
-    if (customerPasswordInput) {
-      customerPasswordInput.addEventListener('input', () => {
-        const criteria = checkPasswordCriteria(customerPasswordInput.value);
-        updatePasswordChecklistUI(customerPasswordChecklist, criteria);
-        if (customerPasswordInput.classList.contains('has-error')) {
-          if (isPasswordCriteriaSatisfied(criteria)) {
-            clearFieldError(customerPasswordError, customerPasswordInput);
+    /**
+     * Handle Login Form Submit
+     */
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      clearStatusAlert();
+
+      const idVal = identifierInput ? identifierInput.value : '';
+      const passVal = passwordInput ? passwordInput.value : '';
+
+      const idCheck = validateIdentifier(idVal);
+      const passCheck = validatePassword(passVal);
+
+      let hasErrors = false;
+
+      if (!idCheck.isValid) {
+        showFieldError(identifierError, identifierInput, idCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(identifierError, identifierInput);
+      }
+
+      if (!passCheck.isValid) {
+        showFieldError(passwordError, passwordInput, passCheck.errorKey);
+        hasErrors = true;
+      } else {
+        clearFieldError(passwordError, passwordInput);
+      }
+
+      if (hasErrors) {
+        if (!idCheck.isValid && identifierInput) identifierInput.focus();
+        else if (!passCheck.isValid && passwordInput) passwordInput.focus();
+        return;
+      }
+
+      submitBtn.classList.add('is-loading');
+      submitBtn.setAttribute('disabled', 'true');
+      const submitTextEl = submitBtn.querySelector('.btn-text');
+      const dict = translations[currentLang] || fallbackDict[currentLang];
+      const prevText = submitTextEl ? submitTextEl.textContent : '';
+      if (submitTextEl) {
+        submitTextEl.textContent = getTranslation('auth.signing_in_btn', dict);
+      }
+
+      let isRedirecting = false;
+      try {
+        const result = await performAuthentication({
+          value: idCheck.value,
+          type: idCheck.type,
+          password: passVal
+        });
+
+        if (result.success) {
+          const params = new URLSearchParams(window.location.search);
+          const redirectParam = params.get('redirect');
+          const destination = resolveClientDestination(result.user, redirectParam);
+
+          if (!destination.valid) {
+            try {
+              localStorage.removeItem('miqat_user');
+              localStorage.removeItem('miqat_token');
+            } catch (e) { }
+            showStatusAlert('error', 'auth.val_unauthorized_role_title', destination.errorKey || 'auth.val_unauthorized_role');
+            return;
+          }
+
+          // Establish authenticated session
+          if (result.user) {
+            try {
+              localStorage.setItem('miqat_user', JSON.stringify(result.user));
+            } catch (e) { }
+          }
+          if (result.token) {
+            try {
+              localStorage.setItem('miqat_token', result.token);
+            } catch (e) { }
+          }
+
+          const target = destination.target;
+          isRedirecting = true;
+          if (window.location.replace) {
+            window.location.replace(target);
+          } else {
+            window.location.href = target;
+          }
+          return;
+        } else if (result.isUnauthorizedRole) {
+          showStatusAlert('error', result.noticeTitleKey || 'auth.val_unauthorized_role_title', result.errorKey || 'auth.val_unauthorized_role');
+        } else if (result.isBackendAwaiting) {
+          showStatusAlert('info', result.noticeTitleKey, result.noticeDescKey);
+        } else {
+          showStatusAlert('error', 'auth.val_invalid_credentials', result.errorKey || 'auth.val_invalid_credentials');
+        }
+      } catch (err) {
+        showStatusAlert('error', 'auth.val_network_error', 'auth.val_network_error');
+      } finally {
+        if (!isRedirecting) {
+          submitBtn.classList.remove('is-loading');
+          submitBtn.removeAttribute('disabled');
+          if (submitTextEl) {
+            submitTextEl.textContent = prevText || getTranslation('auth.sign_in_btn', dict);
           }
         }
-        if (customerConfirmPasswordInput && customerConfirmPasswordInput.value) {
+      }
+    }
+
+    // Realtime Input Listeners
+    function initInputListeners() {
+      if (identifierInput) {
+        identifierInput.addEventListener('input', () => {
+          if (identifierInput.classList.contains('has-error')) clearFieldError(identifierError, identifierInput);
+        });
+      }
+      if (passwordInput) {
+        passwordInput.addEventListener('input', () => {
+          if (passwordInput.classList.contains('has-error')) clearFieldError(passwordError, passwordInput);
+        });
+      }
+      if (customerNameInput) {
+        customerNameInput.addEventListener('input', () => {
+          if (customerNameInput.classList.contains('has-error')) clearFieldError(nameError, customerNameInput);
+        });
+      }
+      if (customerPhoneInput) {
+        customerPhoneInput.addEventListener('input', () => {
+          if (customerPhoneInput.classList.contains('has-error')) clearFieldError(phoneError, customerPhoneInput);
+        });
+      }
+      if (customerGovernorateSelect) {
+        customerGovernorateSelect.addEventListener('change', () => {
+          if (customerGovernorateSelect.classList.contains('has-error')) clearFieldError(governorateError, customerGovernorateSelect);
+        });
+      }
+      if (customerEmailInput) {
+        customerEmailInput.addEventListener('input', () => {
+          if (customerEmailInput.classList.contains('has-error')) clearFieldError(emailError, customerEmailInput);
+        });
+      }
+
+      // Customer Registration Password Listeners
+      if (customerPasswordInput) {
+        customerPasswordInput.addEventListener('input', () => {
+          const criteria = checkPasswordCriteria(customerPasswordInput.value);
+          updatePasswordChecklistUI(customerPasswordChecklist, criteria);
+          if (customerPasswordInput.classList.contains('has-error')) {
+            if (isPasswordCriteriaSatisfied(criteria)) {
+              clearFieldError(customerPasswordError, customerPasswordInput);
+            }
+          }
+          if (customerConfirmPasswordInput && customerConfirmPasswordInput.value) {
+            updateConfirmFeedback(customerPasswordInput, customerConfirmPasswordInput, customerPasswordMatch, customerConfirmPasswordError);
+          }
+        });
+      }
+      if (customerConfirmPasswordInput) {
+        customerConfirmPasswordInput.addEventListener('input', () => {
           updateConfirmFeedback(customerPasswordInput, customerConfirmPasswordInput, customerPasswordMatch, customerConfirmPasswordError);
-        }
-      });
-    }
-    if (customerConfirmPasswordInput) {
-      customerConfirmPasswordInput.addEventListener('input', () => {
-        updateConfirmFeedback(customerPasswordInput, customerConfirmPasswordInput, customerPasswordMatch, customerConfirmPasswordError);
-      });
-    }
+        });
+      }
 
-    // Company Registration Input Listeners
-    if (companyNameInput) {
-      companyNameInput.addEventListener('input', () => {
-        if (companyNameInput.classList.contains('has-error')) clearFieldError(companyNameError, companyNameInput);
-      });
-    }
-    if (responsiblePersonInput) {
-      responsiblePersonInput.addEventListener('input', () => {
-        if (responsiblePersonInput.classList.contains('has-error')) clearFieldError(responsiblePersonError, responsiblePersonInput);
-      });
-    }
-    if (companyPhoneInput) {
-      companyPhoneInput.addEventListener('input', () => {
-        if (companyPhoneInput.classList.contains('has-error')) clearFieldError(companyPhoneError, companyPhoneInput);
-      });
-    }
-    if (companyGovernorateSelect) {
-      companyGovernorateSelect.addEventListener('change', () => {
-        if (companyGovernorateSelect.classList.contains('has-error')) clearFieldError(companyGovernorateError, companyGovernorateSelect);
-      });
-    }
-    if (companyEmailInput) {
-      companyEmailInput.addEventListener('input', () => {
-        if (companyEmailInput.classList.contains('has-error')) clearFieldError(companyEmailError, companyEmailInput);
-      });
-    }
+      // Company Registration Input Listeners
+      if (companyNameInput) {
+        companyNameInput.addEventListener('input', () => {
+          if (companyNameInput.classList.contains('has-error')) clearFieldError(companyNameError, companyNameInput);
+        });
+      }
+      if (responsiblePersonInput) {
+        responsiblePersonInput.addEventListener('input', () => {
+          if (responsiblePersonInput.classList.contains('has-error')) clearFieldError(responsiblePersonError, responsiblePersonInput);
+        });
+      }
+      if (companyPhoneInput) {
+        companyPhoneInput.addEventListener('input', () => {
+          if (companyPhoneInput.classList.contains('has-error')) clearFieldError(companyPhoneError, companyPhoneInput);
+        });
+      }
+      if (companyGovernorateSelect) {
+        companyGovernorateSelect.addEventListener('change', () => {
+          if (companyGovernorateSelect.classList.contains('has-error')) clearFieldError(companyGovernorateError, companyGovernorateSelect);
+        });
+      }
+      if (companyEmailInput) {
+        companyEmailInput.addEventListener('input', () => {
+          if (companyEmailInput.classList.contains('has-error')) clearFieldError(companyEmailError, companyEmailInput);
+        });
+      }
 
-    // Company Registration Password Listeners
-    if (companyPasswordInput) {
-      companyPasswordInput.addEventListener('input', () => {
-        const criteria = checkPasswordCriteria(companyPasswordInput.value);
-        updatePasswordChecklistUI(companyPasswordChecklist, criteria);
-        if (companyPasswordInput.classList.contains('has-error')) {
-          if (isPasswordCriteriaSatisfied(criteria)) {
-            clearFieldError(companyPasswordError, companyPasswordInput);
+      // Company Registration Password Listeners
+      if (companyPasswordInput) {
+        companyPasswordInput.addEventListener('input', () => {
+          const criteria = checkPasswordCriteria(companyPasswordInput.value);
+          updatePasswordChecklistUI(companyPasswordChecklist, criteria);
+          if (companyPasswordInput.classList.contains('has-error')) {
+            if (isPasswordCriteriaSatisfied(criteria)) {
+              clearFieldError(companyPasswordError, companyPasswordInput);
+            }
           }
-        }
-        if (companyConfirmPasswordInput && companyConfirmPasswordInput.value) {
+          if (companyConfirmPasswordInput && companyConfirmPasswordInput.value) {
+            updateConfirmFeedback(companyPasswordInput, companyConfirmPasswordInput, companyPasswordMatch, companyConfirmPasswordError);
+          }
+        });
+      }
+      if (companyConfirmPasswordInput) {
+        companyConfirmPasswordInput.addEventListener('input', () => {
           updateConfirmFeedback(companyPasswordInput, companyConfirmPasswordInput, companyPasswordMatch, companyConfirmPasswordError);
-        }
-      });
-    }
-    if (companyConfirmPasswordInput) {
-      companyConfirmPasswordInput.addEventListener('input', () => {
-        updateConfirmFeedback(companyPasswordInput, companyConfirmPasswordInput, companyPasswordMatch, companyConfirmPasswordError);
-      });
-    }
-  }
-
-  function initEvents() {
-    if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
-    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-
-    // Password Visibility Toggles
-    if (passwordToggleBtn && passwordInput) {
-      setupPasswordToggle(passwordToggleBtn, passwordInput);
-    }
-    if (customerPasswordToggleBtn && customerPasswordInput) {
-      setupPasswordToggle(customerPasswordToggleBtn, customerPasswordInput);
-    }
-    if (customerConfirmPasswordToggleBtn && customerConfirmPasswordInput) {
-      setupPasswordToggle(customerConfirmPasswordToggleBtn, customerConfirmPasswordInput);
-    }
-    if (companyPasswordToggleBtn && companyPasswordInput) {
-      setupPasswordToggle(companyPasswordToggleBtn, companyPasswordInput);
-    }
-    if (companyConfirmPasswordToggleBtn && companyConfirmPasswordInput) {
-      setupPasswordToggle(companyConfirmPasswordToggleBtn, companyConfirmPasswordInput);
+        });
+      }
     }
 
-    if (loginForm) loginForm.addEventListener('submit', handleLoginSubmit);
-    if (customerRegisterForm) customerRegisterForm.addEventListener('submit', handleCustomerRegisterSubmit);
-    if (companyRegisterForm) companyRegisterForm.addEventListener('submit', handleCompanyRegisterSubmit);
-    initRequiredTooltips();
-    initInputListeners();
-  }
+    function initEvents() {
+      if (langToggleBtn) langToggleBtn.addEventListener('click', toggleLanguage);
+      if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
-  async function init() {
-    applyTheme(currentTheme);
-    initEvents();
-    await applyTranslations(currentLang);
-  }
+      // Password Visibility Toggles
+      if (passwordToggleBtn && passwordInput) {
+        setupPasswordToggle(passwordToggleBtn, passwordInput);
+      }
+      if (customerPasswordToggleBtn && customerPasswordInput) {
+        setupPasswordToggle(customerPasswordToggleBtn, customerPasswordInput);
+      }
+      if (customerConfirmPasswordToggleBtn && customerConfirmPasswordInput) {
+        setupPasswordToggle(customerConfirmPasswordToggleBtn, customerConfirmPasswordInput);
+      }
+      if (companyPasswordToggleBtn && companyPasswordInput) {
+        setupPasswordToggle(companyPasswordToggleBtn, companyPasswordInput);
+      }
+      if (companyConfirmPasswordToggleBtn && companyConfirmPasswordInput) {
+        setupPasswordToggle(companyConfirmPasswordToggleBtn, companyConfirmPasswordInput);
+      }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+      if (loginForm) loginForm.addEventListener('submit', handleLoginSubmit);
+      if (customerRegisterForm) customerRegisterForm.addEventListener('submit', handleCustomerRegisterSubmit);
+      if (companyRegisterForm) companyRegisterForm.addEventListener('submit', handleCompanyRegisterSubmit);
+      initRequiredTooltips();
+      initInputListeners();
+    }
+
+    async function init() {
+      applyTheme(currentTheme);
+      initEvents();
+      await applyTranslations(currentLang);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  }) ();
